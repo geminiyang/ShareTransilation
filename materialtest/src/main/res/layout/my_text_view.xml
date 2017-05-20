@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_centerInParent="true"
+    android:layout_width="140dp"
+    android:layout_height="60dp"
+    android:layout_margin="10dp"
+    android:id="@+id/tv_card"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:elevation="2dp"
+    android:gravity="center"
+    android:text="To"
+    >
+
+</TextView>

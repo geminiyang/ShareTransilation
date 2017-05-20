@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">TouchTest</string>
+    <string name="to_table">to_table</string>
+    <string name="testcontent">测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容\n测试内容</string>
+    <string name="Input">请输入...</string>
+    <string name="menu_addfriend">添加朋友</string>
+    <string name="menu_group_chat">加入群组</string>
+    <string name="action_search">搜索</string>
+    <string name="menu_scan">扫一扫</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="dismiss">dismiss</string>
+    <string name="snooze">snooze</string>
+    <string name="to_swipe">to_swipe</string>
+    <string name="sample_show_log">show</string>
+    <string name="sample_hide_log">hide</string>
+    <string name="intro_message">
+        <![CDATA[
+
+
+            A basic sample which shows how to use SwipeRefreshLayout to add the \'swipe-to-refresh\'
+            gesture to a View, enabling the ability to trigger a refresh from swiping down on the view.
+            In this sample the View which can be refreshed is a ListView.
+
+
+        ]]>
+    </string>
+</resources>

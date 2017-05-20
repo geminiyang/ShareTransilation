@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    android:fitsSystemWindows="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--距离一个系统状态栏的高度是因为要状态栏可以透明显示,将marginTop设置为22dp（状态栏的高度）-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/blue_light"
+        android:theme="@style/Theme.ToolBar"
+        app:title=""
+        app:titleTextColor="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
+        <LinearLayout
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:showDividers="end"
+            android:divider="@drawable/template_divider_vertical"
+            android:dividerPadding="5dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/logo"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:text="MOVE"
+                />
+            <TextView
+                android:id="@+id/title_text"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:text=""
+                android:visibility="visible"
+                />
+        </LinearLayout>
+
+        <!--此方法用来添加SearchView-->
+        <!--<android.support.v7.widget.SearchView-->
+            <!--android:id="@+id/searchView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:imeOptions="actionSearch"-->
+            <!--app:defaultQueryHint="搜索" />-->
+    </android.support.v7.widget.Toolbar>
+
+    <RadioGroup
+        android:id="@+id/rd_group"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/home"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_home"
+            android:text="首页"/>
+
+        <RadioButton
+            android:id="@+id/msg"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_msg"
+            android:text="消息"/>
+
+        <RadioButton
+            android:id="@+id/locate"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_locate_two"
+            android:visibility="invisible"
+            android:text="定位"/>
+
+        <RadioButton
+            android:id="@+id/dynamic"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_dynamic"
+            android:text="动态"/>
+
+        <com.idear.move.myWidget.TipButton
+            android:id="@+id/my"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_my"
+            android:text="我的"
+            />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/div_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/_grey"
+        android:layout_above="@id/rd_group"/>
+
+    <FrameLayout
+        android:id="@+id/pan_bg"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/circle_pan"
+        android:layout_marginBottom="-10dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        >
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/plus"
+            />
+    </FrameLayout>
+
+
+
+
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rd_group"
+        android:layout_below="@id/toolbar"
+        android:background="@color/transparent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/id_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v4.view.ViewPager>
+    </FrameLayout>
+
+</RelativeLayout>
+
+

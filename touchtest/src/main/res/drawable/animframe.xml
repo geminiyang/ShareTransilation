@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true"
+    >
+    <item
+        android:drawable="@drawable/pigrun1"
+        android:duration="120"
+        >
+    </item>
+    <item
+        android:drawable="@drawable/pigrun2"
+        android:duration="120"
+        >
+    </item>
+    <item
+        android:drawable="@drawable/pigrun3"
+        android:duration="120"
+        >
+    </item>
+    <item
+        android:drawable="@drawable/pigrun4"
+        android:duration="120"
+        >
+    </item>
+    <item
+        android:drawable="@drawable/pigrun5"
+        android:duration="120"
+        >
+    </item>
+    <item
+        android:drawable="@drawable/pigrun6"
+        android:duration="120"
+        >
+    </item>
+    <item
+        android:drawable="@drawable/pigrun7"
+        android:duration="120"
+        >
+    </item>
+
+</animation-list>

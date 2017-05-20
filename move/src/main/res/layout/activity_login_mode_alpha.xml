@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageButton
+        android:id="@+id/modetwo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/note"
+        android:onClick="onClick"
+        android:elevation="5dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:alpha="1"
+        />
+
+    <ImageButton
+        android:id="@+id/modeone"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/note"
+        android:layout_gravity="center"
+        android:layout_marginBottom="120dp"
+        android:onClick="onClick"
+        android:elevation="5dp"
+        android:alpha="1"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="选择更适合您的角色"
+        android:textSize="26sp"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal"
+        android:alpha="1"
+        />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.255"
+        android:scaleType="centerCrop"
+        android:background="@drawable/timg" />
+</FrameLayout>

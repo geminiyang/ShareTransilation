@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/background_selector"
+    >
+    <ImageView
+        android:src="@mipmap/orgnize"
+        android:id="@+id/image"
+        android:tint="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@drawable/text_selector"
+        android:layout_below="@+id/image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="设置"
+        android:textSize="12sp"
+        />
+</RelativeLayout>

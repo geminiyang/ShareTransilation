@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rl"
+    android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:visibility="visible"
+            android:textSize="25sp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:elevation="2dp"
+            android:textColor="#bb00cc"
+            android:gravity="center"
+            android:text="To" />
+        <ImageView
+            android:id="@+id/heart"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/heart"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            />
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            android:visibility="visible"
+            android:background="@drawable/square_animator"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="-30dp"
+            />
+        <Button
+            android:id="@+id/one"
+            android:layout_above="@+id/two"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="explode"
+            />
+
+        <Button
+            android:id="@+id/two"
+            android:layout_above="@+id/three"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="Transf"
+            />
+        <Button
+            android:id="@+id/three"
+            android:layout_above="@+id/four"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="ClipBound"
+            />
+        <Button
+            android:id="@+id/four"
+            android:layout_above="@+id/five"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="Bounds"
+            />
+        <Button
+            android:id="@+id/five"
+            android:layout_above="@+id/six"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="fade"
+            />
+        <Button
+            android:id="@+id/six"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="slide"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="25dp"
+            />
+
+</RelativeLayout>

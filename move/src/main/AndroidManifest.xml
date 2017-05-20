@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.idear.move">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/move"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/move"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Activity.MyLoadingActivity"
+            android:theme="@style/FirstPageStyle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- qidong -->
+        </activity>
+        <activity
+            android:name=".Activity.SelectActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/FirstPageStyle" />
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.RegisterWebViewActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.LoginModeActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:label=""
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.ForgetPasswordActivity"
+            android:label=""
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.MenuActivity" />
+        <activity
+            android:name=".Activity.MainUIActivity"
+            android:label=""
+            android:theme="@style/otherPageStyle"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Activity.SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".Activity.SearchActivity"
+            android:theme="@style/searchPageStyle" />
+        <activity
+            android:name=".Activity.AllActivityActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.FeedbackActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.SpreadActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.UserDetailInformationActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.UserSettingActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.MyInitiateActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.DynamicPublishingActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.FriendAddActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.SpreadDetailActivity"
+            android:label="活动详情"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.ActivityDetailActivity"
+            android:label="活动详情"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.FeedBackDetailActivity"
+            android:label="活动详情"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.PublishRFActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.PublishRActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.PublishFActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.UserLoginActivity"
+            android:theme="@style/otherPageStyle" />
+    </application>
+
+</manifest>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/swiperefresh"
+    tools:context="com.yqq.touchtest.Activity.TableActivity">
+    <com.yqq.touchtest.MyWidget.MyScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:id="@+id/scroll_root"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_layout"
+            >
+            <include
+                android:id="@+id/mytable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/tablelayout">
+            </include>
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/testcontent"
+                />
+        </LinearLayout>
+    </com.yqq.touchtest.MyWidget.MyScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

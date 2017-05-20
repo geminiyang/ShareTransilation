@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <com.yqq.touchtest.MyWidget.TipRelativeLayout
+        android:id="@+id/rl_tips"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="-52dp"
+        android:background="#51c1d7"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/iv_video_image"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/iv_video_image"
+            android:text="Idear"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tv_video_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_video_title"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/iv_video_image"
+            android:text="gemini进入应用"
+            android:textColor="#ffffff" />
+    </com.yqq.touchtest.MyWidget.TipRelativeLayout>
+
+</LinearLayout>

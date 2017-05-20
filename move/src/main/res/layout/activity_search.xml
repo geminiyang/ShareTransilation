@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/blue_light"
+        android:theme="@style/Theme.ToolBar"
+        app:title=""
+        app:titleTextColor="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
+        <LinearLayout
+            android:gravity="center_vertical|end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:imeOptions="actionSearch"
+                app:closeIcon="@mipmap/msg"
+                app:searchHintIcon="@null"
+                app:queryBackground="@drawable/corner_button_template_login"
+                app:defaultQueryHint="搜索" />
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+</RelativeLayout>

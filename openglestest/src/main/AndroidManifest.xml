@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yqq">
+
+    <!-- Tell the system this app requires OpenGL ES 3.1. -->
+    <uses-feature
+        android:glEsVersion="0x00010000"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.opengles.aep"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".openglestest.MainActivity" />
+        <activity android:name=".openglestest.TriangleActivty" />
+        <activity android:name=".openglestest.BlackBackGroundActivity" />
+        <activity android:name=".openglestest.ProjectionTriangleActivity" />
+        <activity android:name=".openglestest.CircleActivity" />
+        <activity android:name=".BottomNavigationBar.MethodOneActivity"
+            android:label="LinearLayout+TextView"
+            />
+        <activity android:name=".BottomNavigationBar.MethodTwoActivity"
+            android:label="ViewPager+RadioGroup+RadioButton+TipButton"
+            />
+        <activity android:name=".BottomNavigationBar.MethodThreeActivity"
+            android:label="RadioGroup+RadioButton"
+            />
+        <activity android:name=".BottomNavigationBar.MethodFourActivity"
+            android:label="仿新浪微博"
+            />
+        <activity android:name=".BottomNavigationBar.MethodFiveActivity"
+            android:label="BottomNavigationBar"
+            />
+        <activity android:name=".BottomNavigationBar.MethodSixActivity"
+            android:label="TabLayout+ViewPager"
+            />
+        <activity android:name=".BottomNavigationBar.MainMenuActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scene"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yqq.touchtest.Activity.TransitionToActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TransitionTo"
+        android:id="@+id/textview"
+        />
+    <Button
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:text="go"
+        android:id="@+id/go"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/sel_bg_btn_title"
+        />
+
+</RelativeLayout>

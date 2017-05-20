@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#272636"
+    >
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"
+        android:onClick="onClick"
+        />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        >
+
+        <!--layout_gravity是 子布局相对于父布局的位置 gravity是设置布局中子控件在当前布局的位置-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="350dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="20dp"
+                android:src="@mipmap/rina1" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/rina2" />
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@mipmap/rina3" />
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@mipmap/rina4" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@mipmap/rina5" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@mipmap/rina6" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@mipmap/rina7" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="20dp"
+                android:src="@mipmap/rina8" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+</RelativeLayout>

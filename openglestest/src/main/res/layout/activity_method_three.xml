@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/rd_group"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/time"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_time_two"
+            android:text="时间"/>
+
+        <RadioButton
+            android:id="@+id/comment"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_comment_two"
+            android:text="评论"/>
+
+        <RadioButton
+            android:id="@+id/heart"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_heart_two"
+            android:text="心情"/>
+
+        <RadioButton
+            android:id="@+id/locate"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_locate_two"
+            android:text="定位"/>
+    </RadioGroup>
+
+
+    <View
+        android:id="@+id/div_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_grey"
+        android:layout_above="@id/rd_group"/>
+
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rd_group"
+        android:background="@color/transparent">
+    </FrameLayout>
+
+</RelativeLayout>
+
+

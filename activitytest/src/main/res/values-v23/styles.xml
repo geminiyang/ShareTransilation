@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/skyblue</item>
+        <!--<item name="android:navigationBarColor">@color/transparent</item>-->
+        <item name="android:actionBarStyle">@style/myActionBarStyle</item>
+        <item name="android:navigationMode">listMode</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!--&lt;!&ndash; specify enter and exit transitions &ndash;&gt;-->
+        <!--<item name="android:windowEnterTransition">@transition/explode</item>-->
+        <!--<item name="android:windowExitTransition">@transition/explode</item>-->
+
+        <!--&lt;!&ndash; specify shared element transitions &ndash;&gt;-->
+        <!--<item name="android:windowSharedElementEnterTransition">-->
+            <!--@transition/change_image_transform</item>-->
+        <!--<item name="android:windowSharedElementExitTransition">-->
+            <!--@transition/change_image_transform</item>-->
+    </style>
+
+    <!--自定义设置ActionBar-->
+    <style name="myActionBarStyle" parent="android:Widget.ActionBar">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:displayOptions">showTitle</item>
+        <item name="android:titleTextStyle">@style/AcBar_titleStyle</item>
+    </style>
+
+    <style name="AcBar_titleStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+</resources>

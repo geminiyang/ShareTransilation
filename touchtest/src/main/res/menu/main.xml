@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.yqq.touchtest.Activity.ScrollActivity"
+      >
+
+    <item
+        android:id="@+id/action_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@mipmap/actionbar_search_icon"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/action_search"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/action_share"
+        android:actionProviderClass="com.yqq.touchtest.MyWidget.MyActionProvider"
+        android:title="分享" />
+    <item
+        android:id="@+id/action_group_chat"
+        android:icon="@mipmap/menu_group_chat_icon"
+        android:title="@string/menu_group_chat"/>
+    <item
+        android:id="@+id/action_add_friend"
+        android:icon="@mipmap/menu_add_icon"
+        android:title="@string/menu_addfriend"/>
+    <item
+        android:id="@+id/action_scan"
+        android:icon="@mipmap/men_scan_icon"
+        android:title="@string/menu_scan"/>
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@mipmap/menu_refresh_icon"
+        android:title="@string/menu_refresh"/>
+</menu>

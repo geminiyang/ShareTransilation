@@ -1,0 +1,57 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    xmlns:yqq="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/paitnbox" />
+
+        <com.yqq.touchtest.MyWidget.RoundImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            yqq:round_img_src="@drawable/paitnbox"
+            yqq:type="circle" />
+
+        <com.yqq.touchtest.MyWidget.RoundImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            yqq:borderRadius="10dp"
+            yqq:round_img_src="@drawable/paitnbox"
+            yqq:type="round" />
+
+        <com.yqq.touchtest.MyWidget.RoundImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            yqq:borderRadius="20dp"
+            yqq:round_img_src="@drawable/paitnbox"
+            yqq:type="round" />
+        <com.yqq.touchtest.MyWidget.RoundImageViewByXfermode
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/paitnbox"
+            yqq:borderRadius="20dp"
+            yqq:type="circle" />
+        <com.yqq.touchtest.MyWidget.RoundImageViewBitmapShader
+            android:id="@+id/ffff"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/paitnbox"
+            yqq:borderRadius="10dp"
+            yqq:type="round" />
+    </LinearLayout>
+
+</ScrollView>

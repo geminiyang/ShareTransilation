@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:backgroundTintMode="add"
+    android:backgroundTint="@color/transparent"
+    android:alpha="255"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/ll_layer_take_picture"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:clickable="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:background="@drawable/ll_layer_item_select_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拍照"
+            android:textSize="17dp"
+            android:textColor="#222222"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:backgroundTintMode="add"
+        android:backgroundTint="@color/transparent"/>
+
+    <LinearLayout
+        android:id="@+id/ll_layer_select"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:clickable="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:background="@drawable/ll_layer_item_select_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="从手机相册选择"
+            android:textSize="17dp"
+            android:textColor="#222222"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:clickable="true"
+        android:backgroundTintMode="add"
+        android:backgroundTint="@color/transparent"/>
+    <LinearLayout
+        android:id="@+id/ll_layer_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:background="@drawable/ll_layer_item_select_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textSize="17dp"
+            android:textColor="#222222"/>
+    </LinearLayout>
+</LinearLayout>

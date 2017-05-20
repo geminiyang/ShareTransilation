@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#667788"
+    >
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="350dp"
+        android:layout_height="520dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rina"
+        android:orientation="vertical"
+        android:transitionName="shareAnim"
+        />
+
+    <TextView
+        android:id="@+id/tv_second"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="共享动画"
+        android:transitionName="shareAnimTextView"
+        android:textColor="#ff0000"
+        android:textSize="22sp"
+        />
+
+</FrameLayout>

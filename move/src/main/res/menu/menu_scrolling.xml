@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item android:id="@+id/action_report"
+        android:orderInCategory="101"
+        android:title="投诉"
+        android:icon="@mipmap/msg"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_share"
+        android:orderInCategory="100"
+        android:icon="@mipmap/msg_fill"
+        android:title="分享"
+        app:showAsAction="always" />
+</menu>

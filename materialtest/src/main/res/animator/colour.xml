@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:propertyName="fillColor"
+    android:valueType="intType"
+    android:repeatCount="1"
+    android:repeatMode="reverse"
+    android:interpolator="@android:interpolator/decelerate_cubic"
+    android:valueFrom="@color/green"
+    android:valueTo="@color/black" />

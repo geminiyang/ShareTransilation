@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yqq.touchtest">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/note"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.SecondActivity"
+            android:parentActivityName=".Activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.MainActivity" />
+        </activity>
+        >
+        <activity android:name=".Activity.ThreeActivity" />
+        <activity android:name=".Activity.TransitionFromActivity" />
+        <activity android:name=".Activity.TransitionToActivity" />
+        <activity
+            android:name=".Activity.TableActivity"
+            android:theme="@style/mystyle">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.yqq.touchtest.Activity.MainActivity" />
+        </activity>
+        <activity android:name=".Activity.ScrollActivity" />
+        <activity android:name=".Activity.RoundImgActivity" />
+        <activity
+            android:name=".Activity.ResultActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=""></activity>
+        <activity android:name=".Activity.SwipeRefreshActivity" />
+        <activity android:name=".Activity.SwipeActivity" ></activity>
+    </application>
+
+</manifest>

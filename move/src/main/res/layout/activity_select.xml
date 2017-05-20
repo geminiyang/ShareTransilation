@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_light"
+
+    >
+
+    <ImageView
+        android:id="@+id/name"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="110dp"
+        android:src="@drawable/move"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/login_button"
+        android:layout_marginEnd="120dp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_light"
+        android:src="@mipmap/idear"
+        android:tint="@color/white"
+        android:id="@+id/logo"
+        android:layout_marginEnd="28dp"
+        android:layout_above="@+id/topic"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp" />
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:src="@drawable/topic"
+        android:id="@+id/topic"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/name" />
+
+    <Button
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_button"
+        android:background="@drawable/corner_button_template_login"
+        android:textColor="@drawable/login_text_selector"
+        android:elevation="3dp"
+        android:text="登陆"
+        android:textSize="20dp"
+        android:layout_above="@+id/register_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:onClick="onClick"
+        />
+    <Button
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_button"
+        android:background="@drawable/corner_button_template_register"
+        android:textColor="@drawable/register_text_selector"
+        android:elevation="3dp"
+        android:text="注册"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:onClick="onClick"
+        />
+</RelativeLayout>

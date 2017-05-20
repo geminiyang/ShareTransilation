@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="num">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6 ~ 10</item>
+        <item>10 ~ 20</item>
+        <item>20 ~ 50</item>
+        <item>50 以上</item>
+    </string-array>
+</resources>

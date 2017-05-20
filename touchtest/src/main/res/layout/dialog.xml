@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_height="120dp"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="21dp"
+            android:orientation="vertical">
+            <!-- 版权说明 -->
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="7dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="用户权利和义务"/>
+            <!--用户权利和义务 -->
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="7dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="公司权利和义务"/>
+            <!-- 公司的权利和义务 -->
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="7dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="隐私保护"/>
+            <!-- 隐私保护 -->
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="7dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="解释权"/>
+            <!-- 解释权 -->
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="7dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="时间和日期"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

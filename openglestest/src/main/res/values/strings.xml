@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OpenGLESTest</string>
+    <string name="item_time">time</string>
+    <string name="item_comment">comment</string>
+    <string name="item_heart">heart</string>
+    <string name="item_locate">locate</string>
+</resources>

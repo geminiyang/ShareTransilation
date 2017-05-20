@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义圆角图片-->
+    <attr name="type">
+        <enum name="circle" value="0" />
+        <enum name="round" value="1" />
+    </attr>
+    <attr name="borderRadius" format="dimension" />
+
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius"/>
+        <attr name="type" />
+        <attr name="round_img_src" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageViewByXfermode">
+    <attr name="borderRadius"/>
+    <attr name="type" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageViewBitmapShader">
+        <attr name="borderRadius"/>
+        <attr name="type" />
+    </declare-styleable>
+
+    <!--IndicatorView相关-->
+    <!--普通指示器图片,如果图片不存在就默认是bitmap的图片-->
+    <attr name="normalDrawable" format="reference"/>
+    <!--选中指示器图片-->
+    <attr name="selectDrawable" format="reference"/>
+    <!--指示器间隔-->
+    <attr name="indicatorInterval" format="dimension"/>
+    <!--普通指示器颜色-->
+    <attr name="normalColor" format="color"/>
+    <!--选中指示器颜色-->
+    <attr name="selectColor" format="color"/>
+    <!--圆点弧度-->
+    <attr name="indicatorRadius" format="integer"/>
+    <!--是否循环-->
+    <attr name="isCirculate" format="boolean" />
+    <declare-styleable name="IndicatorView">
+        <attr name="normalDrawable"/>
+        <attr name="selectDrawable"/>
+        <attr name="indicatorInterval"/>
+        <attr name="normalColor"/>
+        <attr name="selectColor"/>
+        <attr name="indicatorRadius"/>
+        <attr name="isCirculate" />
+    </declare-styleable>
+</resources>

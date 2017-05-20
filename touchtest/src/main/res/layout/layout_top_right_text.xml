@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_title"
+    android:layout_width="match_parent"
+    android:alpha="125"
+    android:layout_height="54dp">
+    <ImageButton
+        android:id="@+id/btn_left"
+        android:layout_width="54dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="visible"
+        android:background="@drawable/sel_bg_btn_title"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/btn_left"
+        android:layout_toLeftOf="@+id/btn_right"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:maxLines="1"
+        android:ellipsize="none"/>
+    <Button
+        android:id="@id/btn_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:minWidth="54dp"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="15dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="12dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/sel_bg_btn_title"/>
+
+</RelativeLayout>

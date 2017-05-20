@@ -1,0 +1,1 @@
+include ':app' ,':notificationanalyse', ':swipebacklayouttest', ':myutillibrary', ':move', ':horizonalscrollviewtest', ':asynstasktest', ':recyclerviewtest'

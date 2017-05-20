@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <com.idear.move.myWidget.NoScrollViewPager
+            android:id="@+id/view_pager_dynamics"
+            android:layout_below="@+id/tab_layout_fl_dynamics"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.idear.move.myWidget.NoScrollViewPager>
+
+        <FrameLayout
+            android:padding="3dp"
+            android:id="@+id/tab_layout_fl_dynamics"
+            android:layout_alignParentTop="true"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout_dynamics"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    app:tabBackground="@color/transparent"
+                    app:tabIndicatorHeight="1dp"
+                    app:tabIndicatorColor="@color/white"
+                    app:tabSelectedTextColor="@color/blue_light"
+                    app:tabTextColor="#B7B7B7">
+                </android.support.design.widget.TabLayout>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#B7B7B7"
+                    android:layout_gravity="center"
+                    />
+        </FrameLayout>
+
+
+</RelativeLayout>
