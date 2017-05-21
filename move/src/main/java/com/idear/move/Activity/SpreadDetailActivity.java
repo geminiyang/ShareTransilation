@@ -161,7 +161,9 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_scrolling, menu);
         return true;
-    }/**
+    }
+
+    /**
      * 利用反射的方法来设置 每一个tab的大小
      * @param tabs
      * @param leftDip
