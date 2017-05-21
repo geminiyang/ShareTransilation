@@ -120,11 +120,7 @@
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    app:tabBackground="@color/transparent"
-                    app:tabIndicatorHeight="1dp"
-                    app:tabIndicatorColor="@color/blue_light"
-                    app:tabSelectedTextColor="@color/blue_light"
-                    app:tabTextColor="#B7B7B7">
+                    style="@style/MyCustomTabLayout">
                 </android.support.design.widget.TabLayout>
                 <View
                     android:layout_width="1dp"

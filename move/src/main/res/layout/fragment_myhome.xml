@@ -19,7 +19,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager_banner"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
+                android:layout_height="140dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true">
             </android.support.v4.view.ViewPager>

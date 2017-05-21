@@ -151,7 +151,7 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
         mTabLayout.post(new Runnable() {
             @Override
             public void run() {
-                //setIndicator(mTabLayout, 50, 50);
+                setIndicator(mTabLayout, 50, 50);
             }
         });
     }
