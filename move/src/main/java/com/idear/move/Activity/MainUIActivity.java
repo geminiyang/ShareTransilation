@@ -357,7 +357,7 @@ public class MainUIActivity extends BaseActivity implements
                 }
                 break;
             case R.id.action_share:
-                IntentSkipUtil.skipToNextActivity(this,SettingsActivity.class);
+                IntentSkipUtil.skipToNextActivity(this,DynamicPublishingActivity.class);
                 break;
             case R.id.action_addFriend:
                 IntentSkipUtil.skipToNextActivity(this,FriendAddActivity.class);
