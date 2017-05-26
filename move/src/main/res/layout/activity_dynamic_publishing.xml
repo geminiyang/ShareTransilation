@@ -99,17 +99,19 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 >
-                <ImageView
-                    android:id="@+id/iv_publishLocation"
+                <RadioButton
+                    android:id="@+id/rb_publishLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:backgroundTint="@color/black"
-                    android:background="@mipmap/location_32"
+                    android:checked="false"
+                    android:clickable="true"
+                    android:button="@null"
+                    android:drawableStart="@drawable/location_selector"
                     />
                 <TextView
                     android:id="@+id/tv_publishLocation"
-                    android:layout_toEndOf="@+id/iv_publishLocation"
+                    android:layout_toEndOf="@+id/rb_publishLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -137,17 +139,19 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 >
-                <ImageView
-                    android:id="@+id/iv_whoCanRead"
+                <RadioButton
+                    android:id="@+id/rb_whoCanRead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:backgroundTint="@color/black"
-                    android:background="@mipmap/secret_32"
+                    android:checked="false"
+                    android:clickable="true"
+                    android:button="@null"
+                    android:drawableStart="@drawable/lock_selector"
                     />
                 <TextView
                     android:id="@+id/tv_whoCanRead"
-                    android:layout_toEndOf="@+id/iv_whoCanRead"
+                    android:layout_toEndOf="@+id/rb_whoCanRead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

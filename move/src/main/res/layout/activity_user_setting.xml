@@ -34,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="设置选项"
+                android:textSize="18sp"
                 android:textColor="@color/white"
                 android:layout_centerInParent="true"
                 />
@@ -165,8 +166,8 @@
                             />
                     </RelativeLayout>
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/ic_next"
@@ -202,8 +203,8 @@
                             />
                     </RelativeLayout>
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/ic_next"
@@ -239,8 +240,8 @@
                             />
                     </RelativeLayout>
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/ic_next"
@@ -276,8 +277,8 @@
                             />
                     </RelativeLayout>
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/ic_next"

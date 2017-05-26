@@ -31,6 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="个人信息"
+                android:textSize="18sp"
+                android:textColor="@color/white"
                 android:layout_centerInParent="true"
                 />
         </RelativeLayout>
@@ -114,8 +116,8 @@
                             <ImageView
                                 android:id="@+id/iv_next_nickname"
                                 android:layout_toRightOf="@+id/tv_nickname"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/ic_next"
                                 />
@@ -151,8 +153,8 @@
                             <ImageView
                                 android:id="@+id/iv_next_sex"
                                 android:layout_toRightOf="@+id/tv_sex"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/ic_next"
                                 />
@@ -188,8 +190,8 @@
                             <ImageView
                                 android:id="@+id/iv_next_birthday"
                                 android:layout_toRightOf="@+id/tv_birthday"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/ic_next"
                                 />
@@ -225,8 +227,8 @@
                             <ImageView
                                 android:id="@+id/iv_next_school"
                                 android:layout_toRightOf="@+id/tv_school"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/ic_next"
                                 />
@@ -262,8 +264,8 @@
                             <ImageView
                                 android:id="@+id/iv_next_email"
                                 android:layout_toRightOf="@+id/tv_email"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/ic_next"
                                 />
@@ -312,8 +314,8 @@
                             <ImageView
                                 android:id="@+id/iv_next_password"
                                 android:layout_toRightOf="@+id/tv_password"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/ic_next"
                                 />
@@ -349,8 +351,8 @@
                             <ImageView
                                 android:id="@+id/iv_next_cellphoneNumber"
                                 android:layout_toRightOf="@+id/tv_cellphoneNumber"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/ic_next"
                                 />

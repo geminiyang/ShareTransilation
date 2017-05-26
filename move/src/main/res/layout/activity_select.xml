@@ -19,14 +19,13 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/blue_light"
-        android:src="@mipmap/idear"
+        android:src="@mipmap/idea"
         android:tint="@color/white"
         android:id="@+id/logo"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="30dp"
         android:layout_above="@+id/topic"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="40dp" />
     <ImageView
         android:layout_width="200dp"
         android:layout_height="100dp"
