@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
@@ -17,7 +18,7 @@ public class DynamicPublishingActivity extends BaseActivity {
 
     private Button back,publish;
     private LoadingProgressDialog dialog;
-    private RadioButton rb_location,rb_lock;
+    private CheckBox cb_location,cb_lock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +44,16 @@ public class DynamicPublishingActivity extends BaseActivity {
                 showDialogOne(v);
             }
         });
-        rb_location.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-            }
-        });
-        rb_location.setOnClickListener(new View.OnClickListener() {
+        cb_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //rb_location.setChecked(!rb_location.isChecked());
+                //cb_location.setChecked(!cb_location.isChecked());
             }
         });
-        rb_lock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-            }
-        });
-        rb_lock.setOnClickListener(new View.OnClickListener() {
+        cb_lock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //rb_lock.setChecked(!rb_lock.isChecked());
+
             }
         });
     }
@@ -73,8 +62,8 @@ public class DynamicPublishingActivity extends BaseActivity {
         back = (Button) findViewById(R.id.ic_arrow_back);
         publish = (Button) findViewById(R.id.publish_dynamic);
 
-        rb_location = (RadioButton) findViewById(R.id.rb_publishLocation);
-        rb_lock = (RadioButton) findViewById(R.id.rb_whoCanRead);
+        cb_location = (CheckBox) findViewById(R.id.cb_publishLocation);
+        cb_lock = (CheckBox) findViewById(R.id.cb_whoCanRead);
     }
 
     private void showDialogOne(View view) {

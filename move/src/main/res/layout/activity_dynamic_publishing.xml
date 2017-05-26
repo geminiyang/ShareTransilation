@@ -99,8 +99,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 >
-                <RadioButton
-                    android:id="@+id/rb_publishLocation"
+                <CheckBox
+                    android:id="@+id/cb_publishLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -111,7 +111,7 @@
                     />
                 <TextView
                     android:id="@+id/tv_publishLocation"
-                    android:layout_toEndOf="@+id/rb_publishLocation"
+                    android:layout_toEndOf="@+id/cb_publishLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -139,8 +139,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 >
-                <RadioButton
-                    android:id="@+id/rb_whoCanRead"
+                <CheckBox
+                    android:id="@+id/cb_whoCanRead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -151,7 +151,7 @@
                     />
                 <TextView
                     android:id="@+id/tv_whoCanRead"
-                    android:layout_toEndOf="@+id/rb_whoCanRead"
+                    android:layout_toEndOf="@+id/cb_whoCanRead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

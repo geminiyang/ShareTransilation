@@ -101,8 +101,12 @@
         <activity
             android:name=".Activity.PublishFActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.UserLoginActivity"
+        <activity
+            android:name=".Activity.UserLoginActivity"
             android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.UserChatActivity"
+            android:theme="@style/otherPageStyle"
+            />
     </application>
 
 </manifest>

@@ -66,6 +66,7 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.wechat:
                 Toast.makeText(this,"第三方接入登陆wechat",Toast.LENGTH_SHORT).show();
+                IntentSkipUtil.skipToNextActivity(this,UserChatActivity.class);
                 break;
             case R.id.qq:
                 Toast.makeText(this,"第三方接入登陆qq",Toast.LENGTH_SHORT).show();
