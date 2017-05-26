@@ -59,7 +59,7 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
                 login();
                 break;
             case R.id.start:
-                IntentSkipUtil.skipToNextActivity(this,RegisterActivity.class);
+                IntentSkipUtil.skipToNextActivity(this,UserRegisterActivity.class);
                 break;
             case R.id.end:
                 IntentSkipUtil.skipToNextActivity(this,ForgetPasswordActivity.class);

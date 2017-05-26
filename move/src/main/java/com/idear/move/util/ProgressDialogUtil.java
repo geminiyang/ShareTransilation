@@ -1,7 +1,12 @@
 package com.idear.move.util;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.view.Gravity;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.idear.move.R;
 
@@ -27,7 +32,7 @@ public class ProgressDialogUtil {
         if(progressDialog==null) {
             progressDialog = new ProgressDialog(context, R.style.dialog);
             //设置点击加载框外面的区域不会退出progressDialog
-            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCanceledOnTouchOutside(true);
             progressDialog.setMessage(message);
             progressDialog.setCancelable(isCancelable);
             progressDialog.setIndeterminate(true);

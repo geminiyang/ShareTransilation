@@ -37,7 +37,7 @@
             android:launchMode="singleTask"
             android:theme="@style/otherPageStyle" />
         <activity
-            android:name=".Activity.RegisterActivity"
+            android:name=".Activity.UserRegisterActivity"
             android:label=""
             android:theme="@style/otherPageStyle" />
         <activity

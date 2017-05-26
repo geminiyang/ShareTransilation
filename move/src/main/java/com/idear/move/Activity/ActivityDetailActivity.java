@@ -1,6 +1,7 @@
 package com.idear.move.Activity;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,7 +10,10 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -25,8 +29,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityDetailActivity extends BaseActivity implements TabLayout.OnTabSelectedListener{
+public class ActivityDetailActivity extends BaseActivity implements
+                                                        TabLayout.OnTabSelectedListener {
 
+    private static final String TAG = "info";
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
 
@@ -37,6 +43,8 @@ public class ActivityDetailActivity extends BaseActivity implements TabLayout.On
 
     private ImageView iv_back;
 
+    private NestedScrollView nestedScrollView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +54,7 @@ public class ActivityDetailActivity extends BaseActivity implements TabLayout.On
         initToolBar();
         initData();
         initView();
+        initEvent();
     }
 
     private void initToolBar() {
@@ -114,6 +123,8 @@ public class ActivityDetailActivity extends BaseActivity implements TabLayout.On
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
+        nestedScrollView = (NestedScrollView) findViewById(R.id.my_nested_scrollview);
+
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(0);
 
@@ -127,11 +138,49 @@ public class ActivityDetailActivity extends BaseActivity implements TabLayout.On
         mTabLayout.getTabAt(0).setText("详情");//自有方法添加icon
         mTabLayout.getTabAt(1).setText("反馈");
 
+
         //设置下划线的长度
         mTabLayout.post(new Runnable() {
             @Override
             public void run() {
-                //setIndicator(mTabLayout, 50, 50);
+                setIndicator(mTabLayout, 30, 30);
+            }
+        });
+    }
+
+    private void initEvent() {
+
+        final LinearLayout one = (LinearLayout) findViewById(R.id.container_ll_one);
+        final LinearLayout two = (LinearLayout) findViewById(R.id.container_ll_two);
+
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (scrollY > oldScrollY) {
+                    Log.i(TAG, "Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {
+                    Log.i(TAG, "Scroll UP");
+                }
+
+                if (scrollY == 0) {
+                    Log.i(TAG, "TOP SCROLL");
+                    if(mTabLayout.getParent()!=one) {
+                        two.removeView(mTabLayout);
+                        one.addView(mTabLayout,0);
+                    }
+                }
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    Log.i(TAG, "BOTTOM SCROLL");
+                    //当其滑到指定长度，将其父容器置换
+                    if(mTabLayout.getParent()!=two) {
+                        one.removeView(mTabLayout);
+                        two.addView(mTabLayout);
+                    }
+                }
+
             }
         });
     }

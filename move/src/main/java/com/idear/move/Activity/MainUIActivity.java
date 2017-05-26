@@ -72,8 +72,9 @@ public class MainUIActivity extends BaseActivity implements
     private FrameLayout fl_bt1,fl_bt2,fl_bt3;
     private TextView tv1,tv2,tv3;
 
-    private TextView titleText;//toolbar标题
-    private TextView logo;
+    //toolBar相关参数
+    private ImageView iv_search;
+    private TextView logo,titleText;
     private int menu_position;//
 
     @Override
@@ -141,8 +142,9 @@ public class MainUIActivity extends BaseActivity implements
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
         //初始化标题栏
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        titleText = (TextView) findViewById(R.id.title_text);
         logo = (TextView) findViewById(R.id.logo);
+        titleText = (TextView) findViewById(R.id.title_text);
+        iv_search = (ImageView) findViewById(R.id.iv_search);
     }
 
     private void initEvent() {
@@ -157,6 +159,7 @@ public class MainUIActivity extends BaseActivity implements
 
         //使Toolbar能取代原本的 actionbar
         setSupportActionBar(toolbar);
+
 //        //设置左上角导航图标
 //        toolbar.setNavigationIcon(R.mipmap.back);
 //        //toolbar.inflateMenu(R.menu.activity_tool_bar);//设置右上角的填充菜单
@@ -171,6 +174,14 @@ public class MainUIActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
               showWindow(v);
+            }
+        });
+
+        iv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转到一个搜索界面
+                IntentSkipUtil.skipToNextActivity(MainUIActivity.this,SearchActivity.class);
             }
         });
     }
@@ -305,7 +316,7 @@ public class MainUIActivity extends BaseActivity implements
 
 
     /**
-     * 移动变化
+     * 移动变化 overFlowMenu
      * @param menu
      * @return
      */
@@ -316,13 +327,13 @@ public class MainUIActivity extends BaseActivity implements
 
         switch (menu_position) {
             case 0:
-                inflater.inflate(R.menu.activity_tool_bar_f1,menu);
+                //inflater.inflate(R.menu.activity_tool_bar,menu);
                 break;
             case 1:
-                inflater.inflate(R.menu.activity_tool_bar_f2,menu);
+                //inflater.inflate(R.menu.activity_tool_bar,menu);
                 break;
             case 2:
-                inflater.inflate(R.menu.activity_tool_bar_f3,menu);
+                inflater.inflate(R.menu.activity_tool_bar,menu);
                 break;
             case 3:
                 break;
@@ -332,9 +343,8 @@ public class MainUIActivity extends BaseActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_tool_bar_f1,menu);
+        inflater.inflate(R.menu.activity_tool_bar,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -362,17 +372,16 @@ public class MainUIActivity extends BaseActivity implements
             case R.id.action_addFriend:
                 IntentSkipUtil.skipToNextActivity(this,FriendAddActivity.class);
                 break;
-            case R.id.action_search:
-                //跳转到一个搜索界面
-                IntentSkipUtil.skipToNextActivity(this,SearchActivity.class);
-                break;
-            default:
-                Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 强制使溢出菜单的图标显示
+     * @param featureId
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onMenuOpened(int featureId, Menu menu)
     {
@@ -387,7 +396,7 @@ public class MainUIActivity extends BaseActivity implements
                     m.invoke(menu, true);
                 }
                 catch(NoSuchMethodException e){
-                    Log.e("RegisterActivity", "onMenuOpened", e);
+                    Log.e("info", "onMenuOpened", e);
                 }
                 catch(Exception e){
                     throw new RuntimeException(e);
@@ -397,6 +406,9 @@ public class MainUIActivity extends BaseActivity implements
         return super.onMenuOpened(featureId, menu);
     }
 
+    /**
+     * 设置默认选择项
+     */
     private void setDefaultFragment() {
         titleText.setText("消息");
         msg.setChecked(true);

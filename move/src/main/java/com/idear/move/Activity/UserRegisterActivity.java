@@ -11,7 +11,7 @@ import com.idear.move.R;
 import com.idear.move.util.ScrimUtil;
 import com.yqq.swipebackhelper.BaseActivity;
 
-public class RegisterActivity extends BaseActivity {
+public class UserRegisterActivity extends BaseActivity {
 
     private Toolbar toolbar;
 

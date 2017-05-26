@@ -5,20 +5,15 @@
     <!--android:orderInCategory="100"-->
     <!--actionbar里每个item的优先级，值越大优先级越低，actionbar地方不够就会放到overflow中-->
     <item
-        android:id="@+id/action_search"
-        android:icon="@mipmap/search"
-        android:orderInCategory="100"
-        android:title="搜索"
-        app:showAsAction="always"
-        />
-    <item
         android:id="@+id/action_share"
-        android:icon="@mipmap/me"
-        android:title="分享"
+        android:icon="@mipmap/publish_48"
+        android:title="发布动态"
+        android:orderInCategory="100"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_addFriend"
-        android:icon="@mipmap/me"
-        android:title="添加"
+        android:icon="@mipmap/add_friend_48"
+        android:title="添加好友"
+        android:orderInCategory="101"
         app:showAsAction="never" />
 </menu>

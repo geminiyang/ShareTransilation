@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,37 +21,47 @@
         app:titleTextColor="@color/white"
         app:layout_scrollFlags="scroll|enterAlways"
         >
-        <LinearLayout
-            android:gravity="start"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:showDividers="end"
-            android:divider="@drawable/template_divider_vertical"
-            android:dividerPadding="5dp"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:id="@+id/logo"
-                android:padding="2dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:showDividers="end"
+                android:divider="@drawable/template_divider_vertical"
+                android:dividerPadding="5dp"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/logo"
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:textColor="@color/white"
+                    android:text="MOVE"
+                    />
+                <TextView
+                    android:id="@+id/title_text"
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    tools:text=""
+                    />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textColor="@color/white"
-                android:text="MOVE"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@mipmap/search"
                 />
-            <TextView
-                android:id="@+id/title_text"
-                android:padding="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:text=""
-                android:visibility="visible"
-                />
-        </LinearLayout>
-
+        </RelativeLayout>
         <!--此方法用来添加SearchView-->
         <!--<android.support.v7.widget.SearchView-->
             <!--android:id="@+id/searchView"-->
@@ -127,10 +137,6 @@
             android:src="@mipmap/plus"
             />
     </FrameLayout>
-
-
-
-
 
     <FrameLayout
         android:id="@+id/fragment_container"

@@ -6,14 +6,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.idear.move.R;
-import com.idear.move.myWidget.MyProgressDialog;
+import com.idear.move.myWidget.LoadingProgressDialog;
+import com.idear.move.util.ProgressDialogUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 
 public class DynamicPublishingActivity extends BaseActivity {
 
     private Button back,publish;
-    private MyProgressDialog dialog;
+    private LoadingProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class DynamicPublishingActivity extends BaseActivity {
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //ProgressDialogUtil.showLoadingDialog(DynamicPublishingActivity.this,"正在加载中...",false);
                 showDialogOne(v);
             }
         });
@@ -46,7 +48,7 @@ public class DynamicPublishingActivity extends BaseActivity {
     }
 
     private void showDialogOne(View view) {
-        dialog =new MyProgressDialog(this, "正在加载中",R.anim.progress_loading);
+        dialog =new LoadingProgressDialog(this,R.drawable.progress_loading);
         dialog.show();
         Handler handler =new Handler();
         handler.postDelayed(new Runnable() {

@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.idear.move.POJO.UserInformation;
+import com.idear.move.POJO.UserInfoViewModel;
 import com.idear.move.R;
 import com.idear.move.util.NetWorkUtil;
 import com.idear.move.util.ToastUtil;
@@ -46,6 +46,8 @@ public class UserDetailInformationActivity extends BaseActivity {
     private TextView loadingText;
     private BroadcastReceiver connectionReceiver;
 
+    private UserInfoViewModel userInfoViewModel;
+
     private String jsonUrl = "http://idear.party/info/1";
 
     @Override
@@ -53,6 +55,8 @@ public class UserDetailInformationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_user_detail_information);
+
+
 
         initView();
         //initToolBar(mToolBar);
@@ -143,8 +147,8 @@ public class UserDetailInformationActivity extends BaseActivity {
      * @param param
      * @return
      */
-    private List<UserInformation> myGetJsonData(String param) {
-        List<UserInformation> users = new ArrayList<>();
+    private List<UserInfoViewModel> myGetJsonData(String param) {
+        List<UserInfoViewModel> users = new ArrayList<>();
         //通过InputStream去和获取Json数据
         InputStream is = null;
         //可以写成URLConnection urlConnection = null;
@@ -161,11 +165,11 @@ public class UserDetailInformationActivity extends BaseActivity {
 //            is = new URL(param).openStream();
             String jsonString = readStream(is);
             JSONObject jsonObject;
-            UserInformation user;
+            UserInfoViewModel user;
             try {
                 //将整一个json字符串转换成json对象
                 jsonObject = new JSONObject(jsonString);
-                user = new UserInformation();
+                user = new UserInfoViewModel();
                 user.setUsername(jsonObject.getString("username"));
                 user.setPassword(jsonObject.getString("password"));
                 user.setSchool(jsonObject.getString("school"));
@@ -216,24 +220,24 @@ public class UserDetailInformationActivity extends BaseActivity {
     /**
      * 实现网络的异步访问
      */
-    //UserInformation-> List -> Adapter -> ListView
-    private class UserInfoAsyncTask extends AsyncTask<String,Void,List<UserInformation>> {
+    //UserInfoViewModel-> List -> Adapter -> ListView
+    private class UserInfoAsyncTask extends AsyncTask<String,Void,List<UserInfoViewModel>> {
 
         @Override
-        protected List<UserInformation> doInBackground(String... params) {
-                List<UserInformation> list = null;
+        protected List<UserInfoViewModel> doInBackground(String... params) {
+                List<UserInfoViewModel> list = null;
                 list = myGetJsonData(params[0]);
 
                 return list;
         }
 
         @Override
-        protected void onPostExecute(List<UserInformation> users) {
+        protected void onPostExecute(List<UserInfoViewModel> users) {
             super.onPostExecute(users);
             if(users != null) {
                 LoadingFace.setVisibility(View.GONE);
 
-                UserInformation user = users.get(0);
+                UserInfoViewModel user = users.get(0);
                 //显示一个ProgressBar
                 //获取成功后移除，然后更新数据
                 nickName.setText(user.getUsername());

@@ -4,7 +4,7 @@ package com.idear.move.POJO;
  * Created by user on 2017/5/9.
  */
 
-public class UserInformation {
+public class UserInfoViewModel {
     private int status;
     private int list_orders;
     private String id;
@@ -107,7 +107,7 @@ public class UserInformation {
 
     @Override
     public String toString() {
-        return "UserInformation{" +
+        return "UserInfoViewModel{" +
                 "status=" + status +
                 ", listorders=" + list_orders +
                 ", id='" + id + '\'' +

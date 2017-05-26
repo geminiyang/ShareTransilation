@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:background="@drawable/ic_arrow_back_black_24dp"
+                android:background="@drawable/ic_arrow_back_white_24dp"
                 android:backgroundTint="@color/white"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"

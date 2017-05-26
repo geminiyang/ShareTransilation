@@ -40,7 +40,7 @@ public class SelectActivity extends BaseActivity {
             case R.id.register_button:
                 //API 23
                 //register.setTextColor(getResources().getColorStateList(R.color.blue_light,null));
-                IntentSkipUtil.skipToNextActivity(SelectActivity.this,RegisterActivity.class);
+                IntentSkipUtil.skipToNextActivity(SelectActivity.this,UserRegisterActivity.class);
                 break;
             case R.id.login_button:
                 IntentSkipUtil.skipToNextActivity(SelectActivity.this,LoginModeActivity.class);
