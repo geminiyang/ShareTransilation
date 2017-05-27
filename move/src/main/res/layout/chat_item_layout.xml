@@ -11,15 +11,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:background="@drawable/bubble_chat_left">
+        android:background="@drawable/bg_chat_left">
+
         <TextView
             android:id="@+id/left_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_margin="10dp"
-            tools:text="你在吗?"
-            android:textColor="@color/black"/>
+            android:gravity="center"
+            android:textColor="@color/black"
+            tools:text="你在吗?" />
 
     </LinearLayout>
 
@@ -28,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:background="@drawable/bubble_chat_right"
+        android:background="@drawable/bg_chat_right"
         >
         <TextView
             android:id="@+id/right_msg"

@@ -3,40 +3,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d8e0e8"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/aliceblue"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/blue_light"
+        android:theme="@style/Theme.ToolBar"
+        app:title=""
+        app:titleTextColor="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ic_arrow_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_arrow_back_white_24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                />
+            <TextView
+                android:id="@+id/more_spread_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:text="杨琦琦"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
     <ListView
         android:id="@+id/msg_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:listSelector="@drawable/item_chat_selector"
         android:divider="#0000">
 
     </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/white"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/me"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            />
         <EditText
             android:id="@+id/input_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:padding="5dp"
             android:drawableBottom="@drawable/chat_edit_line"
+            android:maxLines="2"
+            android:padding="5dp"
             android:textColor="@color/goldenrod"
-            tools:text="在这里输入信息"
-            android:maxLines="2"/>
+            tools:text="在这里输入信息" />
+
         <Button
             android:id="@+id/send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:textColor="@drawable/register_text_selector"
             android:background="@drawable/corner_button_template_register"
             android:text="发送"/>

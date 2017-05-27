@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,16 +33,19 @@ public class UserChatActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//设置窗口没有标题栏
         setContentView(R.layout.activity_user_chat);
         initMsg();
+        init();
+
+    }
+
+    private void init() {
         adapter = new MsgAdapter(UserChatActivity.this, R.layout.chat_item_layout, msgList);
         inputText = (EditText) findViewById(R.id.input_text);
         send = (Button) findViewById(R.id.send);
         msgListView = (ListView) findViewById(R.id.msg_list_view);
         msgListView.setAdapter(adapter);
         send.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 String content = inputText.getText().toString();
