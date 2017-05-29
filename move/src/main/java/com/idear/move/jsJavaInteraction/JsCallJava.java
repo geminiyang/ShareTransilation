@@ -1,9 +1,9 @@
-package com.idear.move.JsJavaInteraction;
+package com.idear.move.jsJavaInteraction;
 
 import android.content.Context;
 import android.webkit.JavascriptInterface;
 
-import com.idear.move.Util.IntentSkipUtil;
+import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.Activity.LoginActivity;
 
 /**

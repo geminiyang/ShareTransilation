@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.idear.move.POJO.FeedBackDataModel;
 import com.idear.move.R;
-import com.idear.move.MyWidget.UpdateTimeTextView;
+import com.idear.move.myWidget.UpdateTimeTextView;
 
 import java.util.List;
 

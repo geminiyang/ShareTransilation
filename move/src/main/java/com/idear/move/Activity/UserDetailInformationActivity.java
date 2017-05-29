@@ -18,8 +18,8 @@ import android.widget.TextView;
 
 import com.idear.move.POJO.UserInfoViewModel;
 import com.idear.move.R;
-import com.idear.move.Util.NetWorkUtil;
-import com.idear.move.Util.ToastUtil;
+import com.idear.move.util.NetWorkUtil;
+import com.idear.move.util.ToastUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 

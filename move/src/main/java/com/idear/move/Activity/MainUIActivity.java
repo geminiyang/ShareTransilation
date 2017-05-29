@@ -31,17 +31,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.idear.move.Dummy.UserListContent;
 import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.MessageFragment;
 import com.idear.move.Fragment.MyHomeFragment;
 import com.idear.move.Fragment.UserInformationFragment;
 import com.idear.move.Fragment.UserListFragment;
-import com.idear.move.Dummy.DummyContent;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
-import com.idear.move.MyWidget.TipButton;
-import com.idear.move.Util.IntentSkipUtil;
-import com.idear.move.Util.ObjectAnimatorUtil;
+import com.idear.move.myWidget.TipButton;
+import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.ObjectAnimatorUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 import com.yqq.swipebackhelper.SwipeBackHelper;
@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainUIActivity extends BaseActivity implements
-        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener, View.OnClickListener,UserListFragment.OnListFragmentInteractionListener {
+        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,UserListFragment.OnListFragmentInteractionListener {
     private RadioButton dynamic,home,locate,msg;
     private TipButton my;
     private DynamicsFragment f3;
@@ -76,7 +76,7 @@ public class MainUIActivity extends BaseActivity implements
     //toolBar相关参数
     private ImageView iv_search;
     private TextView logo,titleText;
-    private int menu_position;//
+    private int menu_position;//实现随位置变化actionBar变化所需的标记
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +150,12 @@ public class MainUIActivity extends BaseActivity implements
 
     private void initEvent() {
         radioGroup.setOnCheckedChangeListener(this);
-        radioGroup.setOnClickListener(this);
+        radioGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(this);
@@ -174,7 +179,13 @@ public class MainUIActivity extends BaseActivity implements
         fm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              showWindow(v);
+                final View view = v;
+                fm.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        showWindow(view);
+                    }
+                });
             }
         });
 
@@ -265,7 +276,7 @@ public class MainUIActivity extends BaseActivity implements
 
 
             // 创建一个PopupWidow对象
-            popup = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT,150);
+            popup = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT,130);
             if(Build.VERSION.SDK_INT>=21){
                 popup.setElevation(10);
             }
@@ -411,9 +422,9 @@ public class MainUIActivity extends BaseActivity implements
      * 设置默认选择项
      */
     private void setDefaultFragment() {
-        titleText.setText("消息");
+        titleText.setText("");
         msg.setChecked(true);
-        mViewPager.setCurrentItem(1,false);
+        mViewPager.setCurrentItem(0,false);
         my.setTipOn(true);
     }
 
@@ -566,12 +577,7 @@ public class MainUIActivity extends BaseActivity implements
     }
 
     @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
+    public void onListFragmentInteraction(UserListContent.UserList item) {
+        IntentSkipUtil.skipToNextActivity(this,UserChatActivity.class);
     }
 }

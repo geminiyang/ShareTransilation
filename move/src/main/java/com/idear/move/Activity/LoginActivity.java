@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.idear.move.R;
-import com.idear.move.Util.IntentSkipUtil;
+import com.idear.move.util.IntentSkipUtil;
 import com.yqq.myutillibrary.BitmapToRoundUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;

@@ -104,7 +104,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <com.idear.move.MyWidget.UpdateTimeTextView
+                <com.idear.move.myWidget.UpdateTimeTextView
                     android:id="@+id/info_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

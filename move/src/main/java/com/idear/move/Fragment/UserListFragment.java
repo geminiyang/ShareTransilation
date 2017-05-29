@@ -11,13 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idear.move.Adapter.MyUserListRecyclerViewAdapter;
+import com.idear.move.Dummy.UserListContent;
 import com.idear.move.R;
-import com.idear.move.Dummy.DummyContent;
-import com.idear.move.Dummy.DummyContent.DummyItem;
+import com.idear.move.Dummy.UserListContent.UserList;
 
 /**
  * 表示Item列表的Fragment
- * <p/>
  * Activity必须实现 {@link OnListFragmentInteractionListener} 接口
  */
 public class UserListFragment extends Fragment {
@@ -54,7 +53,7 @@ public class UserListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_userlist_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_list, container, false);
 
         //设置adapter
         if (view instanceof RecyclerView) {
@@ -65,7 +64,8 @@ public class UserListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyUserListRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            //添加初始数据源
+            recyclerView.setAdapter(new MyUserListRecyclerViewAdapter(UserListContent.ITEMS, mListener));
         }
         return view;
     }
@@ -99,6 +99,6 @@ public class UserListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         //刷新数据
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(UserList item);
     }
 }

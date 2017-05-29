@@ -65,7 +65,7 @@
                     android:textSize="14sp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground" />
-                <com.idear.move.MyWidget.UpdateTimeTextView
+                <com.idear.move.myWidget.UpdateTimeTextView
                     android:id="@+id/info_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

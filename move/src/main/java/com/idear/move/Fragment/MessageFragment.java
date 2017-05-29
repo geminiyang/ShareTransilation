@@ -12,8 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.idear.move.Activity.UserChatActivity;
+import com.idear.move.Dummy.UserListContent;
 import com.idear.move.R;
-import com.idear.move.MyWidget.NoScrollViewPager;
+import com.idear.move.myWidget.NoScrollViewPager;
+import com.idear.move.util.IntentSkipUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -23,7 +26,8 @@ import java.util.List;
  * Created by user on 2017/5/3.
  */
 
-public class MessageFragment extends Fragment implements TabLayout.OnTabSelectedListener {
+public class MessageFragment extends Fragment implements
+        TabLayout.OnTabSelectedListener {
 
     private static final String ARG = "arg";
 
@@ -39,8 +43,8 @@ public class MessageFragment extends Fragment implements TabLayout.OnTabSelected
     private NoScrollViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private MyFragment f1;
-    private UserListFragment f2;
+    private MyFragment f2;
+    private UserListFragment f1;
 
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
@@ -67,7 +71,7 @@ public class MessageFragment extends Fragment implements TabLayout.OnTabSelected
 
         mViewPager.setUnableScroll(true);
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(0);
+        mViewPager.setCurrentItem(0);//设置默认项
 
         mTabLayout.setupWithViewPager(mViewPager);
         //TabLayout.MODE_SCROLLABLE和TabLayout.MODE_FIXED分别表示当tab的内容超过屏幕宽度是否支持横向水平滑动
@@ -83,17 +87,17 @@ public class MessageFragment extends Fragment implements TabLayout.OnTabSelected
         mTabLayout.post(new Runnable() {
             @Override
             public void run() {
-                setIndicator(mTabLayout, 50, 50);
+                //setIndicator(mTabLayout, 50, 50);
             }
         });
     }
 
     private void initData() {
         if(f1==null) {
-            f1 = MyFragment.newInstance("房间");
+            f1 = UserListFragment.newInstance(1);
         }
         if(f2==null){
-            f2 = UserListFragment.newInstance(1);
+            f2 = MyFragment.newInstance("房间");
         }
         mTabs.add(f1);
         mTabs.add(f2);
@@ -110,6 +114,7 @@ public class MessageFragment extends Fragment implements TabLayout.OnTabSelected
                 return mTabs.get(position);
             }
         };
+
     }
 
     /**
@@ -178,6 +183,5 @@ public class MessageFragment extends Fragment implements TabLayout.OnTabSelected
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
-
 
 }

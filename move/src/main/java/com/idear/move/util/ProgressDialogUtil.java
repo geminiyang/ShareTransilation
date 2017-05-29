@@ -1,4 +1,4 @@
-package com.idear.move.Util;
+package com.idear.move.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;

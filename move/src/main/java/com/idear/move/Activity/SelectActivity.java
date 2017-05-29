@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.idear.move.Util.IntentSkipUtil;
+import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;

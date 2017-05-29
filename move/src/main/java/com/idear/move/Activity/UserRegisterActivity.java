@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.idear.move.R;
-import com.idear.move.Util.ScrimUtil;
+import com.idear.move.util.ScrimUtil;
 import com.yqq.swipebackhelper.BaseActivity;
 
 public class UserRegisterActivity extends BaseActivity {

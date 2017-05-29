@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.idear.move.R;
-import com.idear.move.MyWidget.NoScrollViewPager;
+import com.idear.move.myWidget.NoScrollViewPager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

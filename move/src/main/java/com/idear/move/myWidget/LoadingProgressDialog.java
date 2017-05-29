@@ -1,4 +1,4 @@
-package com.idear.move.MyWidget;
+package com.idear.move.myWidget;
 
 import android.app.ProgressDialog;
 import android.content.Context;

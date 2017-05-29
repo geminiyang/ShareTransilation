@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.idear.move.R;
-import com.idear.move.MyWidget.LoadingProgressDialog;
+import com.idear.move.myWidget.LoadingProgressDialog;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 

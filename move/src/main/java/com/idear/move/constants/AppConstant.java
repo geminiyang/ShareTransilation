@@ -1,4 +1,4 @@
-package com.idear.move.Constants;
+package com.idear.move.constants;
 
 /**
  * Created by user on 2017/4/26.

@@ -16,10 +16,10 @@ import com.idear.move.Activity.FeedbackActivity;
 import com.idear.move.Activity.SpreadActivity;
 import com.idear.move.Thread.MyHomeLoadingAsyncTask;
 import com.idear.move.R;
-import com.idear.move.Constants.AppConstant;
-import com.idear.move.Util.IntentSkipUtil;
+import com.idear.move.constants.AppConstant;
+import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.Adapter.HSVAdapter;
-import com.idear.move.MyWidget.HSVLinearLayout;
+import com.idear.move.myWidget.HSVLinearLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -129,7 +129,14 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
         moreFeedback_iv = (ImageView) view.findViewById(R.id.more_feedback);
         moreSpread_iv = (ImageView) view.findViewById(R.id.more_spread);
 
-        initAdapterData(view);
+        final View v= view;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                initAdapterData(v);
+            }
+        }).start();
 
         moreActivity_iv.setOnClickListener(this);
         moreFeedback_iv.setOnClickListener(this);

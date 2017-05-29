@@ -1,4 +1,4 @@
-package com.idear.move.Util;
+package com.idear.move.util;
 
 /**
  * Created by user on 2017/5/12.
