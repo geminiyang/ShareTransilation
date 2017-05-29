@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <com.idear.move.myWidget.NoScrollViewPager
+        <com.idear.move.MyWidget.NoScrollViewPager
             android:id="@+id/view_pager_message"
             android:layout_below="@+id/tab_layout_fl_message"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </com.idear.move.myWidget.NoScrollViewPager>
+        </com.idear.move.MyWidget.NoScrollViewPager>
 
         <FrameLayout
             android:padding="3dp"

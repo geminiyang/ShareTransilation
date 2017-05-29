@@ -1,11 +1,10 @@
-package com.idear.move.myWidget;
+package com.idear.move.MyWidget;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.idear.move.R;
 

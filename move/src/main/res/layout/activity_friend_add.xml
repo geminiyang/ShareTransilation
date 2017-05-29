@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
-        <com.idear.move.myWidget.RoundImageViewByXfermode
+        <com.idear.move.MyWidget.RoundImageViewByXfermode
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/rina"

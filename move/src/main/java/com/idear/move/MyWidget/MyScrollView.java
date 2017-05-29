@@ -1,4 +1,4 @@
-package com.idear.move.myWidget;
+package com.idear.move.MyWidget;
 
 import android.content.Context;
 import android.os.Handler;

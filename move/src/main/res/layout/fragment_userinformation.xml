@@ -23,7 +23,7 @@
             android:layout_centerInParent="true"
             android:background="@drawable/circle"
             >
-            <com.idear.move.myWidget.RoundImageViewByXfermode
+            <com.idear.move.MyWidget.RoundImageViewByXfermode
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/rina"

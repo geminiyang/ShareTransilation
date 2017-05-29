@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.idear.move.Adapter.BannerPagerAdapter;
 import com.idear.move.R;
-import com.idear.move.myWidget.IndicatorView;
+import com.idear.move.MyWidget.IndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;

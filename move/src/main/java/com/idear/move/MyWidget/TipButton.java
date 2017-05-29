@@ -1,4 +1,4 @@
-package com.idear.move.myWidget;
+package com.idear.move.MyWidget;
 
 /**
  * Created by user on 2017/4/21.

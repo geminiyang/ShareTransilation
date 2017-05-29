@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.idear.move.R;
-import com.idear.move.myWidget.NoScrollViewPager;
+import com.idear.move.MyWidget.NoScrollViewPager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -39,7 +39,8 @@ public class MessageFragment extends Fragment implements TabLayout.OnTabSelected
     private NoScrollViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private MyFragment f1,f2;
+    private MyFragment f1;
+    private UserListFragment f2;
 
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
@@ -92,7 +93,7 @@ public class MessageFragment extends Fragment implements TabLayout.OnTabSelected
             f1 = MyFragment.newInstance("房间");
         }
         if(f2==null){
-            f2 = MyFragment.newInstance("私聊");
+            f2 = UserListFragment.newInstance(1);
         }
         mTabs.add(f1);
         mTabs.add(f2);

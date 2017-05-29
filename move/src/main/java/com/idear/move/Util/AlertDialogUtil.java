@@ -1,4 +1,4 @@
-package com.idear.move.util;
+package com.idear.move.Util;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;

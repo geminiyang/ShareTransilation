@@ -1,4 +1,4 @@
-package com.idear.move.myWidget;
+package com.idear.move.MyWidget;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.idear.move.Adapter.HSVAdapter;
-import com.idear.move.constants.AppConstant;
-import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.Constants.AppConstant;
+import com.idear.move.Util.IntentSkipUtil;
 import com.idear.move.Activity.ActivityDetailActivity;
 import com.idear.move.Activity.FeedBackDetailActivity;
 import com.idear.move.Activity.SpreadDetailActivity;

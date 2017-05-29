@@ -11,7 +11,7 @@ import android.widget.Button;
 import com.idear.move.Adapter.SpreadRvAdapter;
 import com.idear.move.POJO.SpreadDataModel;
 import com.idear.move.R;
-import com.idear.move.myWidget.RecyclerViewDivider;
+import com.idear.move.MyWidget.RecyclerViewDivider;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 

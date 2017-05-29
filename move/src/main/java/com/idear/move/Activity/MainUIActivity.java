@@ -30,17 +30,18 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.MessageFragment;
 import com.idear.move.Fragment.MyHomeFragment;
 import com.idear.move.Fragment.UserInformationFragment;
+import com.idear.move.Fragment.UserListFragment;
+import com.idear.move.Dummy.DummyContent;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
-import com.idear.move.myWidget.TipButton;
-import com.idear.move.util.IntentSkipUtil;
-import com.idear.move.util.ObjectAnimatorUtil;
+import com.idear.move.MyWidget.TipButton;
+import com.idear.move.Util.IntentSkipUtil;
+import com.idear.move.Util.ObjectAnimatorUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 import com.yqq.swipebackhelper.SwipeBackHelper;
@@ -50,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainUIActivity extends BaseActivity implements
-        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener, View.OnClickListener {
+        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener, View.OnClickListener,UserListFragment.OnListFragmentInteractionListener {
     private RadioButton dynamic,home,locate,msg;
     private TipButton my;
     private DynamicsFragment f3;
@@ -566,6 +567,11 @@ public class MainUIActivity extends BaseActivity implements
 
     @Override
     public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
 }

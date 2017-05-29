@@ -1,4 +1,4 @@
-package com.idear.move.myWidget;
+package com.idear.move.MyWidget;
 
 import android.content.Context;
 import android.os.Handler;
@@ -6,7 +6,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.idear.move.util.DateUtil;
+import com.idear.move.Util.DateUtil;
 
 import java.util.Calendar;
 

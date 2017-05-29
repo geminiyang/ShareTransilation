@@ -24,7 +24,7 @@
                 android:layout_alignParentStart="true">
             </android.support.v4.view.ViewPager>
             <!--指示器-->
-            <com.idear.move.myWidget.IndicatorView
+            <com.idear.move.MyWidget.IndicatorView
                 android:id="@+id/indicator_view_banner"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -34,7 +34,7 @@
                 android:gravity="center_horizontal"
                 yqq:isCirculate="true"
                 >
-            </com.idear.move.myWidget.IndicatorView>
+            </com.idear.move.MyWidget.IndicatorView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -70,13 +70,13 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
                 >
-                <com.idear.move.myWidget.HSVLinearLayout
+                <com.idear.move.MyWidget.HSVLinearLayout
                     android:id="@+id/my_gallery_one"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                </com.idear.move.myWidget.HSVLinearLayout>
+                </com.idear.move.MyWidget.HSVLinearLayout>
 
             </HorizontalScrollView>
             <RelativeLayout
@@ -112,13 +112,13 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
                 >
-                <com.idear.move.myWidget.HSVLinearLayout
+                <com.idear.move.MyWidget.HSVLinearLayout
                     android:id="@+id/my_gallery_two"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                </com.idear.move.myWidget.HSVLinearLayout>
+                </com.idear.move.MyWidget.HSVLinearLayout>
 
             </HorizontalScrollView>
             <RelativeLayout
@@ -155,13 +155,13 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
                 >
-                <com.idear.move.myWidget.HSVLinearLayout
+                <com.idear.move.MyWidget.HSVLinearLayout
                     android:id="@+id/my_gallery_three"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                </com.idear.move.myWidget.HSVLinearLayout>
+                </com.idear.move.MyWidget.HSVLinearLayout>
 
             </HorizontalScrollView>
         </RelativeLayout>

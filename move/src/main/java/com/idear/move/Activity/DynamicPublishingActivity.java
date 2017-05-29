@@ -5,12 +5,9 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 
 import com.idear.move.R;
-import com.idear.move.myWidget.LoadingProgressDialog;
-import com.idear.move.util.ProgressDialogUtil;
+import com.idear.move.MyWidget.LoadingProgressDialog;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 

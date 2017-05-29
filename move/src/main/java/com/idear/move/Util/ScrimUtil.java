@@ -1,4 +1,4 @@
-package com.idear.move.util;
+package com.idear.move.Util;
 
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
-import android.os.Build;
 import android.util.LruCache;
 import android.view.Gravity;
 /*

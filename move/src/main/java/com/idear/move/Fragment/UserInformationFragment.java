@@ -18,7 +18,7 @@ import com.idear.move.Activity.MyInitiateActivity;
 import com.idear.move.Activity.UserDetailInformationActivity;
 import com.idear.move.Activity.UserSettingActivity;
 import com.idear.move.R;
-import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.Util.IntentSkipUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

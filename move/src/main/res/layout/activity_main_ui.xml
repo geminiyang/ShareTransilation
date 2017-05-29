@@ -104,7 +104,7 @@
             android:drawableTop="@drawable/tab_menu_dynamic"
             android:text="动态"/>
 
-        <com.idear.move.myWidget.TipButton
+        <com.idear.move.MyWidget.TipButton
             android:id="@+id/my"
             style="@style/tab_menu_item"
             android:drawableTop="@drawable/tab_menu_my"

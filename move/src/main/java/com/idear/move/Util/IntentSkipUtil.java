@@ -1,4 +1,4 @@
-package com.idear.move.util;
+package com.idear.move.Util;
 
 
 import android.app.Activity;
