@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loading_view"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    tools:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/loading_viewStub"
+        layout="@layout/sample_common_list_footer_loading"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <include
+        android:id="@+id/end_viewStub"
+        android:visibility="visible"
+        layout="@layout/sample_common_list_footer_end"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <include
+        android:id="@+id/network_error_viewStub"
+        android:visibility="visible"
+        layout="@layout/sample_common_list_footer_network_error"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+</FrameLayout>

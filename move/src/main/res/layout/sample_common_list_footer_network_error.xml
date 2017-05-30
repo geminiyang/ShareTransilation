@@ -3,11 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="38dp">
+    android:layout_height="38dp"
+    >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="已经到底了"
+        android:text="网络出错了"
+        android:textColor="#ff0000"
+        android:textSize="15sp"
+        android:typeface="monospace"
         android:layout_centerInParent="true"
         />
 </RelativeLayout>

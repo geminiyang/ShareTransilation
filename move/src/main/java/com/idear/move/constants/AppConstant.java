@@ -6,4 +6,10 @@ package com.idear.move.constants;
 
 public class AppConstant {
     public static final String UPDATE_IMAGE_ACTION = "update image";
+    public enum FooterState {
+        NORMAL,
+        LOADING,
+        END,
+        NETWORK_ERROR
+    }
 }
