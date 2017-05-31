@@ -2,42 +2,19 @@ package com.idear.move.Dummy;
 
 import com.idear.move.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  *
  */
 public class UserListContent {
 
     /**
-     * 存储数据源
+     * 生产数据源的方法
+     * @param position
+     * @return
      */
-    public static final List<UserList> ITEMS = new ArrayList<UserList>();
-
-    /**
-     * 通过Id标识存储数据源
-     */
-    public static final Map<String, UserList> ITEM_MAP = new HashMap<String, UserList>();
-
-    private static final int COUNT = 10;
-
-    static {
-        //初始化操作
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createUserItem(i));
-        }
-    }
-
-    private static void addItem(UserList item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.title, item);
-    }
-
-    private static UserList createUserItem(int position) {
-        return new UserList(String.valueOf(position)+"号嘉宾", "今晚去湛江鸡吃饭，老铁!", "2017.5.29", R.drawable.paitnbox,R.mipmap.msg_fill);
+    public static UserList createUserItem(int position) {
+        return new UserList(String.valueOf(position+1) +"号嘉宾", "今晚去湛江鸡吃饭，老铁!",
+                "2017.5.29", R.drawable.paitnbox,R.mipmap.msg_fill);
     }
 
     /**

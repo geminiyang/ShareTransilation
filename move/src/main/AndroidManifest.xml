@@ -15,12 +15,7 @@
         <activity
             android:name=".Activity.MyLoadingActivity"
             android:theme="@style/FirstPageStyle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.SelectActivity"
@@ -49,7 +44,15 @@
             android:name=".Activity.MainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 启动 -->
+        </activity>
+
         <activity
             android:name=".Activity.SettingsActivity"
             android:label="@string/title_activity_settings" />

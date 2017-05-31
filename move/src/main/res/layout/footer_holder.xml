@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loading_view"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="38dp"
     tools:layout_height="wrap_content">
 
     <include
@@ -12,19 +13,25 @@
         layout="@layout/sample_common_list_footer_loading"
         android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
+        android:layout_height="38dp" />
 
     <include
         android:id="@+id/end_viewStub"
         android:visibility="visible"
         layout="@layout/sample_common_list_footer_end"
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
+        android:layout_height="38dp" />
 
     <include
         android:id="@+id/network_error_viewStub"
         android:visibility="visible"
         layout="@layout/sample_common_list_footer_network_error"
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
+        android:layout_height="38dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/_grey"
+        android:layout_gravity="bottom"
+        />
 </FrameLayout>

@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/select_grey"
     android:orientation="horizontal"
-    android:padding="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
     android:gravity="end"
     >
     <LinearLayout
@@ -14,7 +16,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/bg_chat_right">
+        android:background="@drawable/blue_bubble_64">
         <TextView
             android:id="@+id/tv_msg"
             android:layout_width="wrap_content"

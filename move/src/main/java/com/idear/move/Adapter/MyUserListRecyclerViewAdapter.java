@@ -5,43 +5,54 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.idear.move.Dummy.UserListContent;
 import com.idear.move.Fragment.UserListFragment.OnListFragmentInteractionListener;
 import com.idear.move.Dummy.UserListContent.UserList;
 import com.idear.move.POJO.ChatContentHolder;
 import com.idear.move.R;
+import com.idear.move.ViewHolder.FooterHolder;
+import com.idear.move.ViewHolder.HeaderHolder;
 import com.idear.move.constants.AppConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyUserListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int TYPE_NORMAL = 1;
     public static final int TYPE_FOOTER = 2;
+    public static final int TYPE_HEADER = 3;
 
-    private final List<UserList> mValues;
+    private List<UserList> mValues = new ArrayList<>();
     private final OnListFragmentInteractionListener mListener;
 
-    public FooterHolder mFooterHolder;
+    private FooterHolder mFooterHolder;
+    private HeaderHolder mHeaderHolder;
+    private int mHeaderCount = 1;
+    private int mFooterCount = 1;
 
-    public MyUserListRecyclerViewAdapter(List<UserList> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public MyUserListRecyclerViewAdapter(OnListFragmentInteractionListener listener,
+                                         ArrayList<UserList> mList) {
+        this.mValues = mList;
+        this.mListener = listener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         switch (viewType) {
             case TYPE_NORMAL:
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_user_list, parent, false);
-                return new ChatContentHolder(view);
+                return new ChatContentHolder(LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.item_user_list, parent, false));
             case TYPE_FOOTER:
-                View viewFooter = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_holder, parent, false);
-                mFooterHolder = new FooterHolder(viewFooter);
+                mFooterHolder = new FooterHolder(LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.footer_holder, parent, false));
                 return mFooterHolder;
+            case TYPE_HEADER:
+                mHeaderHolder = new HeaderHolder(LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.header_holder, parent, false));
+                return mHeaderHolder;
             default:
                 break;
         }
@@ -72,8 +83,11 @@ public class MyUserListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 });
                 break;
             case TYPE_FOOTER:
-                //((FooterHolder)holder).setState(AppConstant.FooterState.NORMAL);
+                //默认为加载状态
+                ((FooterHolder)holder).setState(AppConstant.FooterState.NORMAL);
                 break;
+            case TYPE_HEADER:
+
             default:
                 break;
         }
@@ -81,64 +95,27 @@ public class MyUserListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemViewType(int position) {
-        return position==mValues.size()? TYPE_FOOTER : TYPE_NORMAL;
+        return position==mValues.size() ? TYPE_FOOTER : (position == 0 ? TYPE_HEADER : TYPE_NORMAL);//配对方法1
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size()+1;
+        return mValues==null ? 0 : (mValues.size()+mFooterCount);//配对方法1
     }
 
-    public class FooterHolder extends RecyclerView.ViewHolder {
-        View mLoadingViewStub;
-        View mEndViewStub;
-        View mNetworkErrorViewStub;
+    public FooterHolder getFooterHolder() {
+        return this.mFooterHolder;
+    }
+    public HeaderHolder getHeaderHolder() {
+        return this.mHeaderHolder;
+    }
 
-        public FooterHolder(View itemView) {
-            super(itemView);
-            //绑定视图id
-            mLoadingViewStub = itemView.findViewById(R.id.loading_viewStub);
-            mEndViewStub = itemView.findViewById(R.id.end_viewStub);
-            mNetworkErrorViewStub = itemView.findViewById(R.id.network_error_viewStub);
-        }
-
-        //根据传过来的status控制哪个状态可见
-        public void setState(AppConstant.FooterState status) {
-            Log.d("TAG", "DemoAdapter" + status + "");
-            switch (status) {
-                case NORMAL:
-                    setAllGone();
-                    break;
-                case LOADING:
-                    setAllGone();
-                    mLoadingViewStub.setVisibility(View.VISIBLE);
-                    break;
-                case END:
-                    setAllGone();
-                    mEndViewStub.setVisibility(View.VISIBLE);
-                    break;
-                case NETWORK_ERROR:
-                    setAllGone();
-                    mNetworkErrorViewStub.setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    break;
-            }
-
-        }
-
-        //全部不可见
-        void setAllGone() {
-            if (mLoadingViewStub != null) {
-                mLoadingViewStub.setVisibility(View.GONE);
-            }
-            if (mEndViewStub != null) {
-                mEndViewStub.setVisibility(View.GONE);
-            }
-            if (mNetworkErrorViewStub != null) {
-                mNetworkErrorViewStub.setVisibility(View.GONE);
-            }
-        }
+    public void addHeaderView() {
 
     }
+
+    public void addFooterView() {
+
+    }
+
 }

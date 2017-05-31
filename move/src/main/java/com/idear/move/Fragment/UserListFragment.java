@@ -2,6 +2,9 @@ package com.idear.move.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,11 +16,14 @@ import android.view.ViewGroup;
 
 import com.idear.move.Adapter.MyUserListRecyclerViewAdapter;
 import com.idear.move.Dummy.UserListContent;
-import com.idear.move.MyListener.DataEndlessListener;
+import com.idear.move.MyListener.DataStateChangeListener;
 import com.idear.move.R;
 import com.idear.move.Dummy.UserListContent.UserList;
 import com.idear.move.constants.AppConstant;
+import com.idear.move.util.NetWorkUtil;
 import com.idear.move.util.ToastUtil;
+
+import java.util.ArrayList;
 
 /**
  * 表示Item列表的Fragment
@@ -32,13 +38,29 @@ public class UserListFragment extends Fragment {
 
     protected AppConstant.FooterState mState = AppConstant.FooterState.NORMAL;
     // 服务器端一共多少条数据
-    private static final int TOTAL_COUNTER = 10;
+    private static final int TOTAL_COUNTER = 22;
     // 每一页展示多少条数据
     private static final int REQUEST_COUNT = 10;
-    // 已经获取到多少条数据了
-    private int mCurrentCounter = 7;
+
+    private RecyclerView recyclerView;
+    //数据源
+    private ArrayList<UserList> mValues = new ArrayList<>();
 
     private MyUserListRecyclerViewAdapter mAdapter;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.notifyDataSetChanged();
+                    //加载完毕时
+                    setState(AppConstant.FooterState.NORMAL);
+                }
+            },1500);
+        }
+    };
 
     private void setState(AppConstant.FooterState mState) {
         this.mState = mState;
@@ -52,8 +74,8 @@ public class UserListFragment extends Fragment {
 
     //改变底部bottom的样式
     private void changeAdapterState() {
-        if (mAdapter != null && mAdapter.mFooterHolder != null) {
-            mAdapter.mFooterHolder.setState(mState);
+        if (mAdapter != null && mAdapter.getFooterHolder() != null) {
+            mAdapter.getFooterHolder().setState(mState);
         }
     }
 
@@ -85,7 +107,7 @@ public class UserListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_list, container, false);
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.addOnScrollListener(mDataEndListener);
 
         //设置adapter
@@ -108,12 +130,16 @@ public class UserListFragment extends Fragment {
                     }
                 }
             });
-
             recyclerView.setLayoutManager(gridLayoutManager);
         }
-        mAdapter = new MyUserListRecyclerViewAdapter(UserListContent.ITEMS, mListener);
+
+        //初始化Adapter
+        getRemoteData();
+        mAdapter = new MyUserListRecyclerViewAdapter(mListener,mValues);
         //添加初始数据源
         recyclerView.setAdapter(mAdapter);
+        //确保HeaderView不优先显示出来
+        recyclerView.scrollToPosition(1);
 
         return view;
     }
@@ -151,7 +177,7 @@ public class UserListFragment extends Fragment {
         void onListFragmentInteraction(UserList item);
     }
 
-    private DataEndlessListener mDataEndListener = new DataEndlessListener() {
+    private DataStateChangeListener mDataEndListener = new DataStateChangeListener() {
         /**
          * 到底部就会触发
          * @param view
@@ -162,11 +188,13 @@ public class UserListFragment extends Fragment {
 
             if (mState == AppConstant.FooterState.LOADING) {
                 Log.d("info", "the state is Loading, just wait..");
+                ToastUtil.getInstance().showToast(getActivity(),"正在加载中...");
                 return;
             }
             //加载数据(根据界面显示个数和服务器返回的数据总数实现动态加载)
-            if (mCurrentCounter < TOTAL_COUNTER) {
-                // loading more
+            if (mValues.size() < TOTAL_COUNTER) {
+                //载入更多数据
+                requestData();
                 Log.d("TAG", "请求数据");
             } else {
                 //the end
@@ -174,5 +202,52 @@ public class UserListFragment extends Fragment {
                 ToastUtil.getInstance().showToast(getActivity(),"已经到了底部");
             }
         }
+
+        @Override
+        public void onRefreshPage(View view) {
+            ToastUtil.getInstance().showToast(getActivity(),"到达了顶部");
+            recyclerView.scrollToPosition(mValues.size()-1);
+            mAdapter.notifyDataSetChanged();
+        }
     };
+
+    /**
+     * 模拟请求网络
+     */
+    private void requestData() {
+        setState(AppConstant.FooterState.LOADING);
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                //模拟网络连接
+                if (NetWorkUtil.isNetworkConnected(getActivity())) {
+                    //模拟请求远程数据
+                    getRemoteData();
+                    Looper.prepare();
+                    Message msg = new Message();
+                    msg.arg1 = 1;
+                    handler.handleMessage(msg);
+                    Looper.loop();
+
+
+                } else {
+                    //模拟一下网络请求失败的情况
+                    setState(AppConstant.FooterState.NETWORK_ERROR);
+                }
+            }
+        }.start();
+    }
+
+     //模拟请求数据(在线程中执行)
+     private void getRemoteData() {
+         //要减去adapter最后一页
+         for (int i = 0; i < REQUEST_COUNT; i++) {
+             if (mValues.size() >= TOTAL_COUNTER) {
+                 break;
+             }
+             mValues.add(UserListContent.createUserItem(i-1));
+         }
+     }
+
 }
