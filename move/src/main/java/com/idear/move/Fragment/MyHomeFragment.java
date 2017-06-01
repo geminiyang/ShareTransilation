@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.idear.move.Activity.AllActivityActivity;
 import com.idear.move.Activity.FeedbackActivity;
@@ -49,7 +50,7 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     private HSVLinearLayout mGalleryLayoutTwo = null;
     private HSVLinearLayout mGalleryLayoutThree = null;
 
-    private ImageView moreActivity_iv,moreFeedback_iv,moreSpread_iv;
+    private TextView moreActivity_tv,moreFeedback_tv,moreSpread_tv;
 
     private IntentFilter intentFilter = null;
     private BroadcastReceiver receiver = null;
@@ -125,9 +126,9 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
         mGalleryLayoutTwo= (HSVLinearLayout) view.findViewById(R.id.my_gallery_two);
         mGalleryLayoutThree = (HSVLinearLayout) view.findViewById(R.id.my_gallery_three);
 
-        moreActivity_iv = (ImageView) view.findViewById(R.id.more_activity);
-        moreFeedback_iv = (ImageView) view.findViewById(R.id.more_feedback);
-        moreSpread_iv = (ImageView) view.findViewById(R.id.more_spread);
+        moreActivity_tv = (TextView) view.findViewById(R.id.more_activity);
+        moreFeedback_tv = (TextView) view.findViewById(R.id.more_feedback);
+        moreSpread_tv = (TextView) view.findViewById(R.id.more_spread);
 
         final View v= view;
 
@@ -138,9 +139,9 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
             }
         }).start();
 
-        moreActivity_iv.setOnClickListener(this);
-        moreFeedback_iv.setOnClickListener(this);
-        moreSpread_iv.setOnClickListener(this);
+        moreActivity_tv.setOnClickListener(this);
+        moreFeedback_tv.setOnClickListener(this);
+        moreSpread_tv.setOnClickListener(this);
     }
 
     private void initAdapterData(View view) {

@@ -39,7 +39,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_marginTop="5dp"
                 android:id="@+id/title_one"
                 android:layout_below="@+id/viewpager_banner"
                 android:background="@color/white"
@@ -50,16 +49,19 @@
                     android:text="活动"
                     android:textSize="18sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="10dp"
                     />
-                <ImageView
+                <TextView
                     android:id="@+id/more_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/back_32"
+                    android:clickable="true"
+                    android:textSize="10sp"
+                    android:text="查看更多"
+                    android:textColor="@color/blue_light"
                     />
 
             </RelativeLayout>
@@ -82,27 +84,29 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_marginTop="5dp"
                 android:id="@+id/title_two"
-                android:layout_below="@+id/hsv_one"
                 android:background="@color/white"
-                >
+                android:layout_below="@+id/hsv_one"
+                android:layout_alignParentStart="true">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="反馈"
                     android:textSize="18sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="10dp"
                     />
-                <ImageView
+                <TextView
                     android:id="@+id/more_feedback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/back_32"
+                    android:clickable="true"
+                    android:textSize="10sp"
+                    android:text="查看更多"
+                    android:textColor="@color/blue_light"
                     />
             </RelativeLayout>
             <HorizontalScrollView
@@ -124,7 +128,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_marginTop="5dp"
                 android:id="@+id/title_three"
                 android:layout_below="@+id/hsv_two"
                 android:background="@color/white"
@@ -135,16 +138,19 @@
                     android:text="推广"
                     android:textSize="18sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="10dp"
                     />
-                <ImageView
+                <TextView
                     android:id="@+id/more_spread"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/back_32"
+                    android:clickable="true"
+                    android:textSize="10sp"
+                    android:text="查看更多"
+                    android:textColor="@color/blue_light"
                     />
             </RelativeLayout>
 

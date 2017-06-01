@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.idear.move.Adapter.MsgAdapter;
@@ -27,13 +28,26 @@ public class UserChatActivity extends BaseActivity {
 
     private List<Msg> msgList = new ArrayList<Msg>();//数据源
 
+    private ImageView iv_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_chat);
         initMsg();
         init();
+        initToolBar();
 
+    }
+
+    private void initToolBar() {
+        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void init() {

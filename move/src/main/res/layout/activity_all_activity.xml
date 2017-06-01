@@ -32,36 +32,38 @@
                 android:id="@+id/more_activity_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="更多活动"
                 android:layout_centerInParent="true"
                 />
-            <android.support.v7.widget.SearchView
-                android:layout_alignParentEnd="true"
-                android:id="@+id/searchView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:imeOptions="actionSearch"
-                app:closeIcon="@mipmap/msg"
-                app:searchHintIcon="@null"
-                app:queryBackground="@drawable/corner_button_template_login" />
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout_all_activity"
+    <FrameLayout
+        android:id="@+id/fl_wrapper"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        app:tabBackground="@color/transparent"
-        app:tabIndicatorHeight="1dp"
-        app:tabIndicatorColor="@color/blue_light"
-        app:tabSelectedTextColor="@color/blue_light"
-        app:tabTextColor="@color/blue_light">
-    </android.support.design.widget.TabLayout>
+        android:layout_margin="10dp"
+        android:layout_height="30dp">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout_all_activity"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            app:tabBackground="@drawable/bg_tab_selector"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabIndicatorHeight="0dp"
+            app:tabIndicatorColor="@color/blue_light"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/blue_light">
+        </android.support.design.widget.TabLayout>
+        <View
+            android:background="@drawable/bg_corner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+    </FrameLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_all_activity"
-        android:layout_below="@+id/tab_layout_all_activity"
+        android:layout_below="@+id/fl_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>

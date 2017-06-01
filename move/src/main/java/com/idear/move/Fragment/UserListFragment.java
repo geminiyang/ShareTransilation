@@ -38,9 +38,9 @@ public class UserListFragment extends Fragment {
 
     protected AppConstant.FooterState mState = AppConstant.FooterState.NORMAL;
     // 服务器端一共多少条数据
-    private static final int TOTAL_COUNTER = 22;
+    private static final int TOTAL_COUNTER = 15;
     // 每一页展示多少条数据
-    private static final int REQUEST_COUNT = 10;
+    private static final int REQUEST_COUNT = 8;
 
     private RecyclerView recyclerView;
     //数据源
@@ -51,14 +51,29 @@ public class UserListFragment extends Fragment {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.notifyDataSetChanged();
-                    //加载完毕时
-                    setState(AppConstant.FooterState.NORMAL);
-                }
-            },1500);
+            switch (msg.arg1) {
+                case 1:
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            //加载完毕时
+                            setState(AppConstant.FooterState.NORMAL);
+                        }
+                    },1500);
+                    break;
+                case 2:
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.scrollToPosition(1);
+                        }
+                    },100);
+                    break;
+                default:
+                    break;
+            }
+
         }
     };
 
@@ -204,10 +219,32 @@ public class UserListFragment extends Fragment {
         }
 
         @Override
-        public void onRefreshPage(View view) {
+        public void onRefreshPage(final View view) {
             ToastUtil.getInstance().showToast(getActivity(),"到达了顶部");
-            recyclerView.scrollToPosition(mValues.size()-1);
-            mAdapter.notifyDataSetChanged();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.scrollToPosition(getLastCompletelyVisibleItemPosition((RecyclerView) view) + 2);
+                    Message msg = new Message();
+                    msg.arg1 = 2;
+                    handler.handleMessage(msg);
+                }
+            },3000);
+
+        }
+
+        @Override
+        public void onStopRefreshPage(final View view) {
+            ToastUtil.getInstance().showToast(getActivity(),"停止刷新");
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.scrollToPosition(getLastCompletelyVisibleItemPosition((RecyclerView) view) + 2);
+                    Message msg = new Message();
+                    msg.arg1 = 2;
+                    handler.handleMessage(msg);
+                }
+            },250);
         }
     };
 
