@@ -62,7 +62,7 @@ public class HSVAdapter extends BaseAdapter {
 
         Map<String,Object> map= (Map<String, Object>) getItem(position); //获取当前的Item
         viewHolder.mImg.setBackgroundResource((Integer) map.get("image"));
-        viewHolder.mText.setText("第"+(position+1)+"张");
+        viewHolder.mText.setText((position+1)+"");
         return convertView;
     }
 

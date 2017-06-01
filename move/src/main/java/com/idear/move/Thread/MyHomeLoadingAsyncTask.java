@@ -158,9 +158,9 @@ public class MyHomeLoadingAsyncTask extends AsyncTask<View,Void,Void> {
     }
 
     private void initData() {
-        pictureList.add(R.drawable.pic_one);
-        pictureList.add(R.drawable.pic_two);
-        pictureList.add(R.drawable.pic_three);
+        pictureList.add(R.drawable.family);
+        pictureList.add(R.drawable.family);
+        pictureList.add(R.drawable.family);
     }
 
     public void quitBannerTask(){

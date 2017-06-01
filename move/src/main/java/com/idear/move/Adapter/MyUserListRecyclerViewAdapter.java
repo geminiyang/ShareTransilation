@@ -1,10 +1,13 @@
 package com.idear.move.Adapter;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 
 import com.idear.move.Dummy.UserListContent;
 import com.idear.move.Fragment.UserListFragment.OnListFragmentInteractionListener;
@@ -87,7 +90,6 @@ public class MyUserListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 ((FooterHolder)holder).setState(AppConstant.FooterState.NORMAL);
                 break;
             case TYPE_HEADER:
-
             default:
                 break;
         }

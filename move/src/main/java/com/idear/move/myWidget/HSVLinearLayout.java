@@ -24,6 +24,7 @@ public class HSVLinearLayout extends LinearLayout {
 
     private HSVAdapter adapter;
     private Context context;
+    private int itemWidth,itemHeight;
 
     public static final int TYPE_ONE = 1;
     public static final int TYPE_TWO = 2;
@@ -32,15 +33,20 @@ public class HSVLinearLayout extends LinearLayout {
     public HSVLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+
     }
 
 
     /**
-     * 为当前布局设置数据源
-     * @param adapter
+     * 设置数据源
+     * @param adapter   数据源适配器
+     * @param type  区分监听器的类型
+     * @param width item 宽度
+     * @param height item 高度
      */
-    public void setAdapter(HSVAdapter adapter,int type) {
-
+    public void setAdapter(HSVAdapter adapter,int type,int width,int height) {
+        this.itemWidth = width;
+        this.itemHeight = height;
         this.adapter = adapter;
         final int myType = type;
         for (int i = 0; i < adapter.getCount(); i++) {
@@ -74,9 +80,9 @@ public class HSVLinearLayout extends LinearLayout {
                 }
             });
             setOrientation(HORIZONTAL);
-            LayoutParams params = new LayoutParams(120,150);
-            addView(view, new LayoutParams(
-                    LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+            LayoutParams params = new LayoutParams(itemWidth,itemHeight);
+            addView(view, params);
+            //addView(view, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
         }
     }
 }

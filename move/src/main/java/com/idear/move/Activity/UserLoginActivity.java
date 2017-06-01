@@ -69,7 +69,7 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.qq:
                 Toast.makeText(this,"第三方接入登陆qq",Toast.LENGTH_SHORT).show();
-                IntentSkipUtil.skipToNextActivity(this,MainUIActivity.class);
+                IntentSkipUtil.skipToNextActivity(this,FirstMainUIActivity.class);
                 break;
             default:
                 break;

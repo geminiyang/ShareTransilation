@@ -31,4 +31,13 @@ public class ToastUtil {
             toast.show();
     }
 
+    public void showToastTest(Context context){
+
+        if(toast != null){
+            toast.cancel();
+        }
+        toast = Toast.makeText(context, "click",Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
 }

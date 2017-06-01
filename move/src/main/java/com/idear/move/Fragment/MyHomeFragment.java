@@ -57,8 +57,8 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     private int nCount = 0;
     // pic in the drawable
     private Integer[] images = {
-            R.mipmap.rina8,R.mipmap.rina8,R.mipmap.rina8,R.mipmap.rina8,
-            R.mipmap.rina8,R.mipmap.rina8
+            R.mipmap.a,R.mipmap.a,R.mipmap.a,R.mipmap.a,
+            R.mipmap.a,R.mipmap.a
     };
 
     public static final int TYPE_ONE = 1;
@@ -153,9 +153,9 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
             map.put("index", (i+1));//代表第张图片，而数组从零开始计数
             hsvAdapter.addObjectItem(map);
         }
-        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE);
-        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO);
-        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE);
+        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,200,200);
+        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,200,200);
+        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE,200,200);
 
     }
 
