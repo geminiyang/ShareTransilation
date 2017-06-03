@@ -46,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_margin="5dp"
         android:listSelector="@drawable/item_chat_selector"
         android:divider="#0000">
 
@@ -62,7 +63,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/me"
+            android:src="@mipmap/emoji"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             />
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:drawableBottom="@drawable/chat_edit_line"
+            android:drawableBottom="@drawable/commons_edit_line"
             android:maxLines="2"
             android:padding="5dp"
             android:textColor="@color/goldenrod"

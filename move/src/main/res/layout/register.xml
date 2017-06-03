@@ -59,11 +59,12 @@
         android:drawableBottom="@drawable/edit_line"
         />
     <EditText
-        android:id="@+id/phone_number"
+        android:id="@+id/email"
         android:layout_below="@+id/nickname"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:hint="手机号码"
+        android:hint="邮箱"
+        android:inputType="textEmailAddress"
         android:textSize="12sp"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
@@ -77,7 +78,7 @@
         />
     <EditText
         android:id="@+id/password"
-        android:layout_below="@+id/phone_number"
+        android:layout_below="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:hint="输入密码"
@@ -109,39 +110,20 @@
         android:background="@null"
         android:drawableBottom="@drawable/edit_line"
         />
-    <LinearLayout
-        android:id="@+id/ll"
+
+    <Button
         android:layout_below="@+id/password_reconfirm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:id="@+id/bt_next_step"
         android:layout_width="match_parent"
-        android:weightSum="4"
-        android:layout_height="56dp"
-        android:orientation="horizontal"
-        >
-            <EditText
-                android:id="@+id/identification_code"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_weight="3"
-                android:hint="验证码"
-                android:textSize="12sp"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:layout_marginStart="50dp"
-                android:background="@null"
-                android:drawableBottom="@drawable/edit_line" />
-            <Button
-                android:id="@+id/identify_bt"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="36dp"
-                android:layout_marginEnd="50dp"
-                android:text="点击获取"
-                android:textSize="12sp"
-                android:textColor="@drawable/login_text_selector"
-                android:background="@drawable/corner_button_template_login"
-                />
-    </LinearLayout>
+        android:layout_height="36dp"
+        android:text="下一步"
+        android:textSize="12sp"
+        android:textColor="@drawable/login_text_selector"
+        android:background="@drawable/corner_button_template_login"
+        />
 
 </RelativeLayout>

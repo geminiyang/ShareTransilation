@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.idear.move.POJO.Msg;
@@ -44,7 +45,7 @@ public class MsgAdapter extends BaseAdapter {
                 if(convertView==null) {
                     convertView = mInflater.inflate(R.layout.chat_item_left_layout, null);
                     viewHolder = new MsgAdapter.ViewHolder();
-                    viewHolder.mLayout = (LinearLayout) convertView.findViewById(R.id.ll_layout);
+                    viewHolder.mLayout = (RelativeLayout) convertView.findViewById(R.id.rl_layout);
                     viewHolder.Msg = (TextView) convertView.findViewById(R.id.tv_msg);
                     viewHolder.Img = (ImageView) convertView.findViewById(R.id.iv_img);
                     convertView.setTag(viewHolder);//通过tag标记 避免加载错位
@@ -58,7 +59,7 @@ public class MsgAdapter extends BaseAdapter {
                 if(convertView==null) {
                     convertView = mInflater.inflate(R.layout.chat_item_right_layout, null);
                     viewHolder = new MsgAdapter.ViewHolder();
-                    viewHolder.mLayout = (LinearLayout) convertView.findViewById(R.id.ll_layout);
+                    viewHolder.mLayout = (RelativeLayout) convertView.findViewById(R.id.rl_layout);
                     viewHolder.Msg = (TextView) convertView.findViewById(R.id.tv_msg);
                     viewHolder.Img = (ImageView) convertView.findViewById(R.id.iv_img);
                     convertView.setTag(viewHolder);//通过tag标记 避免加载错位
@@ -66,7 +67,7 @@ public class MsgAdapter extends BaseAdapter {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
                 viewHolder.Msg.setText(msg.getContent());
-                viewHolder.Img.setBackgroundResource(R.drawable.rina);
+                viewHolder.Img.setBackgroundResource(R.mipmap.e);
                 break;
             default:
                 break;
@@ -101,7 +102,7 @@ public class MsgAdapter extends BaseAdapter {
     }
 
     class ViewHolder{
-        LinearLayout mLayout;
+        RelativeLayout mLayout;
         TextView Msg;
         ImageView Img;
     }

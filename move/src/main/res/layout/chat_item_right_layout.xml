@@ -1,35 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/ll_Layout"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:id="@+id/rl_Layout"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/select_grey"
-    android:orientation="horizontal"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
-    android:gravity="end"
-    >
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
+
+    <TextView
+        android:id="@+id/my_chat_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/my_chat_time"
+        android:background="@color/blue_light"
+        android:src="@mipmap/e"
+        />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:background="@drawable/chat_to_bg_focused">
-        <TextView
+        android:layout_below="@id/my_chat_time"
+        android:layout_toStartOf="@+id/iv_img"
+        android:orientation="horizontal">
+
+        <com.idear.move.myWidget.GifTextView
             android:id="@+id/tv_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="我在啊!"
-            android:textColor="@color/black" />
+            android:layout_marginTop="2dp"
+            android:background="@drawable/blue_bubble_64"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
     </LinearLayout>
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/rina"
-        android:scaleType="fitXY"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+
+</RelativeLayout>
+
 

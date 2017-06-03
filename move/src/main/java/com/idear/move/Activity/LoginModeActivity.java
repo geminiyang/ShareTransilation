@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.idear.move.R;
+import com.idear.move.SponsorActivity.SponsorLoginActivity;
 import com.idear.move.util.IntentSkipUtil;
 import com.yqq.myutillibrary.BitmapToRoundUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
@@ -111,7 +112,7 @@ public class LoginModeActivity extends BaseActivity {
             case R.id.modeone:
                 //API 23
                 //register.setTextColor(getResources().getColorStateList(R.color.blue_light,null));
-                IntentSkipUtil.skipToNextActivity(LoginModeActivity.this,LoginActivity.class);
+                IntentSkipUtil.skipToNextActivity(LoginModeActivity.this,SponsorLoginActivity.class);
                 break;
             case R.id.modetwo:
                 IntentSkipUtil.skipToNextActivity(LoginModeActivity.this,UserLoginActivity.class);

@@ -5,6 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/move"
@@ -49,8 +54,7 @@
             android:name=".Activity.MainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -108,12 +112,21 @@
         <activity
             android:name=".Activity.UserChatActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.FirstMainUIActivity"
+        <activity
+            android:name=".Activity.FirstMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Activity.RegisterNextStepActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".SponsorActivity.SponsorLoginActivity"
+            android:label="@string/title_activity_sponsor_login"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".SponsorActivity.SponsorRegisterActivity"
+            android:theme="@style/otherPageStyle"
+            />
     </application>
 
 </manifest>

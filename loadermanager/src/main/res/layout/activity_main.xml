@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="学习加载器的使用" />
+
+    <Button
+        android:id="@+id/btn_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_text"
+        android:text="所有通话记录" />
+
+    <Button
+        android:id="@+id/btn_incoming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_text"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/btn_all"
+        android:text="拨入记录" />
+
+    <Button
+        android:id="@+id/btn_outcoming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_all"
+        android:layout_marginTop="10dp"
+        android:text="拨出记录" />
+
+    <Button
+        android:id="@+id/btn_missed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/btn_incoming"
+        android:layout_below="@id/btn_all"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/btn_outcoming"
+        android:text="未接记录" />
+
+    <View
+        android:id="@+id/line_layout"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/btn_missed"
+        android:background="#000000" >
+    </View>
+
+    <ListView
+        android:id="@+id/lv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line_layout"
+        tools:listitem="@layout/item_list_view"
+        android:clipToPadding="false"
+        android:divider="#ff553311"
+        android:dividerHeight="2dp"
+        android:fadingEdge="none"
+        android:paddingTop="10dp" />
+</RelativeLayout>
