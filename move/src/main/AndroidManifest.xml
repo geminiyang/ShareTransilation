@@ -111,7 +111,9 @@
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.UserChatActivity"
-            android:theme="@style/otherPageStyle" />
+            android:theme="@style/otherPageStyle"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
         <activity
             android:name=".Activity.FirstMainUIActivity"
             android:label=""

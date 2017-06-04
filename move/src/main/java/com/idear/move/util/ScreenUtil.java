@@ -21,14 +21,16 @@ public class ScreenUtil {
 
 	private static final int TITLE_HEIGHT = 0;
 
-	/** 
+	/**
+	 * dp转换成px
      */
 	public static int dip2px(Context context, float dpValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dpValue * scale + 0.5f);
 	}
 
-	/** 
+	/**
+	 * px转换成dp
      */
 	public static int px2dip(Context context, float pxValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
@@ -112,7 +114,9 @@ public class ScreenUtil {
     }
 
 
-	//获取屏幕原始尺寸高度，包括虚拟功能键高度
+	/**
+	 * 获取屏幕原始尺寸高度，包括虚拟功能键高度
+	 */
 	public static int getDpi(Context context){
 		int dpi = 0;
 		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -139,9 +143,7 @@ public class ScreenUtil {
 	 */
 	public static  int getBottomStatusHeight(Context context){
 		int totalHeight = getDpi(context);
-
 		int contentHeight = getScreenHeight(context);
-
 		return totalHeight  - contentHeight;
 	}
 
@@ -159,9 +161,7 @@ public class ScreenUtil {
 	 * @param context
 	 * @return
 	 */
-	public static int getStatusHeight(Context context)
-	{
-
+	public static int getStatusHeight(Context context) {
 		int statusHeight = -1;
 		try
 		{

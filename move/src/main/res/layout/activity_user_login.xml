@@ -28,7 +28,7 @@
             <EditText
                 android:id="@+id/et_id"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:paddingStart="30dp"
@@ -37,6 +37,7 @@
                 android:maxLines="1"
                 android:gravity="center"
                 android:hint="id"
+                android:textSize="14sp"
                 android:textColor="@color/trans_blue"
                 android:background="@drawable/bg_edit_text"
                 />
@@ -57,7 +58,7 @@
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
@@ -68,6 +69,7 @@
                 android:maxLength="20"
                 android:gravity="center"
                 android:hint="password"
+                android:textSize="14sp"
                 android:textColor="@color/trans_blue"
                 android:background="@drawable/bg_edit_text"
                 />
@@ -76,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/password_32"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="50dp"
                 android:tint="@color/blue_light"
                 />
@@ -86,8 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginStart="33dp"
+            android:layout_marginEnd="33dp"
             android:layout_centerHorizontal="true"
             android:textColor="@color/blue_light"
             android:background="@drawable/corner_button_user_login"

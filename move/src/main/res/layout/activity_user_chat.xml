@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,6 +14,7 @@
         android:minHeight="?attr/actionBarSize"
         android:background="@color/blue_light"
         android:theme="@style/Theme.ToolBar"
+        android:layout_alignParentTop="true"
         app:title=""
         app:titleTextColor="@color/white"
         app:layout_scrollFlags="scroll|enterAlways"
@@ -42,17 +43,27 @@
 
     </android.support.v7.widget.Toolbar>
     <ListView
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/ll_layout"
         android:id="@+id/msg_list_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="5dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:scrollbars="none"
         android:listSelector="@drawable/item_chat_selector"
         android:divider="#0000">
 
     </ListView>
 
     <LinearLayout
+        android:id="@+id/ll_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
@@ -60,33 +71,65 @@
         android:orientation="horizontal"
         >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/emoji"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            />
-        <EditText
-            android:id="@+id/input_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:drawableBottom="@drawable/commons_edit_line"
-            android:maxLines="2"
-            android:padding="5dp"
-            android:textColor="@color/goldenrod"
-            tools:text="在这里输入信息" />
+            <ImageView
+                android:id="@+id/iv_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/emoji"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                />
+            <EditText
+                android:id="@+id/input_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_chat_msg"
+                android:maxLines="10"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:padding="5dp"
+                tools:text="在这里输入信息" />
 
-        <Button
-            android:id="@+id/send"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:textColor="@drawable/register_text_selector"
-            android:background="@drawable/corner_button_template_register"
-            android:text="发送"/>
+            <Button
+                android:id="@+id/send"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:textColor="@drawable/register_text_selector"
+                android:background="@drawable/corner_button_template_register"
+                android:text="发送"/>
+        </LinearLayout>
+        <LinearLayout
+        android:id="@+id/emoji_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vPager"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="3dp"
+                android:paddingTop="5dp"
+                android:background="@color/light_grey" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@color/light_grey"
+                    android:padding="5dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/emoji_icon" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

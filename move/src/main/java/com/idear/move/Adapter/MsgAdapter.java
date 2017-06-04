@@ -2,6 +2,7 @@ package com.idear.move.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.idear.move.Activity.UserChatActivity;
 import com.idear.move.POJO.Msg;
 import com.idear.move.R;
+import com.idear.move.myWidget.SmileUtils;
 
 import java.util.List;
 
@@ -66,7 +69,10 @@ public class MsgAdapter extends BaseAdapter {
                 } else {
                     viewHolder = (ViewHolder) convertView.getTag();
                 }
-                viewHolder.Msg.setText(msg.getContent());
+                //在这里添加图标解析处理
+                SpannableString txt = new SpannableString(msg.getContent());
+                SmileUtils.addSmiles(mContext,txt);
+                viewHolder.Msg.setText(txt);
                 viewHolder.Img.setBackgroundResource(R.mipmap.e);
                 break;
             default:

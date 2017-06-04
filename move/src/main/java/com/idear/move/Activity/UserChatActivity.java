@@ -1,18 +1,31 @@
 package com.idear.move.Activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ImageSpan;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.idear.move.Adapter.ExpressionAdapter;
+import com.idear.move.Adapter.ExpressionPagerAdapter;
 import com.idear.move.Adapter.MsgAdapter;
 import com.idear.move.POJO.Msg;
 import com.idear.move.R;
+import com.idear.move.myWidget.ExpandGridView;
+import com.idear.move.myWidget.SmileUtils;
 import com.yqq.swipebackhelper.BaseActivity;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,19 +38,24 @@ public class UserChatActivity extends BaseActivity {
     private Button send;
     //消息适配器
     private MsgAdapter adapter;
-
+    //聊天记录数据源
     private List<Msg> msgList = new ArrayList<Msg>();//数据源
+    private ImageView iv_back;//返回按钮
+    //表情viewPager
+    private ViewPager expressionViewpager;
+    private ImageView iv_emoji;
+    private LinearLayout emoji_group;
+    private List<String> resList;//存储图标名字的list列表
 
-    private ImageView iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_chat);
         initMsg();
-        init();
+        initView();
+        initEvent();
         initToolBar();
-
     }
 
     private void initToolBar() {
@@ -50,12 +68,18 @@ public class UserChatActivity extends BaseActivity {
         });
     }
 
-    private void init() {
+    private void initView() {
         adapter = new MsgAdapter(UserChatActivity.this, msgList);
         inputText = (EditText) findViewById(R.id.input_text);
         send = (Button) findViewById(R.id.send);
         msgListView = (ListView) findViewById(R.id.msg_list_view);
         msgListView.setAdapter(adapter);
+        expressionViewpager = (ViewPager) findViewById(R.id.vPager);
+        iv_emoji = (ImageView) findViewById(R.id.iv_emoji);
+        emoji_group = (LinearLayout) findViewById(R.id.emoji_group);
+    }
+
+    private void initEvent() {
         send.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -70,7 +94,143 @@ public class UserChatActivity extends BaseActivity {
             }
 
         });
+        iv_emoji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (emoji_group.getVisibility()==View.GONE) {
+                    iv_emoji.setImageResource(R.mipmap.chatting_setmode_keyboard_btn_normal);
+                    emoji_group.setVisibility(View.VISIBLE);
+                } else {
+                    iv_emoji.setImageResource(R.mipmap.emoji);
+                    emoji_group.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
+        initData();
+
+
     }
+
+    /**
+     * 初始化表情界面
+     */
+    private void initData() {
+        // 表情list
+        resList = getExpressionRes(60);
+        // 初始化表情viewpager
+        List<View> views = new ArrayList<View>();
+        View gv1 = getGridChildView(1);
+        View gv2 = getGridChildView(2);
+        View gv3 = getGridChildView(3);
+        views.add(gv1);
+        views.add(gv2);
+        views.add(gv3);
+        expressionViewpager.setAdapter(new ExpressionPagerAdapter(views));
+    }
+
+    /**
+     * 初始化文件名数组
+     * @param getSum
+     * @return
+     */
+    private List<String> getExpressionRes(int getSum) {
+        List<String> res = new ArrayList<String>();
+        for (int x = 1; x <= getSum; x++) {
+            String filename = "f" + x;
+            res.add(filename);
+        }
+        return res;
+
+    }
+
+    /**
+     * 获取表情的gridView的子view
+     * @param i
+     * @return
+     */
+    private View getGridChildView(int i) {
+        View view = View.inflate(this, R.layout.layout_expression_gridview, null);
+        ExpandGridView expandGridView = (ExpandGridView) view.findViewById(R.id.gridView);
+        List<String> list = new ArrayList<String>();
+        if (i == 1) {
+            List<String> listOne = resList.subList(0, 20);
+            list.addAll(listOne);
+        } else if (i == 2) {
+            list.addAll(resList.subList(20, 40));
+        } else if(i == 3) {
+            list.addAll(resList.subList(40, resList.size()));
+        }
+        //第21个图标默认为删除键
+        list.add("delete_expression");
+
+        final ExpressionAdapter expressionAdapter = new ExpressionAdapter(this, 1, list);
+        expandGridView.setAdapter(expressionAdapter);
+        expandGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //文件名与position相对应
+                String filename = expressionAdapter.getItem(position);
+                try {
+                    // 文字输入框可见时，才可输入表情
+                    // 按住说话可见，不让输入表情
+                    if (!filename.equals("delete_expression")) {
+                        // 不是删除键，则显示表情
+                        // 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
+                        @SuppressWarnings("rawtypes")
+                        Class clz = Class.forName("com.idear.move.myWidget.SmileUtils");
+                        Field field = clz.getField(filename);
+                        String inputContent = inputText.getText().toString();
+                        int index = Math.max(inputText.getSelectionStart(), 0);//获取开始光标位置
+                        StringBuilder sBuilder = new StringBuilder(inputContent);
+                        Spannable insertEmotion = SmileUtils.getSmiledText(
+                                UserChatActivity.this, (String) field.get(null));
+                        sBuilder.insert(index, insertEmotion);
+
+                        SpannableString txt = new SpannableString(sBuilder.toString());
+                        SmileUtils.addSmiles(UserChatActivity.this,txt);
+
+                        inputText.setText(txt);
+
+                        inputText.setSelection(index + insertEmotion.length());//设置光标新位置
+                    } else {
+                        // 删除文字或者表情
+                        if (!TextUtils.isEmpty(inputText.getText())) {
+                            int selectionStart = inputText.getSelectionStart();// 获取光标的位置
+                            if (selectionStart > 0) {
+                                String body = inputText.getText().toString();
+                                String tempStr = body.substring(0, selectionStart);
+                                // 获取最后一个表情的位置，如果不存在则返回-1
+                                int i = tempStr.lastIndexOf("[");
+                                if (i != -1) {
+                                    CharSequence cs = tempStr.substring(i, selectionStart);
+                                    if (SmileUtils.containsKey(cs.toString())) {
+                                        //如果存在该键值，则将其成对删除
+                                        inputText.getEditableText().delete(i, selectionStart);
+                                    } else {
+                                        //清除一个字符
+                                        inputText.getEditableText().delete(selectionStart - 1, selectionStart);
+                                    }
+                                } else {
+                                    //清楚一个字符
+                                    inputText.getEditableText().delete(selectionStart - 1, selectionStart);
+                                }
+                            }
+                        }
+
+                    }
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+        return view;
+    }
+
 
     private void initMsg() {
         //模拟初始化数据源
