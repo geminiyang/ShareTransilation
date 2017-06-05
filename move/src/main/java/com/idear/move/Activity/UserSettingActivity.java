@@ -17,13 +17,21 @@ public class UserSettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_user_setting);
-        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
+
+        initView();
+        initEvent();
+    }
+
+    private void initEvent() {
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
 
+    private void initView() {
+        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
     }
 }

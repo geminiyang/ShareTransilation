@@ -21,13 +21,6 @@ public class ScreenUtil {
 
 	private static final int TITLE_HEIGHT = 0;
 
-	/**
-	 * dp转换成px
-     */
-	public static int dip2px(Context context, float dpValue) {
-		final float scale = context.getResources().getDisplayMetrics().density;
-		return (int) (dpValue * scale + 0.5f);
-	}
 
 	/**
 	 * px转换成dp
@@ -88,25 +81,28 @@ public class ScreenUtil {
 		return metric.densityDpi;
 	}
 
+	//通过反射获取状态栏高度，默认25dp
 	public static int getStatusBarHeight(Context context) {
-		if (statusBarHeight != 0) {
-			return statusBarHeight;
-		}
-		Class<?> c = null;
-		Object obj = null;
-		Field field = null;
-		int x = 0;
+		int statusBarHeight = dip2px(context, 25);
 		try {
-			c = Class.forName("com.android.internal.R$dimen");
-			obj = c.newInstance();
-			field = c.getField("status_bar_height");
-			x = Integer.parseInt(field.get(obj).toString());
-			statusBarHeight = context.getResources().getDimensionPixelSize(x);
-		} catch (Exception e1) {
-			e1.printStackTrace();
+			Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+			Object object = clazz.newInstance();
+			int height = Integer.parseInt(clazz.getField("status_bar_height")
+					.get(object).toString());
+			statusBarHeight = context.getResources().getDimensionPixelSize(height);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return statusBarHeight;
 	}
+
+	//根据手机的分辨率从 dp 的单位 转成为 px(像素)
+	public static int dip2px(Context context, float dpValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dpValue * scale + 0.5f);
+	}
+
+
 	public static boolean isTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)

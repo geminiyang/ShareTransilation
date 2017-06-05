@@ -324,23 +324,24 @@ public class FirstMainUIActivity extends BaseActivity implements
     private void showPopupWindow(final Context context, View parent,int layoutId) {
         View contentView = LayoutInflater.from(context).inflate(layoutId,null);
 
+        final PopupWindow popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
         contentView.findViewById(R.id.rl_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,FriendAddActivity.class);
-                ToastUtil.getInstance().showToastTest(v.getContext());
+                popupWindow.dismiss();
             }
         });
         contentView.findViewById(R.id.rl_publish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,DynamicPublishingActivity.class);
-                ToastUtil.getInstance().showToastTest(v.getContext());
+                popupWindow.dismiss();
             }
         });
 
-        final PopupWindow popupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         //设置入场动画
         popupWindow.setAnimationStyle(R.style.PopupSlideFromRightAnimation);
         // 设置焦点在弹窗上

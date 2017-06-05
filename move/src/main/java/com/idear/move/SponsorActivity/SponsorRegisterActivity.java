@@ -1,18 +1,18 @@
 package com.idear.move.SponsorActivity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.idear.move.Activity.RegisterNextStepActivity;
-import com.idear.move.Activity.UserRegisterActivity;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
+import com.yqq.swipebackhelper.BaseActivity;
 
-public class SponsorRegisterActivity extends AppCompatActivity {
+public class SponsorRegisterActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private Button bt_next;
@@ -21,6 +21,7 @@ public class SponsorRegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sponsor_register);
 
         initView();

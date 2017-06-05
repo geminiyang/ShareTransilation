@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,7 +38,9 @@ import com.idear.move.Activity.ForgetPasswordActivity;
 import com.idear.move.Activity.UserRegisterActivity;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
+import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
+import com.yqq.swipebackhelper.SwipeBackHelper;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -67,13 +70,19 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
     private View mLoginFormView;
     private TextView start,end;
 
+    private ImageView iv_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.title_bar_blue));
         setContentView(R.layout.activity_login_sponsor);
         initView();
         initEvent();
 
+        //设置当前Activity不能够滑动返回
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(true);
     }
 
     /**
@@ -112,6 +121,12 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
                 IntentSkipUtil.skipToNextActivity(SponsorLoginActivity.this, ForgetPasswordActivity.class);
             }
         });
+        iv_back.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     /**
@@ -124,6 +139,7 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
         mProgressView = findViewById(R.id.login_progress);
         start = (TextView) findViewById(R.id.start);
         end = (TextView) findViewById(R.id.end);
+        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
     }
 
     /**

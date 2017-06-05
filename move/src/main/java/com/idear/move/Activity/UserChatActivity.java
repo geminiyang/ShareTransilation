@@ -1,13 +1,16 @@
 package com.idear.move.Activity;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.ImageSpan;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.idear.move.Adapter.ExpressionAdapter;
 import com.idear.move.Adapter.ExpressionPagerAdapter;
@@ -23,6 +27,7 @@ import com.idear.move.POJO.Msg;
 import com.idear.move.R;
 import com.idear.move.myWidget.ExpandGridView;
 import com.idear.move.myWidget.SmileUtils;
+import com.idear.move.util.KeyBoardUtils;
 import com.yqq.swipebackhelper.BaseActivity;
 
 import java.lang.reflect.Field;
@@ -46,7 +51,7 @@ public class UserChatActivity extends BaseActivity {
     private ImageView iv_emoji;
     private LinearLayout emoji_group;
     private List<String> resList;//存储图标名字的list列表
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,11 @@ public class UserChatActivity extends BaseActivity {
                 finish();
             }
         });
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
     }
+
+
 
     private void initView() {
         adapter = new MsgAdapter(UserChatActivity.this, msgList);
@@ -80,17 +89,26 @@ public class UserChatActivity extends BaseActivity {
     }
 
     private void initEvent() {
+        inputText.setOnKeyListener(onKeyListener);
+        inputText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                    if (emoji_group.getVisibility()==View.VISIBLE) {
+                        emoji_group.setVisibility(View.GONE);
+                    }
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
+
+
         send.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String content = inputText.getText().toString();
-                if(!TextUtils.isEmpty(content)){
-                    Msg msg = new Msg(content, Msg.SENT);
-                    msgList.add(msg);
-                    adapter.notifyDataSetChanged();//有新消息时，刷新ListView中的显示
-                    msgListView.setSelection(msgListView.getCount()-1);//将ListView定位到最后一行or msgList.size()
-                    inputText.setText("");//清空输入框的内容
-                }
+                sendMessage();
             }
 
         });
@@ -101,6 +119,7 @@ public class UserChatActivity extends BaseActivity {
                 if (emoji_group.getVisibility()==View.GONE) {
                     iv_emoji.setImageResource(R.mipmap.chatting_setmode_keyboard_btn_normal);
                     emoji_group.setVisibility(View.VISIBLE);
+                    KeyBoardUtils.hideKeyBoard(UserChatActivity.this,v);
                 } else {
                     iv_emoji.setImageResource(R.mipmap.emoji);
                     emoji_group.setVisibility(View.GONE);
@@ -191,10 +210,12 @@ public class UserChatActivity extends BaseActivity {
                         sBuilder.insert(index, insertEmotion);
 
                         SpannableString txt = new SpannableString(sBuilder.toString());
-                        SmileUtils.addSmiles(UserChatActivity.this,txt);
-
-                        inputText.setText(txt);
-
+                        boolean flag = SmileUtils.addSmiles(UserChatActivity.this,txt);
+                        if(flag) {
+                            inputText.setText(txt);
+                        } else  {
+                            inputText.setText(sBuilder.toString());
+                        }
                         inputText.setSelection(index + insertEmotion.length());//设置光标新位置
                     } else {
                         // 删除文字或者表情
@@ -242,6 +263,32 @@ public class UserChatActivity extends BaseActivity {
 
         Msg msg3 = new Msg("I will come back soon!",Msg.RECEIVED);
         msgList.add(msg3);
+    }
 
+    private View.OnKeyListener onKeyListener = new View.OnKeyListener() {
+
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER
+                    && event.getAction() == KeyEvent.ACTION_DOWN) {
+                sendMessage();
+                return true;
+            }
+            return false;
+        }
+    };
+
+    /**
+     * 发送消息具体操作
+     */
+    private void sendMessage() {
+        String content = inputText.getText().toString();
+        if(!TextUtils.isEmpty(content)){
+            Msg msg = new Msg(content, Msg.SENT);
+            msgList.add(msg);
+            adapter.notifyDataSetChanged();//有新消息时，刷新ListView中的显示
+            msgListView.setSelection(msgListView.getCount()-1);//将ListView定位到最后一行or msgList.size()
+            inputText.setText("");//清空输入框的内容
+        }
     }
 }

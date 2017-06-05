@@ -2,6 +2,7 @@ package com.idear.move.Activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.idear.move.R;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -14,6 +15,7 @@ public class RegisterNextStepActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_register_next_step);
 
         initToolbar();

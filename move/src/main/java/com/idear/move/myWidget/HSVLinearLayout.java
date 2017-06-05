@@ -13,6 +13,7 @@ import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.Activity.ActivityDetailActivity;
 import com.idear.move.Activity.FeedBackDetailActivity;
 import com.idear.move.Activity.SpreadDetailActivity;
+import com.idear.move.util.ScreenUtil;
 
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class HSVLinearLayout extends LinearLayout {
         for (int i = 0; i < adapter.getCount(); i++) {
             final Map<String, Object> map = (Map<String, Object>) adapter.getItem(i);
             View view = adapter.getView(i, null, null);
-            view.setPadding(10, 5, 10, 0);
+            view.setPadding(0, 0, 0, 0);
             // 为视图设定点击监听器
             view.setOnClickListener(new OnClickListener() {
                 @Override
@@ -80,7 +81,8 @@ public class HSVLinearLayout extends LinearLayout {
                 }
             });
             setOrientation(HORIZONTAL);
-            LayoutParams params = new LayoutParams(itemWidth,itemHeight);
+            LayoutParams params = new LayoutParams(ScreenUtil.dip2px(context,itemWidth),
+                    ScreenUtil.dip2px(context,itemHeight));
             addView(view, params);
             //addView(view, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
         }

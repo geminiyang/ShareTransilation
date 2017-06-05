@@ -1,6 +1,9 @@
 package com.idear.move.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.idear.move.R;
+import com.idear.move.util.ImageUtil;
+import com.idear.move.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +56,8 @@ public class HSVAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder();
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.gallery_item,null);
-            viewHolder.mImg = (ImageView) convertView
-                    .findViewById(R.id.imageView);
-            viewHolder.mText = (TextView) convertView
-                    .findViewById(R.id.textView);
+            viewHolder.mImg = (ImageView) convertView.findViewById(R.id.imageView);
+            viewHolder.mText = (TextView) convertView.findViewById(R.id.textView);
 
             convertView.setTag(viewHolder);
         } else {
@@ -61,6 +65,7 @@ public class HSVAdapter extends BaseAdapter {
         }
 
         Map<String,Object> map= (Map<String, Object>) getItem(position); //获取当前的Item
+
         viewHolder.mImg.setBackgroundResource((Integer) map.get("image"));
         viewHolder.mText.setText((position+1)+"");
         return convertView;
@@ -71,13 +76,6 @@ public class HSVAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    /**
-     * Unconditional layout inflation from view adapter:
-     * Should use View Holder pattern (use recycled view passed into this method as the second parameter) for smoother scrolling less... (Ctrl+F1)
-     *When implementing a view Adapter, you should avoid unconditionally inflating a new layout;
-     *if an available item is passed in for reuse, you should try to use that one instead.
-     *This helps make for example ListView scrolling much smoother.
-     */
     private class ViewHolder
     {
         ImageView mImg;

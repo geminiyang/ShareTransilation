@@ -23,6 +23,9 @@ import com.idear.move.R;
 
 import java.util.List;
 
+/**
+ * girdView的Adapter
+ */
 public class ExpressionAdapter extends ArrayAdapter<String>{
 
 	public ExpressionAdapter(Context context, int textViewResourceId, List<String> objects) {

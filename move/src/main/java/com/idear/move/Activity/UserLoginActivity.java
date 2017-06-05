@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
 import com.yqq.swipebackhelper.BaseActivity;
+import com.yqq.swipebackhelper.SwipeBackHelper;
 
 public class UserLoginActivity extends BaseActivity implements View.OnClickListener{
 
@@ -29,6 +30,10 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
 
         initView();
         initEvent();
+
+        //设置当前Activity不能够滑动返回
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(true);
     }
 
     private void initView() {

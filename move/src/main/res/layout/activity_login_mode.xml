@@ -10,32 +10,49 @@
     >
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginTop="56dp"
         android:text="选 择 更 适 合 职 业"
-        android:textSize="20sp"
-        android:textColor="@color/white"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:textSize="16sp"
+        android:textColor="@color/blue_light"
         android:fontFamily="monospace"
-        android:gravity="center_horizontal"
+        android:background="@drawable/corner_button_verify"
+        android:gravity="center"
         />
-
-    <ImageButton
-        android:id="@+id/modetwo"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:src="@mipmap/user"
-        android:layout_marginTop="120dp"
+    <FrameLayout
+        android:id="@+id/fl_two"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/modeone"
-        android:onClick="onClick"
-        android:elevation="8dp"
-        />
+        android:layout_alignStart="@+id/fl_one"
+        android:layout_marginTop="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/modetwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/user"
+            android:layout_gravity="center"
+            android:onClick="onClick"
+            android:elevation="8dp"
+            />
+        <View
+            android:id="@+id/view_two"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:clickable="true"
+            android:background="@drawable/circle_pan_white"
+            />
+    </FrameLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/modetwo"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/fl_two"
         android:text="一般用户"
         android:textSize="20sp"
         android:textColor="@color/white"
@@ -43,20 +60,34 @@
         android:gravity="center_horizontal"
         />
 
-    <ImageButton
-        android:id="@+id/modeone"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:src="@mipmap/user"
+    <FrameLayout
+        android:id="@+id/fl_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/supporters"
         android:layout_centerHorizontal="true"
-        android:onClick="onClick"
-        android:elevation="8dp"
-        />
+        >
+        <ImageButton
+            android:id="@+id/modeone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/sponsor"
+            android:layout_gravity="center"
+            android:onClick="onClick"
+            android:elevation="8dp"
+            />
+        <View
+            android:id="@+id/view_one"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:clickable="true"
+            android:background="@drawable/circle_pan_white"
+            />
+    </FrameLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/supporters"
         android:text="赞助商"
         android:textSize="20sp"

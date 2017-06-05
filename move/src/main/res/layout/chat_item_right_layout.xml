@@ -4,7 +4,7 @@
     android:id="@+id/rl_Layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/select_grey"
+    android:background="@color/light_grey"
     android:paddingStart="5dp"
     android:paddingEnd="5dp">
 

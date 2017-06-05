@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:showDividers="middle"
                 android:dividerPadding="18dp"
-                android:divider="@drawable/template_divider"
+                android:divider="@drawable/template_divider_horizontal"
                 android:orientation="vertical"
                 android:background="@color/white"
                 >

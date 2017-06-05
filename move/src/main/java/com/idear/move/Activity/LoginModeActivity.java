@@ -8,9 +8,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.idear.move.R;
 import com.idear.move.SponsorActivity.SponsorLoginActivity;
@@ -23,8 +27,10 @@ import com.yqq.swipebackhelper.SwipeBackHelper;
 public class LoginModeActivity extends BaseActivity {
 
     private ImageButton modeOne,modeTwo;
+    private View viewOne,viewTwo;
     private RelativeLayout rl;
     private Drawable drawable;
+    private TextView text;
 
 //    private Handler handler = new Handler(){
 //        @Override
@@ -53,8 +59,21 @@ public class LoginModeActivity extends BaseActivity {
     }
 
     private void initEvent() {
+        viewOne .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(LoginModeActivity.this,SponsorLoginActivity.class);
+            }
+        });
+        viewTwo .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(LoginModeActivity.this,UserLoginActivity.class);
+            }
+        });
 
-        ProductRoundImage();
+
+        //ProductRoundImage();
 //        Runnable run = new Runnable() {
 //            @Override
 //            public void run() {
@@ -71,6 +90,27 @@ public class LoginModeActivity extends BaseActivity {
 //            thread.start();
 //        }
 
+        //setContent();
+    }
+
+    private void setContent() {
+        SpannableString txt = new SpannableString("选择更适合职业");
+        RelativeSizeSpan sizeSpan01 = new RelativeSizeSpan(1.2f);
+        RelativeSizeSpan sizeSpan02 = new RelativeSizeSpan(1.4f);
+        RelativeSizeSpan sizeSpan03 = new RelativeSizeSpan(1.6f);
+        RelativeSizeSpan sizeSpan04 = new RelativeSizeSpan(1.8f);
+        RelativeSizeSpan sizeSpan05 = new RelativeSizeSpan(1.6f);
+        RelativeSizeSpan sizeSpan06 = new RelativeSizeSpan(1.4f);
+        RelativeSizeSpan sizeSpan07 = new RelativeSizeSpan(1.2f);
+
+        txt.setSpan(sizeSpan01, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        txt.setSpan(sizeSpan02, 1, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        txt.setSpan(sizeSpan03, 2, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        txt.setSpan(sizeSpan04, 3, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        txt.setSpan(sizeSpan05, 4, 5, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        txt.setSpan(sizeSpan06, 5, 6, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        txt.setSpan(sizeSpan07, 6, 7, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        text.setText(txt);
     }
 
     private void ProductRoundImage() {
@@ -100,6 +140,10 @@ public class LoginModeActivity extends BaseActivity {
         modeTwo = (ImageButton) findViewById(R.id.modetwo);
         rl = (RelativeLayout) findViewById(R.id.rl_layout);
 
+        viewOne = findViewById(R.id.view_one);
+        viewTwo = findViewById(R.id.view_two);
+
+        text = (TextView) findViewById(R.id.text);
     }
 
     /**

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:showDividers="middle"
+    android:divider="@drawable/template_divider_horizontal"
+    android:background="@color/select_grey"
+    android:dividerPadding="3dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/ll_layer_take_picture"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:text="拍照"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:background="@drawable/rectangle_selector"
+        android:textColor="@drawable/rectangle_text_selector"/>
+
+    <TextView
+        android:id="@+id/ll_layer_select"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:text="从手机相册选取"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:background="@drawable/rectangle_selector"
+        android:textColor="@drawable/rectangle_text_selector"/>
+    <TextView
+        android:id="@+id/ll_layer_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="5dp"
+        android:text="取消"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:background="@drawable/rectangle_selector"
+        android:textColor="@drawable/rectangle_text_selector"/>
+</LinearLayout>

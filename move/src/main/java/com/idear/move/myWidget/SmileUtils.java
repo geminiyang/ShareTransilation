@@ -161,6 +161,7 @@ public class SmileUtils {
 	}
 
 	private static void addPattern(Map<Pattern, Integer> map, String smile, int resource) {
+		//添加正则表达式
 		map.put(Pattern.compile(Pattern.quote(smile)), resource);
 	}
 
@@ -169,16 +170,17 @@ public class SmileUtils {
 	 * 给Spannable字符串中的表情符号替换成图标
 	 * @param context
 	 * @param spannable
-	 * @return
+	 * @return 可拓展文本是否改变的标记
 	 */
 	public static boolean addSmiles(Context context, Spannable spannable) {
 		boolean hasChanges = false;
 		for (Entry<Pattern, Integer> entry : emoticons.entrySet()) {
-			Matcher matcher = entry.getKey().matcher(spannable);
-			while (matcher.find()) {
-				boolean set = true;
+			Matcher matcher = entry.getKey().matcher(spannable);//循环是否有匹配的字符串
+			while (matcher.find()) {//如果匹配才执行相关操作 循环进行寻找，找到一个就进行相关操作
+				boolean set = true;//当此标志位为true时才执行设置带图标的可拓展文本
 				for (ImageSpan span : spannable.getSpans(matcher.start(),
 						matcher.end(), ImageSpan.class))
+					//用于处理图标的所代表的文本，将其移除
 					if (spannable.getSpanStart(span) >= matcher.start()
 							&& spannable.getSpanEnd(span) <= matcher.end())
 						spannable.removeSpan(span);
@@ -189,8 +191,7 @@ public class SmileUtils {
 				if (set) {
 					hasChanges = true;
 					spannable.setSpan(new ImageSpan(context, entry.getValue()),
-							matcher.start(), matcher.end(),
-							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+							matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				}
 			}
 		}

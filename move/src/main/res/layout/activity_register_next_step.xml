@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/root_rl"
-    android:background="@color/white"
+    android:background="@drawable/gradient"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.Toolbar
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:text="注册"
+                android:text="下一步"
                 android:layout_centerInParent="true"
                 />
         </RelativeLayout>
@@ -50,8 +50,10 @@
         android:gravity="center"
         android:typeface="monospace"
         android:textSize="14sp"
-        android:textColorHint="@color/_grey"
-        android:textColor="@color/_grey"
+        android:background="@null"
+        android:drawableBottom="@drawable/edit_line"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:layout_marginStart="50dp"
@@ -71,8 +73,8 @@
         android:layout_height="36dp"
         android:text="提交"
         android:textSize="12sp"
-        android:textColor="@drawable/register_text_selector"
-        android:background="@drawable/corner_button_template_register"
+        android:textColor="@drawable/login_text_selector"
+        android:background="@drawable/corner_button_template_login"
         />
 
 </RelativeLayout>

@@ -57,8 +57,7 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     private int nCount = 0;
     // pic in the drawable
     private Integer[] images = {
-            R.mipmap.a,R.mipmap.a,R.mipmap.a,R.mipmap.a,
-            R.mipmap.a,R.mipmap.a
+            R.mipmap.e,R.mipmap.e,R.mipmap.e
     };
 
     public static final int TYPE_ONE = 1;
@@ -135,7 +134,7 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                initAdapterData(v);
+                initAdapterData();
             }
         }).start();
 
@@ -144,8 +143,8 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
         moreSpread_tv.setOnClickListener(this);
     }
 
-    private void initAdapterData(View view) {
-        hsvAdapter = new HSVAdapter(view.getContext());
+    private void initAdapterData() {
+        hsvAdapter = new HSVAdapter(MyHomeFragment.this.getContext());
         for (int i = 0; i < images.length; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("image", images[i]);
@@ -153,9 +152,9 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
             map.put("index", (i+1));//代表第张图片，而数组从零开始计数
             hsvAdapter.addObjectItem(map);
         }
-        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,200,200);
-        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,200,200);
-        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE,200,200);
+        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,220,120);//第三个参数和第四个参数分别为宽和高
+        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,220,120);
+        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE,220,120);
 
     }
 
@@ -176,6 +175,9 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     }
 }
 
+/**
+ * 通过广播来实现轮播的自动刷新
+ */
 class UpdateImageReceiver extends BroadcastReceiver {
 
     @Override
