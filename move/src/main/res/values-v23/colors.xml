@@ -4,6 +4,7 @@
     <color name="software_loginTextColor_unselected">#00aaff</color>
     <color name="software_registerTextColor_selected">#00aaff</color>
     <color name="software_registerTextColor_unselected">#FFFFFF</color>
+    <color name="divider_view_color">#d9d9d9</color>
     <color name="swipe_color_1">#B6DB49</color>
     <color name="swipe_color_2">#99CC00</color>
     <color name="swipe_color_3">#8ABD00</color>

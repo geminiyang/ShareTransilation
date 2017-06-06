@@ -30,7 +30,17 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="2dp"
                 />
+            <View
+                android:id="@+id/divider_view"
+                android:layout_width="0.8dp"
+                android:layout_height="23dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/ic_arrow_back"
+                android:background="@color/divider_view_color"
+                />
             <EditText
+                android:layout_toEndOf="@+id/divider_view"
                 android:id="@+id/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,7 +48,7 @@
                 android:hint="  搜索添加或关注、好友、商户"
                 android:textColor="@color/colorPrimary"
                 android:layout_centerInParent="true"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginEnd="20dp"
                 android:textSize="14sp"
                 android:drawableBottom="@drawable/template_divider_selector"

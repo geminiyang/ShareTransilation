@@ -10,7 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 public class KeyBoardUtils {
 
     /**
-     * 隐藏键盘
+     * 隐藏键盘（输入法）
      * @param context
      * @param view
      */
@@ -21,7 +21,7 @@ public class KeyBoardUtils {
     }
 
     /**
-     * 显示键盘
+     * 显示键盘 （输入法）
      * @param context
      * @param view
      */

@@ -115,7 +115,7 @@ public class UserChatActivity extends BaseActivity {
         iv_emoji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                inputText.clearFocus();
                 if (emoji_group.getVisibility()==View.GONE) {
                     iv_emoji.setImageResource(R.mipmap.chatting_setmode_keyboard_btn_normal);
                     emoji_group.setVisibility(View.VISIBLE);
@@ -272,6 +272,11 @@ public class UserChatActivity extends BaseActivity {
             if (keyCode == KeyEvent.KEYCODE_ENTER
                     && event.getAction() == KeyEvent.ACTION_DOWN) {
                 sendMessage();
+                return true;
+            } else if(keyCode == KeyEvent.ACTION_DOWN) {
+                if (emoji_group.getVisibility()==View.VISIBLE) {
+                    emoji_group.setVisibility(View.GONE);
+                }
                 return true;
             }
             return false;

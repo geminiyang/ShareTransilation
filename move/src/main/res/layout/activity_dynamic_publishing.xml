@@ -26,18 +26,28 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@drawable/ic_arrow_back_white_24dp"
-                android:backgroundTint="@color/white"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="2dp"
                 />
+            <View
+                android:id="@+id/divider_view"
+                android:layout_width="0.8dp"
+                android:layout_height="23dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/ic_arrow_back"
+                android:background="@color/divider_view_color"
+                />
             <TextView
+                android:layout_toEndOf="@+id/divider_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="动态发布"
+                android:layout_marginStart="15sp"
                 android:textColor="@color/white"
-                android:layout_centerInParent="true"
-                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:textSize="19sp"
                 />
             <Button
                 android:id="@+id/publish_dynamic"
@@ -47,7 +57,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="16dp"
                 android:text="发送"
-                android:textColor="@color/black"
+                android:textColor="@color/_grey"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/corner_button_template_send"
                 />

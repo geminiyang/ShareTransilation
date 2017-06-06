@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,10 +34,14 @@ import android.widget.Toast;
 
 import com.idear.move.R;
 import com.idear.move.util.FileSaveUtil;
+import com.idear.move.util.ImageCheckoutUtil;
+import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +55,10 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
     // 更新显示当前值的TextView
     private EditText personNum,moneyAmount;
     //图片选择控件
+    private static final int TAKE_PICTURE = 100;
+    private static final int SELECT_PICTURE = 101;
+    private static final int IMAGE_SIZE = 100 * 1024;// 300kb
+    private File mCurrentPhotoFile;
     private ImageView pic;
     private FrameLayout fl_bg_pan;
 
@@ -67,6 +76,7 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
     private boolean CAN_WRITE_EXTERNAL_STORAGE = true;
     private static final int SDK_PERMISSION_REQUEST = 127;
     private String camPicPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +184,7 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         Uri uri = Uri.fromFile(new File(camPicPath));
                         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//所拍的照保存在指定路径
-                        startActivity(openCameraIntent);
+                        startActivityForResult(openCameraIntent,TAKE_PICTURE);
                     } else {
                         ToastUtil.getInstance().showToast(PublishRFActivity.this,"请检查内存卡");
                     }
@@ -185,7 +195,6 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
         contentView.findViewById(R.id.ll_layer_select).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.getInstance().showToastTest(v.getContext());
                 //添加选取相册图片功能
                 if (!CAN_WRITE_EXTERNAL_STORAGE) {
                     ToastUtil.getInstance().showToast(PublishRFActivity.this,"权限未开通\n请到设置中开通相册权限");
@@ -204,7 +213,7 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                             intent.putExtra("scaleUpIfNeeded", true);
                         }
                         intent.setType("image/*");
-                        startActivity(intent);
+                        startActivityForResult(intent,SELECT_PICTURE);
                     } else {
                         ToastUtil.getInstance().showToast(PublishRFActivity.this,"没有SD卡");
                     }
@@ -358,6 +367,89 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         currentNum = newVal;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            //操作成功后处理
+            switch (requestCode) {
+                case TAKE_PICTURE:
+                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"TAKE_PICTURE");
+                    FileInputStream is = null;
+                    try {
+                        is = new FileInputStream(camPicPath);
+                        File camFile = new File(camPicPath); // 图片文件路径
+                        if (camFile.exists()) {
+                            int size = ImageCheckoutUtil
+                                    .getImageSize(ImageCheckoutUtil.getLoacalBitmap(camPicPath));
+                            if (size > IMAGE_SIZE) {
+                                //showDialog(camPicPath);
+                            } else {
+                                //sendImage(camPicPath);
+                            }
+                        } else {
+                            ToastUtil.getInstance().showToast(PublishRFActivity.this,"该文件不存在");
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } finally {
+                        // 关闭流
+                        try {
+                            if (is != null) {
+                                is.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                case SELECT_PICTURE:
+                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"SELECT_PICTURE");
+                    Uri uri = data.getData();
+                    String path = FileSaveUtil.getPath(getApplicationContext(), uri);
+                    mCurrentPhotoFile = new File(path); // 图片文件路径
+                    if (mCurrentPhotoFile.exists()) {
+                        int size = ImageCheckoutUtil.getImageSize(ImageCheckoutUtil.getLoacalBitmap(path));
+                        if (size > IMAGE_SIZE) {
+                            //showDialog(path);
+                        } else {
+                            //sendImage(path);
+                        }
+                    } else {
+                        ToastUtil.getInstance().showToast(PublishRFActivity.this,"该文件不存在");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+            //操作取消
+        }
+    }
+
+    //图片的后续操作
+    private void showDialog(final String path) {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    String GalPicPath = getSavePicPath();
+                    Bitmap bitmap = PictureUtil.compressSizeImage(path);
+                    boolean isSave = FileSaveUtil.saveBitmap(
+                            PictureUtil.reviewPicRotate(bitmap, GalPicPath),
+                            GalPicPath);
+                    File file = new File(GalPicPath);
+                    if (file.exists() && isSave) {
+                        //图片的操作
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     /**
