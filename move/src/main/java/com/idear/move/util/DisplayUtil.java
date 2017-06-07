@@ -1,11 +1,11 @@
 package com.idear.move.util;
 
-/**
- * Created by user on 2017/5/12.
- */
-
 import android.content.Context;
 
+/**
+ * 单位转换工具类
+ * Created by user on 2017/5/12.
+ */
 public class DisplayUtil {
     public static int dip2px(Context context, float dipValue){
         final float scale = context.getResources().getDisplayMetrics().density;

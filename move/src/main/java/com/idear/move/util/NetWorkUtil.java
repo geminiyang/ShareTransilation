@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
+ * 网络管理工具类
  * Created by user on 2017/5/10.
  */
 

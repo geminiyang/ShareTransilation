@@ -8,7 +8,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+/**
+ * 线程池工具类
+ */
 public class ThreadPoolUtils {
     //线程池核心线程数
     private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();

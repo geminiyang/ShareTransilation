@@ -28,6 +28,7 @@ import android.view.Gravity;
 
 /**
  * Utility methods for creating prettier gradient scrims.
+ * 颜色渐变的工具类
  */
 public class ScrimUtil {
 

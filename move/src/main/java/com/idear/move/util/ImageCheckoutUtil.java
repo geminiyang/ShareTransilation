@@ -51,7 +51,7 @@ public class ImageCheckoutUtil {
             byte[] data = out.toByteArray();
 
             BitmapFactory.Options opts = new BitmapFactory.Options();
-            opts.inSampleSize = 4;
+            opts.inSampleSize = 2;
             return BitmapFactory.decodeByteArray(data, 0, data.length, opts);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

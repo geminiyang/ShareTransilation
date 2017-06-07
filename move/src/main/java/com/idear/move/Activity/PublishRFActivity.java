@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.idear.move.R;
+import com.idear.move.util.DisplayUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ImageCheckoutUtil;
 import com.idear.move.util.PictureUtil;
@@ -61,7 +63,7 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
     //图片选择控件
     private static final int TAKE_PICTURE = 100;
     private static final int SELECT_PICTURE = 101;
-    private static final int IMAGE_SIZE = 75 * 1024;// 300kb,受载入4096×4096图片限制，与工具类的缩放比例对应
+    private static final int IMAGE_SIZE = 100 * 1024;// 100kb,受载入4096×4096图片限制，与工具类的缩放比例对应
     private static final int SHOW_IMAGE = 102;
     private File mCurrentPhotoFile;
     private ImageView pic;
@@ -263,7 +265,7 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String fileName = String.valueOf(System.currentTimeMillis() + ".png");
+        String fileName = String.valueOf(System.currentTimeMillis() + ".jpg");
         final String[] str = {dir,fileName};
         return str;
     }
@@ -398,6 +400,7 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                             int size = ImageCheckoutUtil.getImageSize(
                                     ImageCheckoutUtil.getLocalBitmap(camPicPath));
                             if (size > IMAGE_SIZE) {
+                                //压缩处理
                                 imageShow.setScaleType(ImageView.ScaleType.CENTER_CROP);
                                 compressPicture(camPicPath);
                             } else {
@@ -465,7 +468,8 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                     String str[] = getSavePicPath();
                     String GalPicPath = str[0] + str[1];//获取文件保存路径
                     Bitmap bitmap = PictureUtil.compressSizeImage(path,
-                            (float)imageShow.getWidth(),(float)imageShow.getHeight());//图片压缩处理具体逻辑
+                            imageShow.getWidth(), imageShow.getHeight()
+                    );//图片压缩处理具体逻辑
                     //判断图像是否有90度旋转
                     boolean isSave = FileSaveUtil.saveBitmap(
                             PictureUtil.reviewPicRotate(bitmap, str[0]+str[1]),

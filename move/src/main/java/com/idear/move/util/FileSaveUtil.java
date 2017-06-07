@@ -208,7 +208,7 @@ public class FileSaveUtil {
         try {
             File f = getFilePath(path,filename);
             FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.PNG, 100, out);
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.flush();
             out.close();
             return true;
