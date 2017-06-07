@@ -13,8 +13,7 @@ import java.io.IOException;
 
 public class ImageCheckoutUtil {
     /**
-     * 检测图片内存大小
-     *
+     * 检测bitmap图片内存大小(单位字节)
      * @param data
      * @return
      */
@@ -27,7 +26,12 @@ public class ImageCheckoutUtil {
         }
     }
 
-    public static Bitmap getLoacalBitmap(String url) {
+    /**
+     * 获取本地路径中的图片变为bitmap
+     * @param url
+     * @return
+     */
+    public static Bitmap getLocalBitmap(String url) {
         try {
             ByteArrayOutputStream out;
             FileInputStream fis = new FileInputStream(url);
@@ -45,9 +49,9 @@ public class ImageCheckoutUtil {
             fis.close();
             bis.close();
             byte[] data = out.toByteArray();
-            // 长宽减半
+
             BitmapFactory.Options opts = new BitmapFactory.Options();
-            opts.inSampleSize = 3;
+            opts.inSampleSize = 4;
             return BitmapFactory.decodeByteArray(data, 0, data.length, opts);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -32,8 +32,7 @@ public class FileSaveUtil {
     public static final String SD_CARD_PATH =
             Environment.getExternalStorageDirectory().toString() + "/MOVE/";
 
-    public static final String voice_dir = SD_CARD_PATH
-            + "/voice_data/";
+    public static final String voice_dir = SD_CARD_PATH + "/voice_data/";
 
     /**
      * SD卡是否存在
@@ -94,12 +93,14 @@ public class FileSaveUtil {
      *
      * @throws IOException
      */
-    public static File createSDDirectory(String fileName) throws IOException {
-        File file = new File(fileName);
-        if (!isFileExists(file))
+    public static File createSDCardDirectory(String filePath) throws IOException {
+        File file = new File(filePath);
+        if (!isFileExists(file)) {
             file.mkdirs();
+        }
         return file;
     }
+
 
     public synchronized static boolean writeBytes(String filePath, byte[] data, boolean isAppend) {
         try {
@@ -136,10 +137,8 @@ public class FileSaveUtil {
                 sb.append(str);
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return sb.toString();
@@ -205,12 +204,9 @@ public class FileSaveUtil {
         return dirFile.delete();
     }
 
-    public static boolean saveBitmap(Bitmap bm, String picName) {
+    public static boolean saveBitmap(Bitmap bm, String path,String filename) {
         try {
-            File f = new File(picName);
-            if (f.exists()) {
-                f.delete();
-            }
+            File f = getFilePath(path,filename);
             FileOutputStream out = new FileOutputStream(f);
             bm.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
@@ -222,6 +218,35 @@ public class FileSaveUtil {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    /**
+     * 先创建文件路径，然后再创建文件名路径,open failed: ENOENT (No such file or directory).
+     * @param filePath
+     * @param fileName
+     * @return
+     */
+    public static File getFilePath(String filePath, String fileName) {
+        File file = null;
+        makeRootDirectory(filePath);
+        try {
+            file = new File(filePath + fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public static void makeRootDirectory(String filePath) {
+        File file = null;
+        try {
+            file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -262,8 +287,7 @@ public class FileSaveUtil {
                 final String[] split = docId.split(":");
                 final String type = split[0];
                 if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/"
-                            + split[1];
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
             }
             // DownloadsProvider

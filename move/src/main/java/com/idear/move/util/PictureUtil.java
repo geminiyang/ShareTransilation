@@ -18,8 +18,8 @@ public class PictureUtil {
 	 * 计算图片的缩放值
 	 * 
 	 * @param options
-	 * @param reqWidth
-	 * @param reqHeight
+	 * @param reqWidth 申请压缩的宽
+	 * @param reqHeight 申请压缩的高
 	 * @return
 	 */
 	public static int calculateInSampleSize(BitmapFactory.Options options,
@@ -31,19 +31,12 @@ public class PictureUtil {
 
 		if (height > reqHeight || width > reqWidth) {
 
-			// Calculate ratios of height and width to requested height and
-			// width
-			final int heightRatio = Math.round((float) height
-					/ (float) reqHeight);
+			// 计算出缩放比例为 宽高比例中的较小值
+			final int heightRatio = Math.round((float) height / (float) reqHeight);
 			final int widthRatio = Math.round((float) width / (float) reqWidth);
 
-			// Choose the smallest ratio as inSampleSize value, this will
-			// guarantee
-			// a final image with both dimensions larger than or equal to the
-			// requested height and width.
 			inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
 		}
-
 		return inSampleSize;
 	}
 
@@ -55,61 +48,108 @@ public class PictureUtil {
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(filePath, options);
-
-		// Calculate inSampleSize
+        //计算缩放比例
 		options.inSampleSize = calculateInSampleSize(options, 320, 480);
-
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
-
 		return BitmapFactory.decodeFile(filePath, options);
 	}
-	
+
+    /**
+     * 压缩图片自定义压缩比
+     * @param srcPath
+     * @param reqHeight
+     * @param reqWidth
+     * @return
+     */
+    public static Bitmap compressSizeImage(String srcPath,float reqHeight,float reqWidth) {
+        Bitmap bitmap = null;
+        BitmapFactory.Options newOpts = new BitmapFactory.Options();
+        //开始读入图片，此时把options.inJustDecodeBounds 设回true了
+        newOpts.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空
+
+        newOpts.inJustDecodeBounds = false;
+        int width = newOpts.outWidth;
+        int height= newOpts.outHeight;
+        //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
+        int scale = 1;//scale=1表示不缩放
+
+        if (height > reqHeight || width > reqWidth) {
+            //计算图片高度和我们需要高度的最接近比例值
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            //宽度比例值
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            //取比例值中的较大值作为inSampleSize
+            scale = heightRatio > widthRatio ? heightRatio : widthRatio;
+        }
+
+        newOpts.inSampleSize = scale;//设置缩放比例
+        //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
+        bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
+    }
+
 	/**
 	 * 压缩大图片
 	 * @param srcPath
 	 * @return
 	 */
-	public static Bitmap compressSizeImage(String srcPath) {  
+	public static Bitmap compressSizeImage(String srcPath) {
+        Bitmap bitmap = null;
         BitmapFactory.Options newOpts = new BitmapFactory.Options();  
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了  
-        newOpts.inJustDecodeBounds = true;  
-        Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空  
+        newOpts.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空
           
         newOpts.inJustDecodeBounds = false;  
-        int w = newOpts.outWidth;  
-        int h = newOpts.outHeight;  
-        //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为  
-        float hh = 800f;//这里设置高度为800f  
-        float ww = 480f;//这里设置宽度为480f  
+        int width = newOpts.outWidth;
+        int height= newOpts.outHeight;
+        //分辨率，所以高和宽我们设置为
+        float reqHeight = 800f;
+        float reqWidth = 480f;
         //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可  
-        int be = 1;//be=1表示不缩放  
-        if (w > h && w > ww) {//如果宽度大的话根据宽度固定大小缩放  
-            be = (int) (newOpts.outWidth / ww);  
-        } else if (w < h && h > hh) {//如果高度高的话根据宽度固定大小缩放  
-            be = (int) (newOpts.outHeight / hh);  
-        }  
-        if (be <= 0)  
-            be = 1;  
-        newOpts.inSampleSize = be;//设置缩放比例  
+        int scale = 1;//scale=1表示不缩放
+
+        if (height > reqHeight || width > reqWidth) {
+            //计算图片高度和我们需要高度的最接近比例值
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            //宽度比例值
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            //取比例值中的较大值作为inSampleSize
+            scale = heightRatio > widthRatio ? heightRatio : widthRatio;
+        }
+
+        newOpts.inSampleSize = scale;//设置缩放比例
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了  
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);  
         return compressImage(bitmap);//压缩好比例大小后再进行质量压缩  
     }  
-	
-	public static Bitmap compressImage(Bitmap image) {  
+
+    /**
+	 * 图片质量压缩
+     */
+	public static Bitmap compressImage(Bitmap bitmap) {
 		  
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中  
-        int options = 100;  
-        while ( baos.toByteArray().length / 1024>100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩         
-            baos.reset();//重置baos即清空baos  
-            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中  
-            options -= 10;//每次都减少10  
-        }  
-        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中  
-        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片  
-        return bitmap;  
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int beginRate = 100;
+		//第一个参数 ：图片格式 ，第二个参数： 图片质量，100为最高，0为最差  ，第三个参数：保存压缩后的数据的流
+		bitmap.compress(Bitmap.CompressFormat.JPEG, beginRate, baos);
+        while ( baos.toByteArray().length / 1024  > 100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+			beginRate -= 10;//每次都减少10
+			baos.reset();//重置baos即清空baos
+            bitmap.compress(Bitmap.CompressFormat.JPEG, beginRate, baos);//这里压缩beginRate%，把压缩后的数据存放到baos中
+
+        }
+        //把压缩后的数据baos存放到ByteArrayInputStream中
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
+        //把ByteArrayInputStream数据生成图片
+        Bitmap newBitmap = BitmapFactory.decodeStream(isBm);
+        if (newBitmap!=null) {
+            return newBitmap;
+        } else {
+            return bitmap;
+        }
     }  
 	
 	 /** 
@@ -117,8 +157,8 @@ public class PictureUtil {
 	 * @param bitmap 需要旋转的图片 
 	 * @param path   图片的路径 
 	 */  
-	public static Bitmap reviewPicRotate(Bitmap bitmap,String path){  
-	    int degree = getPicRotate(path);  
+	public static Bitmap reviewPicRotate(Bitmap bitmap,String path){
+	    int degree = getPicRotate(path);
 	    if(degree!=0){  
 	        Matrix m = new Matrix();    
 	        int width = bitmap.getWidth();    
@@ -134,10 +174,10 @@ public class PictureUtil {
 	 * @param path 图片绝对路径 
 	 * @return 图片旋转的角度 
 	 */  
-	public static int getPicRotate(String path) {  
+	public static int getPicRotate(String path) {
 	    int degree  = 0;  
 	    try {  
-	        ExifInterface exifInterface = new ExifInterface(path);  
+	        ExifInterface exifInterface = new ExifInterface(path);
 	        int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);  
 	        switch (orientation) {  
 	        case ExifInterface.ORIENTATION_ROTATE_90:  
