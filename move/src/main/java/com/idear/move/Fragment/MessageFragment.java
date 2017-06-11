@@ -80,8 +80,8 @@ public class MessageFragment extends Fragment implements
 
         mTabLayout.addOnTabSelectedListener(this);
 
-        mTabLayout.getTabAt(0).setText("房间");//自有方法添加icon
-        mTabLayout.getTabAt(1).setText("私聊");
+        mTabLayout.getTabAt(0).setText("私聊");//自有方法添加icon
+        mTabLayout.getTabAt(1).setText("房间");
 
         //设置下划线的长度
         mTabLayout.post(new Runnable() {

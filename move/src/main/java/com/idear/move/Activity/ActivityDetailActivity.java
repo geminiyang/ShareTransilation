@@ -1,58 +1,48 @@
 package com.idear.move.Activity;
 
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.idear.move.Fragment.MyFragment;
 import com.idear.move.R;
+import com.idear.move.util.ToastUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ActivityDetailActivity extends BaseActivity implements
-                                                        TabLayout.OnTabSelectedListener {
+public class ActivityDetailActivity extends BaseActivity {
 
     private static final String TAG = "info";
-    private ViewPager mViewPager;
-    private TabLayout mTabLayout;
 
-    private MyFragment f1,f2;
-
-    private FragmentPagerAdapter mAdapter;
-    private List<Fragment> mTabs = new ArrayList<Fragment>();
-
+    private Toolbar toolbar;
     private ImageView iv_back;
+    private Button takePartInActivity;
 
+    private CollapsingToolbarLayoutState state;
+
+    private enum CollapsingToolbarLayoutState {
+        EXPANDED,
+        COLLAPSED,
+        INTERNEDIATE
+    }
     private NestedScrollView nestedScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TranslucentStatusSetting.setTranslucentStatusSetting(this,getResources().getColor(R.color.title_bar_blue));
+        TranslucentStatusSetting.setTranslucentStatusSetting(this,getResources().getColor(R.color.transparent));
         setContentView(R.layout.activity_activity_detail);
 
         initToolBar();
-        initData();
         initView();
         initEvent();
     }
@@ -66,8 +56,13 @@ public class ActivityDetailActivity extends BaseActivity implements
             }
         });
 
-        final CollapsingToolbarLayout collapsing_toolbar_layout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
-        collapsing_toolbar_layout.setTitle("");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final CollapsingToolbarLayout collapsing_toolbar_layout = (CollapsingToolbarLayout)
+                findViewById(R.id.collapsing_toolbar_layout);
+        collapsing_toolbar_layout.setTitle("具体活动");
+        collapsing_toolbar_layout.setExpandedTitleGravity(Gravity.CENTER);
         collapsing_toolbar_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
         collapsing_toolbar_layout.setExpandedTitleColor(getResources().getColor(R.color.blue_light));
 
@@ -76,13 +71,30 @@ public class ActivityDetailActivity extends BaseActivity implements
         app_bar_layout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                Log.e("APP","appBarLayoutHeight:"+appBarLayout.getHeight()+" getTotalScrollRange:"+appBarLayout.getTotalScrollRange()+" offSet:"+verticalOffset);
-                if(Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                int scrollRange = appBarLayout.getTotalScrollRange();
+                if (verticalOffset == 0) {
+                    if (state != CollapsingToolbarLayoutState.EXPANDED) {
+                        state = CollapsingToolbarLayoutState.EXPANDED;//修改状态标记为展开
+                        //(expanded)
+                        if(takePartInActivity.getVisibility()==View.GONE) {
+                            takePartInActivity.setVisibility(View.VISIBLE);
+                        }
+                    }
+                } else if (Math.abs(verticalOffset) >= scrollRange) {
+                    if (state != CollapsingToolbarLayoutState.COLLAPSED) {
+                        state = CollapsingToolbarLayoutState.COLLAPSED;//修改状态标记为折叠
+                    }
                     //当向下滑动超过一定距离时(达到collapsed状态）
-                    //toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-                    collapsing_toolbar_layout.setTitle("具体活动(collapsed)");
-                }else{
-                    collapsing_toolbar_layout.setTitle("具体活动(expanded)");
+                    if(takePartInActivity.getVisibility()==View.VISIBLE) {
+                        takePartInActivity.setVisibility(View.GONE);
+                    }
+                } else {
+                    if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
+                        if(state == CollapsingToolbarLayoutState.COLLAPSED){
+
+                        }
+                        state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
+                    }
                 }
             }
         });
@@ -91,67 +103,24 @@ public class ActivityDetailActivity extends BaseActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "你已将该活动标记为喜欢", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
     }
-    private void initData() {
-        if(f1==null) {
-            f1 = MyFragment.newInstance("详情");
-        }
-        if(f2==null){
-            f2 = MyFragment.newInstance("反馈");
-        }
-        mTabs.add(f1);
-        mTabs.add(f2);
-
-        //要关注如何更新其中的数据
-        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public int getCount() {
-                return mTabs.size();
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                return mTabs.get(position);
-            }
-        };
-    }
     private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-
         nestedScrollView = (NestedScrollView) findViewById(R.id.my_nested_scrollview);
-
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(0);
-
-        mTabLayout.setupWithViewPager(mViewPager);
-        //TabLayout.MODE_SCROLLABLE和TabLayout.MODE_FIXED分别表示当tab的内容超过屏幕宽度是否支持横向水平滑动
-        //第一种支持滑动，第二种不支持，默认不支持水平滑动。
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-
-        mTabLayout.addOnTabSelectedListener(this);
-
-        mTabLayout.getTabAt(0).setText("详情");//自有方法添加icon
-        mTabLayout.getTabAt(1).setText("反馈");
-
-
-        //设置下划线的长度
-        mTabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                setIndicator(mTabLayout, 30, 30);
-            }
-        });
+        takePartInActivity = (Button) findViewById(R.id.takePartInActivity);
     }
 
     private void initEvent() {
 
-        final LinearLayout one = (LinearLayout) findViewById(R.id.container_ll_one);
-        final LinearLayout two = (LinearLayout) findViewById(R.id.container_ll_two);
+        takePartInActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.getInstance().showToastTest(ActivityDetailActivity.this);
+            }
+        });
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -166,88 +135,14 @@ public class ActivityDetailActivity extends BaseActivity implements
 
                 if (scrollY == 0) {
                     Log.i(TAG, "TOP SCROLL");
-                    if(mTabLayout.getParent()!=one) {
-                        two.removeView(mTabLayout);
-                        one.addView(mTabLayout,0);
-                    }
                 }
 
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     Log.i(TAG, "BOTTOM SCROLL");
-                    //当其滑到指定长度，将其父容器置换
-                    if(mTabLayout.getParent()!=two) {
-                        one.removeView(mTabLayout);
-                        two.addView(mTabLayout);
-                    }
+
                 }
 
             }
         });
-    }
-
-    /**
-     * 利用反射的方法来设置 每一个tab的大小
-     * @param tabs
-     * @param leftDip
-     * @param rightDip
-     */
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        //将px转换成dp
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip,
-                Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip,
-                Resources.getSystem().getDisplayMetrics());
-
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
-                    (0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
-
-
-    }
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        int position = tab.getPosition();
-        switch (position) {
-            case 0:
-                mViewPager.setCurrentItem(0,false);
-                break;
-            case 1:
-                mViewPager.setCurrentItem(1,false);
-                break;
-        }
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
     }
 }

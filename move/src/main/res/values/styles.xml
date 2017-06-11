@@ -53,19 +53,30 @@
     </style>
 
     <!--自定义的带下划线的TapLayout-->
+    <style name="MyCustomAppBarTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabMaxWidth">300dp</item>
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabIndicatorHeight">4dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabBackground">@color/blue_light</item>
+        <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+    </style>
+    <!--自定义的带下划线的TapLayout-->
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabMaxWidth">300dp</item>
-        <item name="tabIndicatorColor">@color/black</item>
+        <item name="tabIndicatorColor">@color/white</item>
         <item name="tabIndicatorHeight">4dp</item>
         <item name="tabPaddingStart">12dp</item>
         <item name="tabPaddingEnd">12dp</item>
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
-        <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+        <item name="tabSelectedTextColor">@color/white</item>
     </style>
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textColor">#e0e0e0</item>
         <item name="textAllCaps">true</item>
     </style>
 

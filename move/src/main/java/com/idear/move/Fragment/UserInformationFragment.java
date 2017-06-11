@@ -48,10 +48,9 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private GridView gridView;//网格视图
     private List<Map<String, Object>> data_list;//数据源
     private SimpleAdapter simple_adapter;//适配器
-    private int[] icon = { R.mipmap.takepart, R.mipmap.orgnize,
-            R.mipmap.trends,R.mipmap.feedback};
+    private int[] icon = { R.mipmap.takepart, R.mipmap.trends,R.mipmap.feedback};
 
-    private String[] iconName={ "我的参与", "我的发起", "我的动态", "我的反馈"};
+    private String[] iconName={ "我的参与", "我的动态", "我的反馈"};
 
     public static UserInformationFragment newInstance(String arg){
         UserInformationFragment fragment = new UserInformationFragment();
@@ -127,7 +126,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
                 toast.setGravity(Gravity.CENTER,0,0);
                 toast.show();
                 switch (position) {
-                    case 1:
+                    case 0:
                         IntentSkipUtil.skipToNextActivity(getActivity(),MyInitiateActivity.class);
                         break;
                 }

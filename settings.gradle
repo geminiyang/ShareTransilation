@@ -1,1 +1,1 @@
-include ':app', ':loadermanager', ':notificationanalyse', ':swipebacklayouttest', ':myutillibrary', ':move', ':horizonalscrollviewtest', ':asynstasktest', ':recyclerviewtest', ':glidetest'
+include ':app', ':loadermanager', ':notificationanalyse', ':swipebacklayouttest', ':myutillibrary', ':move', ':horizonalscrollviewtest', ':asynstasktest', ':recyclerviewtest', ':glidetest', ':SqliteTest'

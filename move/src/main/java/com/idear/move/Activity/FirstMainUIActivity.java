@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,8 +77,10 @@ public class FirstMainUIActivity extends BaseActivity implements
     private TextView tv1,tv2,tv3;
 
     //toolBar相关参数
-    private ImageView iv_search,iv_more_op;
+    private ImageView iv_more_op,searchImageView;
     private TextView logo,titleText;
+    private EditText searchEditText;
+    private FrameLayout searchView;
     private int menu_position = 0;//实现随位置变化actionBar变化所需的标记
 
     @Override
@@ -148,8 +151,10 @@ public class FirstMainUIActivity extends BaseActivity implements
         logo = (TextView) findViewById(R.id.logo);
         titleText = (TextView) findViewById(R.id.title_text);
         //toolbar上按钮的操作
-        iv_search = (ImageView) findViewById(R.id.iv_search);
         iv_more_op = (ImageView) findViewById(R.id.iv_more_op);
+        searchView = (FrameLayout) findViewById(R.id.fl_search);
+        searchEditText = (EditText) findViewById(R.id.et_search);
+        searchImageView = (ImageView) findViewById(R.id.iv_search);
     }
 
     private void initEvent() {
@@ -181,11 +186,17 @@ public class FirstMainUIActivity extends BaseActivity implements
             }
         });
 
-        iv_search.setOnClickListener(new View.OnClickListener() {
+        searchImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转到一个搜索界面
-                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,SearchActivity.class);
+                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,UserSearchActivity.class);
+            }
+        });
+
+        searchEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,UserSearchActivity.class);
             }
         });
 
@@ -389,18 +400,18 @@ public class FirstMainUIActivity extends BaseActivity implements
                 mViewPager.setCurrentItem(0, false);
                 titleText.setVisibility(View.GONE);
                 logo.setVisibility(View.VISIBLE);
-                iv_search.setVisibility(View.VISIBLE);
-                iv_more_op.setVisibility(View.INVISIBLE);
+                iv_more_op.setVisibility(View.GONE);
                 toolbar.setVisibility(View.VISIBLE);
+                searchView.setVisibility(View.VISIBLE);
                 break;
             case R.id.msg:
                 mViewPager.setCurrentItem(1, false);
                 titleText.setVisibility(View.VISIBLE);
                 titleText.setText("消息");
                 logo.setVisibility(View.GONE);
-                iv_search.setVisibility(View.INVISIBLE);
                 iv_more_op.setVisibility(View.VISIBLE);
                 toolbar.setVisibility(View.GONE);
+                searchView.setVisibility(View.GONE);
                 break;
 
             case R.id.dynamic:
@@ -408,9 +419,9 @@ public class FirstMainUIActivity extends BaseActivity implements
                 titleText.setVisibility(View.VISIBLE);
                 titleText.setText("动态");
                 logo.setVisibility(View.GONE);
-                iv_search.setVisibility(View.INVISIBLE);
                 iv_more_op.setVisibility(View.VISIBLE);
-                toolbar.setVisibility(View.VISIBLE);
+                toolbar.setVisibility(View.GONE);
+                searchView.setVisibility(View.GONE);
                 break;
             case R.id.my:
                 mViewPager.setCurrentItem(3, false);
@@ -418,9 +429,9 @@ public class FirstMainUIActivity extends BaseActivity implements
                 titleText.setVisibility(View.VISIBLE);
                 titleText.setText("我的信息");
                 logo.setVisibility(View.GONE);
-                iv_search.setVisibility(View.INVISIBLE);
-                iv_more_op.setVisibility(View.INVISIBLE);
+                iv_more_op.setVisibility(View.GONE);
                 toolbar.setVisibility(View.VISIBLE);
+                searchView.setVisibility(View.GONE);
                 break;
         }
         invalidateOptionsMenu();
@@ -441,33 +452,33 @@ public class FirstMainUIActivity extends BaseActivity implements
             case 0:
                 mViewPager.setCurrentItem(0, false);
                 home.setChecked(true);
-                iv_search.setVisibility(View.VISIBLE);
-                iv_more_op.setVisibility(View.INVISIBLE);
+                iv_more_op.setVisibility(View.GONE);
                 toolbar.setVisibility(View.VISIBLE);
+                searchView.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 mViewPager.setCurrentItem(1, false);
                 msg.setChecked(true);
-                iv_search.setVisibility(View.INVISIBLE);
                 iv_more_op.setVisibility(View.VISIBLE);
                 //平移控件
                 //toolbar.animate().translationY(-30);
                 toolbar.setVisibility(View.GONE);
+                searchView.setVisibility(View.GONE);
                 break;
             case 2:
                 mViewPager.setCurrentItem(2, false);
                 dynamic.setChecked(true);
-                iv_search.setVisibility(View.INVISIBLE);
                 iv_more_op.setVisibility(View.VISIBLE);
-                toolbar.setVisibility(View.VISIBLE);
+                toolbar.setVisibility(View.GONE);
+                searchView.setVisibility(View.GONE);
                 break;
             case 3:
                 mViewPager.setCurrentItem(3, false);
                 my.setChecked(true);
                 my.setTipOn(false);
-                iv_search.setVisibility(View.INVISIBLE);
-                iv_more_op.setVisibility(View.INVISIBLE);
+                iv_more_op.setVisibility(View.GONE);
                 toolbar.setVisibility(View.VISIBLE);
+                searchView.setVisibility(View.GONE);
                 break;
         }
     }

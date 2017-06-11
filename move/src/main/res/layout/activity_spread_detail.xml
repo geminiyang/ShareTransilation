@@ -5,18 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:clipToPadding="false"
+    android:fitsSystemWindows="false">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height">
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="false"
+        >
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/blue_light"
+            android:fitsSystemWindows="false"
+            app:contentScrim="@color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <ImageView
                 android:layout_width="match_parent"
@@ -24,10 +28,24 @@
                 android:scaleType="centerCrop"
                 android:src="@mipmap/cocacola"
                 app:layout_collapseMode="parallax"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/scrim_gradient"
+                android:fitsSystemWindows="false"
+                />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@color/transparent"
+                style="@style/MyCustomTabLayout">
+            </android.support.design.widget.TabLayout>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="90dp"
                 app:titleTextColor="@color/white"
                 app:layout_collapseMode="pin" >
                 <RelativeLayout
@@ -38,7 +56,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_arrow_back_white_24dp"
-                        android:backgroundTint="@color/white"
                         android:layout_centerVertical="true"
                         android:layout_alignParentStart="true"
                         />
@@ -70,7 +87,8 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="true"
+        android:fitsSystemWindows="false"
+        android:clipToPadding="false"
         android:background="@color/light_grey"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -84,58 +102,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:layout_marginTop="@dimen/text_margin"
-                android:paddingTop="@dimen/text_margin"
-                android:paddingStart="@dimen/text_margin"
-                android:paddingEnd="@dimen/text_margin"
+                android:divider="@drawable/template_divider_horizontal_grey"
+                android:showDividers="middle|end"
+                android:dividerPadding="0dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/blue_light"
                     android:textSize="18sp"
                     android:text="公司简介:" />
-                <TextView
-                    android:layout_marginTop="@dimen/text_margin"
+                <com.idear.move.myWidget.MySpannableTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="20"
+                    android:maxLines="10"
+                    android:padding="@dimen/text_margin"
                     android:text="可口可乐公司(The Coca-Cola Company)成立于1886年5月8日，总部设在美国佐治亚州(Georgia, 简称GA)的亚特兰大，是全球最大的饮料公司，拥有全球48%市场占有率以及全球前三大饮料的二项（可口可乐排名第一，百事可乐第二，低热量可口可乐第三）,可口可乐在200个国家拥有160种饮料品牌，包括汽水、运动饮料、乳类饮品、果汁、茶和咖啡，亦是全球最大的果汁饮料经销商（包括Minute Maid品牌），在美国排名第一的可口可乐为其取得超过40%的市场占有率，而雪碧(Sprite)则是成长最快的饮料，其它品牌包括伯克(Barq)的root beer（沙士）" />
                 <TextView
-                    android:layout_margin="@dimen/text_margin"
+
+                    android:layout_marginStart="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue_light"
                     android:text="点击链接查看详情..." />
             </LinearLayout>
-
-            <FrameLayout
-                android:padding="3dp"
-                android:layout_marginTop="@dimen/text_margin"
-                android:id="@+id/tab_layout_fl"
-                android:background="@color/white"
-                android:layout_gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tab_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    style="@style/MyCustomTabLayout">
-                </android.support.design.widget.TabLayout>
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="25dp"
-                    android:background="@color/blue_light"
-                    android:layout_gravity="center"
-                    />
-            </FrameLayout>
             <android.support.v4.view.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_marginTop="@dimen/text_margin"
+                android:layout_height="510dp"
                 android:background="@color/white"
                 >
             </android.support.v4.view.ViewPager>

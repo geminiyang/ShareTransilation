@@ -92,7 +92,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:divider="@drawable/template_divider"
+        android:divider="@drawable/template_divider_horizontal_white"
         android:showDividers="middle"
         android:dividerPadding="10dp"
         android:orientation="vertical"

@@ -21,6 +21,12 @@
         <item name="android:fontFamily">monospace</item>
     </style>
 
+    <!--TabLayout的文字样式-->
+    <style name="TabLayoutBigTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
     <!--修改右边默认的更多按钮-->
     <style name="Theme.ToolBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>

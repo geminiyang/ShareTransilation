@@ -12,28 +12,43 @@
         </com.idear.move.myWidget.NoScrollViewPager>
 
         <FrameLayout
-            android:padding="3dp"
             android:id="@+id/tab_layout_fl_dynamics"
             android:layout_alignParentTop="true"
-            android:background="@color/white"
+            android:background="@color/blue_light"
             android:layout_width="match_parent"
-            android:layout_height="35dp">
+            android:layout_height="45dp"
+            >
+            <ImageView
+                android:id="@+id/iv_add_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="start|center_vertical"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/add_friend_48"
+                />
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tab_layout_dynamics"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    app:tabBackground="@color/transparent"
-                    app:tabIndicatorHeight="1dp"
+                    android:layout_width="200dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    app:tabBackground="@color/blue_light"
+                    app:tabTextAppearance="@style/TabLayoutBigTextStyle"
+                    app:tabIndicatorHeight="2.5dp"
                     app:tabIndicatorColor="@color/white"
-                    app:tabSelectedTextColor="@color/blue_light"
-                    app:tabTextColor="#B7B7B7">
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextColor="#e0e0e0">
                 </android.support.design.widget.TabLayout>
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:background="#B7B7B7"
-                    android:layout_gravity="center"
-                    />
+            <ImageView
+                android:id="@+id/iv_publish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/publish_48"
+                />
         </FrameLayout>
 
 

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ShareTransilation.iml" filepath="$PROJECT_DIR$/ShareTransilation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SqliteTest/SqliteTest.iml" filepath="$PROJECT_DIR$/SqliteTest/SqliteTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/asynstasktest/asynstasktest.iml" filepath="$PROJECT_DIR$/asynstasktest/asynstasktest.iml" />
       <module fileurl="file://$PROJECT_DIR$/glidetest/glidetest.iml" filepath="$PROJECT_DIR$/glidetest/glidetest.iml" />

@@ -42,7 +42,7 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TranslucentStatusSetting.setTranslucentStatusSetting(this,getResources().getColor(R.color.title_bar_blue));
+        TranslucentStatusSetting.setTranslucentStatusSetting(this,getResources().getColor(R.color.transparent));
         setContentView(R.layout.activity_spread_detail);
 
         initToolBar();
@@ -62,18 +62,6 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
 //        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //
 //        setSupportActionBar(toolbar);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-//        //设置系统默认退出按钮
-//        ActionBar actionBar;
-//        if ((actionBar=getSupportActionBar())!= null) {
-//            actionBar.setDisplayHomeAsUpEnabled(true);//设置标题栏具有返回按钮
-//            actionBar.setDisplayShowTitleEnabled(false);
-//        }
 
         final CollapsingToolbarLayout collapsing_toolbar_layout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
         collapsing_toolbar_layout.setTitle("");
@@ -151,7 +139,7 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
         mTabLayout.post(new Runnable() {
             @Override
             public void run() {
-                setIndicator(mTabLayout, 50, 50);
+                setIndicator(mTabLayout, 10, 10);
             }
         });
     }
@@ -199,6 +187,7 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
                     (0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
             params.leftMargin = left;
             params.rightMargin = right;
+            params.bottomMargin = 10;
             child.setLayoutParams(params);
             child.invalidate();
         }
@@ -210,12 +199,7 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_share) {
             return true;
         }

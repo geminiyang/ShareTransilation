@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/move"
@@ -22,7 +23,6 @@
             android:name=".Activity.MyLoadingActivity"
             android:theme="@style/FirstPageStyle">
 
-            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.SelectActivity"
@@ -108,19 +108,18 @@
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.UserChatActivity"
-            android:theme="@style/otherPageStyle"
-
-            />
+            android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.FirstMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.RegisterNextStepActivity"
@@ -129,7 +128,10 @@
             android:name=".SponsorActivity.SponsorLoginActivity"
             android:label="@string/title_activity_sponsor_login"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".SponsorActivity.SponsorRegisterActivity"
+        <activity
+            android:name=".SponsorActivity.SponsorRegisterActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.UserSearchActivity"
             android:theme="@style/otherPageStyle"
             />
     </application>

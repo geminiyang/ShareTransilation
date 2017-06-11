@@ -10,10 +10,15 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.idear.move.Activity.DynamicPublishingActivity;
+import com.idear.move.Activity.FirstMainUIActivity;
+import com.idear.move.Activity.FriendAddActivity;
 import com.idear.move.R;
 import com.idear.move.myWidget.NoScrollViewPager;
+import com.idear.move.util.IntentSkipUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,6 +43,7 @@ public class DynamicsFragment extends Fragment implements TabLayout.OnTabSelecte
 
     private NoScrollViewPager mViewPager;
     private TabLayout mTabLayout;
+    private ImageView addFriend,publishDynamics;
 
     private MyFragment f1,f2;
 
@@ -63,6 +69,21 @@ public class DynamicsFragment extends Fragment implements TabLayout.OnTabSelecte
     private void init(View view) {
         mViewPager = (NoScrollViewPager) view.findViewById(R.id.view_pager_dynamics);
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout_dynamics);
+        addFriend = (ImageView) view.findViewById(R.id.iv_add_friend);
+        publishDynamics = (ImageView) view.findViewById(R.id.iv_publish);
+
+        addFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(v.getContext(),FriendAddActivity.class);
+            }
+        });
+        publishDynamics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(v.getContext(),DynamicPublishingActivity.class);
+            }
+        });
 
         mViewPager.setUnableScroll(true);
         mViewPager.setAdapter(mAdapter);
@@ -82,7 +103,7 @@ public class DynamicsFragment extends Fragment implements TabLayout.OnTabSelecte
         mTabLayout.post(new Runnable() {
             @Override
             public void run() {
-                setIndicator(mTabLayout, 50, 50);
+                setIndicator(mTabLayout, 17, 17);
             }
         });
     }
@@ -147,6 +168,7 @@ public class DynamicsFragment extends Fragment implements TabLayout.OnTabSelecte
                     (0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
             params.leftMargin = left;
             params.rightMargin = right;
+            params.bottomMargin = 17;
             child.setLayoutParams(params);
             child.invalidate();
         }

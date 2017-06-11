@@ -13,7 +13,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:weightSum="4"
-        android:divider="@drawable/template_divider"
+        android:divider="@drawable/template_divider_horizontal_white"
         android:showDividers="middle|end"
         android:dividerPadding="0dp"
         android:orientation="vertical"
