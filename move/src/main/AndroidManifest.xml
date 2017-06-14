@@ -30,7 +30,7 @@
             android:name=".Activity.LoginActivity"
             android:theme="@style/otherPageStyle" />
         <activity
-            android:name=".Activity.RegisterWebViewActivity"
+            android:name=".Activity.MoveProtocolWebViewActivity"
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.LoginModeActivity"

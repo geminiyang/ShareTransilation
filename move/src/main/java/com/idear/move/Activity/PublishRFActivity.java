@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -40,6 +42,8 @@ import com.idear.move.R;
 import com.idear.move.util.DisplayUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ImageCheckoutUtil;
+import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.KeyBoardUtils;
 import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -58,6 +62,10 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
 
     private RelativeLayout rlRoot;
     private CheckBox cb_goods,cb_money;
+    private CheckedTextView ctv;
+    private Button publish;
+    private TextView urlTextView;
+
     // 更新显示当前值的TextView
     private EditText personNum,moneyAmount;
     //图片选择控件
@@ -100,8 +108,13 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
      * 绑定ID
      */
     private void initView() {
+
         cb_goods = (CheckBox) findViewById(R.id.cb_goods);
         cb_money = (CheckBox) findViewById(R.id.cb_money);
+        ctv = (CheckedTextView) findViewById(R.id.check_tv_title);
+
+        publish = (Button) findViewById(R.id.publish);
+        urlTextView = (TextView) findViewById(R.id.tv_url);
 
         moneyAmount = (EditText) findViewById(R.id.money_amount);
         personNum = (EditText) findViewById(R.id.edit_personNum);
@@ -138,6 +151,34 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                 }
             }
         });
+        ctv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctv.toggle();
+            }
+        });
+        //发布按钮监听器
+        publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ctv.isChecked()) {
+                    //打勾状态才能提交发布，相关的网络访问操作
+
+                } else {
+                    //非打勾状态进行提示
+                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"请阅读协议并打勾!");
+                }
+            }
+        });
+
+        urlTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击事件，跳转到一个WEBVIEW
+                IntentSkipUtil.skipToNextActivity(PublishRFActivity.this,MoveProtocolWebViewActivity.class);
+            }
+        });
+
         //时间编辑框监听
         editText.setOnClickListener(new View.OnClickListener() {
             @Override

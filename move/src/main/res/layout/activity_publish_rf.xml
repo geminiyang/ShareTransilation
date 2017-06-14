@@ -141,6 +141,7 @@
                         android:textCursorDrawable="@null"
                         android:hint="请输入活动名称"
                         android:maxLines="1"
+                        android:singleLine="true"
                         android:background="@null"
                         />
                 </RelativeLayout>
@@ -170,6 +171,7 @@
                         android:textColor="@color/gray"
                         android:textSize="12sp"
                         android:hint="请输入时间日期"
+                        android:singleLine="true"
                         android:maxLines="1"
                         android:background="@null"
                         />
@@ -201,13 +203,14 @@
                         android:textColor="@color/gray"
                         android:textSize="12sp"
                         android:hint="请输入活动地点"
+                        android:singleLine="true"
                         android:maxLines="1"
                         android:background="@null"
                         />
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     >
@@ -232,7 +235,7 @@
                         android:textColor="@color/gray"
                         android:hint="请输入活动内容"
                         android:textSize="12sp"
-                        android:maxLines="1"
+                        android:maxLines="4"
                         android:background="@null"
                         />
                 </RelativeLayout>
@@ -249,7 +252,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="8dp"
-                        android:text="活动目的"
+                        android:text="活动意义"
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         />
@@ -273,7 +276,7 @@
                         android:textColor="@color/gray"
                         android:textSize="12sp"
                         android:hint="请输入活动的原因"
-                        android:maxLines="3"
+                        android:maxLines="4"
                         android:background="@null"
                         />
                 </RelativeLayout>
@@ -321,6 +324,9 @@
                         android:layout_toEndOf="@id/cb_money"
                         android:visibility="gone"
                         android:gravity="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:inputType="numberDecimal"
                         android:hint="元"
                         android:layout_alignParentEnd="true"
                         />
@@ -359,6 +365,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="12sp"
+                        android:maxLines="1"
+                        android:singleLine="true"
                         android:hint="招募人数(>0)"
                         android:layout_toStartOf="@+id/human"
                         android:layout_centerVertical="true"
@@ -376,8 +384,38 @@
                         />
                 </RelativeLayout>
             </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/move_protocol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/form_detail"
+                    android:layout_alignParentStart="true">
+                    <!--android:checkMark="?android:attr/listChoiceIndicatorMultiple"-->
+                    <CheckedTextView
+                        android:id="@+id/check_tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:gravity="center_vertical"
+                        android:drawableStart="?android:attr/listChoiceIndicatorMultiple"
+                        android:paddingLeft="6dp"
+                        android:clickable="true"
+                        android:checked="false"
+                        android:text="我已阅读同意"
+                        android:textSize="12sp"
+                        android:paddingRight="6dp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:text="《MOVE协议》"
+                        />
+                </LinearLayout>
             <Button
-                android:layout_below="@+id/form_detail"
+                android:layout_below="@+id/move_protocol"
                 android:id="@+id/publish"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

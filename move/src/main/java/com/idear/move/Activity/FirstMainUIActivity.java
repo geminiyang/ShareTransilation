@@ -77,7 +77,7 @@ public class FirstMainUIActivity extends BaseActivity implements
     private TextView tv1,tv2,tv3;
 
     //toolBar相关参数
-    private ImageView iv_more_op,searchImageView;
+    private ImageView iv_more_op,searchImageView,iv_setting;
     private TextView logo,titleText;
     private EditText searchEditText;
     private FrameLayout searchView;
@@ -152,6 +152,7 @@ public class FirstMainUIActivity extends BaseActivity implements
         titleText = (TextView) findViewById(R.id.title_text);
         //toolbar上按钮的操作
         iv_more_op = (ImageView) findViewById(R.id.iv_more_op);
+        iv_setting = (ImageView) findViewById(R.id.iv_setting);
         searchView = (FrameLayout) findViewById(R.id.fl_search);
         searchEditText = (EditText) findViewById(R.id.et_search);
         searchImageView = (ImageView) findViewById(R.id.iv_search);
@@ -205,6 +206,13 @@ public class FirstMainUIActivity extends BaseActivity implements
             public void onClick(View v) {
                 //弹出一个PopupWindow
                 showPopupWindow(v.getContext(),v,R.layout.more_op_layout);
+            }
+        });
+
+        iv_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,UserSettingActivity.class);
             }
         });
     }
@@ -400,7 +408,7 @@ public class FirstMainUIActivity extends BaseActivity implements
                 mViewPager.setCurrentItem(0, false);
                 titleText.setVisibility(View.GONE);
                 logo.setVisibility(View.VISIBLE);
-                iv_more_op.setVisibility(View.GONE);
+                iv_setting.setVisibility(View.GONE);
                 toolbar.setVisibility(View.VISIBLE);
                 searchView.setVisibility(View.VISIBLE);
                 break;
@@ -409,7 +417,7 @@ public class FirstMainUIActivity extends BaseActivity implements
                 titleText.setVisibility(View.VISIBLE);
                 titleText.setText("消息");
                 logo.setVisibility(View.GONE);
-                iv_more_op.setVisibility(View.VISIBLE);
+                iv_setting.setVisibility(View.GONE);
                 toolbar.setVisibility(View.GONE);
                 searchView.setVisibility(View.GONE);
                 break;
@@ -419,7 +427,7 @@ public class FirstMainUIActivity extends BaseActivity implements
                 titleText.setVisibility(View.VISIBLE);
                 titleText.setText("动态");
                 logo.setVisibility(View.GONE);
-                iv_more_op.setVisibility(View.VISIBLE);
+                iv_setting.setVisibility(View.GONE);
                 toolbar.setVisibility(View.GONE);
                 searchView.setVisibility(View.GONE);
                 break;
@@ -429,7 +437,7 @@ public class FirstMainUIActivity extends BaseActivity implements
                 titleText.setVisibility(View.VISIBLE);
                 titleText.setText("我的信息");
                 logo.setVisibility(View.GONE);
-                iv_more_op.setVisibility(View.GONE);
+                iv_setting.setVisibility(View.VISIBLE);
                 toolbar.setVisibility(View.VISIBLE);
                 searchView.setVisibility(View.GONE);
                 break;
@@ -452,14 +460,14 @@ public class FirstMainUIActivity extends BaseActivity implements
             case 0:
                 mViewPager.setCurrentItem(0, false);
                 home.setChecked(true);
-                iv_more_op.setVisibility(View.GONE);
+                iv_setting.setVisibility(View.GONE);
                 toolbar.setVisibility(View.VISIBLE);
                 searchView.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 mViewPager.setCurrentItem(1, false);
                 msg.setChecked(true);
-                iv_more_op.setVisibility(View.VISIBLE);
+                iv_setting.setVisibility(View.GONE);
                 //平移控件
                 //toolbar.animate().translationY(-30);
                 toolbar.setVisibility(View.GONE);
@@ -468,7 +476,7 @@ public class FirstMainUIActivity extends BaseActivity implements
             case 2:
                 mViewPager.setCurrentItem(2, false);
                 dynamic.setChecked(true);
-                iv_more_op.setVisibility(View.VISIBLE);
+                iv_setting.setVisibility(View.GONE);
                 toolbar.setVisibility(View.GONE);
                 searchView.setVisibility(View.GONE);
                 break;
@@ -476,7 +484,7 @@ public class FirstMainUIActivity extends BaseActivity implements
                 mViewPager.setCurrentItem(3, false);
                 my.setChecked(true);
                 my.setTipOn(false);
-                iv_more_op.setVisibility(View.GONE);
+                iv_setting.setVisibility(View.VISIBLE);
                 toolbar.setVisibility(View.VISIBLE);
                 searchView.setVisibility(View.GONE);
                 break;

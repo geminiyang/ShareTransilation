@@ -118,14 +118,17 @@
                 <com.idear.move.myWidget.MySpannableTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:padding="@dimen/text_margin"
+                    android:maxLines="20"
+                    android:paddingTop="@dimen/text_margin"
+                    android:paddingStart="@dimen/text_margin"
+                    android:paddingEnd="@dimen/text_margin"
                     android:text="可口可乐公司(The Coca-Cola Company)成立于1886年5月8日，总部设在美国佐治亚州(Georgia, 简称GA)的亚特兰大，是全球最大的饮料公司，拥有全球48%市场占有率以及全球前三大饮料的二项（可口可乐排名第一，百事可乐第二，低热量可口可乐第三）,可口可乐在200个国家拥有160种饮料品牌，包括汽水、运动饮料、乳类饮品、果汁、茶和咖啡，亦是全球最大的果汁饮料经销商（包括Minute Maid品牌），在美国排名第一的可口可乐为其取得超过40%的市场占有率，而雪碧(Sprite)则是成长最快的饮料，其它品牌包括伯克(Barq)的root beer（沙士）" />
                 <TextView
-
                     android:layout_marginStart="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:textColor="@color/blue_light"
                     android:text="点击链接查看详情..." />
             </LinearLayout>

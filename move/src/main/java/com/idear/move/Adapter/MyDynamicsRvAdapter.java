@@ -11,12 +11,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.idear.move.POJO.MyDynamicsDataModel;
-import com.idear.move.POJO.MyInitiateDataModel;
 import com.idear.move.R;
 import com.idear.move.myWidget.CommentTextView;
-import com.idear.move.util.DisplayUtil;
 import com.idear.move.util.ScreenUtil;
 import com.idear.move.util.ToastUtil;
+import com.yqq.idear.CustomRecyclerView;
 
 import java.util.List;
 
@@ -95,7 +94,7 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        return modelList.get(position).type;
+        return CustomRecyclerView.TYPE_NORMAL;
     }
 
     //重写的自定义ViewHolder

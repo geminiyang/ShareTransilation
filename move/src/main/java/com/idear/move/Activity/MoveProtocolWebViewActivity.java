@@ -15,7 +15,7 @@ import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 
-public class RegisterWebViewActivity extends BaseActivity {
+public class MoveProtocolWebViewActivity extends BaseActivity {
 
     private WebView wv;
     private ProgressBar pb;

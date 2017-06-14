@@ -8,21 +8,32 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.idear.move.R;
+import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.KeyBoardUtils;
+import com.idear.move.util.ToastUtil;
 
 import java.util.Calendar;
 
 public class PublishRActivity extends AppCompatActivity {
 
+    private RelativeLayout rlRoot;
     private EditText editText;
     //用来拼接日期和时间，最终用来显示的
     private StringBuilder str = new StringBuilder("");
+
+    private CheckedTextView ctv;
+    private Button publish;
+    private TextView urlTextView;
 
     private NumberPicker numberPicker;
     private final int MIN = 1;
@@ -37,9 +48,41 @@ public class PublishRActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_r);
         initView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        ctv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctv.toggle();
+            }
+        });
+        //发布按钮监听器
+        publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ctv.isChecked()) {
+                    //打勾状态才能提交发布，相关的网络访问操作
+
+                } else {
+                    //非打勾状态进行提示
+                    ToastUtil.getInstance().showToast(PublishRActivity.this,"请阅读协议并打勾!");
+                }
+            }
+        });
+
+        urlTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击事件，跳转到一个WEBVIEW
+                IntentSkipUtil.skipToNextActivity(PublishRActivity.this,MoveProtocolWebViewActivity.class);
+            }
+        });
     }
 
     private void initView() {
+        rlRoot = (RelativeLayout) findViewById(R.id.root_rl);
         editText = (EditText) findViewById(R.id.time_select);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,9 +90,12 @@ public class PublishRActivity extends AppCompatActivity {
                 productTimeDialog();
             }
         });
+        ctv = (CheckedTextView) findViewById(R.id.check_tv_title);
+
+        publish = (Button) findViewById(R.id.publish);
+        urlTextView = (TextView) findViewById(R.id.tv_url);
 
         //productNumberPicker();
-
         productNumberPickerDialog();
 
     }

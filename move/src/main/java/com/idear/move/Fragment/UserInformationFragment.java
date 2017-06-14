@@ -42,15 +42,16 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private ScrollView myScrollView;
     private RelativeLayout rllayout;//含有图片的那个相对布局，顶部控件
 
-    private ImageView ivComeUserInfo,ivComeUserSetting;
+    private ImageView ivToUserInfo,ivToDynamics;
     private Button loginOutBtn;
 
     private GridView gridView;//网格视图
     private List<Map<String, Object>> data_list;//数据源
     private SimpleAdapter simple_adapter;//适配器
-    private int[] icon = { R.mipmap.takepart, R.mipmap.trends};
+    private int[] icon = { R.mipmap.takepart, R.mipmap.trends,R.mipmap.takepart, R.mipmap.trends,
+            R.mipmap.takepart};
 
-    private String[] iconName={ "我的参与", "我的动态"};
+    private String[] iconName={ "未通过", "审核中","进行中","已结束","已完成"};
 
     public static UserInformationFragment newInstance(String arg){
         UserInformationFragment fragment = new UserInformationFragment();
@@ -88,8 +89,8 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
 
         myScrollView = (ScrollView)view.findViewById(R.id.myScrollView);
 
-        ivComeUserInfo = (ImageView) view.findViewById(R.id.image_come_userInfo);
-        ivComeUserSetting = (ImageView) view.findViewById(R.id.image_come_setting);
+        ivToUserInfo = (ImageView) view.findViewById(R.id.to_user_info);
+        ivToDynamics = (ImageView) view.findViewById(R.id.to_dynamics);
 
         //三句代码使界面打开时候自定义ScrollView下面的EditText获取焦点的事件不再发生
         myScrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
@@ -101,9 +102,8 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
 
     //初始化监听器
     private void initEvent() {
-        ivComeUserInfo.setOnClickListener(this);
-        ivComeUserSetting.setOnClickListener(this);
-
+        ivToUserInfo.setOnClickListener(this);
+        ivToDynamics.setOnClickListener(this);
         loginOutBtn.setOnClickListener(this);
     }
 
@@ -156,11 +156,11 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         int id = v.getId();
         switch (id){
-            case R.id.image_come_userInfo:
+            case R.id.to_user_info:
                 IntentSkipUtil.skipToNextActivity(getActivity(),UserDetailInformationActivity.class);
                 break;
-            case R.id.image_come_setting:
-                IntentSkipUtil.skipToNextActivity(getActivity(),UserSettingActivity.class);
+            case R.id.to_dynamics:
+                IntentSkipUtil.skipToNextActivity(getActivity(),MyDynamicsActivity.class);
                 break;
             case R.id.log_out_bt:
                 loginOutOP();

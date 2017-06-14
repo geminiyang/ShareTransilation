@@ -91,7 +91,7 @@
                     />
             </FrameLayout>
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/ll_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,14 +100,24 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 >
-            <ImageView
-                android:id="@+id/iv_more_op"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                app:srcCompat="@drawable/ic_add_white"
-                />
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_more_op"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_add_white"
+                    />
+                <ImageView
+                    android:id="@+id/iv_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/setting"
+                    android:tint="@color/white"
+                    />
+            </FrameLayout>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

@@ -269,6 +269,7 @@
                     android:textSize="14sp"
                     />
                 <ImageView
+                    android:id="@+id/image_come_setting"
                     yqq:srcCompat="@drawable/ic__next_black_24dp"
                     android:tint="@color/black"
                     android:layout_marginEnd="20dp"

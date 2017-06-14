@@ -77,8 +77,6 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
         init(context);
     }
 
-
-
     public CustomRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs,0);
         init(context);
@@ -220,6 +218,8 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
     private void refresh() {
         if(this.dataOperation!=null) {
             dataOperation.onRefresh();
+            mAdapter.notifyItemRangeInserted(0,requestCount);
+            smoothScrollToPosition(1);//不添加则会动画很好看
         }
     }
 
@@ -330,21 +330,34 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
             //正在加载中
             return;
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("info", "Mode:REFRESHING ,the state is Loading, just wait..");
-                setHeaderState(HeaderState.LOADING);
-                //模拟耗时操作
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        //加载数据(根据界面显示个数和服务器返回的数据总数实现动态加载)
+        if(currentCount == 0) {
+            currentCount = requestCount;
+        } else {
+            //更新当前拥有项
+            currentCount =  mAdapter.getItemCount() - ((CustomRecyclerView.WrapAdapter)mAdapter).
+                    getHeaderCount() - ((CustomRecyclerView.WrapAdapter)mAdapter).getFooterCount()
+                    + requestCount;
+        }
+        if(currentCount<=totalCount) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("info", "Mode:REFRESHING ,the state is Loading, just wait..");
+                    setHeaderState(HeaderState.LOADING);
+                    //模拟耗时操作
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //执行添加新数据操作
+                    refreshMoreData();
                 }
-                //执行添加新数据操作
-                refreshMoreData();
-            }
-        }).start();
+            }).start();
+        } else {
+            ToastUtil.getInstance().showToast(mContext,"已无最新数据");
+        }
     }
 
     /**
@@ -382,6 +395,7 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
             this.mHeaderCount = 1;
             this.mFooterCount = 1;
         }
+
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

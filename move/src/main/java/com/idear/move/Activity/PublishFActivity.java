@@ -6,13 +6,20 @@ import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.idear.move.R;
+import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.KeyBoardUtils;
+import com.idear.move.util.ToastUtil;
 
 import java.util.Calendar;
 
@@ -21,6 +28,9 @@ public class PublishFActivity extends AppCompatActivity {
     private CheckBox cb_goods,cb_moneys;
     // 更新显示当前值的TextView
     private EditText moneyAmount;
+    private CheckedTextView ctv;
+    private Button publish;
+    private TextView urlTextView;
 
     private EditText editText;
     //用来拼接日期和时间，最终用来显示的
@@ -32,6 +42,38 @@ public class PublishFActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pubulish_f);
 
         initView();
+        initEvent();
+    }
+
+    private void initEvent() {
+
+        ctv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctv.toggle();
+            }
+        });
+        //发布按钮监听器
+        publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ctv.isChecked()) {
+                    //打勾状态才能提交发布，相关的网络访问操作
+
+                } else {
+                    //非打勾状态进行提示
+                    ToastUtil.getInstance().showToast(PublishFActivity.this,"请阅读协议并打勾!");
+                }
+            }
+        });
+
+        urlTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击事件，跳转到一个WEBVIEW
+                IntentSkipUtil.skipToNextActivity(PublishFActivity.this,MoveProtocolWebViewActivity.class);
+            }
+        });
     }
 
     private void initView() {
@@ -42,6 +84,11 @@ public class PublishFActivity extends AppCompatActivity {
                 productTimeDialog();
             }
         });
+
+        ctv = (CheckedTextView) findViewById(R.id.check_tv_title);
+
+        publish = (Button) findViewById(R.id.publish);
+        urlTextView = (TextView) findViewById(R.id.tv_url);
 
         moneyAmount = (EditText) findViewById(R.id.money_amount);
 

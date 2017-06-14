@@ -89,7 +89,7 @@ public class DateUtil {
         long time = (curTime - timeMills) / (long)1000;//已经将单位转换成秒
 
         if (time > 0 && time < 60) {
-            return "刚刚";
+            return time + "秒前";
         } else if (time >= 60 && time < 3600) {
             return time / 60 + "分钟前";
         } else if (time >= 3600 && time < 3600 * 24) {
