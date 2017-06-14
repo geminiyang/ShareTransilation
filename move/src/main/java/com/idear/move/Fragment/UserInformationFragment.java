@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.idear.move.Activity.FirstMainUIActivity;
 import com.idear.move.Activity.MyDynamicsActivity;
 import com.idear.move.Activity.MyTakePartInActivity;
 import com.idear.move.Activity.UserDetailInformationActivity;
@@ -38,6 +39,9 @@ import java.util.Map;
 public class UserInformationFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG = "arg";
+
+    //ToolBar
+    private ImageView iv_setting;
 
     private ScrollView myScrollView;
     private RelativeLayout rllayout;//含有图片的那个相对布局，顶部控件
@@ -83,6 +87,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
      */
     private void init(View view) {
 
+        iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
         loginOutBtn = (Button) view.findViewById(R.id.log_out_bt);
 
         rllayout = (RelativeLayout)view.findViewById(R.id.rllayout);
@@ -105,6 +110,12 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
         ivToUserInfo.setOnClickListener(this);
         ivToDynamics.setOnClickListener(this);
         loginOutBtn.setOnClickListener(this);
+        iv_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(getActivity(),UserSettingActivity.class);
+            }
+        });
     }
 
 

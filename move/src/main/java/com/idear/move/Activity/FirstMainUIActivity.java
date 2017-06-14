@@ -63,7 +63,6 @@ public class FirstMainUIActivity extends BaseActivity implements
     private MyHomeFragment f1;
 
     private RadioGroup radioGroup;
-    private Toolbar toolbar;
 
     private FrameLayout fm;
     private ImageView img;
@@ -75,13 +74,6 @@ public class FirstMainUIActivity extends BaseActivity implements
     private PopupWindow popup;
     private FrameLayout fl_bt1,fl_bt2,fl_bt3;
     private TextView tv1,tv2,tv3;
-
-    //toolBar相关参数
-    private ImageView iv_more_op,searchImageView,iv_setting;
-    private TextView logo,titleText;
-    private EditText searchEditText;
-    private FrameLayout searchView;
-    private int menu_position = 0;//实现随位置变化actionBar变化所需的标记
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,16 +138,6 @@ public class FirstMainUIActivity extends BaseActivity implements
         radioGroup = (RadioGroup) findViewById(R.id.rd_group);
 
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        //初始化标题栏
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        logo = (TextView) findViewById(R.id.logo);
-        titleText = (TextView) findViewById(R.id.title_text);
-        //toolbar上按钮的操作
-        iv_more_op = (ImageView) findViewById(R.id.iv_more_op);
-        iv_setting = (ImageView) findViewById(R.id.iv_setting);
-        searchView = (FrameLayout) findViewById(R.id.fl_search);
-        searchEditText = (EditText) findViewById(R.id.et_search);
-        searchImageView = (ImageView) findViewById(R.id.iv_search);
     }
 
     private void initEvent() {
@@ -187,37 +169,7 @@ public class FirstMainUIActivity extends BaseActivity implements
             }
         });
 
-        searchImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,UserSearchActivity.class);
-            }
-        });
-
-        searchEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,UserSearchActivity.class);
-            }
-        });
-
-        iv_more_op.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //弹出一个PopupWindow
-                showPopupWindow(v.getContext(),v,R.layout.more_op_layout);
-            }
-        });
-
-        iv_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,UserSettingActivity.class);
-            }
-        });
     }
-
-
 
     /**
      * 点击+号按钮后的触发事件 自动逸动画
@@ -333,7 +285,6 @@ public class FirstMainUIActivity extends BaseActivity implements
             popup.showAsDropDown(parent, 0,0,Gravity.BOTTOM);
         }
     }
-
     /**
      * 对应更多操作
      * @param context
@@ -389,113 +340,61 @@ public class FirstMainUIActivity extends BaseActivity implements
             //popupWindow.showAtLocation(parent,Gravity.CENTER,0,0);
         }
     }
-
     /**
      * 设置默认选择项
      */
     private void setDefaultFragment() {
-        titleText.setText("");
         msg.setChecked(true);
         mViewPager.setCurrentItem(0,false);
         my.setTipOn(true);
     }
-
-
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         switch(checkedId){
             case R.id.home:
                 mViewPager.setCurrentItem(0, false);
-                titleText.setVisibility(View.GONE);
-                logo.setVisibility(View.VISIBLE);
-                iv_setting.setVisibility(View.GONE);
-                toolbar.setVisibility(View.VISIBLE);
-                searchView.setVisibility(View.VISIBLE);
                 break;
             case R.id.msg:
                 mViewPager.setCurrentItem(1, false);
-                titleText.setVisibility(View.VISIBLE);
-                titleText.setText("消息");
-                logo.setVisibility(View.GONE);
-                iv_setting.setVisibility(View.GONE);
-                toolbar.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
                 break;
-
             case R.id.dynamic:
                 mViewPager.setCurrentItem(2, false);
-                titleText.setVisibility(View.VISIBLE);
-                titleText.setText("动态");
-                logo.setVisibility(View.GONE);
-                iv_setting.setVisibility(View.GONE);
-                toolbar.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
                 break;
             case R.id.my:
                 mViewPager.setCurrentItem(3, false);
                 my.setTipOn(false);
-                titleText.setVisibility(View.VISIBLE);
-                titleText.setText("我的信息");
-                logo.setVisibility(View.GONE);
-                iv_setting.setVisibility(View.VISIBLE);
-                toolbar.setVisibility(View.VISIBLE);
-                searchView.setVisibility(View.GONE);
                 break;
         }
-        invalidateOptionsMenu();
     }
-
-    /*
-        ViewPager的活动监听
-     */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
     }
-
     @Override
     public void onPageSelected(int position) {
-
-        menu_position = position;
         switch (position) {
             case 0:
                 mViewPager.setCurrentItem(0, false);
                 home.setChecked(true);
-                iv_setting.setVisibility(View.GONE);
-                toolbar.setVisibility(View.VISIBLE);
-                searchView.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 mViewPager.setCurrentItem(1, false);
                 msg.setChecked(true);
-                iv_setting.setVisibility(View.GONE);
-                //平移控件
-                //toolbar.animate().translationY(-30);
-                toolbar.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
                 break;
             case 2:
                 mViewPager.setCurrentItem(2, false);
                 dynamic.setChecked(true);
-                iv_setting.setVisibility(View.GONE);
-                toolbar.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
                 break;
             case 3:
                 mViewPager.setCurrentItem(3, false);
                 my.setChecked(true);
                 my.setTipOn(false);
-                iv_setting.setVisibility(View.VISIBLE);
-                toolbar.setVisibility(View.VISIBLE);
-                searchView.setVisibility(View.GONE);
                 break;
         }
     }
-
     @Override
     public void onPageScrollStateChanged(int state) {
 
     }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

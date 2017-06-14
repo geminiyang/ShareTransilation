@@ -19,13 +19,13 @@ public class MoveProtocolWebViewActivity extends BaseActivity {
 
     private WebView wv;
     private ProgressBar pb;
-    String url = "http://120.24.75.126/index.html";
+    String url = "http://www.baidu.com";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TranslucentStatusSetting.setTranslucentStatusSetting(this, Color.TRANSPARENT);
+        TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_web_view);
         //webView使用的最佳实践
         wv = (WebView) findViewById(R.id.wv);

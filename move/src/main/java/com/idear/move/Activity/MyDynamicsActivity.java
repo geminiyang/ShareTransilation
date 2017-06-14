@@ -119,7 +119,7 @@ public class MyDynamicsActivity extends BaseActivity implements CustomRecyclerVi
             }
             int index = dataModels.size()%4;
             Log.d("info","refreshMode------"+index + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.add(new MyDynamicsDataModel(userIcons[index],userNames[index],times[index],
+            dataModels.addFirst(new MyDynamicsDataModel(userIcons[index],userNames[index],times[index],
                     pics[index], states[index],lists.get(0)));
         }
     }

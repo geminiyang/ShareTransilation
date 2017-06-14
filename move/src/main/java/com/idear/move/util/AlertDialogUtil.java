@@ -1,10 +1,16 @@
 package com.idear.move.util;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.idear.move.R;
+import com.idear.move.myWidget.LoadingProgressDialog;
 
 /**
  * Created by user on 2017/5/10.
@@ -41,6 +47,5 @@ public class AlertDialogUtil {
         display.setCanceledOnTouchOutside(false);
         display.show();
     }
-
 
 }

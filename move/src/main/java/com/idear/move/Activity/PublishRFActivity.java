@@ -245,6 +245,7 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                 }
             }
         });
+
         //照片选取监听
         contentView.findViewById(R.id.ll_layer_select).setOnClickListener(new View.OnClickListener() {
             @Override

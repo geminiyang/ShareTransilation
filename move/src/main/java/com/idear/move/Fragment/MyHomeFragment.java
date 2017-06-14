@@ -4,17 +4,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idear.move.Activity.AllActivityActivity;
 import com.idear.move.Activity.FeedbackActivity;
+import com.idear.move.Activity.FirstMainUIActivity;
 import com.idear.move.Activity.SpreadActivity;
+import com.idear.move.Activity.UserSearchActivity;
 import com.idear.move.Thread.MyHomeLoadingAsyncTask;
 import com.idear.move.R;
 import com.idear.move.constants.AppConstant;
@@ -51,6 +56,8 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     private HSVLinearLayout mGalleryLayoutThree = null;
 
     private TextView moreActivity_tv,moreFeedback_tv,moreSpread_tv;
+    private EditText searchEditText;
+    private ImageView searchImageView;
 
     private IntentFilter intentFilter = null;
     private BroadcastReceiver receiver = null;
@@ -129,6 +136,9 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
         moreFeedback_tv = (TextView) view.findViewById(R.id.more_feedback);
         moreSpread_tv = (TextView) view.findViewById(R.id.more_spread);
 
+        searchEditText = (EditText) view.findViewById(R.id.et_search);
+        searchImageView = (ImageView) view.findViewById(R.id.iv_search);
+
         final View v= view;
 
         new Thread(new Runnable() {
@@ -141,6 +151,9 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
         moreActivity_tv.setOnClickListener(this);
         moreFeedback_tv.setOnClickListener(this);
         moreSpread_tv.setOnClickListener(this);
+        searchEditText.setOnClickListener(this);
+        searchImageView.setOnClickListener(this);
+
     }
 
     private void initAdapterData() {
@@ -170,6 +183,14 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.more_spread:
                 IntentSkipUtil.skipToNextActivity(MyHomeFragment.this.getActivity(),SpreadActivity.class);
+                break;
+            case R.id.et_search:
+                IntentSkipUtil.skipToNextActivity(getActivity(),UserSearchActivity.class);
+                break;
+            case R.id.iv_search:
+                IntentSkipUtil.skipToNextActivity(getActivity(),UserSearchActivity.class);
+                break;
+            default:
                 break;
         }
     }

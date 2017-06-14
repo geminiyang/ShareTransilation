@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.MyLoadingActivity"
-            android:theme="@style/FirstPageStyle"></activity>
+            android:theme="@style/FirstPageStyle">
+        </activity>
         <activity
             android:name=".Activity.SelectActivity"
             android:launchMode="singleTop"

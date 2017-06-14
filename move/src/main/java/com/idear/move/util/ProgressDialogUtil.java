@@ -1,9 +1,14 @@
 package com.idear.move.util;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Handler;
+import android.view.View;
 
 import com.idear.move.R;
+import com.idear.move.myWidget.LoadingProgressDialog;
 
 /**
  * 系统默认效果的ProgressDialog
@@ -47,4 +52,45 @@ public class ProgressDialogUtil {
         }
     }
 
+    /**
+     * 加载动画
+     */
+    public static void showLoadDialog(Activity activity) {
+        final LoadingProgressDialog dialog =new LoadingProgressDialog(activity, R.drawable.progress_loading);
+        dialog.show();
+        Handler handler =new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 3000);
+    }
+    /**
+     * 加载动画
+     */
+    public static void showLoadDialog(Fragment fragment) {
+        showLoadDialog(fragment.getActivity());
+    }
+    /**
+     * 加载动画
+     */
+    public static void showLoadingDialog(Context context) {
+        final LoadingProgressDialog dialog =new LoadingProgressDialog(context, R.drawable.progress_loading);
+        dialog.show();
+        Handler handler =new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 3000);
+    }
+
+    /**
+     * 加载动画
+     */
+    public static void showLoadingDialog(View view) {
+        showLoadingDialog(view.getContext());
+    }
 }

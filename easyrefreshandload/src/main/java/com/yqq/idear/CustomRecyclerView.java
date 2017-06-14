@@ -213,13 +213,13 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
     }
 
     /**
-     * 将数据操作与外部方法关联（上拉刷新）
+     * 将数据操作与外部方法关联（下拉刷新）
      */
     private void refresh() {
         if(this.dataOperation!=null) {
             dataOperation.onRefresh();
-            mAdapter.notifyItemRangeInserted(0,requestCount);
-            smoothScrollToPosition(1);//不添加则会动画很好看
+            mAdapter.notifyItemRangeInserted(0, requestCount);
+            smoothScrollToPosition(1);
         }
     }
 

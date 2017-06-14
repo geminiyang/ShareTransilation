@@ -1,5 +1,7 @@
 package com.idear.move.util;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -30,6 +32,22 @@ public class ToastUtil {
         }
             toast = Toast.makeText(context, string,Toast.LENGTH_SHORT);
             toast.show();
+    }
+
+    public void showToast(Fragment fragment, String string){
+        if(toast != null){
+            toast.cancel();
+        }
+        toast = Toast.makeText(fragment.getActivity(), string,Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    public void showToast(Activity activity, String string){
+        if(toast != null){
+            toast.cancel();
+        }
+        toast = Toast.makeText(activity, string,Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void showToastTest(Context context){

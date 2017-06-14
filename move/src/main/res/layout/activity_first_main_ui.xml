@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,117 +10,6 @@
 
     <!--距离一个系统状态栏的高度是因为要状态栏可以透明显示,将marginTop设置为22dp（状态栏的高度）-->
     <!--android:layout_marginTop="24dp"-->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/blue_light"
-        android:theme="@style/Theme.ToolBar"
-        app:title=""
-        app:titleTextColor="@color/white"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/MyOverflowPopupMenuStyle"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/ll_text"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:id="@+id/logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:textColor="@color/white"
-                    android:text="MOVE"
-                    />
-                <TextView
-                    android:id="@+id/title_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    tools:text=""
-                    />
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/ll_text"
-                android:layout_toStartOf="@+id/ll_iv"
-                android:clickable="true"
-                android:layout_centerVertical="true"
-                >
-                <EditText
-                    android:id="@+id/et_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:paddingStart="35dp"
-                    android:paddingEnd="5dp"
-                    android:textSize="12sp"
-                    android:focusable="false"
-                    android:hint="搜索"
-                    android:background="@drawable/bg_chat_msg"
-                    />
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="14dp"
-                    android:background="@color/_grey"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="28dp"
-                    />
-                <ImageView
-                    android:id="@+id/iv_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:layout_marginStart="5dp"
-                    android:src="@mipmap/search"
-                    />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/ll_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                >
-                <ImageView
-                    android:id="@+id/iv_more_op"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_add_white"
-                    />
-                <ImageView
-                    android:id="@+id/iv_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/setting"
-                    android:tint="@color/white"
-                    />
-            </FrameLayout>
-        </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
-
     <RadioGroup
         android:id="@+id/rd_group"
         android:layout_width="match_parent"
