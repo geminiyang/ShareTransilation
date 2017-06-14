@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 我发起的
  */
-public class MyInitiateActivity extends BaseActivity {
+public class MyTakePartInActivity extends BaseActivity {
 
     private Button add,remove;
 

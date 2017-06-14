@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ProgressBar
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/refresh_tip"
+        />
+    <TextView
+        android:id="@+id/refresh_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加载完成"
+        android:layout_centerInParent="true"
+        />
+</RelativeLayout>

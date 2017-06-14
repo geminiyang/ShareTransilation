@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.idear.move.R;
 import com.idear.move.constants.AppConstant;
+import com.idear.move.myWidget.CustomRecyclerView;
 
 /**
  * 作者:geminiyang on 2017/5/31.
@@ -14,9 +15,9 @@ import com.idear.move.constants.AppConstant;
  */
 
 public class FooterHolder extends RecyclerView.ViewHolder {
-    View mLoadingViewStub;
-    View mEndViewStub;
-    View mNetworkErrorViewStub;
+    private View mLoadingViewStub;
+    private View mEndViewStub;
+    private View mNetworkErrorViewStub;
 
     public FooterHolder(View itemView) {
         super(itemView);
@@ -51,8 +52,33 @@ public class FooterHolder extends RecyclerView.ViewHolder {
 
     }
 
+    //根据传过来的status控制哪个状态可见
+    public void setState(CustomRecyclerView.FooterState status) {
+        Log.d("TAG", "DemoAdapter" + status + "");
+        switch (status) {
+            case NORMAL:
+                setAllGone();
+                break;
+            case LOADING:
+                setAllGone();
+                mLoadingViewStub.setVisibility(View.VISIBLE);
+                break;
+            case END:
+                setAllGone();
+                mEndViewStub.setVisibility(View.VISIBLE);
+                break;
+            case NETWORK_ERROR:
+                setAllGone();
+                mNetworkErrorViewStub.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
+        }
+
+    }
+
     //设置全部布局不可见
-    void setAllGone() {
+    private void setAllGone() {
         if (mLoadingViewStub != null) {
             mLoadingViewStub.setVisibility(View.GONE);
         }

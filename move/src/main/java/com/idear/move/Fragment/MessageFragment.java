@@ -43,8 +43,7 @@ public class MessageFragment extends Fragment implements
     private NoScrollViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private MyFragment f2;
-    private UserListFragment f1;
+    private UserListFragment f1,f2;
 
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
@@ -97,7 +96,7 @@ public class MessageFragment extends Fragment implements
             f1 = UserListFragment.newInstance(1);
         }
         if(f2==null){
-            f2 = MyFragment.newInstance("房间");
+            f2 = UserListFragment.newInstance(1);
         }
         mTabs.add(f1);
         mTabs.add(f2);

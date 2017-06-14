@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/SqliteTest/SqliteTest.iml" filepath="$PROJECT_DIR$/SqliteTest/SqliteTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/asynstasktest/asynstasktest.iml" filepath="$PROJECT_DIR$/asynstasktest/asynstasktest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esayrefreshandload/esayrefreshandload.iml" filepath="$PROJECT_DIR$/esayrefreshandload/esayrefreshandload.iml" />
       <module fileurl="file://$PROJECT_DIR$/glidetest/glidetest.iml" filepath="$PROJECT_DIR$/glidetest/glidetest.iml" />
       <module fileurl="file://$PROJECT_DIR$/horizonalscrollviewtest/horizonalscrollviewtest.iml" filepath="$PROJECT_DIR$/horizonalscrollviewtest/horizonalscrollviewtest.iml" />
       <module fileurl="file://$PROJECT_DIR$/loadermanager/loadermanager.iml" filepath="$PROJECT_DIR$/loadermanager/loadermanager.iml" />

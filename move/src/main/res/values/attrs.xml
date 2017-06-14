@@ -47,4 +47,14 @@
         <attr name="indicatorRadius"/>
         <attr name="isCirculate" />
     </declare-styleable>
+
+    <!--CommentTextView相关-->
+    <!--用户名-->
+    <attr name="nameLabel" format="string"/>
+    <!--评论内容-->
+    <attr name="commentContent" format="string" />
+    <declare-styleable name="CommentTextView">
+        <attr name="nameLabel"/>
+        <attr name="commentContent"/>
+    </declare-styleable>
 </resources>

@@ -14,7 +14,7 @@ public class UserListContent {
      */
     public static UserList createUserItem(int position) {
         return new UserList(String.valueOf(position+1) +"号嘉宾", "今晚去湛江鸡吃饭，老铁!",
-                "2017.5.29", R.drawable.paitnbox,R.mipmap.msg_fill);
+                "2017.5.29", R.drawable.paintbox,R.mipmap.msg_fill);
     }
 
     /**

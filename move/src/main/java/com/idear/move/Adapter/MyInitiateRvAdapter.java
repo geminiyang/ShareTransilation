@@ -32,7 +32,7 @@ public class MyInitiateRvAdapter extends RecyclerView.Adapter<MyInitiateRvAdapte
     @Override
     public MyInitiateRvAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // 给ViewHolder设置布局文件
-        View v = mInflater.inflate(R.layout.myinitiate_cardview, viewGroup, false);
+        View v = mInflater.inflate(R.layout.item_myinitiate, viewGroup, false);
         return new ViewHolder(v);
     }
 

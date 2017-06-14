@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,8 @@ import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.idear.move.Activity.MyInitiateActivity;
+import com.idear.move.Activity.MyDynamicsActivity;
+import com.idear.move.Activity.MyTakePartInActivity;
 import com.idear.move.Activity.UserDetailInformationActivity;
 import com.idear.move.Activity.UserSettingActivity;
 import com.idear.move.R;
@@ -48,9 +48,9 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private GridView gridView;//网格视图
     private List<Map<String, Object>> data_list;//数据源
     private SimpleAdapter simple_adapter;//适配器
-    private int[] icon = { R.mipmap.takepart, R.mipmap.trends,R.mipmap.feedback};
+    private int[] icon = { R.mipmap.takepart, R.mipmap.trends};
 
-    private String[] iconName={ "我的参与", "我的动态", "我的反馈"};
+    private String[] iconName={ "我的参与", "我的动态"};
 
     public static UserInformationFragment newInstance(String arg){
         UserInformationFragment fragment = new UserInformationFragment();
@@ -127,7 +127,10 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
                 toast.show();
                 switch (position) {
                     case 0:
-                        IntentSkipUtil.skipToNextActivity(getActivity(),MyInitiateActivity.class);
+                        IntentSkipUtil.skipToNextActivity(getActivity(),MyTakePartInActivity.class);
+                        break;
+                    case 1:
+                        IntentSkipUtil.skipToNextActivity(getActivity(),MyDynamicsActivity.class);
                         break;
                 }
             }

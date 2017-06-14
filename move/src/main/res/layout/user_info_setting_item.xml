@@ -7,7 +7,7 @@
     android:background="@drawable/background_selector"
     >
     <ImageView
-        android:src="@mipmap/orgnize"
+        android:src="@mipmap/setting_32"
         android:id="@+id/image"
         android:tint="@color/colorPrimary"
         android:layout_width="wrap_content"

@@ -68,7 +68,7 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if(rootView==null) {
-            rootView = inflater.inflate(R.layout.fragment_myhome, null);
+            rootView = inflater.inflate(R.layout.fragment_myhome, container,false);
             initView(rootView);
             myHomeLoadingAsyncTask = new MyHomeLoadingAsyncTask();
             myHomeLoadingAsyncTask.execute(rootView);

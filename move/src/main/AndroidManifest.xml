@@ -21,9 +21,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.MyLoadingActivity"
-            android:theme="@style/FirstPageStyle">
-
-        </activity>
+            android:theme="@style/FirstPageStyle"></activity>
         <activity
             android:name=".Activity.SelectActivity"
             android:launchMode="singleTop"
@@ -74,7 +72,7 @@
             android:name=".Activity.UserSettingActivity"
             android:theme="@style/otherPageStyle" />
         <activity
-            android:name=".Activity.MyInitiateActivity"
+            android:name=".Activity.MyTakePartInActivity"
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.DynamicPublishingActivity"
@@ -131,7 +129,10 @@
         <activity
             android:name=".SponsorActivity.SponsorRegisterActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.UserSearchActivity"
+        <activity
+            android:name=".Activity.UserSearchActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.MyDynamicsActivity"
             android:theme="@style/otherPageStyle"
             />
     </application>
