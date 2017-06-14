@@ -2,28 +2,19 @@ package com.idear.move.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.idear.move.Adapter.MyUserListRecyclerViewAdapter;
 import com.idear.move.Dummy.UserListContent;
-import com.idear.move.MyListener.DataStateChangeCheck;
 import com.idear.move.R;
 import com.idear.move.Dummy.UserListContent.UserList;
-import com.idear.move.Thread.MyHomeLoadingAsyncTask;
-import com.idear.move.constants.AppConstant;
-import com.idear.move.myWidget.CustomRecyclerView;
-import com.idear.move.util.NetWorkUtil;
-import com.idear.move.util.ToastUtil;
+import com.yqq.idear.CustomRecyclerView;
+import com.yqq.idear.DataStateChangeCheck;
 
 import java.util.ArrayList;
 
@@ -120,7 +111,6 @@ public class UserListFragment extends Fragment {
         //实现了数据操作监听
         mDataEndListener.setLoadDataListener(myRecyclerView);
         myRecyclerView.addDataChangeListener(mDataEndListener);
-        myRecyclerView.addHeaderView(context);
         myRecyclerView.addFooterView(context);
         myRecyclerView.setTotalCount(TOTAL_COUNT);
         myRecyclerView.setRequestCount(REQUEST_COUNT);

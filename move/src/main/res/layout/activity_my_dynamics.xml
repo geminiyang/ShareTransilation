@@ -45,7 +45,7 @@
                 />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-    <com.idear.move.myWidget.CustomRecyclerView
+    <com.yqq.idear.CustomRecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_below="@+id/toolbar"
         android:scrollbars="none"

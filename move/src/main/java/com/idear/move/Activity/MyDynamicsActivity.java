@@ -9,10 +9,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.idear.move.Adapter.MyDynamicsRvAdapter;
-import com.idear.move.MyListener.DataStateChangeCheck;
 import com.idear.move.POJO.MyDynamicsDataModel;
 import com.idear.move.R;
-import com.idear.move.myWidget.CustomRecyclerView;
+import com.yqq.idear.CustomRecyclerView;
+import com.yqq.idear.DataStateChangeCheck;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 

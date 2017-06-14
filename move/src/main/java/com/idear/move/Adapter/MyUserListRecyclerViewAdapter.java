@@ -10,10 +10,7 @@ import com.idear.move.Fragment.UserListFragment.OnListFragmentInteractionListene
 import com.idear.move.Dummy.UserListContent.UserList;
 import com.idear.move.POJO.ChatContentHolder;
 import com.idear.move.R;
-import com.idear.move.ViewHolder.FooterHolder;
-import com.idear.move.ViewHolder.HeaderHolder;
-import com.idear.move.constants.AppConstant;
-import com.idear.move.myWidget.CustomRecyclerView;
+import com.yqq.idear.CustomRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -68,6 +68,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(path: ':myutillibrary')
+    compile project(path: ':esayrefreshandload')
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -81,6 +82,5 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'org.apache.httpcomponents:httpcore:4.4.1'
-    compile 'com.sch.rfview:AnimRefreshRecyclerView:1.0.0'
     testCompile 'junit:junit:4.12'
 }

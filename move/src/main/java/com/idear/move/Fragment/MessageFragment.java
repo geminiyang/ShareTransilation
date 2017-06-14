@@ -96,7 +96,7 @@ public class MessageFragment extends Fragment implements
             f1 = UserListFragment.newInstance(1);
         }
         if(f2==null){
-            f2 = UserListFragment.newInstance(1);
+            f2 = UserListFragment.newInstance(2);
         }
         mTabs.add(f1);
         mTabs.add(f2);
