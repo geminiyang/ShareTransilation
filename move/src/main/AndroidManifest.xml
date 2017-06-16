@@ -135,9 +135,10 @@
         <activity
             android:name=".SponsorActivity.SponsorRegisterNextStepActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".SponsorActivity.SponsorRegisterActivity"
-            android:theme="@style/otherPageStyle"
-            />
+        <activity
+            android:name=".SponsorActivity.SponsorRegisterActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.ForgetPasswordNextStepActivity"></activity>
     </application>
 
 </manifest>
