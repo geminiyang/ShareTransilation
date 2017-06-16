@@ -49,4 +49,27 @@ public class AlertDialogUtil {
         display.setCanceledOnTouchOutside(false);
         display.show();
     }
+
+    public static void MutiDialogChoice(Context context) {
+        new  AlertDialog.Builder(context)
+                .setTitle("性别选择" )
+                .setMultiChoiceItems(new  String[] {"男", "女" },  null ,  null )
+                .setPositiveButton("确定" , null)
+                .setNegativeButton("取消" ,  null )
+                .show();
+    }
+
+    public static void SingleChoiceDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle("请选择" )
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setSingleChoiceItems(new String[] {"男", "女"},  0 ,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }
+                ).setNegativeButton("取消" ,  null )
+                .show();
+    }
 }

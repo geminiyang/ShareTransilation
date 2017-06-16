@@ -21,14 +21,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.MyLoadingActivity"
-            android:theme="@style/FirstPageStyle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- 启动 -->
-        </activity>
+            android:theme="@style/FirstPageStyle"></activity>
         <activity
             android:name=".Activity.SelectActivity"
             android:launchMode="singleTop"
@@ -118,7 +111,14 @@
             android:name=".Activity.FirstMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 启动 -->
+        </activity>
         <activity
             android:name=".Activity.RegisterNextStepActivity"
             android:theme="@style/otherPageStyle" />
@@ -138,7 +138,15 @@
         <activity
             android:name=".SponsorActivity.SponsorRegisterActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.ForgetPasswordNextStepActivity"></activity>
+        <activity
+            android:name=".Activity.ForgetPasswordNextStepActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.MyFavoritesActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.MyActivityActivity"
+            android:theme="@style/otherPageStyle"
+            />
     </application>
 
 </manifest>

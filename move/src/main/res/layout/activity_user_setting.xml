@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/toolBarHeight"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/blue_light"
         android:theme="@style/Theme.ToolBar"
-        app:title=""
-        app:titleTextColor="@color/white"
-        app:layout_scrollFlags="scroll|enterAlways"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -50,256 +46,270 @@
                 />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+
     <ScrollView
-        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
         <RelativeLayout
-            android:background="@color/aliceblue"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/aliceblue">
+
             <LinearLayout
                 android:id="@+id/ll_one"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:orientation="horizontal"
                 android:background="@color/white"
-                >
+                android:orientation="horizontal">
+
                 <RelativeLayout
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
-                    >
+                    android:layout_weight="1">
+
                     <ImageView
                         android:id="@+id/iv_checkUpdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:background="@mipmap/version_update"
-                        />
+                        android:background="@mipmap/version_update" />
+
                     <TextView
                         android:id="@+id/tv_checkUpdate"
-                        android:layout_toEndOf="@+id/iv_checkUpdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
-                        android:text="检查更新"
-                        />
+                        android:layout_toEndOf="@+id/iv_checkUpdate"
+                        android:text="检查更新" />
                 </RelativeLayout>
+
                 <TextView
                     android:id="@+id/versionNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="20dp"
-                    android:text="当前版本:1.0.0.1"
-                    />
+                    android:text="当前版本:1.0.0.1" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_two"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/ll_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:showDividers="middle"
-                android:dividerPadding="18dp"
-                android:divider="@drawable/template_divider_horizontal_grey"
-                android:orientation="vertical"
+                android:layout_below="@id/ll_one"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
-                >
+                android:divider="@drawable/template_divider_horizontal_grey"
+                android:dividerPadding="18dp"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:background="@color/white"
-                    >
+                    android:orientation="horizontal">
+
                     <RelativeLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
-                        >
+                        android:layout_weight="1">
+
                         <ImageView
                             android:id="@+id/iv_clearCache"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:background="@mipmap/clean_cache"
-                            />
+                            android:background="@mipmap/clean_cache" />
+
                         <TextView
                             android:id="@+id/tv_clearCache"
-                            android:layout_toEndOf="@+id/iv_clearCache"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-                            android:text="清除缓存"
-                            />
+                            android:layout_toEndOf="@+id/iv_clearCache"
+                            android:text="清除缓存" />
                     </RelativeLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
-                        android:text="XX.XXMB"
-                        />
+                        android:text="XX.XXMB" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:background="@color/white"
-                    >
+                    android:orientation="horizontal">
+
                     <RelativeLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
-                        >
+                        android:layout_weight="1">
+
                         <ImageView
                             android:id="@+id/iv_message_notification"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:background="@mipmap/msg_notification"
-                            />
+                            android:background="@mipmap/msg_notification" />
+
                         <TextView
                             android:id="@+id/tv_message_notification"
-                            android:layout_toEndOf="@+id/iv_message_notification"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-                            android:text="消息通知"
-                            />
+                            android:layout_toEndOf="@+id/iv_message_notification"
+                            android:text="消息通知" />
                     </RelativeLayout>
+
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
-                        android:background="@drawable/ic_next"
-                        />
+                        android:background="@drawable/ic_next" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:background="@color/white"
-                    >
+                    android:orientation="horizontal">
+
                     <RelativeLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
-                        >
+                        android:layout_weight="1">
+
                         <ImageView
                             android:id="@+id/iv_contactCustomerService"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:background="@mipmap/chatwith"
-                            />
+                            android:background="@mipmap/chatwith" />
+
                         <TextView
                             android:id="@+id/tv_contactCustomerService"
-                            android:layout_toEndOf="@+id/iv_contactCustomerService"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-                            android:text="联系客服"
-                            />
+                            android:layout_toEndOf="@+id/iv_contactCustomerService"
+                            android:text="联系客服" />
                     </RelativeLayout>
+
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
-                        android:background="@drawable/ic_next"
-                        />
+                        android:background="@drawable/ic_next" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:background="@color/white"
-                    >
+                    android:orientation="horizontal">
+
                     <RelativeLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
-                        >
+                        android:layout_weight="1">
+
                         <ImageView
                             android:id="@+id/iv_suggestions"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:background="@mipmap/suggestions"
-                            />
+                            android:background="@mipmap/suggestions" />
+
                         <TextView
                             android:id="@+id/tv_suggestions"
-                            android:layout_toEndOf="@+id/iv_suggestions"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-                            android:text="意见反馈"
-                            />
+                            android:layout_toEndOf="@+id/iv_suggestions"
+                            android:text="意见反馈" />
                     </RelativeLayout>
+
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
-                        android:background="@drawable/ic_next"
-                        />
+                        android:background="@drawable/ic_next" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:background="@color/white"
-                    >
+                    android:orientation="horizontal">
+
                     <RelativeLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
-                        >
+                        android:layout_weight="1">
+
                         <ImageView
                             android:id="@+id/iv_aboutUs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:background="@mipmap/aboutus"
-                            />
+                            android:background="@mipmap/aboutus" />
+
                         <TextView
                             android:id="@+id/tv_aboutUs"
-                            android:layout_toEndOf="@+id/iv_aboutUs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-                            android:text="关于我们"
-                            />
+                            android:layout_toEndOf="@+id/iv_aboutUs"
+                            android:text="关于我们" />
                     </RelativeLayout>
+
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="20dp"
-                        android:background="@drawable/ic_next"
-                        />
+                        android:background="@drawable/ic_next" />
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/log_out_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/corner_button_template_register"
+                    android:text="退出登录"
+                    android:textColor="@drawable/register_text_selector" />
             </LinearLayout>
 
             <View
-                android:layout_below="@+id/ll_two"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"/>
+                android:layout_height="100dp"
+                android:layout_below="@+id/ll_two" />
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

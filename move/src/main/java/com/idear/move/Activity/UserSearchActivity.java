@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
 
-    private ViewPager mViewPager;
+
     private TabLayout mTabLayout;
     private Toolbar mToolBar;
     private ImageView iv_back,iv_clear;
@@ -45,8 +45,8 @@ public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabS
     private LinearLayout llBefore,llAfter;
     private EditText inputEdit;
 
+    private ViewPager mViewPager;
     private MyFragment f1,f2,f3;
-
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
 
@@ -99,6 +99,12 @@ public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabS
         mTabLayout.getTabAt(0).setText("活动");//自有方法添加icon
         mTabLayout.getTabAt(1).setText("反馈");
         mTabLayout.getTabAt(2).setText("推广");
+
+        //设置分割线
+        LinearLayout linearLayout = (LinearLayout) mTabLayout.getChildAt(0);
+        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        linearLayout.setDividerDrawable(ContextCompat.getDrawable(this,
+                R.drawable.template_divider_vertical));
 
         initToolBar(mToolBar);
 
@@ -176,12 +182,6 @@ public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabS
                 searchAction();
             }
         });
-
-        //设置分割线
-        LinearLayout linearLayout = (LinearLayout) mTabLayout.getChildAt(0);
-        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        linearLayout.setDividerDrawable(ContextCompat.getDrawable(this,
-                R.drawable.template_divider_vertical));
     }
 
     private void initData() {

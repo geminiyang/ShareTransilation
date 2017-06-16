@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.idear.move.Activity.FirstMainUIActivity;
 import com.idear.move.Activity.MyDynamicsActivity;
+import com.idear.move.Activity.MyFavoritesActivity;
 import com.idear.move.Activity.MyTakePartInActivity;
 import com.idear.move.Activity.UserDetailInformationActivity;
 import com.idear.move.Activity.UserSettingActivity;
@@ -46,8 +47,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private ScrollView myScrollView;
     private RelativeLayout rllayout;//含有图片的那个相对布局，顶部控件
 
-    private ImageView ivToUserInfo,ivToDynamics;
-    private Button loginOutBtn;
+    private ImageView ivToUserInfo,ivToDynamics,ivToMyFavorites;
 
     private GridView gridView;//网格视图
     private List<Map<String, Object>> data_list;//数据源
@@ -88,7 +88,6 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private void init(View view) {
 
         iv_setting = (ImageView) view.findViewById(R.id.iv_setting);
-        loginOutBtn = (Button) view.findViewById(R.id.log_out_bt);
 
         rllayout = (RelativeLayout)view.findViewById(R.id.rllayout);
 
@@ -96,6 +95,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
 
         ivToUserInfo = (ImageView) view.findViewById(R.id.to_user_info);
         ivToDynamics = (ImageView) view.findViewById(R.id.to_dynamics);
+        ivToMyFavorites = (ImageView) view.findViewById(R.id.to_my_favorites);
 
         //三句代码使界面打开时候自定义ScrollView下面的EditText获取焦点的事件不再发生
         myScrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
@@ -109,13 +109,13 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private void initEvent() {
         ivToUserInfo.setOnClickListener(this);
         ivToDynamics.setOnClickListener(this);
-        loginOutBtn.setOnClickListener(this);
         iv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IntentSkipUtil.skipToNextActivity(getActivity(),UserSettingActivity.class);
             }
         });
+        ivToMyFavorites.setOnClickListener(this);
     }
 
 
@@ -173,50 +173,11 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             case R.id.to_dynamics:
                 IntentSkipUtil.skipToNextActivity(getActivity(),MyDynamicsActivity.class);
                 break;
-            case R.id.log_out_bt:
-                loginOutOP();
+            case R.id.to_my_favorites:
+                IntentSkipUtil.skipToNextActivity(getActivity(),MyFavoritesActivity.class);
                 break;
             default:
                 break;
         }
     }
-
-    private void loginOutOP() {
-        AlertDialog.Builder dialog1 = new AlertDialog.Builder(getActivity());
-        dialog1.setTitle("Tips");
-        dialog1.setMessage("Are you sure quit the App?");
-        dialog1.setIcon(android.R.drawable.ic_dialog_email);
-        dialog1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                getActivity().finish();
-            }
-        });
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setIcon(android.R.drawable.ic_dialog_info);
-        dialog.setInverseBackgroundForced(true);
-        dialog.setTitle("注销");
-        dialog.setMessage("你确定要退出当前程序？");
-        dialog.setPositiveButton("确定",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityManager.getInstance().finishAllActivities();
-                        getActivity().finish();
-                    }
-                });
-        dialog.setNegativeButton("取消",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        //可以如此，也可以直接 用dialog 来执行show()
-        AlertDialog apk = dialog.create();
-        apk.show();
-    }
-
 }

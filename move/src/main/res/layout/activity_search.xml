@@ -7,13 +7,10 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/toolBarHeight"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/blue_light"
         android:theme="@style/Theme.ToolBar"
-        app:title=""
-        app:titleTextColor="@color/white"
-        app:layout_scrollFlags="scroll|enterAlways"
         >
         <LinearLayout
             android:gravity="center_vertical|end"
