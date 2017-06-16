@@ -402,18 +402,6 @@ public class FirstMainUIActivity extends BaseActivity implements
             // 需要处理
             //return true;//屏蔽back键(不响应back键)
             //show()方法决定是否display
-            AlertDialog.Builder dialog1 = new AlertDialog.Builder(this);
-            dialog1.setTitle("Tips");
-            dialog1.setMessage("Are you sure quit the App?");
-            dialog1.setIcon(android.R.drawable.ic_dialog_email);
-            dialog1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-
-                }
-            });
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setIcon(android.R.drawable.ic_dialog_info);

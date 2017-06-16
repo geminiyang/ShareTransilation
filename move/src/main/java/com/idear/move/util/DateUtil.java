@@ -1,12 +1,9 @@
 package com.idear.move.util;
 
-/**
- * Created by user on 2017/5/15.
- */
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateUtil {
 
@@ -18,6 +15,12 @@ public class DateUtil {
         return System.currentTimeMillis()/1000;
     }
 
+    public static String picDateFormat(long timeMills) {
+        Date date = new Date(timeMills);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
+        return sdf.format(date);
+    }
+
     /**
      * 得到昨天的日期
      * @return
@@ -25,7 +28,7 @@ public class DateUtil {
     public static String getYesterdayDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,-1);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         String yesterday = sdf.format(calendar.getTime());
         return yesterday;
     }
@@ -35,7 +38,7 @@ public class DateUtil {
      * @return
      */
     public static  String getTodayDate(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         String date = sdf.format(new Date());
         return date;
     }
@@ -46,7 +49,7 @@ public class DateUtil {
      * @return
      */
     public static String timeStampToStr(long timeMills) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         String date = sdf.format(timeMills);
         return date;
     }
@@ -57,7 +60,7 @@ public class DateUtil {
      * @return
      */
     public static String formatDate(long timeMills) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         String date = sdf.format(timeMills);
         return date;
     }
@@ -69,7 +72,7 @@ public class DateUtil {
      */
     public static String getTime(long timeMills) {
         String time = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         String date = sdf.format(timeMills);
         String[] split = date.split("\\s");
         if ( split.length > 1 ){

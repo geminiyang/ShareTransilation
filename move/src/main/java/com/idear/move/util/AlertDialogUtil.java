@@ -3,8 +3,10 @@ package com.idear.move.util;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,5 +49,4 @@ public class AlertDialogUtil {
         display.setCanceledOnTouchOutside(false);
         display.show();
     }
-
 }

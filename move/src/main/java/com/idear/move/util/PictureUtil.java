@@ -10,7 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * 图片相关操作的工具类
+ * 图片压缩相关操作的工具类
  */
 public class PictureUtil {
 

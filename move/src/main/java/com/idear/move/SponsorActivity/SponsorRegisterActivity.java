@@ -1,35 +1,42 @@
 package com.idear.move.SponsorActivity;
 
+import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.idear.move.Activity.RegisterNextStepActivity;
+import com.idear.move.Activity.UserRegisterActivity;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
-import com.yqq.swipebackhelper.BaseActivity;
+import com.idear.move.util.ScrimUtil;
 
-public class SponsorRegisterActivity extends BaseActivity {
+public class SponsorRegisterActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private Button bt_next;
-    private ImageView iv_back;
+    private Button bt_next,getCode;
+    private ImageView icBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_sponsor_register);
-
+        setContentView(R.layout.register);
         initView();
         initEvent();
     }
 
+    private void initView() {
+        bt_next = (Button) findViewById(R.id.bt_next_step);
+        icBack = (ImageView) findViewById(R.id.ic_arrow_back);
+        getCode = (Button) findViewById(R.id.getCode);
+    }
+
     private void initEvent() {
-        iv_back.setOnClickListener(new View.OnClickListener() {
+        icBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -39,14 +46,16 @@ public class SponsorRegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 IntentSkipUtil.skipToNextActivity(SponsorRegisterActivity.this,
-                        RegisterNextStepActivity.class);
+                        SponsorRegisterNextStepActivity.class);
+            }
+        });
+
+        getCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //在线程中进行网络操作验证邮箱
             }
         });
     }
 
-    private void initView() {
-        bt_next = (Button) findViewById(R.id.bt_next_step);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
-    }
 }

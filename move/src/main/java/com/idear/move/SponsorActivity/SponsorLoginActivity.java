@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
 import android.content.CursorLoader;
@@ -33,9 +32,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.idear.move.Activity.UserRegisterActivity;
 import com.idear.move.Activity.FirstMainUIActivity;
 import com.idear.move.Activity.ForgetPasswordActivity;
-import com.idear.move.Activity.UserRegisterActivity;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;

@@ -20,5 +20,6 @@
     <dimen name="app_bar_height">320dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="toolBarHeight">45dp</dimen>
 
 </resources>

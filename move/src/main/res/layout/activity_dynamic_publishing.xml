@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,7 +11,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/toolBarHeight"
         android:background="@color/blue_light"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Theme.ToolBar"
@@ -66,29 +67,60 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:orientation="vertical"
         >
+
         <EditText
+            android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:maxLines="8"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:paddingTop="10dp"
+            android:background="@null"
             android:gravity="top"
             android:hint="这一刻的想法..."
-            android:text=""
-            android:textSize="16sp"
-            android:background="@null"
-            android:paddingStart="15dp"
+            android:maxEms="256"
+            android:maxLength="256"
+            android:maxLines="8"
             android:paddingEnd="15dp"
-            android:layout_marginStart="10dp"
+            android:paddingStart="15dp"
+            android:text=""
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/textCount"
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="还可输入256字"
             />
-
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/_grey"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/select_grey"
+        >
+    <ImageView
+        android:id="@+id/pic_show"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        />
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/select_grey"
+        android:background="@color/white"
         android:gravity="bottom"
         android:orientation="horizontal">
 
@@ -123,7 +155,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@mipmap/camera_64" />
+            android:clickable="true"
+            android:src="@mipmap/camera_64" />
 
         <LinearLayout
             android:layout_width="wrap_content"

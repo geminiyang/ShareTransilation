@@ -22,6 +22,12 @@
         <activity
             android:name=".Activity.MyLoadingActivity"
             android:theme="@style/FirstPageStyle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.SelectActivity"
@@ -112,14 +118,7 @@
             android:name=".Activity.FirstMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- 启动 -->
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.RegisterNextStepActivity"
             android:theme="@style/otherPageStyle" />
@@ -128,12 +127,15 @@
             android:label="@string/title_activity_sponsor_login"
             android:theme="@style/otherPageStyle" />
         <activity
-            android:name=".SponsorActivity.SponsorRegisterActivity"
-            android:theme="@style/otherPageStyle" />
-        <activity
             android:name=".Activity.UserSearchActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.MyDynamicsActivity"
+        <activity
+            android:name=".Activity.MyDynamicsActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".SponsorActivity.SponsorRegisterNextStepActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".SponsorActivity.SponsorRegisterActivity"
             android:theme="@style/otherPageStyle"
             />
     </application>

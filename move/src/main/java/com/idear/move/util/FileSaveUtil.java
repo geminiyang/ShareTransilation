@@ -35,19 +35,12 @@ public class FileSaveUtil {
     public static final String voice_dir = SD_CARD_PATH + "/voice_data/";
 
     /**
-     * SD卡是否存在
-     **/
-    private boolean hasSD = false;
-    /**
-     * 当前程序包的路径
-     **/
-    private String FILESPATH;
-
-    public static boolean isFileExists(File file) {
-        if (!file.exists()) {
-            return false;
-        }
-        return true;
+     * 检测SD卡是否可用
+     *
+     * @return true 可用，false不可用。
+     */
+    public static boolean isSDExist() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
@@ -79,12 +72,13 @@ public class FileSaveUtil {
      */
     public static File createSDFile(String fileName) throws IOException {
         File file = new File(fileName);
-        if (!isFileExists(file))
+        if (!file.exists()) {
             if (file.isDirectory()) {
-                file.mkdirs();
+                boolean mkdirs = file.mkdirs();
             } else {
-                file.createNewFile();
+                boolean newFile = file.createNewFile();
             }
+        }
         return file;
     }
 
@@ -95,13 +89,20 @@ public class FileSaveUtil {
      */
     public static File createSDCardDirectory(String filePath) throws IOException {
         File file = new File(filePath);
-        if (!isFileExists(file)) {
-            file.mkdirs();
+        if (!file.exists()) {
+            boolean mkdirs = file.mkdirs();
         }
         return file;
     }
 
 
+    /**
+     * 往文本文件中写字节流
+     * @param filePath
+     * @param data
+     * @param isAppend
+     * @return
+     */
     public synchronized static boolean writeBytes(String filePath, byte[] data, boolean isAppend) {
         try {
             FileOutputStream fos;
@@ -144,12 +145,58 @@ public class FileSaveUtil {
         return sb.toString();
     }
 
-    public String getFILESPATH() {
-        return FILESPATH;
+
+    /**
+     * 新建文件夹到手机本地
+     * @param fileFolder ,文件夹的路径名称
+     * @return
+     */
+    public static boolean createDir(String fileFolder) {
+        File dir = new File(fileFolder);
+        if (!dir.exists()) {
+            return dir.mkdirs();
+        }
+        return false;
     }
 
-    public boolean hasSD() {
-        return hasSD;
+    /**
+     * 新建文件到手机本地
+     *
+     * @param fileNameWithPath ,文件名包含路径
+     * @return , true新建成功, false新建失败
+     */
+    public static boolean createFile(String fileNameWithPath) {
+        File file = new File(fileNameWithPath);
+        try {
+            if (isSDExist() && file.exists()) {
+                if (file.delete()) {
+                    return file.createNewFile();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 新建文件到手机指定路径
+     * @param dirPath  ,文件的文件夹目录路径
+     * @param fileName ,文件名
+     * @return , true新建成功, false新建失败
+     */
+    public static boolean createFile(String dirPath, String fileName) {
+        File file = new File(dirPath, fileName);
+        try {
+            if (isSDExist() && file.exists()) {
+                if (file.delete()) {
+                    return file.createNewFile();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
@@ -202,6 +249,40 @@ public class FileSaveUtil {
             return false;
         // 删除当前空目录
         return dirFile.delete();
+    }
+
+    /**
+     * 保存图片的Bitmap数据到sd卡指定路径
+     *
+     * @param fileNameWithPath ,图片的路径
+     * @param bitmap           ,图片的bitmap数据
+     */
+    public static void savePhotoToPath(String fileNameWithPath, Bitmap bitmap) {
+        if (isSDExist()) {
+            File file = new File(fileNameWithPath);
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(file);
+                if (bitmap != null) {
+                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)) {
+                        fos.flush();
+                        fos.close();
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                file.delete();
+                e.printStackTrace();
+            } catch (IOException e) {
+                file.delete();
+                e.printStackTrace();
+            } finally {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public static boolean saveBitmap(Bitmap bm, String path,String filename) {

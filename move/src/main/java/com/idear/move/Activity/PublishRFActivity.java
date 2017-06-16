@@ -9,16 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,14 +34,12 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.idear.move.R;
-import com.idear.move.util.DisplayUtil;
+import com.idear.move.util.CameraUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ImageCheckoutUtil;
 import com.idear.move.util.IntentSkipUtil;
-import com.idear.move.util.KeyBoardUtils;
 import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -60,7 +56,7 @@ import java.util.Map;
 
 public class PublishRFActivity extends BaseActivity implements NumberPicker.OnValueChangeListener {
 
-    private RelativeLayout rlRoot;
+    private RelativeLayout rlRoot;//根布局
     private CheckBox cb_goods,cb_money;
     private CheckedTextView ctv;
     private Button publish;
@@ -89,17 +85,16 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
     private int currentNum = 2;
 
     //权限相关操作
-    private String permissionInfo;
     private boolean CAN_WRITE_EXTERNAL_STORAGE = true;
     private static final int SDK_PERMISSION_REQUEST = 127;
-    private String camPicPath;
-
+    private String camPicPath;//照片保存路径
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_rf);
 
+        getPermissions();
         initView();
         initEvent();
     }
@@ -108,7 +103,6 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
      * 绑定ID
      */
     private void initView() {
-
         cb_goods = (CheckBox) findViewById(R.id.cb_goods);
         cb_money = (CheckBox) findViewById(R.id.cb_money);
         ctv = (CheckedTextView) findViewById(R.id.check_tv_title);
@@ -227,21 +221,18 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
             @Override
             public void onClick(View v) {
                 //添加拍照功能
-                if (!CAN_WRITE_EXTERNAL_STORAGE) {
-                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"权限未开通\n请到设置中开通相册权限");
-                } else {
-                    final String state = Environment.getExternalStorageState();
-                    //当sd卡可用才执行相关操作
-                    if (Environment.MEDIA_MOUNTED.equals(state)) {
-                        String str[] = getSavePicPath();
-                        camPicPath = str[0] + str[1];//path + filename
-                        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        Uri uri = Uri.fromFile(new File(camPicPath));
-                        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//所拍的照保存在指定路径
-                        startActivityForResult(openCameraIntent,TAKE_PICTURE);
+                if (CAN_WRITE_EXTERNAL_STORAGE) {
+                    //当sd卡可用才执行相关操作state
+                    if (FileSaveUtil.isSDExist()) {
+                        String str[] = CameraUtil.getSavePicPath();
+                        camPicPath = str[0] + str[1];//path + filename (执行拍照操作一次生成一个文件路径名)
+                        startActivityForResult(CameraUtil.openMyCamera(camPicPath),TAKE_PICTURE);
                     } else {
                         ToastUtil.getInstance().showToast(PublishRFActivity.this,"请检查内存卡");
                     }
+                } else {
+                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"权限未开通\n请到设置中开通相册权限");
+                    getPermissions();
                 }
             }
         });
@@ -251,27 +242,16 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
             @Override
             public void onClick(View v) {
                 //添加选取相册图片功能
-                if (!CAN_WRITE_EXTERNAL_STORAGE) {
-                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"权限未开通\n请到设置中开通相册权限");
-                } else {
-                    String status = Environment.getExternalStorageState();
+                if (CAN_WRITE_EXTERNAL_STORAGE) {
                     // 判断是否有SD卡
-                    if (status.equals(Environment.MEDIA_MOUNTED)) {
-                        Intent intent = new Intent();
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                            intent.setAction(Intent.ACTION_GET_CONTENT);
-                        } else {
-                            intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-                            intent.addCategory(Intent.CATEGORY_OPENABLE);
-                            intent.putExtra("crop", "true");
-                            intent.putExtra("scale", "true");
-                            intent.putExtra("scaleUpIfNeeded", true);
-                        }
-                        intent.setType("image/*");
-                        startActivityForResult(intent,SELECT_PICTURE);
+                    if (FileSaveUtil.isSDExist()) {
+                        startActivityForResult(CameraUtil.openRecentPhotoList(),SELECT_PICTURE);
                     } else {
-                        ToastUtil.getInstance().showToast(PublishRFActivity.this,"没有SD卡");
+                        ToastUtil.getInstance().showToast(PublishRFActivity.this,"请检查SD卡");
                     }
+                } else {
+                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"权限未开通\n请到设置中开通相册权限");
+                    getPermissions();
                 }
             }
         });
@@ -294,22 +274,6 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
             //相对屏幕，显示在指定位置
             popupWindow.showAtLocation(parent, Gravity.BOTTOM,0,0);
         }
-    }
-
-    /**
-     * 获取图片存储路径
-     * @return
-     */
-    private String[] getSavePicPath() {
-        final String dir = FileSaveUtil.SD_CARD_PATH + "image_data/";
-        try {
-            FileSaveUtil.createSDCardDirectory(dir);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String fileName = String.valueOf(System.currentTimeMillis() + ".jpg");
-        final String[] str = {dir,fileName};
-        return str;
     }
 
     protected void showDialog_First(Context context) {
@@ -429,10 +393,9 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            //操作成功后处理
+            //操作成功后处理(压缩操作)
             switch (requestCode) {
                 case TAKE_PICTURE:
-                    //ToastUtil.getInstance().showToast(PublishRFActivity.this,"TAKE_PICTURE");
                     FileInputStream is = null;
                     try {
                         is = new FileInputStream(camPicPath);
@@ -469,26 +432,27 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                     }
                     break;
                 case SELECT_PICTURE:
-                    //ToastUtil.getInstance().showToast(PublishRFActivity.this,"SELECT_PICTURE");
                     Uri uri = data.getData();
-                    String path = FileSaveUtil.getPath(getApplicationContext(), uri);//将系统文档应用的图片保存在指定路径
-                    mCurrentPhotoFile = new File(path); // 图片文件路径
-                    if (mCurrentPhotoFile.exists()) {
-                        int size = ImageCheckoutUtil.getImageSize(ImageCheckoutUtil.getLocalBitmap(path));
-                        if (size > IMAGE_SIZE) {
-                            imageShow.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            //添加压缩处理
-                            compressPicture(path);
+                    String path = FileSaveUtil.getPath(getApplicationContext(), uri);//转换路径
+                    if(path!=null) {
+                        mCurrentPhotoFile = new File(path); // 图片文件路径
+                        if (mCurrentPhotoFile.exists()) {
+                            int size = ImageCheckoutUtil.getImageSize(ImageCheckoutUtil.getLocalBitmap(path));
+                            if (size > IMAGE_SIZE) {
+                                imageShow.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                //添加压缩处理
+                                compressPicture(path);
+                            } else {
+                                //不需要压缩直接处理
+                                imageShow.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                Message msg = new Message();
+                                msg.obj = path;
+                                msg.what = SHOW_IMAGE;
+                                imageHandler.sendMessage(msg);
+                            }
                         } else {
-                            //不需要压缩直接处理
-                            imageShow.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                            Message msg = new Message();
-                            msg.obj = path;
-                            msg.what = SHOW_IMAGE;
-                            imageHandler.sendMessage(msg);
+                            ToastUtil.getInstance().showToast(PublishRFActivity.this,"该文件不存在");
                         }
-                    } else {
-                        ToastUtil.getInstance().showToast(PublishRFActivity.this,"该文件不存在");
                     }
                     break;
                 default:
@@ -507,8 +471,9 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
             @Override
             public void run() {
                 try {
-                    String str[] = getSavePicPath();
+                    String str[] = CameraUtil.getSavePicPath();//压缩图片另存为
                     String GalPicPath = str[0] + str[1];//获取文件保存路径
+                    //生成对应bitmap
                     Bitmap bitmap = PictureUtil.compressSizeImage(path,
                             imageShow.getWidth(), imageShow.getHeight()
                     );//图片压缩处理具体逻辑
@@ -542,9 +507,10 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
             ArrayList<String> permissions = new ArrayList<String>();
             // 读写权限
             if (addPermission(permissions, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                permissionInfo += "Manifest.permission.WRITE_EXTERNAL_STORAGE Deny \n";
+                Log.d("info","Manifest.permission.WRITE_EXTERNAL_STORAGE Deny \n") ;
             }
             if (permissions.size() > 0) {
+                //请求权限
                 requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
             }
         }
@@ -560,40 +526,44 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                 permissionsList.add(permission);
                 return false;
             }
-
         } else {
             return true;
         }
     }
 
-    @TargetApi(23)
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        /**
+         * 权限请求结果回调
+         */
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case SDK_PERMISSION_REQUEST:
                 Map<String, Integer> perms = new HashMap<String, Integer>();
                 //初始化操作
                 perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
-
+                //批量进行权限申请
                 for (int i = 0; i < permissions.length; i++) {
                     perms.put(permissions[i], grantResults[i]);
                 }
 
                 if (perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    //如果拒绝权限授予则提示
                     CAN_WRITE_EXTERNAL_STORAGE = false;
-                    Toast.makeText(this, "禁用图片权限将导致发送图片功能无法使用！", Toast.LENGTH_SHORT).show();
+                    ToastUtil.getInstance().showToast(this,"禁用图片权限将导致发送图片功能无法使用！");
+                } else {
+                    CAN_WRITE_EXTERNAL_STORAGE = true;
                 }
-
                 break;
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
-
-     static class ImageHandler extends Handler {
+    /**
+     * 进行异步显示图片到控件
+     */
+    private static class ImageHandler extends Handler {
          WeakReference<PublishRFActivity> mActivity;
 
          ImageHandler(PublishRFActivity activity) {
