@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.idear.move.Fragment.UserListFragment.OnListFragmentInteractionListener;
 import com.idear.move.Dummy.UserListContent.UserList;
 import com.idear.move.POJO.UserListHolder;
 import com.idear.move.R;
@@ -21,15 +20,19 @@ public class MyUserListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     private Context mContext;
     private List<UserList> mValues;
-    private final OnListFragmentInteractionListener mListener;
     private LayoutInflater mInflater;
     private int iconWidth,iconHeight;
+    public OnItemClickListener onItemClickListener;//item点击事件
+    /**
+     * item点击事件
+     */
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 
-    public MyUserListRecyclerViewAdapter(Context context ,OnListFragmentInteractionListener listener,
-                                         List<UserList> mList) {
+    public MyUserListRecyclerViewAdapter(Context context,List<UserList> mList) {
         this.mContext = context;
         this.mValues = mList;
-        this.mListener = listener;
         mInflater = LayoutInflater.from(this.mContext);
         iconWidth = ScreenUtil.dip2px(mContext,55);
         iconHeight = ScreenUtil.dip2px(mContext,55);
@@ -42,6 +45,7 @@ public class MyUserListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final int tempPosition = position;
         final UserListHolder mHolder = ((UserListHolder)holder);
         mHolder.mItem = mValues.get(position);//具体哪一个位置的数据项
         mHolder.mTitle.setText(mValues.get(position).title);
@@ -54,9 +58,9 @@ public class MyUserListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         mHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
+                if (null != onItemClickListener) {
                     //监听函数
-                    mListener.onUserListFragmentInteraction(mHolder.mItem);//将这个位置的数据传递出去
+                    onItemClickListener.onItemClick(tempPosition);
                 }
             }
         });
@@ -77,4 +81,11 @@ public class MyUserListRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         return mValues==null ? 0 : mValues.size();//配对方法1
     }
 
+    /**
+     * 设置item点击事件
+     * @param onItemClickListener
+     */
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 }

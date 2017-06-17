@@ -3,6 +3,7 @@ package com.idear.move.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -426,13 +427,13 @@ public class UserMainUIActivity extends BaseActivity implements
     }
 
     @Override
-    public void onUserListFragmentInteraction(UserListContent.UserList item) {
-        IntentSkipUtil.skipToNextActivity(this,UserChatActivity.class);
+    public void onGroupListFragmentInteraction(Uri uri) {
+
     }
 
     @Override
-    public void onGroupListFragmentInteraction(GroupListContent.GroupList item) {
-        IntentSkipUtil.skipToNextActivity(this,UserChatActivity.class);
+    public void onUserListFragmentInteraction(Uri uri) {
+
     }
 }
 

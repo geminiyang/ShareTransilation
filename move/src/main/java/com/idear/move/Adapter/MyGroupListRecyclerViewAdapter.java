@@ -21,15 +21,19 @@ public class MyGroupListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
 
     private Context mContext;
     private List<GroupList> mValues;
-    private final OnListFragmentInteractionListener mListener;
     private LayoutInflater mInflater;
     private int iconWidth,iconHeight;
+    public OnItemClickListener onItemClickListener;//item点击事件
+    /**
+     * item点击事件
+     */
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 
-    public MyGroupListRecyclerViewAdapter(Context context , OnListFragmentInteractionListener listener,
-                                          List<GroupList> mList) {
+    public MyGroupListRecyclerViewAdapter(Context context ,List<GroupList> mList) {
         this.mContext = context;
         this.mValues = mList;
-        this.mListener = listener;
         mInflater = LayoutInflater.from(this.mContext);
         iconWidth = ScreenUtil.dip2px(mContext,55);
         iconHeight = ScreenUtil.dip2px(mContext,55);
@@ -42,6 +46,7 @@ public class MyGroupListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final int tempPosition = position;
         final GroupListHolder mHolder = ((GroupListHolder) holder);
         mHolder.mItem = mValues.get(position);//代表哪个位置的数据项
         mHolder.mTitle.setText(mValues.get(position).title);
@@ -54,9 +59,9 @@ public class MyGroupListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
         mHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
+                if (null != onItemClickListener) {
                     //监听函数
-                    mListener.onGroupListFragmentInteraction(mHolder.mItem);
+                    onItemClickListener.onItemClick(tempPosition);
                 }
             }
         });
@@ -77,4 +82,11 @@ public class MyGroupListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
         return mValues==null ? 0 : mValues.size();//配对方法1
     }
 
+    /**
+     * 设置item点击事件
+     * @param onItemClickListener
+     */
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 }

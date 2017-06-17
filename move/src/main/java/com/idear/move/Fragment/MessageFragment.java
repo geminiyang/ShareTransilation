@@ -1,24 +1,16 @@
 package com.idear.move.Fragment;
 
-
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import com.idear.move.Activity.UserChatActivity;
-import com.idear.move.Dummy.UserListContent;
 import com.idear.move.R;
 import com.idear.move.myWidget.NoScrollViewPager;
-import com.idear.move.util.IntentSkipUtil;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,13 +75,6 @@ public class MessageFragment extends Fragment implements
         mTabLayout.getTabAt(0).setText("私聊");//自有方法添加icon
         mTabLayout.getTabAt(1).setText("房间");
 
-        //设置下划线的长度
-        mTabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                //setIndicator(mTabLayout, 50, 50);
-            }
-        });
     }
 
     private void initData() {

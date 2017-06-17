@@ -1,6 +1,7 @@
 package com.idear.move.Fragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idear.move.Activity.UserChatActivity;
 import com.idear.move.Adapter.MyGroupListRecyclerViewAdapter;
 import com.idear.move.Dummy.GroupListContent;
 import com.idear.move.Dummy.GroupListContent.GroupList;
 import com.idear.move.R;
+import com.idear.move.util.IntentSkipUtil;
 import com.yqq.idear.CustomRecyclerView;
 import com.yqq.idear.DataStateChangeCheck;
 
@@ -23,7 +26,7 @@ import java.util.List;
  * 表示Item列表的Fragment
  * Activity必须实现 {@link OnListFragmentInteractionListener} 接口
  */
-public class GroupListFragment extends Fragment {
+public class GroupListFragment extends Fragment implements MyGroupListRecyclerViewAdapter.OnItemClickListener{
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     //默认列数为1
@@ -104,7 +107,8 @@ public class GroupListFragment extends Fragment {
             myRecyclerView.setLayoutManager(gridLayoutManager);
         }
 
-        mAdapter = new MyGroupListRecyclerViewAdapter(getActivity(),mListener,mValues);
+        mAdapter = new MyGroupListRecyclerViewAdapter(getActivity(),mValues);
+        mAdapter.setOnItemClickListener(this);
         //添加初始数据源
         myRecyclerView.setAdapter(mAdapter);
         //数据状态监听器
@@ -155,6 +159,23 @@ public class GroupListFragment extends Fragment {
     }
 
     /**
+     * 此方法可以调用外部Activity中提供的相关运行逻辑(例如信息传递)
+     * 当触发此方法时Activity收到相关数据
+     * @param uri
+     */
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onGroupListFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        //对应的点击事件
+        IntentSkipUtil.skipToNextActivity(this.getActivity(),UserChatActivity.class);
+    }
+
+    /**
      * 此接口必须由包含该fragment的Activity实现，以允许该fragment的交互传达到该Activity中
      * 以及该Activity中潜在包含的其他Fragment
      * 具体内容查看文档 <a href=
@@ -163,7 +184,7 @@ public class GroupListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         //刷新数据
-        void onGroupListFragmentInteraction(GroupList item);
+        void onGroupListFragmentInteraction(Uri uri);
     }
 
 

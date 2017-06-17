@@ -16,11 +16,13 @@ import com.idear.move.Fragment.ActivityInVerifyFragment;
 import com.idear.move.Fragment.ActivityNoPassFragment;
 import com.idear.move.Fragment.ActivityWaitForFeedBackFragment;
 import com.idear.move.R;
+import com.yqq.myutillibrary.TranslucentStatusSetting;
+import com.yqq.swipebackhelper.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyActivityActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener,
+public class MyActivityActivity extends BaseActivity implements TabLayout.OnTabSelectedListener,
         ActivityNoPassFragment.OnFragmentInteractionListener,ActivityInVerifyFragment.OnFragmentInteractionListener,
         ActivityDoingFragment.OnFragmentInteractionListener,ActivityFinishFragment.OnFragmentInteractionListener,
         ActivityWaitForFeedBackFragment.OnFragmentInteractionListener{
@@ -41,6 +43,7 @@ public class MyActivityActivity extends AppCompatActivity implements TabLayout.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_my_activity);
 
         initData();

@@ -14,11 +14,13 @@ import com.idear.move.Fragment.MyFavoritesActivityFragment;
 import com.idear.move.Fragment.MyFavoritesDynamicsFragment;
 import com.idear.move.Fragment.MyFavoritesSpreadFragment;
 import com.idear.move.R;
+import com.yqq.myutillibrary.TranslucentStatusSetting;
+import com.yqq.swipebackhelper.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener,
+public class MyFavoritesActivity extends BaseActivity implements TabLayout.OnTabSelectedListener,
                                             MyFavoritesActivityFragment.OnFragmentInteractionListener,
                                             MyFavoritesDynamicsFragment.OnFragmentInteractionListener,
                                             MyFavoritesSpreadFragment.OnFragmentInteractionListener {
@@ -37,6 +39,7 @@ public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_my_favorites);
 
         initData();

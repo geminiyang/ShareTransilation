@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -31,8 +32,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.idear.move.Dummy.GroupListContent;
-import com.idear.move.Dummy.UserListContent;
 import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.GroupListFragment;
 import com.idear.move.Fragment.MessageFragment;
@@ -581,12 +580,12 @@ public class SponsorMainUIActivity extends BaseActivity implements
 
 
     @Override
-    public void onUserListFragmentInteraction(UserListContent.UserList item) {
+    public void onGroupListFragmentInteraction(Uri uri) {
 
     }
 
     @Override
-    public void onGroupListFragmentInteraction(GroupListContent.GroupList item) {
+    public void onUserListFragmentInteraction(Uri uri) {
 
     }
 }

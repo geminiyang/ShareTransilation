@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.MyLoadingActivity"
-            android:theme="@style/FirstPageStyle"></activity>
+            android:theme="@style/FirstPageStyle" />
         <activity
             android:name=".Activity.SelectActivity"
             android:launchMode="singleTop"
@@ -144,9 +144,10 @@
         <activity
             android:name=".Activity.MyFavoritesActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.MyActivityActivity"
-            android:theme="@style/otherPageStyle"
-            />
+        <activity
+            android:name=".Activity.MyActivityActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.WriteFeedBackActivity"></activity>
     </application>
 
 </manifest>
