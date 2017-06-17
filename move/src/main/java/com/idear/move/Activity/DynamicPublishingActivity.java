@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -49,7 +50,6 @@ import java.util.Map;
 
 public class DynamicPublishingActivity extends BaseActivity {
 
-    private boolean CAN_WRITE_EXTERNAL_STORAGE = true;
     private Button back,publish;
     private CheckBox cb_location,cb_lock;
     private ImageView camera;
@@ -58,6 +58,7 @@ public class DynamicPublishingActivity extends BaseActivity {
     private ImageView picShow;
 
     //拍照相关功能
+    private boolean CAN_WRITE_EXTERNAL_STORAGE = true;
     private final String TAG = "info";
     private final int SELECT_PICTURE = 0;
     private final int TAKE_PICTURE = 1;
@@ -209,7 +210,8 @@ public class DynamicPublishingActivity extends BaseActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         /**
          * 权限请求结果回调
          */

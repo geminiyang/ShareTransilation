@@ -147,7 +147,9 @@
         <activity
             android:name=".Activity.MyActivityActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.WriteFeedBackActivity"></activity>
+        <activity android:name=".Activity.WriteFeedBackActivity"
+            android:theme="@style/otherPageStyle"
+            />
     </application>
 
 </manifest>

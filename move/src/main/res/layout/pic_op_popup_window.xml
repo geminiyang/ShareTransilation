@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:showDividers="middle"
+    android:showDividers="middle|beginning"
     android:divider="@drawable/template_divider_horizontal_grey"
     android:background="@color/select_grey"
     android:dividerPadding="3dp"

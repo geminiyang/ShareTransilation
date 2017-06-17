@@ -51,8 +51,8 @@
 
             <Button
                 android:id="@+id/publish_dynamic"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="16dp"
@@ -80,7 +80,7 @@
             android:paddingTop="10dp"
             android:background="@null"
             android:gravity="top"
-            android:hint="这一刻的想法..."
+            android:hint="@string/currentMind"
             android:maxEms="256"
             android:maxLength="256"
             android:maxLines="8"

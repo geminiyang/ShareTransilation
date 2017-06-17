@@ -31,7 +31,8 @@ import java.util.LinkedList;
  * Use the {@link ActivityWaitForFeedBackFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ActivityWaitForFeedBackFragment extends Fragment implements CustomRecyclerView.DataOperation,CardLayoutTwoAdapter.OnItemClickListener{
+public class ActivityWaitForFeedBackFragment extends Fragment implements CustomRecyclerView.DataOperation,
+        CardLayoutTwoAdapter.OnItemClickListener{
     private static final String ARG = "param1";
 
     private String mParam1;

@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.idear.move.Activity.WriteFeedBackActivity;
 import com.idear.move.POJO.CardLayoutOneDataModel;
 import com.idear.move.POJO.CardLayoutTwoDataModel;
 import com.idear.move.R;
 import com.idear.move.util.DateUtil;
+import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ScreenUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.idear.BaseAdapter;
@@ -65,7 +67,7 @@ public class CardLayoutTwoAdapter extends RecyclerView.Adapter<RecyclerView.View
         mHolder.mWriteFeedBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.getInstance().showToastTest(mContext);
+                IntentSkipUtil.skipToNextActivity(mContext, WriteFeedBackActivity.class);
             }
         });
 
