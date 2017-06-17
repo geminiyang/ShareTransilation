@@ -2,29 +2,20 @@ package com.idear.move.Activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,8 +24,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.idear.move.Dummy.GroupListContent;
 import com.idear.move.Dummy.UserListContent;
 import com.idear.move.Fragment.DynamicsFragment;
+import com.idear.move.Fragment.GroupListFragment;
 import com.idear.move.Fragment.MessageFragment;
 import com.idear.move.Fragment.MyHomeFragment;
 import com.idear.move.Fragment.UserInformationFragment;
@@ -44,17 +37,17 @@ import com.idear.move.Service.ActivityManager;
 import com.idear.move.myWidget.TipButton;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ObjectAnimatorUtil;
-import com.idear.move.util.ToastUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 import com.yqq.swipebackhelper.SwipeBackHelper;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstMainUIActivity extends BaseActivity implements
-        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,UserListFragment.OnListFragmentInteractionListener {
+public class UserMainUIActivity extends BaseActivity implements
+        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,
+        UserListFragment.OnListFragmentInteractionListener,
+        GroupListFragment.OnListFragmentInteractionListener {
     private RadioButton dynamic,home,locate,msg;
     private TipButton my;
     private DynamicsFragment f3;
@@ -300,14 +293,14 @@ public class FirstMainUIActivity extends BaseActivity implements
         contentView.findViewById(R.id.rl_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,FriendAddActivity.class);
+                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,FriendAddActivity.class);
                 popupWindow.dismiss();
             }
         });
         contentView.findViewById(R.id.rl_publish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(FirstMainUIActivity.this,DynamicPublishingActivity.class);
+                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,DynamicPublishingActivity.class);
                 popupWindow.dismiss();
             }
         });
@@ -433,7 +426,12 @@ public class FirstMainUIActivity extends BaseActivity implements
     }
 
     @Override
-    public void onListFragmentInteraction(UserListContent.UserList item) {
+    public void onUserListFragmentInteraction(UserListContent.UserList item) {
+        IntentSkipUtil.skipToNextActivity(this,UserChatActivity.class);
+    }
+
+    @Override
+    public void onGroupListFragmentInteraction(GroupListContent.GroupList item) {
         IntentSkipUtil.skipToNextActivity(this,UserChatActivity.class);
     }
 }

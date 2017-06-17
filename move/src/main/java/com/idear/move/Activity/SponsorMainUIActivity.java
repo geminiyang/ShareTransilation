@@ -31,8 +31,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.idear.move.Dummy.GroupListContent;
 import com.idear.move.Dummy.UserListContent;
 import com.idear.move.Fragment.DynamicsFragment;
+import com.idear.move.Fragment.GroupListFragment;
 import com.idear.move.Fragment.MessageFragment;
 import com.idear.move.Fragment.MyHomeFragment;
 import com.idear.move.Fragment.UserInformationFragment;
@@ -50,8 +52,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainUIActivity extends BaseActivity implements
-        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,UserListFragment.OnListFragmentInteractionListener {
+public class SponsorMainUIActivity extends BaseActivity implements
+        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,
+        UserListFragment.OnListFragmentInteractionListener, GroupListFragment.OnListFragmentInteractionListener{
     private RadioButton dynamic,home,locate,msg;
     private TipButton my;
     private DynamicsFragment f3;
@@ -193,7 +196,7 @@ public class MainUIActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 //跳转到一个搜索界面
-                IntentSkipUtil.skipToNextActivity(MainUIActivity.this,SearchActivity.class);
+                IntentSkipUtil.skipToNextActivity(SponsorMainUIActivity.this,SearchActivity.class);
             }
         });
     }
@@ -576,8 +579,14 @@ public class MainUIActivity extends BaseActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
+
     @Override
-    public void onListFragmentInteraction(UserListContent.UserList item) {
-        IntentSkipUtil.skipToNextActivity(this,UserChatActivity.class);
+    public void onUserListFragmentInteraction(UserListContent.UserList item) {
+
+    }
+
+    @Override
+    public void onGroupListFragmentInteraction(GroupListContent.GroupList item) {
+
     }
 }

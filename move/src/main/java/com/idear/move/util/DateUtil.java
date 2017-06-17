@@ -55,6 +55,31 @@ public class DateUtil {
     }
 
     /**
+     * 根据时间戳获取自定义时间
+     * @param timeStamp 单位为秒
+     * @return
+     */
+    public static String receiveDate(long timeStamp) {
+        long curTime = System.currentTimeMillis();//获取当前时间
+        long time = ((curTime / 1000) - timeStamp);//已经将单位转换成秒
+
+        if (time >= 60 && time < 3600 * 24) {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.CHINA);
+            return sdf.format(new Date(timeStamp*1000));
+        } else if (time >= 3600 * 24 && time < 3600 * 24 * 2) {
+            return "昨天";
+        } else if(time >= 3600 * 24 * 2&& time < 3600 * 24 * 30) {
+            return time / 3600 / 24 + "天前";
+        } else if (time >= 3600 * 24 * 30 && time < 3600 * 24 * 30 * 12) {
+            return time / 3600 / 24 / 30 + "个月前";
+        } else if (time >= 3600 * 24 * 30 * 12) {
+            return time / 3600 / 24 / 30 / 12 + "年前";
+        } else {
+            return "时间为负数";
+        }
+    }
+
+    /**
      * 得到日期   yyyy-MM-dd
      * @param timeMills
      * @return

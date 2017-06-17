@@ -46,7 +46,7 @@
             android:theme="@style/otherPageStyle" />
         <activity android:name=".Activity.MenuActivity" />
         <activity
-            android:name=".Activity.MainUIActivity"
+            android:name=".Activity.SponsorMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
             android:windowSoftInputMode="adjustPan" />
@@ -108,7 +108,7 @@
             android:name=".Activity.UserChatActivity"
             android:theme="@style/otherPageStyle" />
         <activity
-            android:name=".Activity.FirstMainUIActivity"
+            android:name=".Activity.UserMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
             android:windowSoftInputMode="adjustPan">

@@ -219,7 +219,7 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
         if(this.dataOperation!=null) {
             dataOperation.onRefresh();
             mAdapter.notifyItemRangeInserted(0, requestCount);
-            smoothScrollToPosition(1);
+            smoothScrollToPosition(0);//虽然会报错但是能实现效果
         }
     }
 

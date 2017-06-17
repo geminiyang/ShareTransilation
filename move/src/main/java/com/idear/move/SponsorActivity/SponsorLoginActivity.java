@@ -32,8 +32,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.idear.move.Activity.UserRegisterActivity;
-import com.idear.move.Activity.FirstMainUIActivity;
+import com.idear.move.Activity.UserMainUIActivity;
 import com.idear.move.Activity.ForgetPasswordActivity;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
@@ -374,7 +373,7 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
             showProgress(false);
 
             if (success) {
-                IntentSkipUtil.skipToNextActivity(SponsorLoginActivity.this,FirstMainUIActivity.class);
+                IntentSkipUtil.skipToNextActivity(SponsorLoginActivity.this,UserMainUIActivity.class);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

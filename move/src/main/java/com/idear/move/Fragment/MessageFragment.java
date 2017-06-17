@@ -43,7 +43,8 @@ public class MessageFragment extends Fragment implements
     private NoScrollViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private UserListFragment f1,f2;
+    private UserListFragment f1;
+    private GroupListFragment f2;
 
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
@@ -92,11 +93,11 @@ public class MessageFragment extends Fragment implements
     }
 
     private void initData() {
-        if(f1==null) {
+        if (f1 == null) {
             f1 = UserListFragment.newInstance(1);
         }
-        if(f2==null){
-            f2 = UserListFragment.newInstance(2);
+        if (f2 == null) {
+            f2 = GroupListFragment.newInstance(1);
         }
         mTabs.add(f1);
         mTabs.add(f2);
@@ -115,51 +116,6 @@ public class MessageFragment extends Fragment implements
         };
 
     }
-
-    /**
-     * 利用反射的方法来设置 每一个tab的大小
-     * @param tabs
-     * @param leftDip
-     * @param rightDip
-     */
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        //将px转换成dp
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip,
-                Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip,
-                Resources.getSystem().getDisplayMetrics());
-
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
-                    (0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
-
-
-    }
-
-
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();

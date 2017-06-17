@@ -27,16 +27,6 @@ public class BaseAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView
         init(context,dataLists);
     }
 
-    /**
-     * 如果item的子View有点击事件，可使用该构造方法
-     * @param context
-     * @param dataLists
-     * @param onViewClickListener
-     */
-    public BaseAdapter(Context context, List<Object> dataLists, OnViewClickListener onViewClickListener) {
-        init(context,dataLists);
-        this.onViewClickListener = onViewClickListener;
-    }
 
     /**
      * 初始化
@@ -121,4 +111,11 @@ public class BaseAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView
         this.onItemLongClickListener = onItemLongClickListener;
     }
 
+    /**
+     * 设置子View的点击事件
+     * @param onViewClickListener
+     */
+    public void setViewClickListener(OnViewClickListener onViewClickListener) {
+        this.onViewClickListener = onViewClickListener;
+    }
 }

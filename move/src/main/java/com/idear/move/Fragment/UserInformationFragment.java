@@ -1,30 +1,23 @@
 package com.idear.move.Fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
-import com.idear.move.Activity.FirstMainUIActivity;
+import com.idear.move.Activity.MyActivityActivity;
 import com.idear.move.Activity.MyDynamicsActivity;
 import com.idear.move.Activity.MyFavoritesActivity;
-import com.idear.move.Activity.MyTakePartInActivity;
 import com.idear.move.Activity.UserDetailInformationActivity;
 import com.idear.move.Activity.UserSettingActivity;
 import com.idear.move.R;
-import com.idear.move.Service.ActivityManager;
 import com.idear.move.util.IntentSkipUtil;
 
 import java.util.ArrayList;
@@ -55,7 +48,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private int[] icon = { R.mipmap.takepart, R.mipmap.trends,R.mipmap.takepart, R.mipmap.trends,
             R.mipmap.takepart};
 
-    private String[] iconName={ "未通过", "审核中","进行中","已结束","已完成"};
+    private String[] iconName={ "未通过", "审核中","进行中","待反馈","已结束"};
 
     public static UserInformationFragment newInstance(String arg){
         UserInformationFragment fragment = new UserInformationFragment();
@@ -133,17 +126,8 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HashMap<String, Object> item= (HashMap<String, Object>) parent.getItemAtPosition(position);
-                Toast toast = Toast.makeText(view.getContext(),(String)item.get("text"),Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER,0,0);
-                toast.show();
-                switch (position) {
-                    case 0:
-                        IntentSkipUtil.skipToNextActivity(getActivity(),MyTakePartInActivity.class);
-                        break;
-                    case 1:
-                        IntentSkipUtil.skipToNextActivity(getActivity(),MyDynamicsActivity.class);
-                        break;
-                }
+                IntentSkipUtil.skipToNextActivityWithBundle(getActivity(),
+                        MyActivityActivity.class,"select_tab",(String)item.get("text"));
             }
         });
     }

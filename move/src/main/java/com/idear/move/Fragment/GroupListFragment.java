@@ -9,20 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.idear.move.Adapter.MyUserListRecyclerViewAdapter;
-import com.idear.move.Dummy.UserListContent;
+import com.idear.move.Adapter.MyGroupListRecyclerViewAdapter;
+import com.idear.move.Dummy.GroupListContent;
+import com.idear.move.Dummy.GroupListContent.GroupList;
 import com.idear.move.R;
-import com.idear.move.Dummy.UserListContent.UserList;
 import com.yqq.idear.CustomRecyclerView;
 import com.yqq.idear.DataStateChangeCheck;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 表示Item列表的Fragment
  * Activity必须实现 {@link OnListFragmentInteractionListener} 接口
  */
-public class UserListFragment extends Fragment {
+public class GroupListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     //默认列数为1
@@ -36,20 +37,20 @@ public class UserListFragment extends Fragment {
 
     private CustomRecyclerView myRecyclerView;
     //数据源
-    private ArrayList<UserList> mValues = new ArrayList<>();
+    private List<GroupList> mValues = new ArrayList<>();
 
-    private MyUserListRecyclerViewAdapter mAdapter;
+    private MyGroupListRecyclerViewAdapter mAdapter;
 
     private View rootView;
     /**
      * 空构造函数，屏幕方向改变时可调用
      */
-    public UserListFragment() {
+    public GroupListFragment() {
     }
 
     //初始化item每一行的列数
-    public static UserListFragment newInstance(int columnCount) {
-        UserListFragment fragment = new UserListFragment();
+    public static GroupListFragment newInstance(int columnCount) {
+        GroupListFragment fragment = new GroupListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -103,7 +104,7 @@ public class UserListFragment extends Fragment {
             myRecyclerView.setLayoutManager(gridLayoutManager);
         }
 
-        mAdapter = new MyUserListRecyclerViewAdapter(getActivity(),mListener,mValues);
+        mAdapter = new MyGroupListRecyclerViewAdapter(getActivity(),mListener,mValues);
         //添加初始数据源
         myRecyclerView.setAdapter(mAdapter);
         //数据状态监听器
@@ -121,7 +122,7 @@ public class UserListFragment extends Fragment {
                     if (mValues.size() >= TOTAL_COUNT) {
                         break;
                     }
-                    mValues.add(UserListContent.createUserItem(mValues.size()));
+                    mValues.add(GroupListContent.createGroupItem(mValues.size()));
                 }
             }
 
@@ -162,7 +163,7 @@ public class UserListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         //刷新数据
-        void onUserListFragmentInteraction(UserList item);
+        void onGroupListFragmentInteraction(GroupList item);
     }
 
 

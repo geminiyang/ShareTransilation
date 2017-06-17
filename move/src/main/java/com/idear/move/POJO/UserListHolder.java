@@ -14,7 +14,7 @@ import com.idear.move.R;
  * github地址：https://github.com/geminiyang/ShareTransilation
  */
 
-public class ChatContentHolder extends RecyclerView.ViewHolder{
+public class UserListHolder extends RecyclerView.ViewHolder{
     public final View mView;
     public final ImageView mImg;
     public final ImageView mTipImg;
@@ -23,7 +23,7 @@ public class ChatContentHolder extends RecyclerView.ViewHolder{
     public final TextView mTime;
     public UserListContent.UserList mItem;
 
-    public ChatContentHolder(View view) {
+    public UserListHolder(View view) {
         super(view);
         mView = view;
         mImg = (ImageView) view.findViewById(R.id.userImg);

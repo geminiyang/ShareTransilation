@@ -35,11 +35,7 @@ public class ToastUtil {
     }
 
     public void showToast(Fragment fragment, String string){
-        if(toast != null){
-            toast.cancel();
-        }
-        toast = Toast.makeText(fragment.getActivity(), string,Toast.LENGTH_SHORT);
-        toast.show();
+        showToast(fragment.getActivity(),string);
     }
 
     public void showToast(Activity activity, String string){
@@ -51,7 +47,6 @@ public class ToastUtil {
     }
 
     public void showToastTest(Context context){
-
         if(toast != null){
             toast.cancel();
         }
@@ -59,4 +54,15 @@ public class ToastUtil {
         toast.show();
     }
 
+    public void showToastTest(Fragment fragment){
+        showToastTest(fragment.getActivity());
+    }
+
+    public void showToastTest(Activity activity){
+        if(toast != null){
+            toast.cancel();
+        }
+        toast = Toast.makeText(activity, "click",Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }

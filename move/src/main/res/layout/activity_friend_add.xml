@@ -10,13 +10,10 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/toolBarHeight"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/title_bar_blue"
         android:theme="@style/Theme.ToolBar"
-        app:title=""
-        app:titleTextColor="@color/white"
-        app:layout_scrollFlags="scroll|enterAlways"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,15 +40,22 @@
                 android:layout_toEndOf="@+id/divider_view"
                 android:id="@+id/edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:hint="  搜索添加或关注、好友、商户"
-                android:textColor="@color/colorPrimary"
-                android:layout_centerInParent="true"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:hint=" 搜索关注、好友和商户"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="30dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="60dp"
+                android:maxEms="256"
+                android:maxLength="256"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp"
-                android:drawableBottom="@drawable/template_divider_selector"
+                android:background="@null"
+                android:drawableBottom="@drawable/edit_line"
                 android:clickable="true"
                 />
             <FrameLayout
@@ -67,77 +71,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_close_black_24dp"
+                    android:background="@drawable/ic_close_white_24dp"
                     />
             </FrameLayout>
             <View
                 android:id="@+id/divider"
-                android:layout_toStartOf="@+id/ib_search"
+                android:layout_toStartOf="@+id/iv_search"
                 android:layout_width="1dp"
                 android:layout_height="20dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
                 android:layout_centerVertical="true"
-                android:background="@color/black"
-                android:visibility="gone"
+                android:background="@color/divider_view_color"
+                android:visibility="visible"
                 />
-            <ImageButton
-                android:id="@+id/ib_search"
+            <ImageView
+                android:id="@+id/iv_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/search"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="40dp"
                 />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-
-    <RelativeLayout
-        android:background="@color/trans_blue"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
-
-        <com.idear.move.myWidget.RoundImageViewByXfermode
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/rina"
-            android:layout_marginStart="20dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/avatar"
-            app:borderRadius="20dp"
-            app:type="circle" />
-        <LinearLayout
-            android:layout_toEndOf="@+id/avatar"
-            android:id="@+id/ll"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:text="title"
-                android:id="@+id/title"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="content"
-                android:id="@+id/content"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <Button
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:background="@drawable/corner_button_template_send"
-            android:text="关注"
-            android:id="@+id/bt_concernOther"
-            />
-    </RelativeLayout>
+        android:layout_height="match_parent"/>
 </LinearLayout>

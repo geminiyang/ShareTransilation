@@ -1,29 +1,36 @@
 package com.idear.move.Activity;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.idear.move.Fragment.MyFragment;
+import com.idear.move.Fragment.MyFavoritesActivityFragment;
+import com.idear.move.Fragment.MyFavoritesDynamicsFragment;
+import com.idear.move.Fragment.MyFavoritesSpreadFragment;
 import com.idear.move.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
+public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener,
+                                            MyFavoritesActivityFragment.OnFragmentInteractionListener,
+                                            MyFavoritesDynamicsFragment.OnFragmentInteractionListener,
+                                            MyFavoritesSpreadFragment.OnFragmentInteractionListener {
 
     private ImageView iv_back;
     private TabLayout mTabLayout;
 
     //分页列表
     private ViewPager mViewPager;
-    private MyFragment f1,f2,f3,f4,f5;
+    private MyFavoritesActivityFragment f1;
+    private MyFavoritesDynamicsFragment f2;
+    private MyFavoritesSpreadFragment f3;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
 
@@ -39,25 +46,18 @@ public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.
 
     private void initData() {
         if (f1 == null) {
-            f1 = MyFragment.newInstance("界面1");
+            f1 = MyFavoritesActivityFragment.newInstance("活动");
         }
         if (f2 == null) {
-            f2 = MyFragment.newInstance("界面2");
+            f2 = MyFavoritesDynamicsFragment.newInstance("动态");
         }
         if (f3 == null) {
-            f3 = MyFragment.newInstance("界面3");
+            f3 = MyFavoritesSpreadFragment.newInstance("推广");
         }
-        if (f4 == null) {
-            f4 = MyFragment.newInstance("界面4");
-        }
-        if (f5 == null) {
-            f5 = MyFragment.newInstance("界面5");
-        }
+
         mTabs.add(f1);
         mTabs.add(f2);
         mTabs.add(f3);
-        mTabs.add(f4);
-        mTabs.add(f5);
 
         //要关注如何更新其中的数据
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -76,9 +76,17 @@ public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
     }
 
     private void initEvent() {
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(0);
 
@@ -89,11 +97,9 @@ public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.
 
         mTabLayout.addOnTabSelectedListener(this);
 
-        mTabLayout.getTabAt(0).setText("未通过");//自有方法添加icon
-        mTabLayout.getTabAt(1).setText("审核中");
-        mTabLayout.getTabAt(2).setText("进行中");
-        mTabLayout.getTabAt(2).setText("待反馈");
-        mTabLayout.getTabAt(2).setText("已结束");
+        mTabLayout.getTabAt(0).setText("活动");//自有方法添加icon
+        mTabLayout.getTabAt(1).setText("动态");
+        mTabLayout.getTabAt(2).setText("推广");
     }
 
     @Override
@@ -109,11 +115,7 @@ public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.
             case 2:
                 mViewPager.setCurrentItem(2, false);
                 break;
-            case 3:
-                mViewPager.setCurrentItem(3, false);
-                break;
-            case 4:
-                mViewPager.setCurrentItem(4, false);
+            default:
                 break;
         }
     }
@@ -126,5 +128,20 @@ public class MyFavoritesActivity extends AppCompatActivity implements TabLayout.
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void onFavoritesSpreadFragmentInteraction(Uri uri) {
+        //与我的收藏里面的推广关联
+    }
+
+    @Override
+    public void onFavoritesDynamicsFragmentInteraction(Uri uri) {
+        //与我的收藏里面的动态关联
+    }
+
+    @Override
+    public void onFavoritesActivityFragmentInteraction(Uri uri) {
+        //与我的收藏里面的活动关联
     }
 }

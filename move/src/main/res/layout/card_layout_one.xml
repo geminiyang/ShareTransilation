@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="1dp"
+    android:background="@drawable/bg_rectangle"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/activityPic"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        tools:src="@drawable/family" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <TextView
+            android:id="@+id/activityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:maxEms="20"
+            android:maxLength="20"
+            android:maxLines="2"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            tools:text="漫画分享大会"
+            />
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/red"
+            tools:text="[填状态]"
+            />
+        <TextView
+            android:id="@+id/receiverTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="22:37"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+</LinearLayout>
