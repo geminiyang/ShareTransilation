@@ -36,6 +36,7 @@ public class RoundImageViewByXfermode extends android.support.v7.widget.AppCompa
     private int type;
     public static final int TYPE_CIRCLE = 0;
     public static final int TYPE_ROUND = 1;
+    private int width,height;
     /**
      * 圆角大小的默认值
      */
@@ -63,6 +64,14 @@ public class RoundImageViewByXfermode extends android.support.v7.widget.AppCompa
 
         mBorderRadius = typedArray.getDimensionPixelSize(
                 R.styleable.RoundImageViewByXfermode_borderRadius, (int) TypedValue
+                        .applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                                BORDER_RADIUS_DEFAULT, getResources().getDisplayMetrics()));// 默认为10dp
+        width = typedArray.getDimensionPixelSize(
+                R.styleable.RoundImageViewByXfermode_picWidth, (int) TypedValue
+                        .applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                                BORDER_RADIUS_DEFAULT, getResources().getDisplayMetrics()));// 默认为10dp
+        height = typedArray.getDimensionPixelSize(
+                R.styleable.RoundImageViewByXfermode_picHeight, (int) TypedValue
                         .applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                                 BORDER_RADIUS_DEFAULT, getResources().getDisplayMetrics()));// 默认为10dp
         //打印日志显示当前弧度
@@ -100,9 +109,18 @@ public class RoundImageViewByXfermode extends android.support.v7.widget.AppCompa
         {
             //拿到Drawable  
             Drawable drawable = getDrawable();
-            //获取drawable的宽和高  
-            int dWidth = drawable.getIntrinsicWidth();
-            int dHeight = drawable.getIntrinsicHeight();
+
+            //获取drawable的宽和高
+            int dWidth,dHeight;
+
+            if(drawable == null) {
+                dWidth = width;
+                dHeight = height;
+            } else {
+                dWidth = drawable.getIntrinsicWidth();
+                dHeight = drawable.getIntrinsicHeight();
+            }
+
 
             if (null != drawable)
             {

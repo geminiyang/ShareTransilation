@@ -6,6 +6,8 @@
         <enum name="round" value="1" />
     </attr>
     <attr name="borderRadius" format="dimension" />
+    <attr name="picWidth" format="dimension" />
+    <attr name="picHeight" format="dimension" />
 
     <declare-styleable name="RoundImageView">
         <attr name="borderRadius"/>
@@ -14,8 +16,10 @@
     </declare-styleable>
 
     <declare-styleable name="RoundImageViewByXfermode">
-    <attr name="borderRadius"/>
-    <attr name="type" />
+        <attr name="borderRadius"/>
+        <attr name="type" />
+        <attr name="picWidth" />
+        <attr name="picHeight" />
     </declare-styleable>
 
     <declare-styleable name="RoundImageViewBitmapShader">

@@ -1,5 +1,6 @@
 package com.idear.move.Activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.idear.move.Fragment.AllActivityFinancingFragment;
-import com.idear.move.Fragment.AllActivityFragment;
 import com.idear.move.Fragment.AllActivityRecruitAndFinancingFragment;
 import com.idear.move.Fragment.AllActivityRecruitFragment;
 import com.idear.move.R;
@@ -22,20 +22,22 @@ import com.yqq.swipebackhelper.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllActivityActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
+public class AllActivityActivity extends BaseActivity implements TabLayout.OnTabSelectedListener ,
+        AllActivityFinancingFragment.OnFragmentInteractionListener,
+        AllActivityRecruitFragment.OnFragmentInteractionListener ,
+        AllActivityRecruitAndFinancingFragment.OnFragmentInteractionListener {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private Toolbar mToolBar;
     private ImageView iv_back;
 
-    private AllActivityFragment f1;
-    private AllActivityRecruitFragment f2;
-    private AllActivityFinancingFragment f3;
-    private AllActivityRecruitAndFinancingFragment f4;
+    private AllActivityRecruitFragment f1;
+    private AllActivityFinancingFragment f2;
+    private AllActivityRecruitAndFinancingFragment f3;
 
     private FragmentPagerAdapter mAdapter;
-    private List<Fragment> mTabs = new ArrayList<Fragment>();
+    private List<Fragment> mTabs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +65,11 @@ public class AllActivityActivity extends BaseActivity implements TabLayout.OnTab
 
         mTabLayout.addOnTabSelectedListener(this);
 
-        mTabLayout.getTabAt(0).setText("全部活动");//自有方法添加icon
-        mTabLayout.getTabAt(1).setText("招募");
-        mTabLayout.getTabAt(2).setText("筹资");
-        mTabLayout.getTabAt(3).setText("招募筹资");
+        mTabLayout.getTabAt(0).setText("招募");
+        mTabLayout.getTabAt(1).setText("筹资");
+        mTabLayout.getTabAt(2).setText("招募筹资");
 
-        initToolBar(mToolBar);
+        initToolBar();
 
         //设置分割线
         LinearLayout linearLayout = (LinearLayout) mTabLayout.getChildAt(0);
@@ -77,7 +78,7 @@ public class AllActivityActivity extends BaseActivity implements TabLayout.OnTab
                 R.drawable.template_divider_vertical));
     }
 
-    private void initToolBar(Toolbar toolbar) {
+    private void initToolBar() {
         iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,22 +90,17 @@ public class AllActivityActivity extends BaseActivity implements TabLayout.OnTab
 
     private void initData() {
         if (f1 == null) {
-            f1 = AllActivityFragment.newInstance("全部活动");
+            f1 = AllActivityRecruitFragment.newInstance("招募");
         }
         if (f2 == null) {
-            f2 = AllActivityRecruitFragment.newInstance("招募");
+            f2 = AllActivityFinancingFragment.newInstance("筹资");
         }
         if (f3 == null) {
-            f3 = AllActivityFinancingFragment.newInstance("筹资");
-        }
-        if (f4 == null) {
-            f4 = AllActivityRecruitAndFinancingFragment.newInstance("招募筹资");
+            f3 = AllActivityRecruitAndFinancingFragment.newInstance("招募筹资");
         }
         mTabs.add(f1);
         mTabs.add(f2);
         mTabs.add(f3);
-        mTabs.add(f4);
-
         //要关注如何更新其中的数据
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -132,9 +128,6 @@ public class AllActivityActivity extends BaseActivity implements TabLayout.OnTab
             case 2:
                 mViewPager.setCurrentItem(2, false);
                 break;
-            case 3:
-                mViewPager.setCurrentItem(3, false);
-                break;
         }
     }
 
@@ -145,6 +138,21 @@ public class AllActivityActivity extends BaseActivity implements TabLayout.OnTab
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onRecruitFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onFinancingFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onBothFragmentInteraction(Uri uri) {
 
     }
 }

@@ -10,53 +10,53 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.idear.move.POJO.FeedBackDataModel;
-import com.idear.move.POJO.SpreadDataModel;
+import com.idear.move.POJO.CardLayoutFourDataModel;
 import com.idear.move.R;
 import com.idear.move.myWidget.RoundImageViewByXfermode;
 import com.idear.move.myWidget.UpdateTimeTextView;
-import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ScreenUtil;
 
 import java.util.List;
 
 
-public class FeedBackRvAdapter extends RecyclerView.Adapter<FeedBackRvAdapter.ViewHolder> {
+public class CardLayoutFourAdapter extends RecyclerView.Adapter<CardLayoutFourAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<FeedBackDataModel> modelList;
+    private List<CardLayoutFourDataModel> modelList;
     private LayoutInflater mInflater;
     public OnItemClickListener onItemClickListener;//item点击事件
     public OnItemLongClickListener onItemLongClickListener;//item长按事件
-    private int smallPicWidth,smallPicHeight;
+    private int picWidth,picHeight;
 
-    public FeedBackRvAdapter(Context context , List<FeedBackDataModel> modelList) {
+    public CardLayoutFourAdapter(Context context , List<CardLayoutFourDataModel> modelList) {
         this.mContext = context;
         this.modelList = modelList;
         mInflater = LayoutInflater.from(this.mContext);
-        smallPicWidth = ScreenUtil.dip2px(mContext,140);
-        smallPicHeight = ScreenUtil.dip2px(mContext,80);
+        picWidth = ScreenUtil.dip2px(mContext,340);
+        picHeight = ScreenUtil.dip2px(mContext,120);
     }
 
     @Override
-    public FeedBackRvAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public CardLayoutFourAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // 给ViewHolder设置布局文件
-        View v = mInflater.inflate(R.layout.spread_cardview, viewGroup, false);
+        View v = mInflater.inflate(R.layout.card_layout_four, viewGroup, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(FeedBackRvAdapter.ViewHolder holder, int position) {
-        final int tempPosition = position;
+    public void onBindViewHolder(CardLayoutFourAdapter.ViewHolder holder, int position) {
         // 给ViewHolder设置元素
-        FeedBackDataModel u = modelList.get(position);
-        holder.mTitle.setText(u.title);
-        holder.mHisPublishTime.setText(u.publishTime);
+        final int tempPosition = position;
+        CardLayoutFourDataModel u = modelList.get(position);
+        holder.mActivityName.setText(u.activityName);
+        holder.mPublishTime.setText(u.publishTime);
+        holder.mPersonNum.setText(u.personNum);
+        holder.mMoneyNum.setText(u.moneyNum);
         holder.mVisitNum.setText(u.visitNum);
-        //设置图像
-        Glide.with(mContext).load(u.smallImage).override(smallPicWidth,smallPicHeight).
-                diskCacheStrategy(DiskCacheStrategy.RESULT).skipMemoryCache(false).
-                centerCrop().into(holder.mSmallPic);
+        holder.mFavoriteNum.setText(u.favoriteNum);
+        holder.mActivityState.setText(u.activityState);
+        Glide.with(mContext).load(u.activityPic).override(picWidth,picHeight).diskCacheStrategy(DiskCacheStrategy.RESULT).
+                skipMemoryCache(false).into(holder.mActivityPic);
         holder.itemView.setOnClickListener(new View.OnClickListener() {//item点击事件
             @Override
             public void onClick(View v) {
@@ -89,16 +89,20 @@ public class FeedBackRvAdapter extends RecyclerView.Adapter<FeedBackRvAdapter.Vi
 
     //重写的自定义ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mTitle,mVisitNum;
-        private UpdateTimeTextView mHisPublishTime;
-        private RoundImageViewByXfermode mSmallPic;
+        private TextView mActivityName,mFavoriteNum,mVisitNum,mPersonNum,mMoneyNum,mActivityState;
+        private UpdateTimeTextView mPublishTime;
+        private RoundImageViewByXfermode mActivityPic;
 
         private ViewHolder(View v) {
             super(v);
-            mTitle = (TextView)v.findViewById(R.id.info_title);
-            mVisitNum = (TextView)v.findViewById(R.id.info_visit_num);
-            mSmallPic = (RoundImageViewByXfermode) v.findViewById(R.id.smallPic);
-            mHisPublishTime = (UpdateTimeTextView) v.findViewById(R.id.hisPublishTime);
+            mActivityName = (TextView) v.findViewById(R.id.activityName);
+            mPublishTime = (UpdateTimeTextView) v.findViewById(R.id.publishTime);
+            mPersonNum = (TextView) v.findViewById(R.id.personNum);
+            mMoneyNum = (TextView) v.findViewById(R.id.moneyNum);
+            mActivityPic = (RoundImageViewByXfermode) v.findViewById(R.id.activityPic);
+            mActivityState = (TextView) v.findViewById(R.id.activityState);
+            mFavoriteNum = (TextView) v.findViewById(R.id.favoriteNum);
+            mVisitNum = (TextView) v.findViewById(R.id.visitNum);
         }
     }
 
@@ -131,5 +135,4 @@ public class FeedBackRvAdapter extends RecyclerView.Adapter<FeedBackRvAdapter.Vi
     public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
         this.onItemLongClickListener = onItemLongClickListener;
     }
-
 }

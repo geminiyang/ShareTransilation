@@ -14,7 +14,6 @@ import com.idear.move.POJO.CardLayoutOneDataModel;
 import com.idear.move.R;
 import com.idear.move.util.DateUtil;
 import com.idear.move.util.ScreenUtil;
-import com.yqq.idear.BaseAdapter;
 import com.yqq.idear.CustomRecyclerView;
 
 import java.util.List;

@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_height="93dp"
+    android:layout_margin="2dp"
     app:cardElevation="4dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="3dp">
@@ -14,68 +14,105 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:weightSum="5"
+            android:orientation="horizontal"
             android:padding="5dp"
             >
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/light_grey"
+            <RelativeLayout
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 >
-                <ImageView
-                    android:id="@+id/pic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/a"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    />
                 <TextView
                     android:id="@+id/info_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="@color/red"
-                    tools:text="我就是标题"
-                    android:textSize="14sp"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground" />
-            </FrameLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <ImageView
-                    android:id="@+id/iv_me"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/me"
-                    />
-                <TextView
-                    android:id="@+id/info_visit_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:textColor="@color/_grey"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/iv_me"
-                    tools:text="88"
+                    android:textColor="@color/black"
+                    tools:text="今天在广州天河体育馆举行参加篮球比赛"
+                    android:maxLines="2"
+                    android:maxEms="26"
+                    android:maxLength="26"
+                    android:layout_centerHorizontal="true"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:textSize="14sp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground" />
                 <com.idear.move.myWidget.UpdateTimeTextView
-                    android:id="@+id/info_time"
+                    android:id="@+id/hisPublishTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
                     android:textColor="@color/_grey"
                     tools:text="今天20:53"
                     android:textSize="12sp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground" />
+                <ImageView
+                    android:id="@+id/iv_me"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_toStartOf="@+id/info_visit_num"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="5dp"
+                    android:background="@mipmap/me"
+                    />
+                <TextView
+                    android:id="@+id/info_visit_num"
+                    android:layout_toStartOf="@+id/iv_heart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/_grey"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="-3dp"
+                    android:layout_marginEnd="10dp"
+                    tools:text="88"
+                    android:textSize="14sp"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground" />
+                <ImageView
+                    android:id="@+id/iv_heart"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_toStartOf="@+id/info_favorite_num"
+                    android:layout_marginEnd="5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@mipmap/heart"
+                    />
+                <TextView
+                    android:id="@+id/info_favorite_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/_grey"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="-3dp"
+                    tools:text="88"
+                    android:textSize="14sp"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="5dp"
+                >
+                <com.idear.move.myWidget.RoundImageViewByXfermode
+                    android:id="@+id/smallPic"
+                    android:layout_width="140dp"
+                    android:layout_height="80dp"
+                    tools:src="@drawable/family"
+                    android:scaleType="centerCrop"
+                    app:picWidth="140dp"
+                    app:picHeight="80dp"
+                    app:type="round"
+                    app:borderRadius="4dp"
+                    />
             </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

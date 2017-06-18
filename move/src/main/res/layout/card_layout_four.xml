@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_rectangle"
+        android:orientation="vertical"
+        android:padding="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="9">
+
+            <TextView
+                android:id="@+id/activityName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="7"
+                android:maxLength="20"
+                android:maxEms="20"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                tools:text="这就是标题" />
+
+            <com.idear.move.myWidget.UpdateTimeTextView
+                android:id="@+id/publishTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_horizontal"
+                android:textColor="@color/tras_black"
+                android:textSize="14sp"
+                tools:text="20:43" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="3dp"
+            >
+
+            <TextView
+                android:id="@+id/personNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:textColor="@color/main_color_red"
+                android:textSize="12sp"
+                tools:text="招募人数:10人" />
+
+            <TextView
+                android:id="@+id/moneyNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:textColor="@color/main_color_red"
+                android:textSize="12sp"
+                tools:text="4000 元" />
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            >
+            <com.idear.move.myWidget.RoundImageViewByXfermode
+                android:id="@+id/activityPic"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                app:borderRadius="5dp"
+                app:picHeight="120dp"
+                app:picWidth="340dp"
+                app:type="round"
+                tools:background="@color/select_grey" />
+            <TextView
+                android:id="@+id/activityState"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|end"
+                android:layout_margin="7dp"
+                android:textColor="@color/main_color_red"
+                android:text="[进行中]"
+                />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp">
+
+            <ImageButton
+                android:id="@+id/favorite"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/tab_menu_heart" />
+
+            <TextView
+                android:id="@+id/favoriteNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-3dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/favorite"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:textColor="@color/_grey"
+                android:textSize="14sp"
+                tools:text="88" />
+
+            <TextView
+                android:id="@+id/visitNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="1dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:textColor="@color/_grey"
+                android:textSize="12sp"
+                tools:text="浏览 88 次" />
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
