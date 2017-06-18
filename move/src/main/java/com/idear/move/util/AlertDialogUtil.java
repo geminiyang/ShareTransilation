@@ -10,7 +10,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
+import com.idear.move.Activity.PublishRFActivity;
 import com.idear.move.R;
 import com.idear.move.myWidget.LoadingProgressDialog;
 
@@ -72,4 +74,25 @@ public class AlertDialogUtil {
                 ).setNegativeButton("取消" ,  null )
                 .show();
     }
+
+    public static void classificationDialog(Context context, final View ValuesChangeView) {
+        final String [] str = new String[] {"分类1", "分类2","分类3","分类4"};
+        new AlertDialog.Builder(context)
+                .setTitle("请选择您的分类" )
+                .setSingleChoiceItems(str,0,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //选择了任意一个按钮需要更新输入文本的值
+                                ((TextView)ValuesChangeView).setText(str[which]);
+                            }
+                        }
+                ).setPositiveButton("关闭",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
+    }
+
+
 }

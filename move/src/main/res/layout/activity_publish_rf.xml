@@ -13,10 +13,9 @@
         android:id="@+id/toolbar"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/toolBarHeight"
         android:background="@color/title_bar_blue"
         android:theme="@style/Theme.ToolBar"
-        yqq:layout_scrollFlags="scroll|enterAlways"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -183,6 +182,37 @@
                     android:layout_marginEnd="10dp"
                     >
                     <TextView
+                        android:id="@+id/activity_expire_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:text="招募期限"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        />
+                    <EditText
+                        android:layout_toEndOf="@+id/activity_expire_time"
+                        android:id="@+id/expire_time_select"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="70dp"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:hint="请输入招募期限"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:background="@null"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    >
+                    <TextView
                         android:id="@+id/activity_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -293,42 +323,27 @@
                         android:layout_centerVertical="true"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="8dp"
-                        android:text="筹资方式"
+                        android:text="筹资金额"
                         android:textSize="16sp"
                         android:textColor="@color/black"
-                        />
-                    <CheckBox
-                        android:id="@+id/cb_goods"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="70dp"
-                        android:layout_toEndOf="@+id/text"
-                        android:checked="true"
-                        android:text="实物"
-                        />
-                    <CheckBox
-                        android:id="@+id/cb_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/cb_goods"
-                        android:layout_marginStart="13dp"
-                        android:checked="false"
-                        android:text="资金"
                         />
                     <EditText
                         android:id="@+id/money_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/cb_money"
-                        android:visibility="gone"
-                        android:gravity="end"
+                        android:layout_toEndOf="@id/text"
+                        android:layout_marginStart="70dp"
+                        android:layout_centerVertical="true"
+                        android:gravity="start"
                         android:maxLines="1"
+                        android:maxEms="10"
+                        android:maxLength="10"
                         android:singleLine="true"
+                        android:cursorVisible="true"
+                        android:textCursorDrawable="@null"
                         android:inputType="numberDecimal"
-                        android:hint="元"
-                        android:layout_alignParentEnd="true"
+                        android:hint="请输入筹资金额(元)"
+                        android:background="@null"
                         />
                 </RelativeLayout>
                 <RelativeLayout
@@ -345,19 +360,6 @@
                         android:text="招募人数"
                         android:textSize="16sp"
                         android:textColor="@color/black"
-                        />
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_toStartOf="@+id/human"
-                        android:layout_centerVertical="true"
-                        android:visibility="gone"
-                        android:spinnerMode="dropdown"
-                        android:entries="@array/num"
-                        android:popupBackground="@color/white"
-                        android:dropDownVerticalOffset="-100dp"
-                        android:textColor="@color/gray"
                         />
                     <EditText
                         android:id="@+id/edit_personNum"
@@ -383,13 +385,56 @@
                         android:textColor="@color/gray"
                         />
                 </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    >
+                    <TextView
+                        android:id="@+id/classification_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:text="分类"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        />
+                    <EditText
+                        android:layout_toEndOf="@+id/classification_text"
+                        android:id="@+id/classification"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="70dp"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:hint="请选择您的分类"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:background="@null"
+                        />
+                </RelativeLayout>
             </LinearLayout>
+                <TextView
+                    android:id="@+id/tip"
+                    android:layout_below="@id/form_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:layout_margin="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/main_color_red"
+                    android:text="注意:为了您的申请尽快申请通过,请确保您的活动开始时间和招募时间中有一段缓冲时间！"
+                    />
                 <LinearLayout
                     android:id="@+id/move_protocol"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_below="@+id/form_detail"
+                    android:layout_below="@+id/tip"
                     android:layout_alignParentStart="true">
                     <!--android:checkMark="?android:attr/listChoiceIndicatorMultiple"-->
                     <CheckedTextView
@@ -422,14 +467,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
                 android:text="发布"
                 android:textColor="@drawable/register_text_selector"
                 android:background="@drawable/corner_button_template_register"
                 />
-                <View
-                    android:layout_below="@id/publish"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp" />
         </RelativeLayout>
         </LinearLayout>
     </ScrollView>

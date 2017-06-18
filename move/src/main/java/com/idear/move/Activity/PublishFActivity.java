@@ -12,11 +12,13 @@ import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.idear.move.R;
+import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.KeyBoardUtils;
 import com.idear.move.util.ToastUtil;
@@ -25,14 +27,14 @@ import java.util.Calendar;
 
 public class PublishFActivity extends AppCompatActivity {
 
-    private CheckBox cb_goods,cb_moneys;
+    private ImageView iv_back;//返回按钮
     // 更新显示当前值的TextView
-    private EditText moneyAmount;
+    private EditText moneyAmount,classification;
     private CheckedTextView ctv;
     private Button publish;
     private TextView urlTextView;
 
-    private EditText editText;
+    private EditText activityTimeInput,expireTimeInput;
     //用来拼接日期和时间，最终用来显示的
     private StringBuilder str = new StringBuilder("");
 
@@ -46,11 +48,30 @@ public class PublishFActivity extends AppCompatActivity {
     }
 
     private void initEvent() {
-
         ctv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ctv.toggle();
+            }
+        });
+        //时间编辑框监听
+        activityTimeInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productTimeDialog();
+            }
+        });
+        expireTimeInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productTimeDialog();
+            }
+        });
+        //分类功能
+        classification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialogUtil.classificationDialog(PublishFActivity.this,classification);
             }
         });
         //发布按钮监听器
@@ -74,36 +95,24 @@ public class PublishFActivity extends AppCompatActivity {
                 IntentSkipUtil.skipToNextActivity(PublishFActivity.this,MoveProtocolWebViewActivity.class);
             }
         });
+        //返回按钮监听
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initView() {
-        editText = (EditText) findViewById(R.id.time_select);
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productTimeDialog();
-            }
-        });
-
+        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
+        activityTimeInput = (EditText) findViewById(R.id.time_select);
+        expireTimeInput = (EditText) findViewById(R.id.expire_time_select);
         ctv = (CheckedTextView) findViewById(R.id.check_tv_title);
-
         publish = (Button) findViewById(R.id.publish);
         urlTextView = (TextView) findViewById(R.id.tv_url);
-
         moneyAmount = (EditText) findViewById(R.id.money_amount);
-
-        cb_goods = (CheckBox) findViewById(R.id.cb_goods);
-        cb_moneys = (CheckBox) findViewById(R.id.cb_money);
-        cb_moneys.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    moneyAmount.setVisibility(View.VISIBLE);
-                } else {
-                    moneyAmount.setVisibility(View.GONE);
-                }
-            }
-        });
+        classification = (EditText) findViewById(R.id.classification);
     }
 
     private void productTimeDialog() {

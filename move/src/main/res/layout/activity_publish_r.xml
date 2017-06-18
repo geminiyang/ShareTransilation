@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/blue_light"
-        yqq:layout_scrollFlags="scroll|enterAlways"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,13 +53,14 @@
         android:background="@color/_grey"
         />
     <ScrollView
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
         android:fitsSystemWindows="true"
         android:clipToPadding="true"
-        android:layout_below="@+id/toolbar"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -156,6 +156,37 @@
                             android:textColor="@color/gray"
                             android:textSize="12sp"
                             android:hint="请输入时间日期"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:background="@null"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/activity_expire_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:text="招募期限"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            />
+                        <EditText
+                            android:layout_toEndOf="@+id/activity_expire_time"
+                            android:id="@+id/expire_time_select"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="70dp"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp"
+                            android:hint="请输入招募期限"
                             android:singleLine="true"
                             android:maxLines="1"
                             android:background="@null"
@@ -280,28 +311,6 @@
                             android:textSize="16sp"
                             android:textColor="@color/black"
                             />
-                        <Spinner
-                            android:id="@+id/spinner"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_toStartOf="@+id/human"
-                            android:layout_centerVertical="true"
-                            android:spinnerMode="dropdown"
-                            android:entries="@array/num"
-                            android:popupBackground="@color/white"
-                            android:dropDownVerticalOffset="-100dp"
-                            android:textColor="@color/gray"
-                            android:visibility="gone"
-                            />
-                        <NumberPicker
-                            android:id="@+id/numberPicker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/human"
-                            android:layout_centerVertical="true"
-                            android:background="@color/transparent"
-                            android:visibility="gone"
-                            />
                         <EditText
                             android:id="@+id/edit_personNum"
                             android:layout_width="85dp"
@@ -309,6 +318,8 @@
                             android:gravity="center"
                             android:textSize="12sp"
                             android:maxLines="1"
+                            android:maxLength="3"
+                            android:maxEms="3"
                             android:singleLine="true"
                             android:hint="招募人数(>0)"
                             android:layout_toStartOf="@+id/human"
@@ -326,13 +337,56 @@
                             android:textColor="@color/gray"
                             />
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/classification_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:text="分类"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            />
+                        <EditText
+                            android:layout_toEndOf="@+id/classification_text"
+                            android:id="@+id/classification"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="70dp"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp"
+                            android:hint="请选择您的分类"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:background="@null"
+                            />
+                    </RelativeLayout>
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/tip"
+                    android:layout_below="@id/form_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:layout_margin="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/main_color_red"
+                    android:text="注意:为了您的申请尽快申请通过,请确保您的活动开始时间和招募时间中有一段缓冲时间！"
+                    />
                 <LinearLayout
                     android:id="@+id/move_protocol"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_below="@+id/form_detail"
+                    android:layout_below="@+id/tip"
                     android:layout_alignParentStart="true">
                     <!--android:checkMark="?android:attr/listChoiceIndicatorMultiple"-->
                     <CheckedTextView
@@ -366,14 +420,11 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
                     android:text="发布"
                     android:textColor="@drawable/register_text_selector"
                     android:background="@drawable/corner_button_template_register"
                     />
-                <View
-                    android:layout_below="@id/publish"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

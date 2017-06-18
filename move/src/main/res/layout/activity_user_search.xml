@@ -150,7 +150,7 @@
     <FrameLayout
         android:id="@+id/fl_wrapper"
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="3dp"
         android:layout_height="30dp">
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout_all_activity"

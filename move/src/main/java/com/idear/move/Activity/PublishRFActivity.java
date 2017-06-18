@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -36,6 +37,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.idear.move.R;
+import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.CameraUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ImageCheckoutUtil;
@@ -54,16 +56,15 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PublishRFActivity extends BaseActivity implements NumberPicker.OnValueChangeListener {
+public class PublishRFActivity extends BaseActivity {
 
     private RelativeLayout rlRoot;//根布局
-    private CheckBox cb_goods,cb_money;
     private CheckedTextView ctv;
     private Button publish;
     private TextView urlTextView;
 
     // 更新显示当前值的TextView
-    private EditText personNum,moneyAmount;
+    private EditText personNum,moneyAmount,classification;
     //图片选择控件
     private static final int TAKE_PICTURE = 100;
     private static final int SELECT_PICTURE = 101;
@@ -75,9 +76,9 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
     public ImageView imageShow;
     public ImageHandler imageHandler;
 
-    private ImageView iv_back;
+    private ImageView iv_back;//返回按钮
 
-    private EditText editText;
+    private EditText activityTimeInput,expireTimeInput;
     //用来拼接日期和时间，最终用来显示的
     private StringBuilder str = new StringBuilder("");
     private final int MIN = 1;
@@ -103,23 +104,19 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
      * 绑定ID
      */
     private void initView() {
-        cb_goods = (CheckBox) findViewById(R.id.cb_goods);
-        cb_money = (CheckBox) findViewById(R.id.cb_money);
         ctv = (CheckedTextView) findViewById(R.id.check_tv_title);
-
         publish = (Button) findViewById(R.id.publish);
         urlTextView = (TextView) findViewById(R.id.tv_url);
-
         moneyAmount = (EditText) findViewById(R.id.money_amount);
         personNum = (EditText) findViewById(R.id.edit_personNum);
-
-        editText = (EditText) findViewById(R.id.time_select);
+        classification = (EditText) findViewById(R.id.classification);
+        activityTimeInput = (EditText) findViewById(R.id.time_select);
+        expireTimeInput = (EditText) findViewById(R.id.expire_time_select);
         pic = (ImageView) findViewById(R.id.pic);
         fl_bg_pan = (FrameLayout) findViewById(R.id.pan_bg);
         rlRoot = (RelativeLayout) findViewById(R.id.rl_root);
         iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
         imageShow = (ImageView) findViewById(R.id.pic_show);
-
         imageHandler = new ImageHandler(this);
     }
 
@@ -127,24 +124,6 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
      * 绑定相关监听器
      */
     private void initEvent() {
-        //货物复选框监听
-        cb_goods.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-            }
-        });
-        //资金复选框监听
-        cb_money.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    moneyAmount.setVisibility(View.VISIBLE);
-                } else {
-                    moneyAmount.setVisibility(View.GONE);
-                }
-            }
-        });
         ctv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,7 +153,13 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
         });
 
         //时间编辑框监听
-        editText.setOnClickListener(new View.OnClickListener() {
+        activityTimeInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productTimeDialog();
+            }
+        });
+        expireTimeInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 productTimeDialog();
@@ -184,7 +169,14 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
         personNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showNumberPickerDialog();
+                productNumberPickerDialog();
+            }
+        });
+        //分类功能
+        classification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialogUtil.classificationDialog(PublishRFActivity.this,classification);
             }
         });
         //图片选择器监听
@@ -309,6 +301,9 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
         });
     }
 
+    /**
+     * 自定义布局的NumberPicker
+     */
     private void showNumberPickerDialog() {
         final Dialog dialog = new Dialog(PublishRFActivity.this);
         dialog.setTitle("NumberPicker");
@@ -322,7 +317,12 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
         mNumberPicker.setMaxValue(MAX); // max value 100
         mNumberPicker.setMinValue(MIN);   // min value 1
         mNumberPicker.setWrapSelectorWheel(true);
-        mNumberPicker.setOnValueChangedListener(this);
+        mNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                currentNum = newVal;
+            }
+        });
         cancel.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -347,6 +347,57 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
             }
         });
         dialog.show();
+    }
+    /**
+     * 系统默认风格的NumberPicker
+     */
+    private void productNumberPickerDialog() {
+        RelativeLayout linearLayout = new RelativeLayout(PublishRFActivity.this);
+        final NumberPicker aNumberPicker = new NumberPicker(PublishRFActivity.this);
+        aNumberPicker.setMaxValue(MAX);
+        aNumberPicker.setMinValue(MIN);
+        aNumberPicker.setValue(currentNum);
+
+        aNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                currentNum = newVal;
+            }
+        });
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+        RelativeLayout.LayoutParams numPickerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        numPickerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        linearLayout.setLayoutParams(params);
+        linearLayout.addView(aNumberPicker,numPickerParams);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PublishRFActivity.this);
+        alertDialogBuilder.setTitle("选择招募人数");
+        alertDialogBuilder.setView(linearLayout);
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //更新UI
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        personNum.setText("");
+                                        personNum.setText(currentNum+"");
+                                    }
+                                });
+                            }
+                        })
+                .setNegativeButton("取消",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void productTimeDialog() {
@@ -382,11 +433,6 @@ public class PublishRFActivity extends BaseActivity implements NumberPicker.OnVa
                 .get(Calendar.DAY_OF_MONTH));
         dateDialog.setTitle("请选择日期");
         dateDialog.show();
-    }
-
-    @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        currentNum = newVal;
     }
 
     @Override
