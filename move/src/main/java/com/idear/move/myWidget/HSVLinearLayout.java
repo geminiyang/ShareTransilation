@@ -34,7 +34,6 @@ public class HSVLinearLayout extends LinearLayout {
     public HSVLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-
     }
 
 

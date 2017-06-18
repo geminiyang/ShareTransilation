@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,8 +61,8 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     private BroadcastReceiver receiver = null;
     private int nCount = 0;
     // pic in the drawable
-    private Integer[] images = {
-            R.mipmap.e,R.mipmap.e,R.mipmap.e
+    private int[] images = {
+            R.mipmap.family,R.mipmap.family,R.mipmap.family
     };
 
     public static final int TYPE_ONE = 1;
@@ -138,12 +139,7 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
 
         final View v= view;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                initAdapterData();
-            }
-        }).start();
+        initAdapterData();
 
         moreActivity_tv.setOnClickListener(this);
         moreFeedback_tv.setOnClickListener(this);
@@ -162,9 +158,9 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
             map.put("index", (i+1));//代表第张图片，而数组从零开始计数
             hsvAdapter.addObjectItem(map);
         }
-        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,220,120);//第三个参数和第四个参数分别为宽和高
-        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,220,120);
-        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE,220,120);
+        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,180,120);//第三个参数和第四个参数分别为宽和高
+        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,180,120);
+        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE,180,120);
 
     }
 
@@ -191,20 +187,21 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-}
+    /**
+     * 通过广播来实现轮播的自动刷新
+     */
+    class UpdateImageReceiver extends BroadcastReceiver {
 
-/**
- * 通过广播来实现轮播的自动刷新
- */
-class UpdateImageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(AppConstant.UPDATE_IMAGE_ACTION)) {
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if(intent.getAction().equals(AppConstant.UPDATE_IMAGE_ACTION)) {
-
-            int index = intent.getIntExtra("index", Integer.MAX_VALUE);
-            System.out.println("UpdateImageReceiver----" + index);
+                int index = intent.getIntExtra("index", Integer.MAX_VALUE);
+                System.out.println("UpdateImageReceiver----" + index);
+            }
         }
-    }
 
+    }
 }
+
+

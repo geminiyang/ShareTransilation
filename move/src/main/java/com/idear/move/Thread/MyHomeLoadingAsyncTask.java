@@ -17,7 +17,7 @@ import java.util.Timer;
 
 /**
  * Created by user on 2017/4/27.
- * 封装Fragmetn中的初始化操作
+ * 封装Fragment中的初始化操作
  */
 
 public class MyHomeLoadingAsyncTask extends AsyncTask<View,Void,Void> {
@@ -126,6 +126,7 @@ public class MyHomeLoadingAsyncTask extends AsyncTask<View,Void,Void> {
 
             }
         });
+
 
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override

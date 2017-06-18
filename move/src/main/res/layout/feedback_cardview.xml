@@ -89,7 +89,7 @@
                 app:picWidth="140dp"
                 app:picHeight="80dp"
                 app:type="round"
-                app:borderRadius="4dp"
+                app:borderRadius="10dp"
                 />
         </RelativeLayout>
     </LinearLayout>

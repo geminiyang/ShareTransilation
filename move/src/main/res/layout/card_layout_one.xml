@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_margin="1dp"
-    android:background="@drawable/bg_rectangle"
+    android:background="@drawable/bg_rectangle_white"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView

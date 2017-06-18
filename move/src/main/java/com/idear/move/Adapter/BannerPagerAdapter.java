@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.idear.move.R;
+import com.idear.move.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,12 @@ public class BannerPagerAdapter extends PagerAdapter{
         ImageView iv = (ImageView) view.findViewById(R.id.imageView_banner_item);
         //进行取余操作,这样就可以获取到符合数据源取值范围的位置,从而得到想要获取展示的数据.
         position = position%pictureList.size();
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.getInstance().showToastTest(mContext);
+            }
+        });
         iv.setImageResource(pictureList.get(position));
         container.addView(view);
         return view;

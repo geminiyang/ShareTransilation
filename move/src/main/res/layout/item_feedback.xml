@@ -9,7 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/activityPic"
+        android:id="@+id/pic"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp">
         <TextView
-            android:id="@+id/activityName"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -35,26 +35,34 @@
             android:layout_centerHorizontal="true"
             tools:text="漫画分享大会"
             />
-        <Button
-            android:id="@+id/writeFeedBack"
-            android:layout_width="60dp"
-            android:layout_height="20dp"
-            android:textSize="12sp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="2dp"
-            android:textColor="@drawable/register_text_selector"
-            android:background="@drawable/corner_button_template_register"
-            android:text="反馈"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                android:text="评分:"
+                />
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/main_color_red"
+                tools:text="[还可以]"
+                />
+        </LinearLayout>
         <TextView
             android:id="@+id/receiverTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="22:37"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="2dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             />

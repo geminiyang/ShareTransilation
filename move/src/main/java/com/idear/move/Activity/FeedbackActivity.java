@@ -9,9 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.idear.move.Adapter.FeedBackRvAdapter;
-import com.idear.move.Adapter.SpreadRvAdapter;
 import com.idear.move.POJO.FeedBackDataModel;
-import com.idear.move.POJO.SpreadDataModel;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
 import com.yqq.idear.CustomRecyclerView;

@@ -44,6 +44,7 @@ import com.idear.move.util.ImageCheckoutUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
+import com.idear.move.util.UploadUtil;
 import com.yqq.swipebackhelper.BaseActivity;
 
 import java.io.File;
@@ -70,6 +71,7 @@ public class PublishRFActivity extends BaseActivity {
     private static final int SELECT_PICTURE = 101;
     private static final int IMAGE_SIZE = 100 * 1024;// 100kb,受载入4096×4096图片限制，与工具类的缩放比例对应
     private static final int SHOW_IMAGE = 102;
+    private File uploadFile;
     private File mCurrentPhotoFile;
     private ImageView pic;
     private FrameLayout fl_bg_pan;
@@ -136,7 +138,7 @@ public class PublishRFActivity extends BaseActivity {
             public void onClick(View v) {
                 if(ctv.isChecked()) {
                     //打勾状态才能提交发布，相关的网络访问操作
-
+                    submitUploadFile();
                 } else {
                     //非打勾状态进行提示
                     ToastUtil.getInstance().showToast(PublishRFActivity.this,"请阅读协议并打勾!");
@@ -455,6 +457,7 @@ public class PublishRFActivity extends BaseActivity {
                                 imageShow.setScaleType(ImageView.ScaleType.CENTER_CROP);
                                 compressPicture(camPicPath);
                             } else {
+                                uploadFile = camFile;//上传文件
                                 imageShow.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                                 Message msg = new Message();
                                 msg.obj = camPicPath;
@@ -489,6 +492,7 @@ public class PublishRFActivity extends BaseActivity {
                                 //添加压缩处理
                                 compressPicture(path);
                             } else {
+                                uploadFile = mCurrentPhotoFile;//上传文件
                                 //不需要压缩直接处理
                                 imageShow.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                                 Message msg = new Message();
@@ -528,6 +532,7 @@ public class PublishRFActivity extends BaseActivity {
                             PictureUtil.reviewPicRotate(bitmap, str[0]+str[1]),
                             str[0],str[1]);
                     File file = new File(GalPicPath);
+                    uploadFile = new File(path);//上传文件
                     if (file.exists() && isSave) {
                         //图片的操作()
                         Looper.prepare();
@@ -538,6 +543,35 @@ public class PublishRFActivity extends BaseActivity {
                         Looper.loop();
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void submitUploadFile(){
+        if (uploadFile == null || (!uploadFile.exists())) {
+            return;
+        }
+        final String requestURL = "http://idear.party/api/image/up";
+        Log.i("info", "请求的URL=" + requestURL);
+        Log.i("info", "请求的fileName=" + uploadFile.getName());
+        Log.i("info", "请求的fileName=" + uploadFile.length());
+        final Map<String, String> params = new HashMap<>();
+        params.put("user_id", "1");
+        final Map<String, File> files = new HashMap<>();
+        files.put("img", uploadFile);
+
+        new Thread(new Runnable() { //开启线程上传文件
+            @Override
+            public void run() {
+                try {
+                    String str = UploadUtil.uploadImg(requestURL,params,files);
+                    Looper.prepare();
+                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"上传完成!");
+                    Looper.loop();
+                    Log.d("info",str);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

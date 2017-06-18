@@ -2,6 +2,7 @@ package com.idear.move.Activity;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -20,6 +21,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.idear.move.Fragment.ActivityDetailFragment;
+import com.idear.move.Fragment.FeedbackContentFragment;
 import com.idear.move.Fragment.MyFragment;
 import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
@@ -29,13 +32,15 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedBackDetailActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
+public class FeedBackDetailActivity extends BaseActivity implements TabLayout.OnTabSelectedListener,
+        ActivityDetailFragment.OnFragmentInteractionListener,FeedbackContentFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "info";
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private MyFragment f1,f2;
+    private ActivityDetailFragment f1;
+    private FeedbackContentFragment f2;
 
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
@@ -98,10 +103,10 @@ public class FeedBackDetailActivity extends BaseActivity implements TabLayout.On
     }
     private void initData() {
         if(f1==null) {
-            f1 = MyFragment.newInstance("详情");
+            f1 = ActivityDetailFragment.newInstance("详情");
         }
         if(f2==null){
-            f2 = MyFragment.newInstance("反馈");
+            f2 = FeedbackContentFragment.newInstance("反馈");
         }
         mTabs.add(f1);
         mTabs.add(f2);
@@ -249,6 +254,16 @@ public class FeedBackDetailActivity extends BaseActivity implements TabLayout.On
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onActivityDetailFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onFeedbackContentFragmentInteraction(Uri uri) {
 
     }
 }

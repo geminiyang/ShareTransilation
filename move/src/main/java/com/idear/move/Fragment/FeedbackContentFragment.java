@@ -1,84 +1,94 @@
 package com.idear.move.Fragment;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.idear.move.Activity.FeedBackDetailActivity;
-import com.idear.move.Adapter.FeedBackRvAdapter;
-import com.idear.move.POJO.FeedBackDataModel;
+import com.idear.move.Adapter.CardLayoutOneAdapter;
+import com.idear.move.Adapter.FeedbackItemAdapter;
+import com.idear.move.POJO.CardLayoutOneDataModel;
+import com.idear.move.POJO.FeedbackItemDataModel;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.ToastUtil;
 import com.yqq.idear.CustomRecyclerView;
 import com.yqq.idear.DataStateChangeCheck;
 
 import java.util.LinkedList;
 
+public class FeedbackContentFragment extends Fragment implements FeedbackItemAdapter.OnItemClickListener, CustomRecyclerView.DataOperation {
+    private static final String ARG = "param1";
 
-public class FeedbackSearchFragment extends Fragment implements
-        FeedBackRvAdapter.OnItemClickListener,CustomRecyclerView.DataOperation {
+    private String mParam1;
 
     private OnFragmentInteractionListener mListener;
-    private static final String ARG = "arg";
 
-    public static FeedbackSearchFragment newInstance(String arg){
-        FeedbackSearchFragment fragment = new FeedbackSearchFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(ARG, arg);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
+    private View rootView;
 
-    public FeedbackSearchFragment() {
-        //要求要有一个空的构造函数
-    }
-
-    //RecyclerView相关参数
-    private CustomRecyclerView myRecyclerView;
-    private RecyclerView.Adapter adapter;
     // 服务器端一共多少条数据
     private static final int TOTAL_COUNT = 10;
     // 每一页展示多少条数据
     private static final int REQUEST_COUNT = 2;
+    private CustomRecyclerView myRecyclerView;
+    private RecyclerView.Adapter adapter;
+    private LinkedList<FeedbackItemDataModel> dataModels = new LinkedList<>();
+    private String activityName = "分享漫画活动";
+    private String score = "[十分满意]";
+    private long TimeStamp = 1497626094;
+    private static final String picUrl = "http://img0.imgtn.bdimg.com/it/u=1928150351,2755968131&fm=26&gp=0.jpg";
 
-    private LinkedList<FeedBackDataModel> dataModels = new LinkedList<>();
-    private String[] titles ={"aa活动","bb活动","cc活动",
-            "d活动"};
-    private int[] picUrl ={R.drawable.rina,R.drawable.rina,R.drawable.family,R.drawable.family};
-    private String[] Num ={"88","12","188","788"};
+    public FeedbackContentFragment() {
+        //要求要有一个空的构造函数
+    }
 
-    private View rootView;
+    /**
+     * 使用提供的参数和工厂方法去创建一个fragment实例
+     * Activity->Fragment
+     */
+    public static FeedbackContentFragment newInstance(String values) {
+        FeedbackContentFragment fragment = new FeedbackContentFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG, values);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(rootView ==null) {
-            rootView = inflater.inflate(R.layout.fragment_in_all_activity,container,false);
-            initView(rootView);
-            initEvent(rootView);
+        if(rootView==null) {
+            rootView = inflater.inflate(R.layout.fragment_feedback_content, container, false);
+            init(rootView);
             initRecyclerView(rootView);
         }
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
             parent.removeView(rootView);
         }
-
         return rootView;
     }
 
-    private void initEvent(View rootView) {
-
-    }
-
-    private void initView(View rootView) {
-
+    /**
+     * 初始化界面
+     * @param rootView
+     */
+    private void init(View rootView) {
+        myRecyclerView = (CustomRecyclerView) rootView.findViewById(R.id.my_recycler_view);
     }
 
     private void initRecyclerView(View view) {
@@ -88,13 +98,9 @@ public class FeedbackSearchFragment extends Fragment implements
         myRecyclerView.setHasFixedSize(true);
         //设置ITEM 动画管理者
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //使用垂直布局管理器(单次使用)默认垂直
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext(),
-                LinearLayoutManager.VERTICAL,false);
-        myRecyclerView.setLayoutManager(layoutManager);
         //初始化自定义适配器
-        adapter = new FeedBackRvAdapter(view.getContext(), dataModels);
-        ((FeedBackRvAdapter)adapter).setOnItemClickListener(this);
+        adapter = new FeedbackItemAdapter(getActivity(), dataModels);
+        ((FeedbackItemAdapter)adapter).setOnItemClickListener(this);
         // specify（指定） an adapter (see also next example)
         myRecyclerView.setAdapter(adapter);
         //数据状态监听器
@@ -120,28 +126,6 @@ public class FeedbackSearchFragment extends Fragment implements
         myRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
-    @Override
-    public void onLoadMore() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
-            }
-            int index = dataModels.size()%4;
-            Log.d("info","refreshMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.addFirst(new FeedBackDataModel(titles[index],"",picUrl[index],Num[index],
-                    CustomRecyclerView.TYPE_NORMAL));
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        IntentSkipUtil.skipToNextActivity(getActivity(), FeedBackDetailActivity.class);
-    }
-
     /**
      * 此方法可以调用外部Activity中提供的相关运行逻辑(例如信息传递)
      * 当触发此方法时Activity收到相关数据
@@ -149,9 +133,48 @@ public class FeedbackSearchFragment extends Fragment implements
      */
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFeedbackSearchFragmentInteraction(uri);
+            mListener.onFeedbackContentFragmentInteraction(uri);
         }
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        //跳转到评论详细信息页面
+    }
+
+    @Override
+    public void onLoadMore() {
+        for (int i = 0; i < REQUEST_COUNT; i++) {
+            if (dataModels.size() >= TOTAL_COUNT) {
+                break;
+            }
+            Log.d("info","loadMode------" + "LIST SIZE : " + dataModels.size()+1);
+            dataModels.add(new FeedbackItemDataModel(activityName,picUrl,score,TimeStamp));
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
     /**
      * 此接口必须由包含此Fragment的Activity来实现，以允许在此Fragment与包含其的Activity和潜在的其他Fragment交互。
      * <p>
@@ -160,6 +183,6 @@ public class FeedbackSearchFragment extends Fragment implements
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onFeedbackSearchFragmentInteraction(Uri uri);
+        void onFeedbackContentFragmentInteraction(Uri uri);
     }
 }

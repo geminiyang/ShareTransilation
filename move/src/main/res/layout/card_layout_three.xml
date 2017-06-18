@@ -6,7 +6,7 @@
     android:weightSum="9"
     android:orientation="horizontal"
     android:layout_margin="1dp"
-    android:background="@drawable/bg_rectangle"
+    android:background="@drawable/bg_rectangle_white"
     xmlns:tools="http://schemas.android.com/tools">
     <RelativeLayout
         android:layout_weight="4"

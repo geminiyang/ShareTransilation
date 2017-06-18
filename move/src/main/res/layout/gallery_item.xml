@@ -1,27 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginTop="5dp"
-    android:layout_width="220dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_rectangle_white"
+    android:layout_width="180dp"
     android:layout_height="120dp">
-    <ImageView
-        android:layout_margin="5dp"
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_rectangle"
-        />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:layout_alignParentTop="true"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:maxLength="14"
+            android:maxEms="14"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:gravity="center_horizontal"
+            android:textColor="@color/main_color_red"
+            tools:text="text"
+            />
+        <com.idear.move.myWidget.UpdateTimeTextView
+            android:id="@+id/hisPublishTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/_grey"
+            tools:text="今天20:53"
+            android:textSize="12sp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground" />
+        <ImageView
+            android:id="@+id/iv_me"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_toStartOf="@+id/info_visit_num"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:background="@mipmap/me"
+            />
+        <TextView
+            android:id="@+id/info_visit_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/_grey"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            tools:text="88"
+            android:textSize="14sp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground" />
+        <com.idear.move.myWidget.RoundImageViewByXfermode
+            android:id="@+id/imageView"
+            android:layout_marginEnd="10dp"
+            android:layout_centerInParent="true"
+            android:layout_width="160dp"
+            android:layout_height="80dp"
+            app:type="round"
+            app:picHeight="80dp"
+            app:picWidth="160dp"
+            app:borderRadius="10dp"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="15dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        tools:text="text"
+        android:background="@color/black"
         />
-</FrameLayout>
+</LinearLayout>

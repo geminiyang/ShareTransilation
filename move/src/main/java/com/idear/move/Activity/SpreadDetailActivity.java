@@ -1,6 +1,7 @@
 package com.idear.move.Activity;
 
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.idear.move.Fragment.MyFragment;
+import com.idear.move.Fragment.SpreadWebFragment;
 import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -27,12 +29,14 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
+public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTabSelectedListener ,
+        SpreadWebFragment.OnFragmentInteractionListener{
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private MyFragment f1,f2;
+    private MyFragment f1;
+    private SpreadWebFragment f2;
 
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
@@ -59,9 +63,6 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
                 finish();
             }
         });
-//        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//
-//        setSupportActionBar(toolbar);
 
         final CollapsingToolbarLayout collapsing_toolbar_layout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
         collapsing_toolbar_layout.setTitle("");
@@ -96,10 +97,10 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
 
     private void initData() {
         if(f1==null) {
-            f1 = MyFragment.newInstance("产品推广");
+            f1 = MyFragment.newInstance("产品推广功能正在开发中");
         }
         if(f2==null){
-            f2 = MyFragment.newInstance("官方活动");
+            f2 = SpreadWebFragment.newInstance("官方活动");
         }
         mTabs.add(f1);
         mTabs.add(f2);
@@ -226,6 +227,11 @@ public class SpreadDetailActivity extends BaseActivity implements TabLayout.OnTa
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

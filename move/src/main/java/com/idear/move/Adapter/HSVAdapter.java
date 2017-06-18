@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.idear.move.R;
+import com.idear.move.myWidget.RoundImageViewByXfermode;
 import com.idear.move.util.ImageUtil;
 import com.idear.move.util.ScreenUtil;
 
@@ -29,11 +31,14 @@ public class HSVAdapter extends BaseAdapter {
     private List<Map<String,Object>> list;
     private Context context;
     private LayoutInflater inflater;
+    private int picWidth,picHeight;
 
     public HSVAdapter(Context context){
         this.context=context;
         inflater = LayoutInflater.from(context);
-        this.list=new ArrayList<Map<String,Object>>();
+        this.list=new ArrayList<>();
+        picWidth = ScreenUtil.dip2px(context,160);
+        picHeight = ScreenUtil.dip2px(context,800);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class HSVAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder();
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.gallery_item,null);
-            viewHolder.mImg = (ImageView) convertView.findViewById(R.id.imageView);
+            viewHolder.mImg = (RoundImageViewByXfermode) convertView.findViewById(R.id.imageView);
             viewHolder.mText = (TextView) convertView.findViewById(R.id.textView);
 
             convertView.setTag(viewHolder);
@@ -66,8 +71,9 @@ public class HSVAdapter extends BaseAdapter {
 
         Map<String,Object> map= (Map<String, Object>) getItem(position); //获取当前的Item
 
-        viewHolder.mImg.setBackgroundResource((Integer) map.get("image"));
-        viewHolder.mText.setText((position+1)+"");
+        Glide.with(context).load((int)map.get("image")).override(picWidth,picHeight).
+                diskCacheStrategy(DiskCacheStrategy.RESULT).skipMemoryCache(false).into(viewHolder.mImg);
+        viewHolder.mText.setText("我是活动标题名");
         return convertView;
     }
 
@@ -76,9 +82,8 @@ public class HSVAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private class ViewHolder
-    {
-        ImageView mImg;
+    private class ViewHolder {
+        RoundImageViewByXfermode mImg;
         TextView mText;
     }
 }
