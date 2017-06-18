@@ -23,22 +23,21 @@ import com.yqq.idear.DataStateChangeCheck;
 import java.util.LinkedList;
 
 
-
-public class AllActivityRecruitFragment extends Fragment implements
+public class AllActivitySearchFragment extends Fragment implements
         CardLayoutFourAdapter.OnItemClickListener,CustomRecyclerView.DataOperation {
 
     private OnFragmentInteractionListener mListener;
     private static final String ARG = "arg";
 
-    public static AllActivityRecruitFragment newInstance(String arg){
-        AllActivityRecruitFragment fragment = new AllActivityRecruitFragment();
+    public static AllActivitySearchFragment newInstance(String arg){
+        AllActivitySearchFragment fragment = new AllActivitySearchFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG, arg);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public AllActivityRecruitFragment() {
+    public AllActivitySearchFragment() {
         //要求要有一个空的构造函数
     }
 
@@ -57,15 +56,14 @@ public class AllActivityRecruitFragment extends Fragment implements
     private String[] favoriteNums = {"10","20","60"};
     private String[] personNums ={"招募人数:10人","招募人数:10人","招募人数:10人"};
     private String[] moneyNums ={"招募金额:1000 元","招募金额:2000 元","招募金额:3000 元"};
-    private String[] activityStates = {"[进行中]","[招募完成]","[已结束]"};
-
+    private String[] activityStates = {"[进行中]","[筹资完成,招募完成]","[已结束]"};
 
     private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(rootView ==null) {
-            rootView = inflater.inflate(R.layout.fragment_in_all_activity,container,false);
+            rootView = inflater.inflate(R.layout.fragment_user_search,container,false);
             initView(rootView);
             initEvent(rootView);
             initRecyclerView(rootView);
@@ -107,7 +105,6 @@ public class AllActivityRecruitFragment extends Fragment implements
         //实现了数据操作监听
         mDataEndListener.setLoadDataListener(myRecyclerView);
         myRecyclerView.addDataChangeListener(mDataEndListener);
-        myRecyclerView.addHeaderView(getActivity());
         myRecyclerView.addFooterView(getActivity());
         myRecyclerView.setTotalCount(TOTAL_COUNT);
         myRecyclerView.setRequestCount(REQUEST_COUNT);
@@ -132,9 +129,9 @@ public class AllActivityRecruitFragment extends Fragment implements
             if (dataModels.size() >= TOTAL_COUNT) {
                 break;
             }
-            int index = dataModels.size()%3;
+            int index = dataModels.size() % 3;
             Log.d("info","loadMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.add(new CardLayoutFourDataModel(titles[index],personNums[index],"",
+            dataModels.add(new CardLayoutFourDataModel(titles[index],personNums[index],moneyNums[index],
                     visitNums[index],favoriteNums[index],"",activityStates[index],activityPics[index],
                     CustomRecyclerView.TYPE_NORMAL));
         }
@@ -142,16 +139,7 @@ public class AllActivityRecruitFragment extends Fragment implements
 
     @Override
     public void onRefresh() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
-            }
-            int index = dataModels.size()%3;
-            Log.d("info","refreshMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.addFirst(new CardLayoutFourDataModel(titles[index],personNums[index],"",
-                    visitNums[index],favoriteNums[index],"",activityStates[index],activityPics[index],
-                    CustomRecyclerView.TYPE_NORMAL));
-        }
+
     }
 
     @Override
@@ -166,7 +154,7 @@ public class AllActivityRecruitFragment extends Fragment implements
      */
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onRecruitFragmentInteraction(uri);
+            mListener.onAllActivitySearchFragmentInteraction(uri);
         }
     }
     /**
@@ -177,6 +165,6 @@ public class AllActivityRecruitFragment extends Fragment implements
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onRecruitFragmentInteraction(Uri uri);
+        void onAllActivitySearchFragmentInteraction(Uri uri);
     }
 }

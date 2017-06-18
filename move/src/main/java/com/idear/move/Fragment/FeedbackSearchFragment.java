@@ -13,8 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idear.move.Activity.ActivityDetailActivity;
+import com.idear.move.Activity.FeedBackDetailActivity;
 import com.idear.move.Adapter.CardLayoutFourAdapter;
+import com.idear.move.Adapter.FeedBackRvAdapter;
 import com.idear.move.POJO.CardLayoutFourDataModel;
+import com.idear.move.POJO.FeedBackDataModel;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
 import com.yqq.idear.CustomRecyclerView;
@@ -23,22 +26,21 @@ import com.yqq.idear.DataStateChangeCheck;
 import java.util.LinkedList;
 
 
-
-public class AllActivityRecruitFragment extends Fragment implements
-        CardLayoutFourAdapter.OnItemClickListener,CustomRecyclerView.DataOperation {
+public class FeedbackSearchFragment extends Fragment implements
+        FeedBackRvAdapter.OnItemClickListener,CustomRecyclerView.DataOperation {
 
     private OnFragmentInteractionListener mListener;
     private static final String ARG = "arg";
 
-    public static AllActivityRecruitFragment newInstance(String arg){
-        AllActivityRecruitFragment fragment = new AllActivityRecruitFragment();
+    public static FeedbackSearchFragment newInstance(String arg){
+        FeedbackSearchFragment fragment = new FeedbackSearchFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG, arg);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public AllActivityRecruitFragment() {
+    public FeedbackSearchFragment() {
         //要求要有一个空的构造函数
     }
 
@@ -46,19 +48,15 @@ public class AllActivityRecruitFragment extends Fragment implements
     private CustomRecyclerView myRecyclerView;
     private RecyclerView.Adapter adapter;
     // 服务器端一共多少条数据
-    private static final int TOTAL_COUNT = 9;
+    private static final int TOTAL_COUNT = 10;
     // 每一页展示多少条数据
-    private static final int REQUEST_COUNT = 3;
+    private static final int REQUEST_COUNT = 2;
 
-    private LinkedList<CardLayoutFourDataModel> dataModels = new LinkedList<>();
-    private String[] titles ={"活动1","活动2","活动3"};
-    private int[] activityPics ={R.drawable.family,R.drawable.rina,R.drawable.family};
-    private String[] visitNums ={"浏览 88 次","浏览 188 次","浏览 881 次"};
-    private String[] favoriteNums = {"10","20","60"};
-    private String[] personNums ={"招募人数:10人","招募人数:10人","招募人数:10人"};
-    private String[] moneyNums ={"招募金额:1000 元","招募金额:2000 元","招募金额:3000 元"};
-    private String[] activityStates = {"[进行中]","[招募完成]","[已结束]"};
-
+    private LinkedList<FeedBackDataModel> dataModels = new LinkedList<>();
+    private String[] titles ={"aa活动","bb活动","cc活动",
+            "d活动"};
+    private int[] picUrl ={R.drawable.rina,R.drawable.rina,R.drawable.family,R.drawable.family};
+    private String[] Num ={"88","12","188","788"};
 
     private View rootView;
 
@@ -98,8 +96,8 @@ public class AllActivityRecruitFragment extends Fragment implements
                 LinearLayoutManager.VERTICAL,false);
         myRecyclerView.setLayoutManager(layoutManager);
         //初始化自定义适配器
-        adapter = new CardLayoutFourAdapter(view.getContext(), dataModels);
-        ((CardLayoutFourAdapter)adapter).setOnItemClickListener(this);
+        adapter = new FeedBackRvAdapter(view.getContext(), dataModels);
+        ((FeedBackRvAdapter)adapter).setOnItemClickListener(this);
         // specify（指定） an adapter (see also next example)
         myRecyclerView.setAdapter(adapter);
         //数据状态监听器
@@ -107,7 +105,6 @@ public class AllActivityRecruitFragment extends Fragment implements
         //实现了数据操作监听
         mDataEndListener.setLoadDataListener(myRecyclerView);
         myRecyclerView.addDataChangeListener(mDataEndListener);
-        myRecyclerView.addHeaderView(getActivity());
         myRecyclerView.addFooterView(getActivity());
         myRecyclerView.setTotalCount(TOTAL_COUNT);
         myRecyclerView.setRequestCount(REQUEST_COUNT);
@@ -132,31 +129,20 @@ public class AllActivityRecruitFragment extends Fragment implements
             if (dataModels.size() >= TOTAL_COUNT) {
                 break;
             }
-            int index = dataModels.size()%3;
-            Log.d("info","loadMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.add(new CardLayoutFourDataModel(titles[index],personNums[index],"",
-                    visitNums[index],favoriteNums[index],"",activityStates[index],activityPics[index],
+            int index = dataModels.size()%4;
+            Log.d("info","refreshMode------" + "LIST SIZE : " + dataModels.size()+1);
+            dataModels.addFirst(new FeedBackDataModel(titles[index],"",picUrl[index],Num[index],
                     CustomRecyclerView.TYPE_NORMAL));
         }
     }
 
     @Override
     public void onRefresh() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
-            }
-            int index = dataModels.size()%3;
-            Log.d("info","refreshMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.addFirst(new CardLayoutFourDataModel(titles[index],personNums[index],"",
-                    visitNums[index],favoriteNums[index],"",activityStates[index],activityPics[index],
-                    CustomRecyclerView.TYPE_NORMAL));
-        }
     }
 
     @Override
     public void onItemClick(int position) {
-        IntentSkipUtil.skipToNextActivity(getActivity(), ActivityDetailActivity.class);
+        IntentSkipUtil.skipToNextActivity(getActivity(), FeedBackDetailActivity.class);
     }
 
     /**
@@ -166,7 +152,7 @@ public class AllActivityRecruitFragment extends Fragment implements
      */
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onRecruitFragmentInteraction(uri);
+            mListener.onFeedbackSearchFragmentInteraction(uri);
         }
     }
     /**
@@ -177,6 +163,6 @@ public class AllActivityRecruitFragment extends Fragment implements
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onRecruitFragmentInteraction(Uri uri);
+        void onFeedbackSearchFragmentInteraction(Uri uri);
     }
 }

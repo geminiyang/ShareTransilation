@@ -2,6 +2,7 @@ package com.idear.move.Activity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -24,7 +25,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.idear.move.Adapter.SearchItemAdapter;
+import com.idear.move.Fragment.AllActivitySearchFragment;
+import com.idear.move.Fragment.FeedbackSearchFragment;
 import com.idear.move.Fragment.MyFragment;
+import com.idear.move.Fragment.SpreadSearchFragment;
 import com.idear.move.Helper.RecordSQLiteOpenHelper;
 import com.idear.move.R;
 import com.idear.move.util.ToastUtil;
@@ -35,7 +39,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
+public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabSelectedListener ,
+        FeedbackSearchFragment.OnFragmentInteractionListener,AllActivitySearchFragment.OnFragmentInteractionListener,
+        SpreadSearchFragment.OnFragmentInteractionListener {
 
 
     private TabLayout mTabLayout;
@@ -46,7 +52,9 @@ public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabS
     private EditText inputEdit;
 
     private ViewPager mViewPager;
-    private MyFragment f1,f2,f3;
+    private AllActivitySearchFragment f1;
+    private FeedbackSearchFragment f2;
+    private SpreadSearchFragment f3;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
 
@@ -186,13 +194,13 @@ public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabS
 
     private void initData() {
         if (f1 == null) {
-            f1 = MyFragment.newInstance("界面1");
+            f1 = AllActivitySearchFragment.newInstance("活动");
         }
         if (f2 == null) {
-            f2 = MyFragment.newInstance("界面2");
+            f2 = FeedbackSearchFragment.newInstance("反馈");
         }
         if (f3 == null) {
-            f3 = MyFragment.newInstance("界面3");
+            f3 = SpreadSearchFragment.newInstance("推广");
         }
 
         mTabs.add(f1);
@@ -367,4 +375,18 @@ public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabS
         db.close();
     }
 
+    @Override
+    public void onSpreadSearchFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onFeedbackSearchFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onAllActivitySearchFragmentInteraction(Uri uri) {
+
+    }
 }

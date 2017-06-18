@@ -41,7 +41,7 @@ public class FeedBackRvAdapter extends RecyclerView.Adapter<FeedBackRvAdapter.Vi
     @Override
     public FeedBackRvAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // 给ViewHolder设置布局文件
-        View v = mInflater.inflate(R.layout.spread_cardview, viewGroup, false);
+        View v = mInflater.inflate(R.layout.feedback_cardview, viewGroup, false);
         return new ViewHolder(v);
     }
 

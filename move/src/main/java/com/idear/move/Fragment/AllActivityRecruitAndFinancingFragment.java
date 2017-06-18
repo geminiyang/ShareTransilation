@@ -97,6 +97,7 @@ public class AllActivityRecruitAndFinancingFragment extends Fragment implements
         myRecyclerView.setLayoutManager(layoutManager);
         //初始化自定义适配器
         adapter = new CardLayoutFourAdapter(view.getContext(), dataModels);
+        ((CardLayoutFourAdapter)adapter).setOnItemClickListener(this);
         // specify（指定） an adapter (see also next example)
         myRecyclerView.setAdapter(adapter);
         //数据状态监听器
