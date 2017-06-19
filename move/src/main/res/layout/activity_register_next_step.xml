@@ -49,11 +49,11 @@
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
     <EditText
-        android:id="@+id/sex"
+        android:id="@+id/nickname"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:hint="性别"
+        android:hint="昵称"
         android:gravity="center"
         android:typeface="monospace"
         android:textSize="14sp"
@@ -66,46 +66,10 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="10dp" />
-    <EditText
-        android:id="@+id/birthday"
-        android:layout_below="@+id/sex"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:hint="验证码"
-        android:gravity="center"
-        android:typeface="monospace"
-        android:textSize="14sp"
-        android:background="@null"
-        android:drawableBottom="@drawable/edit_line"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="10dp" />
-    <EditText
-        android:id="@+id/tel"
-        android:layout_below="@+id/birthday"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:inputType="phone"
-        android:hint="电话"
-        android:gravity="center"
-        android:typeface="monospace"
-        android:textSize="14sp"
-        android:background="@null"
-        android:drawableBottom="@drawable/edit_line"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="10dp" />
+
     <EditText
         android:id="@+id/school"
-        android:layout_below="@+id/tel"
+        android:layout_below="@+id/nickname"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:hint="学校"

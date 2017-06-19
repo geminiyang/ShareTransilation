@@ -12,15 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.ref.WeakReference;
-
 /**
  * 作者:geminiyang on 2017/6/12.
  * 邮箱:15118871363@163.com
  * github地址：https://github.com/geminiyang/ShareTransilation
  */
 
-public class CustomRecyclerView extends RecyclerView implements DataStateChangeCheck.LoadDataListener{
+public class Custom extends RecyclerView implements DataStateChangeCheck.LoadDataListener{
 
     // 服务器端一共多少条数据 拥有默认值
     private int totalCount = 4;
@@ -72,19 +70,19 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
     private DataStateChangeCheck mDataEndListener;//数据状态监听器
 
     private DataOperation dataOperation;
-    private InnerHandler handler = new InnerHandler(this);
+    private InnerHandler handler = new InnerHandler();
 
-    public CustomRecyclerView(Context context) {
+    public Custom(Context context) {
         super(context,null);
         init(context);
     }
 
-    public CustomRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public Custom(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs,0);
         init(context);
     }
 
-    public CustomRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public Custom(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
@@ -101,7 +99,7 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
      */
     @Override
     public void setAdapter(Adapter adapter) {
-        CustomRecyclerView.WrapAdapter tempAdapter = new WrapAdapter(adapter);
+        Custom.WrapAdapter tempAdapter = new WrapAdapter(adapter);
         super.setAdapter(tempAdapter);
         this.mAdapter = tempAdapter;
     }
@@ -112,7 +110,7 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
     public void addHeaderView(Context context) {
         headerView = null;
         headerView = LayoutInflater.from(context).inflate(R.layout.header_holder,null);
-        if(this.mAdapter != null && (this.mAdapter instanceof CustomRecyclerView.WrapAdapter)) {
+        if(this.mAdapter != null && (this.mAdapter instanceof Custom.WrapAdapter)) {
             ((WrapAdapter)mAdapter).addHeaderView(headerView);
         }
     }
@@ -122,8 +120,8 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
      */
     public void addFooterView(Context context) {
         footerView = null;
-        footerView = LayoutInflater.from(context).inflate(R.layout.footer_holder,null);;
-        if(this.mAdapter != null && (this.mAdapter instanceof CustomRecyclerView.WrapAdapter)) {
+        footerView = LayoutInflater.from(context).inflate(R.layout.footer_holder,null);
+        if(this.mAdapter != null && (this.mAdapter instanceof Custom.WrapAdapter)) {
             ((WrapAdapter)mAdapter).addFooterView(footerView);
         }
     }
@@ -134,18 +132,28 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
      */
     private void setFooterState(FooterState mState) {
         this.mFooterState = mState;
-        changeFooterState();
+        post(new Runnable() {
+            @Override
+            public void run() {
+                changeFooterState();
+            }
+        });
     }
 
     private void setHeaderState(HeaderState mState) {
         this.mHeaderState = mState;
-        changeHeaderState();
+        post(new Runnable() {
+            @Override
+            public void run() {
+                changeHeaderState();
+            }
+        });
     }
 
     //改变Adapter中Footer底部bottom的样式
     private void changeFooterState() {
         if(footerView!=null) {
-            CustomRecyclerView.WrapAdapter adapter = ((WrapAdapter) mAdapter);
+            Custom.WrapAdapter adapter = ((WrapAdapter) mAdapter);
             if (adapter != null && adapter.getFooterHolder() != null) {
                 adapter.getFooterHolder().setState(mFooterState);
             }
@@ -155,7 +163,7 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
     //改变Adapter中顶部bottom的样式
     private void changeHeaderState() {
         if(headerView!=null) {
-            CustomRecyclerView.WrapAdapter adapter = ((WrapAdapter) mAdapter);
+            Custom.WrapAdapter adapter = ((WrapAdapter) mAdapter);
             if (adapter != null && adapter.getHeaderHolder() != null) {
                 adapter.getHeaderHolder().setState(mHeaderState);
             }
@@ -210,69 +218,83 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
     private void refresh() {
         if(this.dataOperation!=null) {
             dataOperation.onRefresh();
+            mAdapter.notifyItemRangeInserted(0, requestCount);
+            smoothScrollToPosition(0);//虽然会报错但是能实现效果
         }
-    }
-
-    /**
-     * 供外部数据加载完毕时候调用
-     */
-    public void finishComplete() {
-        //要确保数据加载完毕后操作才能进行notify操作
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.notifyDataSetChanged();
-                smoothScrollToPosition(0);//虽然会报错但是能实现效果
-            }
-        },1500);
     }
 
     /**
      * 数据上拉加载加载操作
      */
     private void loadMoreData() {
-        //模拟网络连接
-        if (NetWorkUtil.isNetworkConnected(mContext)) {
-            //模拟请求远程数据
-            load();
-            Message msg = new Message();
-            msg.arg1 = 1;
-            handler.handleMessage(msg);
-        } else {
-            //模拟一下网络请求失败的情况
-            setFooterState(FooterState.NETWORK_ERROR);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //模拟网络连接
+                if (NetWorkUtil.isNetworkConnected(mContext)) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //模拟请求远程数据
+                    load();
+                    Looper.prepare();
+                    Message msg = new Message();
+                    msg.arg1 = 1;
+                    handler.handleMessage(msg);
+                    Looper.loop();
+                } else {
+                    //模拟一下网络请求失败的情况
+                    setFooterState(FooterState.NETWORK_ERROR);
+                }
+            }
+        }).start();
+
     }
 
     /**
      * 数据下拉刷新操作
      */
     private void refreshMoreData() {
-        if (NetWorkUtil.isNetworkConnected(mContext)) {
-            //模拟请求远程数据
-            refresh();
-            Log.d("info", "Mode:Refresh ,the state is finish, just wait..");
-            setHeaderState(HeaderState.FINISH);
-            Message msg = new Message();
-            msg.arg1 = 2;
-            handler.handleMessage(msg);
-        } else {
-            Looper.prepare();
-            //模拟一下网络请求失败的情况
-            ToastUtil.getInstance().showToast(mContext,"网络错误");
-            Looper.loop();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //模拟网络连接
+                if (NetWorkUtil.isNetworkConnected(mContext)) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //模拟请求远程数据
+                    refresh();
+                    Log.d("info", "Mode:Refresh ,the state is finish, just wait..");
+                    setHeaderState(HeaderState.FINISH);
+                    Looper.prepare();
+                    Message msg = new Message();
+                    msg.arg1 = 2;
+                    handler.handleMessage(msg);
+                    Looper.loop();
+                } else {
+                    Looper.prepare();
+                    //模拟一下网络请求失败的情况
+                    ToastUtil.getInstance().showToast(mContext,"网络错误");
+                    Looper.loop();
+                }
+            }
+        }).start();
     }
 
     /**
-     * 上拉加载自定义实现,当到达底部的操作
+     * 上拉加载自定义实现
      * @param view
      */
     @Override
     public void onLoadNextPage(View view) {
         //对应加载更多操作
         if (getFooterState() == FooterState.LOADING) {
-            Logger.d("Mode:LOAD ,the state is Loading, just wait..");
+            Log.d("info", "Mode:LOAD ,the state is Loading, just wait..");
             //正在加载中
             return;
         }
@@ -281,19 +303,14 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
             currentCount = requestCount;
         } else {
             //更新当前拥有项
-            currentCount =  mAdapter.getItemCount() - ((CustomRecyclerView.WrapAdapter)mAdapter).
-                    getHeaderCount() - ((CustomRecyclerView.WrapAdapter)mAdapter).getFooterCount()
+            currentCount =  mAdapter.getItemCount() - ((Custom.WrapAdapter)mAdapter).
+                    getHeaderCount() - ((Custom.WrapAdapter)mAdapter).getFooterCount()
                     + requestCount;
         }
         if (currentCount <= totalCount) {
             setFooterState(FooterState.LOADING);
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //载入更多数据
-                    loadMoreData();
-                }
-            },1500);
+            //载入更多数据
+            loadMoreData();
         } else {
             //无数据
             setFooterState(FooterState.END);
@@ -309,7 +326,7 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
     public void onRefreshPage(View view) {
         //对应加载更多操作
         if (getHeaderState() == HeaderState.LOADING) {
-            Logger.d("Mode:refresh ,the state is Loading, just wait..");
+            Log.d("info", "Mode:refresh ,the state is Loading, just wait..");
             //正在加载中
             return;
         }
@@ -318,20 +335,26 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
             currentCount = requestCount;
         } else {
             //更新当前拥有项
-            currentCount =  mAdapter.getItemCount() - ((CustomRecyclerView.WrapAdapter)mAdapter).
-                    getHeaderCount() - ((CustomRecyclerView.WrapAdapter)mAdapter).getFooterCount()
+            currentCount =  mAdapter.getItemCount() - ((Custom.WrapAdapter)mAdapter).
+                    getHeaderCount() - ((Custom.WrapAdapter)mAdapter).getFooterCount()
                     + requestCount;
         }
         if(currentCount<=totalCount) {
-            Logger.d("Mode:REFRESHING ,the state is Loading, just wait..");
-            setHeaderState(HeaderState.LOADING);
-            postDelayed(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.d("info", "Mode:REFRESHING ,the state is Loading, just wait..");
+                    setHeaderState(HeaderState.LOADING);
+                    //模拟耗时操作
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     //执行添加新数据操作
                     refreshMoreData();
                 }
-            },1500);
+            }).start();
         } else {
             ToastUtil.getInstance().showToast(mContext,"已无最新数据");
         }
@@ -548,15 +571,15 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
                 }
             }
 
-                //设置全部布局不可见
-                private void setAllGone() {
-                    if (one != null) {
-                        one.setVisibility(GONE);
-                    }
-                    if (two != null) {
-                        two.setVisibility(GONE);
-                    }
+            //设置全部布局不可见
+            private void setAllGone() {
+                if (one != null) {
+                    one.setVisibility(GONE);
                 }
+                if (two != null) {
+                    two.setVisibility(GONE);
+                }
+            }
         }
 
 
@@ -564,21 +587,19 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
     /**
      * 自定义Handler，实现内部消息传递
      */
-    private static class InnerHandler extends Handler {
-        WeakReference mContext;
-        private InnerHandler(CustomRecyclerView customRecyclerView) {
-            mContext = new WeakReference(customRecyclerView);
+    class InnerHandler extends Handler {
+        private InnerHandler() {
         }
 
         public void handleMessage(Message msg) {
-            final CustomRecyclerView theCustomRecyclerView = (CustomRecyclerView) mContext.get();
             switch (msg.arg1) {
                 case 1:
                     postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            //mAdapter.notifyDataSetChanged();
                             //上拉加载加载完毕时
-                            theCustomRecyclerView.setFooterState(FooterState.NORMAL);
+                            setFooterState(FooterState.NORMAL);
                         }
                     },1500);
                     break;
@@ -587,11 +608,10 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
                         @Override
                         public void run() {
                             //下拉刷新完毕时
-                            theCustomRecyclerView.setHeaderState(HeaderState.NONE);
-                            theCustomRecyclerView.scrollToPosition(theCustomRecyclerView.
-                                    mDataEndListener.getFirstVisibleItemPosition());
+                            setHeaderState(HeaderState.NONE);
+                            scrollToPosition(mDataEndListener.getFirstVisibleItemPosition());
                         }
-                    },1500);
+                    },500);
                     break;
                 default:
                     break;

@@ -123,12 +123,17 @@ public class UserListFragment extends Fragment implements MyUserListRecyclerView
         myRecyclerView.setDataOperation(new CustomRecyclerView.DataOperation() {
             @Override
             public void onLoadMore() {
-                for (int i = 0; i < REQUEST_COUNT; i++) {
-                    if (mValues.size() >= TOTAL_COUNT) {
-                        break;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < REQUEST_COUNT; i++) {
+                            if (mValues.size() >= TOTAL_COUNT) {
+                                break;
+                            }
+                            mValues.add(UserListContent.createUserItem(mValues.size()));
+                        }
                     }
-                    mValues.add(UserListContent.createUserItem(mValues.size()));
-                }
+                }).start();
             }
 
             @Override

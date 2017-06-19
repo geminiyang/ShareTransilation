@@ -16,6 +16,9 @@ import com.idear.move.Activity.FriendAddActivity;
 import com.idear.move.Adapter.MyDynamicsRvAdapter;
 import com.idear.move.POJO.MyDynamicsDataModel;
 import com.idear.move.R;
+import com.idear.move.Thread.LoadMoreThread;
+import com.idear.move.Thread.RefreshThread;
+import com.idear.move.network.DataGetInterface;
 import com.idear.move.util.DateUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.yqq.idear.CustomRecyclerView;
@@ -131,29 +134,30 @@ public class DynamicsFragment extends Fragment implements CustomRecyclerView.Dat
 
     @Override
     public void onLoadMore() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
+        new LoadMoreThread(new DataGetInterface() {
+            @Override
+            public void finishWork(Object obj) {
             }
-            int index = dataModels.size()%4;
-            Log.d("info","loadMode------"+index+"LIST SIZE : " + dataModels.size()+1);
-            dataModels.add(new MyDynamicsDataModel(userIcons[index],"上拉加载获得",
-                    DateUtil.timeStampToStr(System.currentTimeMillis()),
-                    pics[index], states[index],lists.get(0)));
-        }
+
+            @Override
+            public void interrupt(Exception e) {
+
+            }
+        }, dataModels).start();
     }
 
     @Override
     public void onRefresh() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
+        new RefreshThread(new DataGetInterface() {
+            @Override
+            public void finishWork(Object obj) {
+                myRecyclerView.finishComplete();
             }
-            int index = dataModels.size()%4;
-            Log.d("info","refreshMode------"+index + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.addFirst(new MyDynamicsDataModel(userIcons[index],"下拉刷新获得",
-                    DateUtil.timeStampToStr(System.currentTimeMillis()),
-                    pics[index], states[index],lists.get(0)));
-        }
+
+            @Override
+            public void interrupt(Exception e) {
+
+            }
+        },dataModels).start();
     }
 }

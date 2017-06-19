@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.idear.move.Activity.ActivityDetailActivity;
 import com.idear.move.R;
+import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -63,7 +65,7 @@ public class BannerPagerAdapter extends PagerAdapter{
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.getInstance().showToastTest(mContext);
+                IntentSkipUtil.skipToNextActivity(mContext, ActivityDetailActivity.class);
             }
         });
         iv.setImageResource(pictureList.get(position));

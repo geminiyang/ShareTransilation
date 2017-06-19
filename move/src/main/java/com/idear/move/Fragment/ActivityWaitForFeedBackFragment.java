@@ -23,14 +23,6 @@ import com.yqq.idear.DataStateChangeCheck;
 
 import java.util.LinkedList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ActivityWaitForFeedBackFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ActivityWaitForFeedBackFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ActivityWaitForFeedBackFragment extends Fragment implements CustomRecyclerView.DataOperation,
         CardLayoutTwoAdapter.OnItemClickListener{
     private static final String ARG = "param1";

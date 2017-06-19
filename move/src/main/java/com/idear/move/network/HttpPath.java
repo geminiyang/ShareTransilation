@@ -8,11 +8,13 @@ package com.idear.move.network;
 
 public class HttpPath {
 
-    private static final String IP="http://192.168.75.1:8080/";
-
-    public static String getUserLoginPath(){
-
-        return IP+"TennisGameSys/app_userlogin";
+    public static String getUserLoginPath() {
+        return "http://idear.party/api/mine/login";
     }
 
+    public static String getVerifyUserStatePath() {
+        return "http://idear.party/api/mine/check";
+    }
+
+    public static String getUserLogOutPath() {return "http://idear.party/api/mine/logout";}
 }

@@ -22,11 +22,11 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true">
         <FrameLayout
-            android:id="@+id/fl_id"
+            android:id="@+id/fl_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:id="@+id/et_id"
+                android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="30dp"
@@ -35,8 +35,9 @@
                 android:paddingEnd="30dp"
                 android:maxLength="20"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:gravity="center"
-                android:hint="id"
+                android:hint="email"
                 android:textSize="14sp"
                 android:textColor="@color/trans_blue"
                 android:background="@drawable/bg_edit_text"
@@ -51,7 +52,7 @@
                 />
         </FrameLayout>
         <FrameLayout
-            android:layout_below="@+id/fl_id"
+            android:layout_below="@+id/fl_email"
             android:id="@+id/fl_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -66,6 +67,7 @@
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:maxLength="20"
                 android:gravity="center"
                 android:hint="password"

@@ -1,6 +1,10 @@
 package com.idear.move.Activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -10,16 +14,44 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.idear.move.R;
+import com.idear.move.Thread.HttpThread;
+import com.idear.move.Thread.LoginThread;
+import com.idear.move.Thread.VerifyUserStateThread;
+import com.idear.move.network.DataGetInterface;
+import com.idear.move.network.HttpPath;
 import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
 import com.yqq.swipebackhelper.SwipeBackHelper;
 
+import org.w3c.dom.Text;
+
+import java.lang.ref.WeakReference;
+
 public class UserLoginActivity extends BaseActivity implements View.OnClickListener{
 
-    private EditText et_password,et_id;
+    private EditText et_password,et_email;
     private TextView tv_register,tv_forgetPassword;
     private ImageView qq,weChat;
     private Button login;
+
+    private static class MyHandler extends Handler {
+        WeakReference mActivity;
+        MyHandler(UserLoginActivity activity) {
+            mActivity = new WeakReference(activity);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            UserLoginActivity theActivity = (UserLoginActivity) mActivity.get();
+            switch (msg.what) {
+                case 0:
+
+                    break;
+            }
+        }
+    }
+
+    private MyHandler handler = new MyHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +69,7 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initView() {
-        et_id = (EditText) findViewById(R.id.et_id);
+        et_email = (EditText) findViewById(R.id.et_email);
         et_password = (EditText) findViewById(R.id.et_password);
 
         tv_forgetPassword = (TextView) findViewById(R.id.end);
@@ -61,7 +93,7 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
         int id = v.getId();
         switch (id){
             case R.id.bt_login:
-                login();
+                //login();
                 break;
             case R.id.start:
                 IntentSkipUtil.skipToNextActivity(this,UserRegisterActivity.class);
@@ -81,10 +113,59 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    private void verifyUserState() {
+        String email = et_email.getText().toString().trim();
+        if(!TextUtils.isEmpty(email)) {
+            VerifyUserStateThread verifyUserStateThread = new VerifyUserStateThread(
+                    this, HttpPath.getVerifyUserStatePath(), email);
+            verifyUserStateThread.setDataGetListener(new DataGetInterface() {
+                @Override
+                public void finishWork(Object obj) {
+                    //用户界面中提示
+                    Looper.prepare();
+                    ToastUtil.getInstance().showToast(UserLoginActivity.this, obj.toString());
+                    Looper.loop();
+                }
+
+                @Override
+                public void interrupt(Exception e) {
+
+                }
+            });
+            verifyUserStateThread.start();
+        } else {
+
+        }
+    }
+
     /**
-     * 启用线程进行登陆操作
+     * 启用线程进行登陆操作,并且附带检验格式是否正确的操作
      */
     private void login() {
+        String email = et_email.getText().toString().trim();
+        String password = et_password.getText().toString().trim();
+        if(!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(password)) {
+            LoginThread loginThread = new LoginThread(this,HttpPath.getUserLoginPath(), email, password);
+            loginThread.setDataGetListener(new DataGetInterface() {
+                @Override
+                public void finishWork(Object obj) {
+                    //用户界面中提示
+                    Looper.prepare();
+                    ToastUtil.getInstance().showToast(UserLoginActivity.this,obj.toString());
+                    Looper.loop();
+                    Looper.prepare();
+                    verifyUserState();
+                    Looper.loop();
+                }
 
+                @Override
+                public void interrupt(Exception e) {
+
+                }
+            });
+            loginThread.start();
+        } else {
+            ToastUtil.getInstance().showToast(this,"用户名或密码不能为空");
+        }
     }
 }

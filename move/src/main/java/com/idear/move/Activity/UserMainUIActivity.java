@@ -35,7 +35,10 @@ import com.idear.move.Fragment.UserInformationFragment;
 import com.idear.move.Fragment.UserListFragment;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
+import com.idear.move.Thread.LogoutThread;
 import com.idear.move.myWidget.TipButton;
+import com.idear.move.network.DataGetInterface;
+import com.idear.move.network.HttpPath;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ObjectAnimatorUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
@@ -406,8 +409,21 @@ public class UserMainUIActivity extends BaseActivity implements
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityManager.getInstance().finishAllActivities();
-                            finish();
+                            LogoutThread logoutThread = new LogoutThread(UserMainUIActivity.this,
+                                    HttpPath.getUserLogOutPath());
+                            logoutThread.setDataGetListener(new DataGetInterface() {
+                                @Override
+                                public void finishWork(Object obj) {
+                                    ActivityManager.getInstance().finishAllActivities();
+                                    finish();
+                                }
+
+                                @Override
+                                public void interrupt(Exception e) {
+
+                                }
+                            });
+                            logoutThread.start();
                         }
                     });
             dialog.setNegativeButton("取消",

@@ -122,12 +122,18 @@ public class GroupListFragment extends Fragment implements MyGroupListRecyclerVi
         myRecyclerView.setDataOperation(new CustomRecyclerView.DataOperation() {
             @Override
             public void onLoadMore() {
-                for (int i = 0; i < REQUEST_COUNT; i++) {
-                    if (mValues.size() >= TOTAL_COUNT) {
-                        break;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < REQUEST_COUNT; i++) {
+                            if (mValues.size() >= TOTAL_COUNT) {
+                                break;
+                            }
+                            mValues.add(GroupListContent.createGroupItem(mValues.size()));
+                        }
                     }
-                    mValues.add(GroupListContent.createGroupItem(mValues.size()));
-                }
+                }).start();
+
             }
 
             @Override

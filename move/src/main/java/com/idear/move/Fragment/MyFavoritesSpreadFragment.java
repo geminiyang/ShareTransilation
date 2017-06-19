@@ -162,24 +162,34 @@ public class MyFavoritesSpreadFragment extends Fragment implements CustomRecycle
 
     @Override
     public void onLoadMore() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < REQUEST_COUNT; i++) {
+                    if (dataModels.size() >= TOTAL_COUNT) {
+                        break;
+                    }
+                    Log.d("info","loadMode------" + "LIST SIZE : " + dataModels.size()+1);
+                    dataModels.add(new CardLayoutThreeDataModel(activityName,picUrl,breviaryContent));
+                }
             }
-            Log.d("info","loadMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.add(new CardLayoutThreeDataModel(activityName,picUrl,breviaryContent));
-        }
+        }).start();
     }
 
     @Override
     public void onRefresh() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < REQUEST_COUNT; i++) {
+                    if (dataModels.size() >= TOTAL_COUNT) {
+                        break;
+                    }
+                    Log.d("info","refreshMode------" + "LIST SIZE : " + dataModels.size()+1);
+                    dataModels.addFirst(new CardLayoutThreeDataModel(activityName,picUrl,breviaryContent));
+                }
             }
-            Log.d("info","refreshMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.addFirst(new CardLayoutThreeDataModel(activityName,picUrl,breviaryContent));
-        }
+        }).start();
     }
 
     @Override
