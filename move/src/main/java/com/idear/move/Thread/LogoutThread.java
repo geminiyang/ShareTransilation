@@ -1,11 +1,10 @@
 package com.idear.move.Thread;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.idear.move.network.DataGetInterface;
-import com.idear.move.network.ResultTypeOne;
+import com.idear.move.network.ResultTypeTwo;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
 
@@ -93,7 +92,7 @@ public class LogoutThread extends Thread{
                     sb.append(str);
                 }
                 Logger.d(sb.toString());
-                ResultTypeOne result = gson.fromJson(sb.toString(), ResultTypeOne.class);//通过Gson解析json
+                ResultTypeTwo result = gson.fromJson(sb.toString(), ResultTypeTwo.class);//通过Gson解析json
                 Logger.d(result.getMessage());
 
                 if (mListener != null) {

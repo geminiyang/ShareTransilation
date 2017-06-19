@@ -1,18 +1,13 @@
 package com.idear.move.Thread;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.idear.move.network.DataGetInterface;
-import com.idear.move.network.ResultTypeOne;
-import com.idear.move.network.loginData;
+import com.idear.move.network.ResultTypeTwo;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
 
-import org.apache.http.cookie.Cookie;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,18 +18,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class VerifyUserStateThread extends Thread{
 	private String url;
-	private String cookie;
     private Context mContext;
     private DataGetInterface mListener;
-    public VerifyUserStateThread(Context context, String url, String cookie) {
+    public VerifyUserStateThread(Context context, String url) {
 		this.url = url;
-		this.cookie = cookie;
         this.mContext = context;
 	}
 
@@ -96,7 +86,7 @@ public class VerifyUserStateThread extends Thread{
                     sb.append(str);
                 }
                 Logger.d(sb.toString());
-                ResultTypeOne result = gson.fromJson(sb.toString(), ResultTypeOne.class);
+                ResultTypeTwo result = gson.fromJson(sb.toString(), ResultTypeTwo.class);
                 Logger.d(result.getMessage());
 
                 if (mListener != null) {

@@ -17,4 +17,8 @@ public class HttpPath {
     }
 
     public static String getUserLogOutPath() {return "http://idear.party/api/mine/logout";}
+
+    public static String getUserRegisterPath() {return  "http://idear.party/api/mine/signup";}
+
+    public static String getEmailVerifyPath() {return "http://idear.party/api/mine/send";}
 }

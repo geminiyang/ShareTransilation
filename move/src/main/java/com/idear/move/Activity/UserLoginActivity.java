@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.idear.move.R;
-import com.idear.move.Thread.HttpThread;
 import com.idear.move.Thread.LoginThread;
 import com.idear.move.Thread.VerifyUserStateThread;
 import com.idear.move.network.DataGetInterface;
@@ -23,8 +22,6 @@ import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
 import com.yqq.swipebackhelper.SwipeBackHelper;
-
-import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 
@@ -93,7 +90,7 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
         int id = v.getId();
         switch (id){
             case R.id.bt_login:
-                //login();
+                login();
                 break;
             case R.id.start:
                 IntentSkipUtil.skipToNextActivity(this,UserRegisterActivity.class);
@@ -106,7 +103,6 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.qq:
                 Toast.makeText(this,"第三方接入登陆qq",Toast.LENGTH_SHORT).show();
-                IntentSkipUtil.skipToNextActivity(this,UserMainUIActivity.class);
                 break;
             default:
                 break;
@@ -114,28 +110,22 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void verifyUserState() {
-        String email = et_email.getText().toString().trim();
-        if(!TextUtils.isEmpty(email)) {
-            VerifyUserStateThread verifyUserStateThread = new VerifyUserStateThread(
-                    this, HttpPath.getVerifyUserStatePath(), email);
-            verifyUserStateThread.setDataGetListener(new DataGetInterface() {
-                @Override
-                public void finishWork(Object obj) {
-                    //用户界面中提示
-                    Looper.prepare();
-                    ToastUtil.getInstance().showToast(UserLoginActivity.this, obj.toString());
-                    Looper.loop();
-                }
+        VerifyUserStateThread verifyUserStateThread = new VerifyUserStateThread(
+                this, HttpPath.getVerifyUserStatePath());
+        verifyUserStateThread.setDataGetListener(new DataGetInterface() {
+            @Override
+            public void finishWork(Object obj) {
+                Looper.prepare();
+                ToastUtil.getInstance().showToast(UserLoginActivity.this, obj.toString());
+                Looper.loop();
+            }
 
-                @Override
-                public void interrupt(Exception e) {
+            @Override
+            public void interrupt(Exception e) {
 
-                }
-            });
-            verifyUserStateThread.start();
-        } else {
-
-        }
+            }
+        });
+        verifyUserStateThread.start();
     }
 
     /**
@@ -150,9 +140,12 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void finishWork(Object obj) {
                     //用户界面中提示
-                    Looper.prepare();
-                    ToastUtil.getInstance().showToast(UserLoginActivity.this,obj.toString());
-                    Looper.loop();
+                    String s = (String) obj;
+                    //用户界面中提示
+                    //登录状态为1则跳转
+                    if(Integer.parseInt(s)==1) {
+                        IntentSkipUtil.skipToNextActivity(UserLoginActivity.this,UserMainUIActivity.class);
+                    }
                     Looper.prepare();
                     verifyUserState();
                     Looper.loop();

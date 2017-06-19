@@ -1,14 +1,10 @@
 package com.idear.move.Thread;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.idear.move.network.DataGetInterface;
-import com.idear.move.network.loginData;
-import com.idear.move.network.ResultTypeOne;
-import com.idear.move.util.CookiesSaveUtil;
+import com.idear.move.network.ResultTypeTwo;
 import com.idear.move.util.Logger;
 
 import org.json.JSONException;
@@ -21,19 +17,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
-public class LoginThread extends Thread{
+public class GetVerifyCodeThread extends Thread{
 	private String url;
 	private String email;
-	private String password;
     private Context mContext;
     private DataGetInterface mListener;
-    public LoginThread(Context context, String url, String email, String password) {
+    public GetVerifyCodeThread(Context context, String url, String email) {
 		this.url = url;
 		this.email = email;
-		this.password = password;
         this.mContext = context;
 	}
 
@@ -41,11 +33,10 @@ public class LoginThread extends Thread{
         this.mListener = mListener;
     }
 
-    private void login() {
+    private void getCode() {
         try {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", email);
-            jsonObject.put("password", password);
             String jsonString = jsonObject.toString();
             Logger.d(jsonString);
             //使用工具将其封装成一个类的对象
@@ -85,15 +76,7 @@ public class LoginThread extends Thread{
 
             //输入返回状态码
             final int code = conn.getResponseCode();
-            //获取Cookie并且本地化
-            Map<String, List<String>> cookieMap = conn.getHeaderFields();
-            List<String> cookies = cookieMap.get("Set-Cookie");
-            StringBuffer cookieStr = new StringBuffer();
-            if (null != cookies && 0 < cookies.size()) {
-                for (String cookie : cookies) {
-                    cookieStr.append(cookie);
-                }
-            }
+
             if(code == 200){
                 //网络返回数据,放入的输入流
                 InputStream is = conn.getInputStream();
@@ -104,17 +87,12 @@ public class LoginThread extends Thread{
                     sb.append(str);
                 }
                 Logger.d(sb.toString());
-                ResultTypeOne result = gson.fromJson(sb.toString(), ResultTypeOne.class);
+                ResultTypeTwo result = gson.fromJson(sb.toString(), ResultTypeTwo.class);
                 Logger.d(result.getMessage());
 
-                if(1== Integer.parseInt(result.getStatus())) {
-                    //成功则保存cookie
-                    Logger.d("saving---" + cookieStr.toString());
-                    CookiesSaveUtil.saveCookies(cookieStr.toString(),mContext);
-                }
                 Logger.d(code+"");
                 if (mListener != null) {
-                    mListener.finishWork(result.getStatus());
+                    mListener.finishWork(result.getMessage());
                 }
             } else{
                 if (mListener != null) {
@@ -139,6 +117,6 @@ public class LoginThread extends Thread{
     @Override
     public void run() {
         super.run();
-        login();
+        getCode();
     }
 }
