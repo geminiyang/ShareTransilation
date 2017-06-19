@@ -18,6 +18,7 @@ import com.idear.move.Thread.LoginThread;
 import com.idear.move.Thread.VerifyUserStateThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
+import com.idear.move.network.ResultTypeOne;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -115,9 +116,7 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
         verifyUserStateThread.setDataGetListener(new DataGetInterface() {
             @Override
             public void finishWork(Object obj) {
-                Looper.prepare();
-                ToastUtil.getInstance().showToast(UserLoginActivity.this, obj.toString());
-                Looper.loop();
+                ToastUtil.getInstance().showToastInThread(UserLoginActivity.this, obj.toString());
             }
 
             @Override
@@ -140,15 +139,21 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void finishWork(Object obj) {
                     //用户界面中提示
-                    String s = (String) obj;
+                    ResultTypeOne result = (ResultTypeOne) obj;
+                    String s = result.getMessage();
+                    int statusCode = Integer.parseInt(result.getStatus());
                     //用户界面中提示
                     //登录状态为1则跳转
-                    if(Integer.parseInt(s)==1) {
+                    if(statusCode==1) {
                         IntentSkipUtil.skipToNextActivity(UserLoginActivity.this,UserMainUIActivity.class);
+                        Looper.prepare();
+                        verifyUserState();
+                        Looper.loop();
+
+                    } else {
+                        ToastUtil.getInstance().showToastInThread(UserLoginActivity.this,s);
                     }
-                    Looper.prepare();
-                    verifyUserState();
-                    Looper.loop();
+
                 }
 
                 @Override

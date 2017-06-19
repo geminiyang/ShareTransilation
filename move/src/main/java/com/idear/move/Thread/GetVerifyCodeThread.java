@@ -92,7 +92,7 @@ public class GetVerifyCodeThread extends Thread{
 
                 Logger.d(code+"");
                 if (mListener != null) {
-                    mListener.finishWork(result.getMessage());
+                    mListener.finishWork(result);
                 }
             } else{
                 if (mListener != null) {

@@ -3,6 +3,7 @@ package com.idear.move.util;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Looper;
 import android.widget.Toast;
 
 /**
@@ -52,6 +53,16 @@ public class ToastUtil {
         }
         toast = Toast.makeText(context, "click",Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public void showToastInThread(Context context,String msg){
+        Looper.prepare();
+        if(toast != null){
+            toast.cancel();
+        }
+        toast = Toast.makeText(context,msg,Toast.LENGTH_SHORT);
+        toast.show();
+        Looper.loop();
     }
 
     public void showToastTest(Fragment fragment){

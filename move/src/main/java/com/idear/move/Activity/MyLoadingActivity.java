@@ -1,6 +1,9 @@
 package com.idear.move.Activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
@@ -9,12 +12,61 @@ import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 
+import java.lang.ref.WeakReference;
+
 public class MyLoadingActivity extends BaseActivity implements View.OnClickListener{
 
-    private static Button bt;
-    Thread thread;
-
+    private Button bt;
     static int INDEX_IF_COMETONEXT = 1;//这个标志位与handler中的相应what对应
+
+    static class InnerHandler extends Handler {
+        WeakReference mActivity;
+        public InnerHandler(Activity activity){
+            this.mActivity = new WeakReference(activity);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            MyLoadingActivity theActivity = (MyLoadingActivity) mActivity.get();
+            switch (msg.what){
+                case 0:
+                    if (msg.arg1 == 0){
+                        theActivity.bt.setText("重新获取");
+                        theActivity.bt.setClickable(true);
+                    }else {
+                        theActivity.bt.setText("(" + (msg.arg1) + ")秒");
+                        theActivity.bt.setClickable(false);
+                    }
+                    break;
+                case 1:
+                    if (msg.arg1 == 0){
+                        TurnToNext(theActivity);
+                    } else {
+                        theActivity.bt.setText("跳过"+"(" + (msg.arg1) + ")秒");
+                        theActivity.bt.setClickable(true);
+                    }
+                    break;
+                case 2:
+                    //这个方法是用来避免两次通过Intent 去到同一个Activity时，然后Activity On pause出现重复跳转
+                    if (msg.arg1 == 0){
+                        MyLoadingActivity.INDEX_IF_COMETONEXT = 1;
+                    } else {
+                        theActivity.bt.setText("跳过"+"(" + (msg.arg1) + ")秒");
+                        theActivity.bt.setClickable(true);
+                    }
+                    break;
+            }
+
+        }
+        private void TurnToNext(Activity activity) {
+            Intent it = new Intent(activity,SelectActivity.class);
+            it.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            activity.startActivity(it);
+            activity.finish();
+        }
+    }
+
+    private InnerHandler innerHandler = new InnerHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +91,22 @@ public class MyLoadingActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void TurnToNext() {
-        final LoadingHandler handler = new LoadingHandler(MyLoadingActivity.this,bt);
-        Message msg = handler.obtainMessage();
+        Message msg = innerHandler.obtainMessage();
         msg.arg1 = 0;
         msg.what = INDEX_IF_COMETONEXT;
-        handler.sendMessage(msg);
+        innerHandler.sendMessage(msg);
         INDEX_IF_COMETONEXT = 2;
     }
 
-    private void sendMessage(){
-        final LoadingHandler handler = new LoadingHandler(MyLoadingActivity.this,bt);
-        Runnable runnable = new Runnable() {
+    private void sendMessage() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 for (int i = 5; i >=0; i--) {
-                    Message msg = handler.obtainMessage();
+                    Message msg = innerHandler.obtainMessage();
                     msg.arg1 = i;
                     msg.what = INDEX_IF_COMETONEXT;
-                    handler.sendMessage(msg);
+                    innerHandler.sendMessage(msg);
                     try{
                         Thread.sleep(1000);
                     }catch (InterruptedException e){
@@ -65,9 +115,7 @@ public class MyLoadingActivity extends BaseActivity implements View.OnClickListe
 
                 }
             }
-        };
-        thread = new Thread(runnable);
-        thread.start();
+        }).start();
     }
 
 

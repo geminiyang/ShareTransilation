@@ -2,6 +2,9 @@ package com.idear.move.Activity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -12,17 +15,43 @@ import android.widget.ImageView;
 
 import com.idear.move.R;
 import com.idear.move.Thread.GetVerifyCodeThread;
+import com.idear.move.Thread.VerifyEmailWithCodeThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
+import com.idear.move.network.ResultTypeTwo;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ScrimUtil;
+import com.idear.move.util.ToastUtil;
 import com.yqq.idear.Logger;
 import com.yqq.swipebackhelper.BaseActivity;
 
+import java.lang.ref.WeakReference;
+
 public class UserRegisterActivity extends BaseActivity {
     private Button bt_next,getCode;
-    private EditText email;
+    private EditText email,code;
     private ImageView icBack;
+
+    private static class MyHandler extends Handler {
+        WeakReference mActivity;
+        MyHandler(UserRegisterActivity activity) {
+            mActivity = new WeakReference(activity);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            UserRegisterActivity theActivity = (UserRegisterActivity) mActivity.get();
+            switch (msg.what) {
+                case 0:
+                    theActivity.getCode.setText("未获取");
+                    break;
+                case 1:
+                    theActivity.getCode.setText("已获取");
+                    break;
+            }
+        }
+    }
+
+    private MyHandler handler = new MyHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +68,7 @@ public class UserRegisterActivity extends BaseActivity {
         icBack = (ImageView) findViewById(R.id.ic_arrow_back);
         getCode = (Button) findViewById(R.id.getCode);
         email = (EditText) findViewById(R.id.email);
+        code = (EditText) findViewById(R.id.identifyCode);
     }
 
     private void initEvent() {
@@ -48,22 +78,51 @@ public class UserRegisterActivity extends BaseActivity {
                 finish();
             }
         });
-        //use();
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(UserRegisterActivity.this,
-                        RegisterNextStepActivity.class);
+            verifyEmailWithCode();
             }
         });
 
         getCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getCode.setText("获取中");
                 //在线程中进行网络操作验证邮箱
                 getVerifyCode();
             }
         });
+    }
+
+    private void verifyEmailWithCode() {
+        String codeStr = code.getText().toString().trim();
+        String emailStr = email.getText().toString().trim();
+        if(!TextUtils.isEmpty(emailStr)&&!TextUtils.isEmpty(codeStr)) {
+            VerifyEmailWithCodeThread verifyEmailWithCodeThread = new VerifyEmailWithCodeThread(
+                    this,HttpPath.getUserRegisterPath(),emailStr,codeStr);
+            verifyEmailWithCodeThread.setDataGetListener(new DataGetInterface() {
+                @Override
+                public void finishWork(Object obj) {
+                    ResultTypeTwo result = (ResultTypeTwo) obj;
+                    int statusCode = Integer.parseInt(result.getStatus());
+                    if(statusCode == 1) {
+                        IntentSkipUtil.skipToNextActivity(UserRegisterActivity.this,
+                                RegisterNextStepActivity.class);
+                    } else {
+                        ToastUtil.getInstance().showToastInThread(UserRegisterActivity.this,result.getMessage());
+                    }
+                }
+
+                @Override
+                public void interrupt(Exception e) {
+
+                }
+            });
+            verifyEmailWithCodeThread.start();
+        } else {
+            ToastUtil.getInstance().showToast(this,"请填写验证码或邮箱");
+        }
     }
 
     private void getVerifyCode() {
@@ -74,7 +133,9 @@ public class UserRegisterActivity extends BaseActivity {
             getVerifyCodeThread.setDataGetListener(new DataGetInterface() {
                 @Override
                 public void finishWork(Object obj) {
-                    Logger.d(obj.toString());
+                    ResultTypeTwo result = (ResultTypeTwo) obj;
+                    int statusCode = Integer.parseInt(result.getStatus());
+                    handler.sendEmptyMessage(statusCode);
                 }
 
                 @Override
@@ -83,6 +144,8 @@ public class UserRegisterActivity extends BaseActivity {
                 }
             });
             getVerifyCodeThread.start();
+        } else {
+            ToastUtil.getInstance().showToast(this,"请填写邮箱");
         }
     }
 
