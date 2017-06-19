@@ -222,7 +222,6 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
             @Override
             public void run() {
                 mAdapter.notifyDataSetChanged();
-                smoothScrollToPosition(0);//虽然会报错但是能实现效果
             }
         },1500);
     }
