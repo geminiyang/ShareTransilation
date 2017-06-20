@@ -30,6 +30,7 @@ import com.idear.move.Activity.FriendAddActivity;
 import com.idear.move.Activity.PublishFActivity;
 import com.idear.move.Activity.PublishRActivity;
 import com.idear.move.Activity.PublishRFActivity;
+import com.idear.move.Activity.UserLoginActivity;
 import com.idear.move.Activity.UserMainUIActivity;
 import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.GroupListFragment;
@@ -44,6 +45,7 @@ import com.idear.move.myWidget.TipButton;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
+import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ObjectAnimatorUtil;
 import com.idear.move.util.ToastUtil;
@@ -272,7 +274,9 @@ public class SponsorMainUIActivity extends BaseActivity implements
 
                                 @Override
                                 public void interrupt(Exception e) {
-
+                                    //添加网络错误处理
+                                    ToastUtil.getInstance().showToastInThread(SponsorMainUIActivity.this,
+                                            ErrorHandleUtil.ExceptionToStr(e,SponsorMainUIActivity.this));
                                 }
                             });
                             logoutThread.start();

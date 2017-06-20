@@ -18,6 +18,7 @@ import com.idear.move.Thread.VerifyEmailWithCodeThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
+import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ScrimUtil;
 import com.idear.move.util.ToastUtil;
@@ -29,7 +30,7 @@ public class UserRegisterActivity extends BaseActivity {
     private Button bt_next,getCode;
     private EditText email,code;
     private ImageView icBack;
-
+    //静态Handler处理子线程和UI线程的通信
     private static class MyHandler extends Handler {
         WeakReference mActivity;
         MyHandler(UserRegisterActivity activity) {
@@ -56,7 +57,7 @@ public class UserRegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.title_bar_blue));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.register);
+        setContentView(R.layout.activity_user_register);
         initView();
         initEvent();
     }
@@ -86,7 +87,6 @@ public class UserRegisterActivity extends BaseActivity {
         getCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getCode.setText("获取中");
                 //在线程中进行网络操作验证邮箱
                 getVerifyCode();
             }
@@ -97,6 +97,7 @@ public class UserRegisterActivity extends BaseActivity {
         String codeStr = code.getText().toString().trim();
         final String emailStr = email.getText().toString().trim();
         if(!TextUtils.isEmpty(emailStr)&&!TextUtils.isEmpty(codeStr)) {
+            getCode.setText("获取中");
             VerifyEmailWithCodeThread verifyEmailWithCodeThread = new VerifyEmailWithCodeThread(
                     this,HttpPath.getUserRegisterPath(),emailStr,codeStr);
             verifyEmailWithCodeThread.setDataGetListener(new DataGetInterface() {
@@ -118,7 +119,9 @@ public class UserRegisterActivity extends BaseActivity {
 
                 @Override
                 public void interrupt(Exception e) {
-
+                    //添加网络错误处理
+                    ToastUtil.getInstance().showToastInThread(UserRegisterActivity.this,
+                            ErrorHandleUtil.ExceptionToStr(e,UserRegisterActivity.this));
                 }
             });
             verifyEmailWithCodeThread.start();
@@ -142,7 +145,9 @@ public class UserRegisterActivity extends BaseActivity {
 
                 @Override
                 public void interrupt(Exception e) {
-
+                    //添加网络错误处理
+                    ToastUtil.getInstance().showToastInThread(UserRegisterActivity.this,
+                            ErrorHandleUtil.ExceptionToStr(e,UserRegisterActivity.this));
                 }
             });
             getVerifyCodeThread.start();

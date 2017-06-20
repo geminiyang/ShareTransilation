@@ -1,16 +1,16 @@
 package com.idear.move.Thread;
 
-import android.accounts.NetworkErrorException;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.idear.move.R;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.LoginResult;
-import com.idear.move.network.ResultType;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
-import com.idear.move.util.ToastUtil;
 
+import org.apache.http.HttpException;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +20,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +44,7 @@ public class LoginThread extends Thread{
         this.mListener = mListener;
     }
 
-    private void login() throws NetworkErrorException{
+    private void login() {
         try {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", email);
@@ -109,8 +112,9 @@ public class LoginThread extends Thread{
 
                 if(1 == Integer.parseInt(result.getStatus())) {
                     //成功则保存cookie和用户id
-                    Logger.d("saving---" + cookieStr.toString());
+                    Logger.d("saving---cookie" + cookieStr.toString());
                     CookiesSaveUtil.saveCookies(cookieStr.toString(),mContext);
+                    Logger.d("saving---u_id" + result.getData());
                     CookiesSaveUtil.saveUserId(result.getData(),mContext);
                 }
                 Logger.d(code+"");
@@ -126,22 +130,40 @@ public class LoginThread extends Thread{
             conn.disconnect();
         } catch (JSONException e) {
             e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (ConnectTimeoutException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
         }
     }
 
     @Override
     public void run() {
         super.run();
-        try {
-            login();
-        } catch (NetworkErrorException e) {
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
-            //添加网络错误处理
-            ToastUtil.getInstance().showToastInThread(mContext,e.toString());
-        }
+        login();
     }
 }

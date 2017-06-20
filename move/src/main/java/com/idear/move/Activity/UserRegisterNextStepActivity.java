@@ -15,6 +15,7 @@ import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
 import com.idear.move.util.CheckValidUtil;
 import com.idear.move.util.CookiesSaveUtil;
+import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
@@ -104,7 +105,9 @@ public class UserRegisterNextStepActivity extends BaseActivity {
 
                 @Override
                 public void interrupt(Exception e) {
-
+                    //添加网络错误处理
+                    ToastUtil.getInstance().showToastInThread(UserRegisterNextStepActivity.this,
+                            ErrorHandleUtil.ExceptionToStr(e,UserRegisterNextStepActivity.this));
                 }
             });
             fullInInfoThread.start();

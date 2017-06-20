@@ -155,7 +155,6 @@ public class LoginModeActivity extends BaseActivity {
         switch (id){
             case R.id.modeone:
                 //API 23
-                //register.setTextColor(getResources().getColorStateList(R.color.blue_light,null));
                 IntentSkipUtil.skipToNextActivity(LoginModeActivity.this,SponsorLoginActivity.class);
                 break;
             case R.id.modetwo:

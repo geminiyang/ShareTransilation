@@ -6,4 +6,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="currentMind">这一刻的想法...</string>
     <string name="feedbackMind">活动完成如何了呢?有没有什么事情可以跟我们分享呢?</string>
+    <string name="networkFailure">网络异常</string>
+    <string name="responseTimeout">响应超时</string>
+    <string name="requestTimeout">请求超时</string>
+    <string name="networkError">网络异常</string>
+    <string name="json_error">json格式转换异常</string>
+    <string name="canNotGetConnected">无法连接网络</string>
+    <string name="malformedURL">URL协议、格式或者路径错误</string>
 </resources>

@@ -141,9 +141,6 @@
             android:name=".SponsorActivity.SponsorRegisterActivity"
             android:theme="@style/otherPageStyle" />
         <activity
-            android:name=".Activity.ForgetPasswordNextStepActivity"
-            android:theme="@style/otherPageStyle" />
-        <activity
             android:name=".Activity.MyFavoritesActivity"
             android:theme="@style/otherPageStyle" />
         <activity

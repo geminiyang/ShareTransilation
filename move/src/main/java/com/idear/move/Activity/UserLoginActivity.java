@@ -21,6 +21,7 @@ import com.idear.move.network.HttpPath;
 import com.idear.move.network.LoginResult;
 import com.idear.move.network.ResultType;
 import com.idear.move.util.CheckValidUtil;
+import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -131,7 +132,9 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void interrupt(Exception e) {
-
+                //添加网络错误处理
+                ToastUtil.getInstance().showToastInThread(UserLoginActivity.this,
+                        ErrorHandleUtil.ExceptionToStr(e,UserLoginActivity.this));
             }
         });
         verifyUserStateThread.start();
@@ -166,7 +169,9 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void interrupt(Exception e) {
-
+                    //添加网络错误处理
+                    ToastUtil.getInstance().showToastInThread(UserLoginActivity.this,
+                            ErrorHandleUtil.ExceptionToStr(e,UserLoginActivity.this));
                 }
             });
             loginThread.start();

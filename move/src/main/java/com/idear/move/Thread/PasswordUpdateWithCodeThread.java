@@ -24,18 +24,24 @@ import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
-public class VerifyEmailWithCodeThread extends Thread{
+public class PasswordUpdateWithCodeThread extends Thread{
 	private String url;
 	private String email;
     private String code;
+    private String oldPassword;
+    private String newPassword;
     private Context mContext;
     private DataGetInterface mListener;
-    public VerifyEmailWithCodeThread(Context context, String url, String email,String code) {
-		this.url = url;
-		this.email = email;
+
+    public PasswordUpdateWithCodeThread(Context mContext, String url, String email, String code,
+                                        String oldPassword, String newPassword) {
+        this.url = url;
+        this.email = email;
         this.code = code;
-        this.mContext = context;
-	}
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
+        this.mContext = mContext;
+    }
 
     public void setDataGetListener(DataGetInterface mListener) {
         this.mListener = mListener;
@@ -46,6 +52,8 @@ public class VerifyEmailWithCodeThread extends Thread{
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", email);
             jsonObject.put("verify",code);
+            jsonObject.put("oldpwd",oldPassword);
+            jsonObject.put("newpwd",newPassword);
             String jsonString = jsonObject.toString();
             Logger.d(jsonString);
             //使用工具将其封装成一个类的对象

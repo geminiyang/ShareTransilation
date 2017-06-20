@@ -38,6 +38,7 @@ import com.idear.move.myWidget.TipButton;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
+import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ObjectAnimatorUtil;
 import com.idear.move.util.ToastUtil;
@@ -430,7 +431,9 @@ public class UserMainUIActivity extends BaseActivity implements
 
                                 @Override
                                 public void interrupt(Exception e) {
-
+                                    //添加网络错误处理
+                                    ToastUtil.getInstance().showToastInThread(UserMainUIActivity.this,
+                                            ErrorHandleUtil.ExceptionToStr(e,UserMainUIActivity.this));
                                 }
                             });
                             logoutThread.start();

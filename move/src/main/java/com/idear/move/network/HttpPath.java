@@ -22,5 +22,9 @@ public class HttpPath {
 
     public static String getEmailVerifyPath() {return "http://idear.party/api/mine/send";}
 
+    public static String getModifyPWDVerifyPath() {return "http://idear.party/api/mine/pwdVerify";}
+
     public static String getFullInInfoPath() {return "http://idear.party/api/mine/infocreate";}
+
+    public static String getPassWordUpdatePath() {return "http://idear.party/api/mine/pwdUpdate";}
 }

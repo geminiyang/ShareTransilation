@@ -9,6 +9,7 @@ import com.idear.move.network.ResultType;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +19,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +111,7 @@ public class GetVerifyCodeThread extends Thread{
 
                 if(1== Integer.parseInt(result.getStatus())) {
                     //成功则保存cookie
-                    Logger.d("saving---" + cookieStr.toString());
+                    Logger.d("saving---phpId" + cookieStr.toString());
                     CookiesSaveUtil.savePhpId(cookieStr.toString(),mContext);
                 }
                 Logger.d(code+"");
@@ -123,8 +127,34 @@ public class GetVerifyCodeThread extends Thread{
             conn.disconnect();
         } catch (JSONException e) {
             e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (ConnectTimeoutException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
         }
     }
 

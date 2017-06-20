@@ -8,6 +8,7 @@ import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.ResultType;
 import com.idear.move.util.Logger;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +18,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 public class FullInInfoThread extends Thread{
@@ -44,17 +48,10 @@ public class FullInInfoThread extends Thread{
     @Override
     public void run() {
         super.run();
-        try {
-            logout();
-        } catch (NetworkErrorException e) {
-            e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
-        }
+        logout();
     }
 
-    private void logout() throws NetworkErrorException{
+    private void logout() {
         try {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", email);
@@ -126,8 +123,34 @@ public class FullInInfoThread extends Thread{
             conn.disconnect();
         } catch (JSONException e) {
             e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (ConnectTimeoutException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
         }
     }
 }
