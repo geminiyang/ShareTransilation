@@ -14,7 +14,6 @@ import android.widget.ImageView;
 
 import com.idear.move.R;
 import com.idear.move.Thread.GetVerifyCodeThread;
-import com.idear.move.Thread.PasswordForgetWithCodeThread;
 import com.idear.move.Thread.PasswordUpdateWithCodeThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
@@ -27,25 +26,23 @@ import com.yqq.swipebackhelper.BaseActivity;
 
 import java.lang.ref.WeakReference;
 
-/**
- * 赞助商和用户公用一个忘记密码页面，通过Intent传递过来的值判断忘记密码哦操作 所对应的邮箱
- */
-public class ForgetPasswordActivity extends BaseActivity {
+
+public class UserUpdatePasswordActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private ImageView iv_back;
     private Button submit,getCode;
-    private EditText email,newPassword,reSurePassword,code;
+    private EditText email,newPassword,oldPassword,reSurePassword,code;
 
     //静态Handler处理子线程和UI线程的通信
     private static class MyHandler extends Handler {
         WeakReference mActivity;
-        MyHandler(ForgetPasswordActivity activity) {
+        MyHandler(UserUpdatePasswordActivity activity) {
             mActivity = new WeakReference(activity);
         }
         @Override
         public void handleMessage(Message msg) {
-            ForgetPasswordActivity theActivity = (ForgetPasswordActivity) mActivity.get();
+            UserUpdatePasswordActivity theActivity = (UserUpdatePasswordActivity) mActivity.get();
             switch (msg.what) {
                 case 0:
                     theActivity.getCode.setText("未获取");
@@ -69,7 +66,7 @@ public class ForgetPasswordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_forget_password);
+        setContentView(R.layout.activity_user_update_password);
 
         initView();
         initEvent();
@@ -82,6 +79,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         getCode = (Button) findViewById(R.id.getCode);
         email = (EditText) findViewById(R.id.email);
         code = (EditText) findViewById(R.id.identifyCode);
+        oldPassword = (EditText) findViewById(R.id.old_password);
         newPassword = (EditText) findViewById(R.id.new_password);
         reSurePassword = (EditText) findViewById(R.id.password_reconfirm);
     }
@@ -114,44 +112,46 @@ public class ForgetPasswordActivity extends BaseActivity {
     private void modifyPassword() {
         String emailStr = email.getText().toString().trim();
         String codeStr= code.getText().toString().trim();
+        String oldPasswordStr = oldPassword.getText().toString().trim();
         String newPasswordStr = newPassword.getText().toString().trim();
         String reSurePasswordStr = reSurePassword.getText().toString().trim();
         //验证两次密码输入是否一致,不一致则提示并退出
         if(!CheckValidUtil.isEqual(newPasswordStr,reSurePasswordStr)) {
-            ToastUtil.getInstance().showToast(ForgetPasswordActivity.this,"新密码前后输入不一致!");
+            ToastUtil.getInstance().showToast(UserUpdatePasswordActivity.this,"新密码前后输入不一致!");
             return;
         }
 
-        if(CheckValidUtil.isAllNotEmpty(emailStr,codeStr,newPasswordStr,reSurePasswordStr)) {
-            PasswordForgetWithCodeThread passwordForgetWithCodeThread = new PasswordForgetWithCodeThread(
-                    ForgetPasswordActivity.this,HttpPath.getPassWordForgetPath(),emailStr,codeStr,newPasswordStr);
-            passwordForgetWithCodeThread.setDataGetListener(new DataGetInterface() {
+        if(CheckValidUtil.isAllNotEmpty(emailStr,codeStr,oldPasswordStr,newPasswordStr,reSurePasswordStr)) {
+            PasswordUpdateWithCodeThread passwordUpdateWithCodeThread = new PasswordUpdateWithCodeThread(
+                    UserUpdatePasswordActivity.this,HttpPath.getPassWordUpdatePath(),emailStr,codeStr,
+                    oldPasswordStr,newPasswordStr);
+            passwordUpdateWithCodeThread.setDataGetListener(new DataGetInterface() {
                 @Override
                 public void finishWork(Object obj) {
                     if(obj instanceof ResultType) {
                         ResultType result = (ResultType) obj;
                         int statusCode = Integer.parseInt(result.getStatus());
                         if(statusCode == 1) {
-                            IntentSkipUtil.skipToNextActivity(ForgetPasswordActivity.this,
+                            IntentSkipUtil.skipToNextActivity(UserUpdatePasswordActivity.this,
                                     UserLoginActivity.class);
                         } else {
-                            ToastUtil.getInstance().showToastInThread(ForgetPasswordActivity.this,result.getMessage());
+                            ToastUtil.getInstance().showToastInThread(UserUpdatePasswordActivity.this,result.getMessage());
                         }
                     } else {
-                        ToastUtil.getInstance().showToastInThread(ForgetPasswordActivity.this,obj.toString());
+                        ToastUtil.getInstance().showToastInThread(UserUpdatePasswordActivity.this,obj.toString());
                     }
                 }
 
                 @Override
                 public void interrupt(Exception e) {
                     //添加网络错误处理
-                    ToastUtil.getInstance().showToastInThread(ForgetPasswordActivity.this,
-                            ErrorHandleUtil.ExceptionToStr(e,ForgetPasswordActivity.this));
+                    ToastUtil.getInstance().showToastInThread(UserUpdatePasswordActivity.this,
+                            ErrorHandleUtil.ExceptionToStr(e,UserUpdatePasswordActivity.this));
                 }
             });
-            passwordForgetWithCodeThread.start();
+            passwordUpdateWithCodeThread.start();
         } else {
-            ToastUtil.getInstance().showToast(ForgetPasswordActivity.this,"请填写完整信息!");
+            ToastUtil.getInstance().showToast(UserUpdatePasswordActivity.this,"请填写完整信息!");
         }
     }
 
@@ -162,7 +162,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         String emailStr = email.getText().toString().trim();
         if(!TextUtils.isEmpty(emailStr)) {
             getCode.setText("获取中");
-            GetVerifyCodeThread getVerifyCodeThread = new GetVerifyCodeThread(ForgetPasswordActivity.this,
+            GetVerifyCodeThread getVerifyCodeThread = new GetVerifyCodeThread(UserUpdatePasswordActivity.this,
                     HttpPath.getModifyPWDVerifyPath(),emailStr);
             getVerifyCodeThread.setDataGetListener(new DataGetInterface() {
                 @Override
@@ -175,8 +175,8 @@ public class ForgetPasswordActivity extends BaseActivity {
                 @Override
                 public void interrupt(Exception e) {
                     //添加网络错误处理
-                    ToastUtil.getInstance().showToastInThread(ForgetPasswordActivity.this,
-                            ErrorHandleUtil.ExceptionToStr(e,ForgetPasswordActivity.this));
+                    ToastUtil.getInstance().showToastInThread(UserUpdatePasswordActivity.this,
+                            ErrorHandleUtil.ExceptionToStr(e,UserUpdatePasswordActivity.this));
                     handler.sendEmptyMessage(3);
                 }
             });
@@ -187,3 +187,4 @@ public class ForgetPasswordActivity extends BaseActivity {
         }
     }
 }
+

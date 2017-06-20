@@ -1,21 +1,38 @@
 package com.idear.move.POJO;
 
+import com.idear.move.Activity.UserLoginActivity;
+
 /**
  * Created by user on 2017/5/9.
  */
 
 public class UserInfoViewModel {
     private int status;
-    private int list_orders;
-    private String id;
+    private int listorder;
+    private String user_id;
     private String username;
     private String password;
     private String email;
     private String tel;
     private String school;
+    private String sex;
     private String create_time;
-    private String update_time;
-    private String delete_time;
+
+    public UserInfoViewModel() {
+
+    }
+
+    public UserInfoViewModel(int status, String user_id, String username,
+                             String password, String email, String tel, String school, String sex) {
+        this.status = status;
+        this.user_id = user_id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.tel = tel;
+        this.school = school;
+        this.sex = sex;
+    }
 
     public int getStatus() {
         return status;
@@ -25,20 +42,20 @@ public class UserInfoViewModel {
         this.status = status;
     }
 
-    public int getList_orders() {
-        return list_orders;
+    public int getListorder() {
+        return listorder;
     }
 
-    public void setList_orders(int list_orders) {
-        this.list_orders = list_orders;
+    public void setListorder(int listorder) {
+        this.listorder = listorder;
     }
 
-    public String getId() {
-        return id;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -81,6 +98,14 @@ public class UserInfoViewModel {
         this.school = school;
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
     public String getCreate_time() {
         return create_time;
     }
@@ -89,36 +114,17 @@ public class UserInfoViewModel {
         this.create_time = create_time;
     }
 
-    public String getUpdate_time() {
-        return update_time;
-    }
-
-    public void setUpdate_time(String update_time) {
-        this.update_time = update_time;
-    }
-
-    public String getDelete_time() {
-        return delete_time;
-    }
-
-    public void setDelete_time(String delete_time) {
-        this.delete_time = delete_time;
-    }
-
     @Override
     public String toString() {
         return "UserInfoViewModel{" +
                 "status=" + status +
-                ", listorders=" + list_orders +
-                ", id='" + id + '\'' +
+                ", user_id='" + user_id + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", tel='" + tel + '\'' +
                 ", school='" + school + '\'' +
-                ", create_time='" + create_time + '\'' +
-                ", update_time='" + update_time + '\'' +
-                ", delete_time='" + delete_time + '\'' +
+                ", sex='" + sex + '\'' +
                 '}';
     }
 }

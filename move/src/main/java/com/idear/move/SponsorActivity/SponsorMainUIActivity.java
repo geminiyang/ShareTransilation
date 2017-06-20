@@ -153,6 +153,7 @@ public class SponsorMainUIActivity extends BaseActivity implements
         });
 
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(0);
         mViewPager.addOnPageChangeListener(this);
 
         //初始化默认页面

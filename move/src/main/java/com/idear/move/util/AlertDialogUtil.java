@@ -9,7 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.idear.move.Activity.PublishRFActivity;
@@ -94,5 +97,30 @@ public class AlertDialogUtil {
         }).show();
     }
 
+    public static void inputTitleDialog(Context context) {
+        final EditText input = new EditText(context);
+        //获取按钮的LayoutParams
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        //在LayoutParams中设置margin
+        params.setMarginStart(25);
+        params.setMarginEnd(25);
+        //把这个LayoutParams设置给按钮
+        input.setLayoutParams(params);
+        input.setMaxLines(1);
+        input.setSingleLine(true);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(false);
+        builder.setTitle("修改姓名").setIcon(R.mipmap.msg_fill).setView(input)
+                .setNegativeButton("返回", null);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+
+    }
 }

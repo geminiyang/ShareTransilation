@@ -12,12 +12,18 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.idear.move.POJO.UserInfoViewModel;
 import com.idear.move.R;
+import com.idear.move.network.HttpPath;
+import com.idear.move.util.CookiesSaveUtil;
+import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.Logger;
 import com.idear.move.util.NetWorkUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
@@ -30,6 +36,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -44,11 +51,9 @@ public class UserDetailInformationActivity extends BaseActivity {
     private RelativeLayout LoadingFace;
     private ProgressBar progressBar;
     private TextView loadingText;
+    private ImageView iv_back,updatePassword;
+
     private BroadcastReceiver connectionReceiver;
-
-    private UserInfoViewModel userInfoViewModel;
-
-    private String jsonUrl = "http://idear.party/info/1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +64,11 @@ public class UserDetailInformationActivity extends BaseActivity {
 
 
         initView();
-        //initToolBar(mToolBar);
+        initEvent();
         //启动异步任务（UI初始化）
         NetWorkUtil.isConnected(this);
         if (NetWorkUtil.isNetworkConnected(this)) {
-            new UserInfoAsyncTask().execute(jsonUrl);
+            new UserInfoAsyncTask().execute(HttpPath.getUserInfoPath());
         } else {
             //提示无网络连接
             LoadingFace.setBackgroundColor(Color.WHITE);
@@ -74,24 +79,19 @@ public class UserDetailInformationActivity extends BaseActivity {
 
     }
 
-    private void initView() {
-        mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        nickName = (TextView) findViewById(R.id.tv_nickname);
-        Sex = (TextView) findViewById(R.id.tv_sex);
-        birthDay = (TextView) findViewById(R.id.tv_birthday);
-        school = (TextView) findViewById(R.id.tv_school);
-        email = (TextView) findViewById(R.id.tv_email);
-        password = (TextView) findViewById(R.id.tv_password);
-        phoneNumber = (TextView) findViewById(R.id.tv_cellphoneNumber);
-
-        LoadingFace = (RelativeLayout) findViewById(R.id.loading_face);
-        loadingText = (TextView) findViewById(R.id.tv_progressBar);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-        findViewById(R.id.ic_arrow_back).setOnClickListener(new View.OnClickListener() {
+    private void initEvent() {
+        iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        updatePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(UserDetailInformationActivity.this,
+                        UserUpdatePasswordActivity.class);
             }
         });
 
@@ -117,6 +117,25 @@ public class UserDetailInformationActivity extends BaseActivity {
         registerReceiver(connectionReceiver, intentFilter);
     }
 
+    private void initView() {
+        mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
+        nickName = (TextView) findViewById(R.id.tv_nickname);
+        Sex = (TextView) findViewById(R.id.tv_sex);
+        birthDay = (TextView) findViewById(R.id.tv_birthday);
+        school = (TextView) findViewById(R.id.tv_school);
+        email = (TextView) findViewById(R.id.tv_email);
+        password = (TextView) findViewById(R.id.tv_password);
+        phoneNumber = (TextView) findViewById(R.id.tv_cellphoneNumber);
+
+        //ImageView
+        updatePassword = (ImageView) findViewById(R.id.iv_next_password);
+
+        LoadingFace = (RelativeLayout) findViewById(R.id.loading_face);
+        loadingText = (TextView) findViewById(R.id.tv_progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -125,25 +144,8 @@ public class UserDetailInformationActivity extends BaseActivity {
         }
     }
 
-    private void initToolBar(Toolbar toolbar) {
-        setSupportActionBar(toolbar);//使Toolbar能取代原本的 actionbar
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        //设置系统默认退出按钮
-        ActionBar actionBar;
-        if ((actionBar=getSupportActionBar())!= null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);//设置标题栏具有返回按钮
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
-    }
-
     /**
-     * 将URL对应的json格式转换成我们的NewsBean
+     * 将URL对应的json格式转换成我们的Bean
      * @param param
      * @return
      */
@@ -154,33 +156,69 @@ public class UserDetailInformationActivity extends BaseActivity {
         //可以写成URLConnection urlConnection = null;
         HttpURLConnection urlConnection = null;
         try {
+            JSONObject sendJson = new JSONObject();
+            sendJson.put("user_id", CookiesSaveUtil.getUserId(UserDetailInformationActivity.this));
+            String sendJsonString = sendJson.toString();
+            Logger.d(sendJsonString);
+            //使用工具将其封装成一个类的对象
+            Gson gson = new Gson();
+
             urlConnection = (HttpURLConnection) new URL(param).openConnection();
-            urlConnection.setDoInput(true);
+            //设置相应请求头
+            urlConnection.setReadTimeout(5000);
+            urlConnection.setConnectTimeout(5000);
+            // 设置允许输出
             urlConnection.setDoOutput(true);
-            if(HttpURLConnection.HTTP_OK!=urlConnection.getResponseCode()) {
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setUseCaches(false);
+            //设置维持长链接
+            urlConnection.setRequestProperty("connection", "Keep-Alive");
+            //设置文件字符集
+            urlConnection.setRequestProperty("Charset", "UTF-8");
+            // 设置contentType
+            urlConnection.setRequestProperty("Content-Type","application/json");
+            //转换为字节数组
+            byte[] data = (sendJson.toString()).getBytes();
+            //设置文件长度
+            urlConnection.setRequestProperty("Content-length", String.valueOf(data.length));
+            // 开始连接请求
+            urlConnection.connect();
+            OutputStream out = urlConnection.getOutputStream();
+            // 写入请求的字符串，转换成字节流传输
+            out.write(data);
+            out.flush();
+            out.close();
+
+
+            //如果请求码不是200则退出
+            if(HttpURLConnection.HTTP_OK != urlConnection.getResponseCode()) {
                 return null;
             }
             is = urlConnection.getInputStream();
-
-//            is = new URL(param).openStream();
-            String jsonString = readStream(is);
-            JSONObject jsonObject;
+            //is = new URL(param).openStream();
+            String receiverJsonString = readStream(is);
+            JSONObject receiveJson;
             UserInfoViewModel user;
             try {
                 //将整一个json字符串转换成json对象
-                jsonObject = new JSONObject(jsonString);
+                receiveJson = new JSONObject(receiverJsonString);
                 user = new UserInfoViewModel();
-                user.setUsername(jsonObject.getString("username"));
-                user.setPassword(jsonObject.getString("password"));
-                user.setSchool(jsonObject.getString("school"));
-                user.setEmail(jsonObject.getString("email"));
-                user.setTel(jsonObject.getString("tel"));
+                user.setUser_id(receiveJson.getString("user_id"));
+                user.setUsername(receiveJson.getString("username"));
+                user.setSchool(receiveJson.getString("school"));
+                user.setEmail(receiveJson.getString("email"));
+                user.setTel(receiveJson.getString("tel"));
+                user.setSex(receiveJson.getString("sex"));
+                user.setStatus(receiveJson.getInt("status"));
                 users.add(user);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -199,7 +237,6 @@ public class UserDetailInformationActivity extends BaseActivity {
         try {
             String line = "";
             isr = new InputStreamReader(is,"utf-8");
-            Thread.sleep(500);
             BufferedReader br = new BufferedReader(isr);
             while ((line = br.readLine())!= null) {
                 result += line;
@@ -209,8 +246,6 @@ public class UserDetailInformationActivity extends BaseActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -227,7 +262,6 @@ public class UserDetailInformationActivity extends BaseActivity {
         protected List<UserInfoViewModel> doInBackground(String... params) {
                 List<UserInfoViewModel> list = null;
                 list = myGetJsonData(params[0]);
-
                 return list;
         }
 
@@ -245,14 +279,13 @@ public class UserDetailInformationActivity extends BaseActivity {
                 birthDay.setText(user.getCreate_time());
                 school.setText(user.getSchool());
                 email.setText(user.getEmail());
-                password.setText(user.getPassword());
                 phoneNumber.setText(user.getTel());
             } else {
                 //提示服务器出现错误
-                LoadingFace.setBackgroundColor(Color.WHITE);
-                loadingText.setText("服务器出现错误");
-                loadingText.setTextColor(Color.RED);
-                progressBar.setVisibility(View.INVISIBLE);
+                //LoadingFace.setBackgroundColor(Color.WHITE);
+                //loadingText.setText("服务器出现错误");
+                //loadingText.setTextColor(Color.RED);
+                //progressBar.setVisibility(View.INVISIBLE);
             }
         }
 

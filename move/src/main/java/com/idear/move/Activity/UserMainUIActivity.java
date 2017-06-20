@@ -149,6 +149,7 @@ public class UserMainUIActivity extends BaseActivity implements
 
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(this);
+        mViewPager.setOffscreenPageLimit(0);//设置当前ViewPager显示item,旁边左右跨度预先加载范围
 
         //初始化默认页面
         setDefaultFragment();
@@ -158,12 +159,12 @@ public class UserMainUIActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 final View view = v;
-                new Thread(new Runnable() {
+                fm.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         showWindow(view);
                     }
-                }).start();
+                },500);
             }
         });
 

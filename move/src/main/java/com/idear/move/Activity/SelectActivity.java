@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
@@ -20,7 +21,6 @@ public class SelectActivity extends BaseActivity {
         TranslucentStatusSetting.setTranslucentStatusSetting(this,getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_select);
         initView();
-
     }
 
     /**

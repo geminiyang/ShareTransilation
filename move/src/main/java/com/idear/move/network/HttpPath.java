@@ -27,4 +27,8 @@ public class HttpPath {
     public static String getFullInInfoPath() {return "http://idear.party/api/mine/infocreate";}
 
     public static String getPassWordUpdatePath() {return "http://idear.party/api/mine/pwdUpdate";}
+
+    public static String getPassWordForgetPath() { return "http://idear.party/api/mine/pwdForget";}
+
+    public static String getUserInfoPath() {return "http://idear.party/api/mine/info";}
 }
