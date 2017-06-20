@@ -31,7 +31,7 @@ android {
         myReleaseconfig {
             keyAlias 'blackqiqi'
             keyPassword '19960610'
-            storeFile file('F:/keyStore/yqqrelease')
+            storeFile file('E:/keyStore/yqqrelease')
             storePassword '19960610'
         }
     }
@@ -40,11 +40,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.myReleaseconfig
+            debuggable true
         }
         debug {
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.myDebugconfig
+            signingConfig signingConfigs.myReleaseconfig
         }
     }
     productFlavors {
@@ -69,7 +70,6 @@ dependencies {
     })
     compile project(path: ':myutillibrary')
     compile project(path: ':easyrefreshandload')
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'

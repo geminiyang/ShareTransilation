@@ -27,4 +27,29 @@ public class CookiesSaveUtil {
         SharedPreferences sharedPreferences = context.getSharedPreferences("cookies", Context.MODE_PRIVATE);
         return sharedPreferences.getString("cookies","");
     }
+
+
+    public static void savePhpId(String phpId, Context context) {
+        //根据业务需求截取到cookie
+        String[] s1 = phpId.split(";");
+        String myPhpId = s1[0];
+        SharedPreferences preferences = context.getSharedPreferences("phpId", Context.MODE_PRIVATE);
+        preferences.edit().putString("phpId",myPhpId).apply();
+    }
+
+    public static String getPhpId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("phpId", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("phpId","");
+    }
+
+    public static void saveUserId(String userId, Context context) {
+        //根据业务需求截取到cookie
+        SharedPreferences preferences = context.getSharedPreferences("userId", Context.MODE_PRIVATE);
+        preferences.edit().putString("userId",userId).apply();
+    }
+
+    public static String getUserId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("userId", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("userId","");
+    }
 }

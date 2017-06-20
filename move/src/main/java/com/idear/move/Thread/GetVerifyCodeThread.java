@@ -1,10 +1,12 @@
 package com.idear.move.Thread;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.idear.move.network.DataGetInterface;
-import com.idear.move.network.ResultTypeTwo;
+import com.idear.move.network.ResultType;
+import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
 
 import org.json.JSONException;
@@ -17,6 +19,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 public class GetVerifyCodeThread extends Thread{
 	private String url;
@@ -33,7 +37,7 @@ public class GetVerifyCodeThread extends Thread{
         this.mListener = mListener;
     }
 
-    private void getCode() {
+    private void getCode() throws NetworkErrorException{
         try {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", email);
@@ -58,7 +62,7 @@ public class GetVerifyCodeThread extends Thread{
             //设置文件字符集
             conn.setRequestProperty("Charset", "UTF-8");
             // 设置User-Agent: Fiddler
-            conn.setRequestProperty("ser-Agent", "Fiddler");
+            //conn.setRequestProperty("user-Agent", "Fiddler");
             // 设置contentType
             conn.setRequestProperty("Content-Type","application/json");
             //转换为字节数组
@@ -77,6 +81,17 @@ public class GetVerifyCodeThread extends Thread{
             //输入返回状态码
             final int code = conn.getResponseCode();
 
+            //获取PhpId并且本地化
+            Map<String, List<String>> map = conn.getHeaderFields();
+            List<String> cookies = map.get("Set-Cookie");
+            StringBuffer cookieStr = new StringBuffer();
+            if (null != cookies && 0 < cookies.size()) {
+                for (String cookie : cookies) {
+                    cookieStr.append(cookie);
+                }
+            }
+            com.yqq.idear.Logger.d(cookieStr.toString());
+
             if(code == 200){
                 //网络返回数据,放入的输入流
                 InputStream is = conn.getInputStream();
@@ -87,9 +102,14 @@ public class GetVerifyCodeThread extends Thread{
                     sb.append(str);
                 }
                 Logger.d(sb.toString());
-                ResultTypeTwo result = gson.fromJson(sb.toString(), ResultTypeTwo.class);
+                ResultType result = gson.fromJson(sb.toString(), ResultType.class);
                 Logger.d(result.getMessage());
 
+                if(1== Integer.parseInt(result.getStatus())) {
+                    //成功则保存cookie
+                    Logger.d("saving---" + cookieStr.toString());
+                    CookiesSaveUtil.savePhpId(cookieStr.toString(),mContext);
+                }
                 Logger.d(code+"");
                 if (mListener != null) {
                     mListener.finishWork(result);
@@ -103,20 +123,21 @@ public class GetVerifyCodeThread extends Thread{
             conn.disconnect();
         } catch (JSONException e) {
             e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
         } catch (IOException e) {
             e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
         }
     }
 
     @Override
     public void run() {
         super.run();
-        getCode();
+        try {
+            getCode();
+        } catch (NetworkErrorException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        }
     }
 }

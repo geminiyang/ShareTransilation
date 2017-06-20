@@ -6,12 +6,12 @@ package com.idear.move.network;
  * github地址：https://github.com/geminiyang/ShareTransilation
  */
 
-public class ResultTypeOne {
+public class LoginResult {
     private String status;
     private String message;
     private String data;
 
-    public ResultTypeOne(String status, String message, String data) {
+    public LoginResult(String status, String message, String data) {
         this.status = status;
         this.message = message;
         this.data = data;

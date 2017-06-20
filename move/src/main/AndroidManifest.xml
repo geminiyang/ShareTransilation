@@ -53,7 +53,7 @@
             android:theme="@style/otherPageStyle" />
         <activity android:name=".Activity.MenuActivity" />
         <activity
-            android:name=".Activity.SponsorMainUIActivity"
+            android:name=".SponsorActivity.SponsorMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
             android:windowSoftInputMode="adjustPan" />
@@ -122,7 +122,7 @@
 
         </activity>
         <activity
-            android:name=".Activity.RegisterNextStepActivity"
+            android:name=".Activity.UserRegisterNextStepActivity"
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".SponsorActivity.SponsorLoginActivity"

@@ -6,14 +6,13 @@ package com.idear.move.network;
  * github地址：https://github.com/geminiyang/ShareTransilation
  */
 
-public class ResultTypeTwo {
+public class ResultType {
     private String status;
     private String message;
 
-    public ResultTypeTwo(String status, String message) {
+    public ResultType(String status, String message) {
         this.status = status;
         this.message = message;
-
     }
 
     public String getStatus() {
@@ -31,5 +30,4 @@ public class ResultTypeTwo {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }

@@ -27,6 +27,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ import com.idear.move.Activity.UserMainUIActivity;
 import com.idear.move.Activity.ForgetPasswordActivity;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.KeyBoardUtils;
+import com.idear.move.util.ProgressDialogUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 import com.yqq.swipebackhelper.SwipeBackHelper;
@@ -54,7 +57,7 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
      * 虚拟的用户名密码认证
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "yangqiqi@qq.com:yangqiqi", "bar@example.com:world"
     };
     /**
      * 登录注册异步任务
@@ -67,6 +70,7 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
     private View mProgressView;
     private View mLoginFormView;
     private TextView start,end;
+    private RelativeLayout rl_root;
 
     private ImageView iv_back;
 
@@ -138,6 +142,7 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
         start = (TextView) findViewById(R.id.start);
         end = (TextView) findViewById(R.id.end);
         iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
+        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
     }
 
     /**
@@ -232,7 +237,9 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
             focusView.requestFocus();
         } else {
             //成功则执行具体异步登录任务，展示交互动效果
-            showProgress(true);
+            //showProgress(true);
+            ProgressDialogUtil.showLoadingDialog(SponsorLoginActivity.this);
+            KeyBoardUtils.hideKeyBoard(SponsorLoginActivity.this,rl_root);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
@@ -370,10 +377,10 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            //showProgress(false);
 
             if (success) {
-                IntentSkipUtil.skipToNextActivity(SponsorLoginActivity.this,UserMainUIActivity.class);
+                IntentSkipUtil.skipToNextActivity(SponsorLoginActivity.this,SponsorMainUIActivity.class);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -383,7 +390,7 @@ public class SponsorLoginActivity extends BaseActivity implements LoaderCallback
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            showProgress(false);
+            //showProgress(false);
         }
     }
 }

@@ -18,7 +18,9 @@ import com.idear.move.Thread.LoginThread;
 import com.idear.move.Thread.VerifyUserStateThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
-import com.idear.move.network.ResultTypeOne;
+import com.idear.move.network.LoginResult;
+import com.idear.move.network.ResultType;
+import com.idear.move.util.CheckValidUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -116,7 +118,15 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
         verifyUserStateThread.setDataGetListener(new DataGetInterface() {
             @Override
             public void finishWork(Object obj) {
-                ToastUtil.getInstance().showToastInThread(UserLoginActivity.this, obj.toString());
+                if(obj instanceof ResultType) {
+                    ResultType result = (ResultType) obj;
+                    if(Integer.parseInt(result.getStatus()) == 1) {
+                        //当验证的到的登录状态为1时
+                    }
+                    ToastUtil.getInstance().showToastInThread(UserLoginActivity.this, result.getMessage());
+                } else {
+                    ToastUtil.getInstance().showToastInThread(UserLoginActivity.this, obj.toString());
+                }
             }
 
             @Override
@@ -133,27 +143,25 @@ public class UserLoginActivity extends BaseActivity implements View.OnClickListe
     private void login() {
         String email = et_email.getText().toString().trim();
         String password = et_password.getText().toString().trim();
-        if(!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(password)) {
+        if(CheckValidUtil.isAllNotEmpty(email,password)) {
             LoginThread loginThread = new LoginThread(this,HttpPath.getUserLoginPath(), email, password);
             loginThread.setDataGetListener(new DataGetInterface() {
                 @Override
                 public void finishWork(Object obj) {
-                    //用户界面中提示
-                    ResultTypeOne result = (ResultTypeOne) obj;
-                    String s = result.getMessage();
-                    int statusCode = Integer.parseInt(result.getStatus());
-                    //用户界面中提示
-                    //登录状态为1则跳转
-                    if(statusCode==1) {
-                        IntentSkipUtil.skipToNextActivity(UserLoginActivity.this,UserMainUIActivity.class);
-                        Looper.prepare();
-                        verifyUserState();
-                        Looper.loop();
-
+                    if(obj instanceof LoginResult) {
+                        LoginResult result = (LoginResult) obj;
+                        if(Integer.parseInt(result.getStatus()) == 1) {
+                            IntentSkipUtil.skipToNextActivity(UserLoginActivity.this,UserMainUIActivity.class);
+                            Looper.prepare();
+                            verifyUserState();
+                            Looper.loop();
+                        }
+                        ToastUtil.getInstance().showToastInThread(UserLoginActivity.this,
+                                result.getMessage());
                     } else {
-                        ToastUtil.getInstance().showToastInThread(UserLoginActivity.this,s);
+                        ToastUtil.getInstance().showToastInThread(UserLoginActivity.this,
+                                obj.toString());
                     }
-
                 }
 
                 @Override

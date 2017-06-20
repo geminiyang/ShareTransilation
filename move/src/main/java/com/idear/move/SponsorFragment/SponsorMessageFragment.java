@@ -1,4 +1,4 @@
-package com.idear.move.Fragment;
+package com.idear.move.SponsorFragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idear.move.Fragment.GroupListFragment;
+import com.idear.move.Fragment.UserListFragment;
 import com.idear.move.R;
 import com.idear.move.myWidget.NoScrollViewPager;
 
@@ -18,13 +20,13 @@ import java.util.List;
  * Created by user on 2017/5/3.
  */
 
-public class MessageFragment extends Fragment implements
+public class SponsorMessageFragment extends Fragment implements
         TabLayout.OnTabSelectedListener {
 
     private static final String ARG = "arg";
 
-    public static MessageFragment newInstance(String arg){
-        MessageFragment fragment = new MessageFragment();
+    public static SponsorMessageFragment newInstance(String arg){
+        SponsorMessageFragment fragment = new SponsorMessageFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG, arg);
         fragment.setArguments(bundle);
@@ -35,8 +37,7 @@ public class MessageFragment extends Fragment implements
     private NoScrollViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private UserListFragment f1;
-    private GroupListFragment f2;
+    private GroupListFragment f1;
 
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
@@ -46,7 +47,7 @@ public class MessageFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(rootView ==null) {
-            rootView = inflater.inflate(R.layout.fragment_message,container,false);
+            rootView = inflater.inflate(R.layout.fragment_sponsor_message,container,false);
             initData();
             init(rootView);
         }
@@ -72,20 +73,14 @@ public class MessageFragment extends Fragment implements
 
         mTabLayout.addOnTabSelectedListener(this);
 
-        mTabLayout.getTabAt(0).setText("私聊");//自有方法添加icon
-        mTabLayout.getTabAt(1).setText("房间");
-
+        mTabLayout.getTabAt(0).setText("消息");//自有方法添加icon
     }
 
     private void initData() {
         if (f1 == null) {
-            f1 = UserListFragment.newInstance(1);
-        }
-        if (f2 == null) {
-            f2 = GroupListFragment.newInstance(1);
+            f1 = GroupListFragment.newInstance(1);
         }
         mTabs.add(f1);
-        mTabs.add(f2);
 
         //要关注如何更新其中的数据
         mAdapter = new FragmentPagerAdapter(getActivity().getSupportFragmentManager()) {
@@ -107,9 +102,6 @@ public class MessageFragment extends Fragment implements
         switch (position) {
             case 0:
                 mViewPager.setCurrentItem(0,true);
-                break;
-            case 1:
-                mViewPager.setCurrentItem(1,true);
                 break;
         }
     }

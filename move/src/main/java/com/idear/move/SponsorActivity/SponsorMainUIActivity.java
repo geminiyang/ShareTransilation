@@ -1,4 +1,4 @@
-package com.idear.move.Activity;
+package com.idear.move.SponsorActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,14 +25,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.idear.move.Activity.DynamicPublishingActivity;
+import com.idear.move.Activity.FriendAddActivity;
+import com.idear.move.Activity.PublishFActivity;
+import com.idear.move.Activity.PublishRActivity;
+import com.idear.move.Activity.PublishRFActivity;
+import com.idear.move.Activity.UserMainUIActivity;
 import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.GroupListFragment;
 import com.idear.move.Fragment.UserMessageFragment;
-import com.idear.move.Fragment.UserHomeFragment;
-import com.idear.move.Fragment.UserInformationFragment;
-import com.idear.move.Fragment.UserListFragment;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
+import com.idear.move.SponsorFragment.SponsorHomeFragment;
+import com.idear.move.SponsorFragment.SponsorInformationFragment;
+import com.idear.move.SponsorFragment.SponsorMessageFragment;
 import com.idear.move.Thread.LogoutThread;
 import com.idear.move.myWidget.TipButton;
 import com.idear.move.network.DataGetInterface;
@@ -48,16 +54,15 @@ import com.yqq.swipebackhelper.SwipeBackHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserMainUIActivity extends BaseActivity implements
+public class SponsorMainUIActivity extends BaseActivity implements
         RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,
-        UserListFragment.OnListFragmentInteractionListener,
         GroupListFragment.OnListFragmentInteractionListener {
     private RadioButton dynamic,home,locate,msg;
     private TipButton my;
     private DynamicsFragment f3;
-    private UserMessageFragment f2;
-    private UserInformationFragment f4;
-    private UserHomeFragment f1;
+    private SponsorMessageFragment f2;
+    private SponsorInformationFragment f4;
+    private SponsorHomeFragment f1;
 
     private RadioGroup radioGroup;
 
@@ -76,8 +81,7 @@ public class UserMainUIActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_user_main_ui);
+        setContentView(R.layout.activity_sponsor_main_ui);
 
         initData();
         initView();
@@ -90,16 +94,16 @@ public class UserMainUIActivity extends BaseActivity implements
 
     private void initData() {
         if(f1==null) {
-            f1 = UserHomeFragment.newInstance("首页");
+            f1 = SponsorHomeFragment.newInstance("首页");
         }
         if(f2==null){
-            f2 = UserMessageFragment.newInstance("消息");
+            f2 = SponsorMessageFragment.newInstance("消息");
         }
         if(f3==null){
-            f3 = DynamicsFragment.newInstance("动态");
+            f3 = DynamicsFragment.newInstance("管理");
         }
         if(f4==null) {
-            f4 = UserInformationFragment.newInstance("我的");
+            f4 = SponsorInformationFragment.newInstance("我的");
         }
         mTabs.add(f1);
         mTabs.add(f2);
@@ -160,7 +164,7 @@ public class UserMainUIActivity extends BaseActivity implements
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        showWindow(view);
+                        IntentSkipUtil.skipToNextActivity(view.getRootView().getContext(),PublishRFActivity.class);
                     }
                 }).start();
             }
@@ -168,175 +172,6 @@ public class UserMainUIActivity extends BaseActivity implements
 
     }
 
-    /**
-     * 点击+号按钮后的触发事件 自动逸动画
-     * @param parent
-     */
-    private void showWindow(View parent) {
-
-        ObjectAnimatorUtil.rotateAnimation(img,0,315f);
-
-        if(popup == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View view = layoutInflater.inflate(R.layout.popup_layout, null);
-
-            fl_bt1 = (FrameLayout) view.findViewById(R.id.fl_bt1);
-            fl_bt2 = (FrameLayout) view.findViewById(R.id.fl_bt2);
-            fl_bt3 = (FrameLayout) view.findViewById(R.id.fl_bt3);
-            tv1 = (TextView) view.findViewById(R.id.tv1);
-            tv2 = (TextView) view.findViewById(R.id.tv2);
-            tv3 = (TextView) view.findViewById(R.id.tv3);
-
-            tv1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    tv1.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            IntentSkipUtil.skipToNextActivity(view.getRootView().getContext(),PublishRActivity.class);
-                        }
-                    },1000);
-
-                    popup.dismiss();
-                    //添加旋转效果
-                    ObjectAnimatorUtil.rotateAnimation(img,315f,0);
-                }
-            });
-            tv2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    tv2.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            IntentSkipUtil.skipToNextActivity(view.getRootView().getContext(),PublishRFActivity.class);
-                        }
-                    },1000);
-
-                    popup.dismiss();
-                    //添加旋转效果
-                    ObjectAnimatorUtil.rotateAnimation(img,315f,0);
-                }
-            });
-            tv3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    tv3.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            IntentSkipUtil.skipToNextActivity(view.getRootView().getContext(),PublishFActivity.class);
-                        }
-                    },1000);
-
-                    popup.dismiss();
-                    //添加旋转效果
-                    ObjectAnimatorUtil.rotateAnimation(img,315f,0);
-                }
-            });
-
-
-            // 创建一个PopupWidow对象
-            popup = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT,130);
-            if(Build.VERSION.SDK_INT>=21){
-                popup.setElevation(10);
-            }
-
-//            popup.setEnterTransition();
-//            popup.setExitTransition();
-
-            popup.setAnimationStyle(R.style.PopupAnimation);
-
-            // 设置焦点在弹窗上
-            popup.setFocusable(true);
-            // 设置允许在外点击消失
-            popup.setOutsideTouchable(true);
-            // 设置弹窗消失事件监听
-            popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    //设置按钮为正常加号
-                    //img.setImageResource(R.mipmap.plus);
-                    //添加旋转效果
-                    ObjectAnimatorUtil.rotateAnimation(img,315f,0);
-                }
-            });
-
-            // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
-            popup.setBackgroundDrawable(new BitmapDrawable());
-            popup.setTouchInterceptor(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if(event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                        popup.dismiss();
-                        //添加旋转效果
-                        ObjectAnimatorUtil.rotateAnimation(img,315f,0);
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
-
-        //设置显示位置
-        if(!popup.isShowing()) {
-            //相对于屏幕
-            popup.showAsDropDown(parent, 0,0,Gravity.BOTTOM);
-        }
-    }
-    /**
-     * 对应更多操作
-     * @param context
-     * @param parent
-     * @param layoutId
-     */
-    private void showPopupWindow(final Context context, View parent,int layoutId) {
-        View contentView = LayoutInflater.from(context).inflate(layoutId,null);
-
-        final PopupWindow popupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-        contentView.findViewById(R.id.rl_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,FriendAddActivity.class);
-                popupWindow.dismiss();
-            }
-        });
-        contentView.findViewById(R.id.rl_publish).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,DynamicPublishingActivity.class);
-                popupWindow.dismiss();
-            }
-        });
-
-        //设置入场动画
-        popupWindow.setAnimationStyle(R.style.PopupSlideFromRightAnimation);
-        // 设置焦点在弹窗上
-        popupWindow.setFocusable(true);
-        // 设置允许在外点击消失
-        popupWindow.setOutsideTouchable(true);
-
-        // 这个是为了点击“返回Back”,还是点击外部区域，也能使其消失，并且并不会影响你的背景
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    popupWindow.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        //设置显示位置
-        if(!popupWindow.isShowing()) {
-            //相对于一个参照物
-            popupWindow.showAsDropDown(parent);
-            //相对屏幕，显示在指定位置
-            //popupWindow.showAtLocation(parent,Gravity.CENTER,0,0);
-        }
-    }
     /**
      * 设置默认选择项
      */
@@ -392,6 +227,13 @@ public class UserMainUIActivity extends BaseActivity implements
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    /**
+     * 重写退出返回键
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -409,7 +251,7 @@ public class UserMainUIActivity extends BaseActivity implements
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            LogoutThread logoutThread = new LogoutThread(UserMainUIActivity.this,
+                            LogoutThread logoutThread = new LogoutThread(SponsorMainUIActivity.this,
                                     HttpPath.getUserLogOutPath());
                             logoutThread.setDataGetListener(new DataGetInterface() {
                                 @Override
@@ -420,10 +262,10 @@ public class UserMainUIActivity extends BaseActivity implements
                                             ActivityManager.getInstance().finishAllActivities();
                                             finish();
                                         }
-                                        ToastUtil.getInstance().showToastInThread(UserMainUIActivity.this,
+                                        ToastUtil.getInstance().showToastInThread(SponsorMainUIActivity.this,
                                                 result.getMessage());
                                     } else {
-                                        ToastUtil.getInstance().showToastInThread(UserMainUIActivity.this,
+                                        ToastUtil.getInstance().showToastInThread(SponsorMainUIActivity.this,
                                                 obj.toString());
                                     }
                                 }
@@ -454,11 +296,6 @@ public class UserMainUIActivity extends BaseActivity implements
 
     @Override
     public void onGroupListFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void onUserListFragmentInteraction(Uri uri) {
 
     }
 }

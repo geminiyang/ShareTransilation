@@ -1,4 +1,4 @@
-package com.idear.move.Fragment;
+package com.idear.move.SponsorFragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

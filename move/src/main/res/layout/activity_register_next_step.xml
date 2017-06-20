@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/root_rl"
-    android:background="@drawable/gradient"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@drawable/gradient">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -127,7 +126,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
-        android:id="@+id/bt_next_step"
+        android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:text="提交"

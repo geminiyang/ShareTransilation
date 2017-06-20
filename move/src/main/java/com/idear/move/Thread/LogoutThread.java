@@ -1,10 +1,11 @@
 package com.idear.move.Thread;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.idear.move.network.DataGetInterface;
-import com.idear.move.network.ResultTypeTwo;
+import com.idear.move.network.ResultType;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
 
@@ -35,10 +36,17 @@ public class LogoutThread extends Thread{
     @Override
     public void run() {
         super.run();
-        logout();
+        try {
+            logout();
+        } catch (NetworkErrorException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        }
     }
 
-    private void logout() {
+    private void logout() throws NetworkErrorException{
         try {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("cookie", CookiesSaveUtil.getCookies(mContext));
@@ -63,7 +71,7 @@ public class LogoutThread extends Thread{
             //设置文件字符集
             conn.setRequestProperty("Charset", "UTF-8");
             // 设置User-Agent: Fiddler
-            conn.setRequestProperty("ser-Agent", "Fiddler");
+            //conn.setRequestProperty("user-Agent", "Fiddler");
             // 设置contentType
             conn.setRequestProperty("Content-Type","application/json");
             //转换为字节数组
@@ -92,11 +100,11 @@ public class LogoutThread extends Thread{
                     sb.append(str);
                 }
                 Logger.d(sb.toString());
-                ResultTypeTwo result = gson.fromJson(sb.toString(), ResultTypeTwo.class);//通过Gson解析json
+                ResultType result = gson.fromJson(sb.toString(), ResultType.class);//通过Gson解析json
                 Logger.d(result.getMessage());
 
                 if (mListener != null) {
-                    mListener.finishWork(result.getMessage());
+                    mListener.finishWork(result);
                 }
             } else{
                 if (mListener != null) {
@@ -107,14 +115,8 @@ public class LogoutThread extends Thread{
             conn.disconnect();
         } catch (JSONException e) {
             e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
         } catch (IOException e) {
             e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
         }
     }
 }

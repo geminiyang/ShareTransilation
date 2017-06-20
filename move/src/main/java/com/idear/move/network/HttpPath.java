@@ -21,4 +21,6 @@ public class HttpPath {
     public static String getUserRegisterPath() {return  "http://idear.party/api/mine/signup";}
 
     public static String getEmailVerifyPath() {return "http://idear.party/api/mine/send";}
+
+    public static String getFullInInfoPath() {return "http://idear.party/api/mine/infocreate";}
 }

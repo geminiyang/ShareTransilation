@@ -6,7 +6,6 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.ResultType;
-import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
 
 import org.json.JSONException;
@@ -20,28 +19,48 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class VerifyEmailWithCodeThread extends Thread{
+public class FullInInfoThread extends Thread{
 	private String url;
-	private String email;
-    private String code;
     private Context mContext;
+    private String email;
+    private String nickname;
+    private String password;
+    private String school;
     private DataGetInterface mListener;
-    public VerifyEmailWithCodeThread(Context context, String url, String email,String code) {
-		this.url = url;
-		this.email = email;
-        this.code = code;
-        this.mContext = context;
-	}
+
+    public FullInInfoThread(String url, Context mContext, String email, String nickname, String password, String school) {
+        this.url = url;
+        this.mContext = mContext;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.school = school;
+    }
 
     public void setDataGetListener(DataGetInterface mListener) {
         this.mListener = mListener;
     }
 
-    private void getCode() throws NetworkErrorException{
+    @Override
+    public void run() {
+        super.run();
+        try {
+            logout();
+        } catch (NetworkErrorException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        }
+    }
+
+    private void logout() throws NetworkErrorException{
         try {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", email);
-            jsonObject.put("verify",code);
+            jsonObject.put("username", nickname);
+            jsonObject.put("password", password);
+            jsonObject.put("school", school);
             String jsonString = jsonObject.toString();
             Logger.d(jsonString);
             //使用工具将其封装成一个类的对象
@@ -66,7 +85,6 @@ public class VerifyEmailWithCodeThread extends Thread{
             //conn.setRequestProperty("user-Agent", "Fiddler");
             // 设置contentType
             conn.setRequestProperty("Content-Type","application/json");
-            conn.setRequestProperty("Cookie", CookiesSaveUtil.getPhpId(mContext));
             //转换为字节数组
             byte[] data = (jsonObject.toString()).getBytes();
             //设置文件长度
@@ -83,7 +101,6 @@ public class VerifyEmailWithCodeThread extends Thread{
             //输入返回状态码
             final int code = conn.getResponseCode();
             Logger.d(code+"");
-
             if(code == 200){
                 //网络返回数据,放入的输入流
                 InputStream is = conn.getInputStream();
@@ -94,7 +111,7 @@ public class VerifyEmailWithCodeThread extends Thread{
                     sb.append(str);
                 }
                 Logger.d(sb.toString());
-                ResultType result = gson.fromJson(sb.toString(), ResultType.class);
+                ResultType result = gson.fromJson(sb.toString(), ResultType.class);//通过Gson解析json
                 Logger.d(result.getMessage());
 
                 if (mListener != null) {
@@ -102,7 +119,7 @@ public class VerifyEmailWithCodeThread extends Thread{
                 }
             } else{
                 if (mListener != null) {
-                    mListener.finishWork(code);
+                    mListener.finishWork(code+"");
                 }
             }
             //关闭连接
@@ -111,19 +128,6 @@ public class VerifyEmailWithCodeThread extends Thread{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void run() {
-        super.run();
-        try {
-            getCode();
-        } catch (NetworkErrorException e) {
-            e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
         }
     }
 }

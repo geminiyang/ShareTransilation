@@ -3,7 +3,6 @@ package com.idear.move.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -18,11 +17,10 @@ import com.idear.move.Thread.GetVerifyCodeThread;
 import com.idear.move.Thread.VerifyEmailWithCodeThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
-import com.idear.move.network.ResultTypeTwo;
+import com.idear.move.network.ResultType;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ScrimUtil;
 import com.idear.move.util.ToastUtil;
-import com.yqq.idear.Logger;
 import com.yqq.swipebackhelper.BaseActivity;
 
 import java.lang.ref.WeakReference;
@@ -97,20 +95,24 @@ public class UserRegisterActivity extends BaseActivity {
 
     private void verifyEmailWithCode() {
         String codeStr = code.getText().toString().trim();
-        String emailStr = email.getText().toString().trim();
+        final String emailStr = email.getText().toString().trim();
         if(!TextUtils.isEmpty(emailStr)&&!TextUtils.isEmpty(codeStr)) {
             VerifyEmailWithCodeThread verifyEmailWithCodeThread = new VerifyEmailWithCodeThread(
                     this,HttpPath.getUserRegisterPath(),emailStr,codeStr);
             verifyEmailWithCodeThread.setDataGetListener(new DataGetInterface() {
                 @Override
                 public void finishWork(Object obj) {
-                    ResultTypeTwo result = (ResultTypeTwo) obj;
-                    int statusCode = Integer.parseInt(result.getStatus());
-                    if(statusCode == 1) {
-                        IntentSkipUtil.skipToNextActivity(UserRegisterActivity.this,
-                                RegisterNextStepActivity.class);
+                    if(obj instanceof ResultType) {
+                        ResultType result = (ResultType) obj;
+                        int statusCode = Integer.parseInt(result.getStatus());
+                        if(statusCode == 1) {
+                            IntentSkipUtil.skipToNextActivityWithBundle(UserRegisterActivity.this,
+                                    UserRegisterNextStepActivity.class,"email",emailStr);
+                        } else {
+                            ToastUtil.getInstance().showToastInThread(UserRegisterActivity.this,result.getMessage());
+                        }
                     } else {
-                        ToastUtil.getInstance().showToastInThread(UserRegisterActivity.this,result.getMessage());
+                        ToastUtil.getInstance().showToastInThread(UserRegisterActivity.this,obj.toString());
                     }
                 }
 
@@ -133,7 +135,7 @@ public class UserRegisterActivity extends BaseActivity {
             getVerifyCodeThread.setDataGetListener(new DataGetInterface() {
                 @Override
                 public void finishWork(Object obj) {
-                    ResultTypeTwo result = (ResultTypeTwo) obj;
+                    ResultType result = (ResultType) obj;
                     int statusCode = Integer.parseInt(result.getStatus());
                     handler.sendEmptyMessage(statusCode);
                 }

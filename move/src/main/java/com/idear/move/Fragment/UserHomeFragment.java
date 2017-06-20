@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +31,12 @@ import java.util.Map;
  * Created by user on 2017/4/26.
  */
 
-public class MyHomeFragment extends Fragment implements View.OnClickListener {
+public class UserHomeFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG = "arg";
 
-    public static MyHomeFragment newInstance(String arg){
-        MyHomeFragment fragment = new MyHomeFragment();
+    public static UserHomeFragment newInstance(String arg){
+        UserHomeFragment fragment = new UserHomeFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG, arg);
         fragment.setArguments(bundle);
@@ -73,7 +72,7 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if(rootView==null) {
-            rootView = inflater.inflate(R.layout.fragment_myhome, container,false);
+            rootView = inflater.inflate(R.layout.fragment_user_myhome, container,false);
             initView(rootView);
             myHomeLoadingAsyncTask = new MyHomeLoadingAsyncTask();
             myHomeLoadingAsyncTask.execute(rootView);
@@ -150,7 +149,7 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initAdapterData() {
-        hsvAdapter = new HSVAdapter(MyHomeFragment.this.getContext());
+        hsvAdapter = new HSVAdapter(UserHomeFragment.this.getContext());
         for (int i = 0; i < images.length; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("image", images[i]);
@@ -169,13 +168,13 @@ public class MyHomeFragment extends Fragment implements View.OnClickListener {
         int id = v.getId();
         switch (id) {
             case R.id.more_activity:
-                IntentSkipUtil.skipToNextActivity(MyHomeFragment.this.getActivity(),AllActivityActivity.class);
+                IntentSkipUtil.skipToNextActivity(UserHomeFragment.this.getActivity(),AllActivityActivity.class);
                 break;
             case R.id.more_feedback:
-                IntentSkipUtil.skipToNextActivity(MyHomeFragment.this.getActivity(),FeedbackActivity.class);
+                IntentSkipUtil.skipToNextActivity(UserHomeFragment.this.getActivity(),FeedbackActivity.class);
                 break;
             case R.id.more_spread:
-                IntentSkipUtil.skipToNextActivity(MyHomeFragment.this.getActivity(),SpreadActivity.class);
+                IntentSkipUtil.skipToNextActivity(UserHomeFragment.this.getActivity(),SpreadActivity.class);
                 break;
             case R.id.et_search:
                 IntentSkipUtil.skipToNextActivity(getActivity(),UserSearchActivity.class);

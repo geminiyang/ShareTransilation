@@ -1,77 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_grey"
-    android:fitsSystemWindows="false"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--距离一个系统状态栏的高度是因为要状态栏可以透明显示,将marginTop设置为22dp（状态栏的高度）-->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_marginTop="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/blue_light"
-        android:theme="@style/Theme.ToolBar"
-        app:title=""
-        app:titleTextColor="@color/white"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/MyOverflowPopupMenuStyle"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:gravity="start"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:showDividers="end"
-                android:divider="@drawable/template_divider_vertical"
-                android:dividerPadding="5dp"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:id="@+id/logo"
-                    android:padding="2dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:textColor="@color/white"
-                    android:text="MOVE"
-                    />
-                <TextView
-                    android:id="@+id/title_text"
-                    android:padding="2dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    tools:text=""
-                    />
-            </LinearLayout>
-            <ImageView
-                android:id="@+id/iv_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="20dp"
-                app:srcCompat="@drawable/ic_search_white_24dp"
-                />
-        </RelativeLayout>
-        <!--此方法用来添加SearchView-->
-        <!--<android.support.v7.widget.SearchView-->
-            <!--android:id="@+id/searchView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:imeOptions="actionSearch"-->
-            <!--app:defaultQueryHint="搜索" />-->
-    </android.support.v7.widget.Toolbar>
-
+    <!--android:layout_marginTop="24dp"-->
     <RadioGroup
         android:id="@+id/rd_group"
         android:layout_width="match_parent"
@@ -101,7 +39,7 @@
             android:id="@+id/dynamic"
             style="@style/tab_menu_item"
             android:drawableTop="@drawable/tab_menu_dynamic"
-            android:text="动态"/>
+            android:text="管理"/>
 
         <com.idear.move.myWidget.TipButton
             android:id="@+id/my"
@@ -155,5 +93,6 @@
     </FrameLayout>
 
 </RelativeLayout>
+
 
 

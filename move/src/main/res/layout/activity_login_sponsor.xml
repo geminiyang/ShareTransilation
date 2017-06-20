@@ -1,10 +1,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_root"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical">
@@ -16,9 +16,6 @@
         android:layout_height="50dp"
         android:background="@color/title_bar_blue"
         android:theme="@style/Theme.ToolBar"
-        app:title="登录"
-        app:titleTextColor="@color/white"
-        app:layout_scrollFlags="scroll|enterAlways"
         >
         <RelativeLayout
             android:layout_width="match_parent"

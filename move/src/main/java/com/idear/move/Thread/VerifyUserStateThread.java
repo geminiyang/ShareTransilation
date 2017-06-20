@@ -1,10 +1,11 @@
 package com.idear.move.Thread;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.idear.move.network.DataGetInterface;
-import com.idear.move.network.ResultTypeTwo;
+import com.idear.move.network.ResultType;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
 
@@ -19,7 +20,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class VerifyUserStateThread extends Thread{
+public class VerifyUserStateThread extends Thread {
 	private String url;
     private Context mContext;
     private DataGetInterface mListener;
@@ -32,7 +33,7 @@ public class VerifyUserStateThread extends Thread{
         this.mListener = mListener;
     }
 
-    private void verifyUserState() {
+    private void verifyUserState() throws NetworkErrorException{
         try {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("cookie", CookiesSaveUtil.getCookies(mContext));
@@ -57,7 +58,7 @@ public class VerifyUserStateThread extends Thread{
             //设置文件字符集
             conn.setRequestProperty("Charset", "UTF-8");
             // 设置User-Agent: Fiddler
-            conn.setRequestProperty("ser-Agent", "Fiddler");
+            //conn.setRequestProperty("user-Agent", "Fiddler");
             // 设置contentType
             conn.setRequestProperty("Content-Type","application/json");
             //转换为字节数组
@@ -86,11 +87,11 @@ public class VerifyUserStateThread extends Thread{
                     sb.append(str);
                 }
                 Logger.d(sb.toString());
-                ResultTypeTwo result = gson.fromJson(sb.toString(), ResultTypeTwo.class);
+                ResultType result = gson.fromJson(sb.toString(), ResultType.class);
                 Logger.d(result.getMessage());
 
                 if (mListener != null) {
-                    mListener.finishWork(result.getMessage());
+                    mListener.finishWork(result);
                 }
             } else{
                 if (mListener != null) {
@@ -101,21 +102,23 @@ public class VerifyUserStateThread extends Thread{
             conn.disconnect();
         } catch (JSONException e) {
             e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
+
         } catch (IOException e) {
             e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
         }
     }
 
     @Override
     public void run() {
         super.run();
-        verifyUserState();
+        try {
+            verifyUserState();
+        } catch (NetworkErrorException e) {
+            e.printStackTrace();
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+        }
     }
 
 }

@@ -2,13 +2,11 @@ package com.idear.move.Thread;
 
 import android.accounts.NetworkErrorException;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.idear.move.network.DataGetInterface;
-import com.idear.move.network.loginData;
-import com.idear.move.network.ResultTypeOne;
+import com.idear.move.network.LoginResult;
+import com.idear.move.network.ResultType;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
 import com.idear.move.util.ToastUtil;
@@ -69,7 +67,7 @@ public class LoginThread extends Thread{
             //设置文件字符集
             conn.setRequestProperty("Charset", "UTF-8");
             // 设置User-Agent: Fiddler
-            conn.setRequestProperty("ser-Agent", "Fiddler");
+            //conn.setRequestProperty("user-Agent", "Fiddler");
             // 设置contentType
             conn.setRequestProperty("Content-Type","application/json");
             //转换为字节数组
@@ -106,13 +104,14 @@ public class LoginThread extends Thread{
                     sb.append(str);
                 }
                 Logger.d(sb.toString());
-                ResultTypeOne result = gson.fromJson(sb.toString(), ResultTypeOne.class);
+                LoginResult result = gson.fromJson(sb.toString(), LoginResult.class);
                 Logger.d(result.getMessage());
 
-                if(1== Integer.parseInt(result.getStatus())) {
-                    //成功则保存cookie
+                if(1 == Integer.parseInt(result.getStatus())) {
+                    //成功则保存cookie和用户id
                     Logger.d("saving---" + cookieStr.toString());
                     CookiesSaveUtil.saveCookies(cookieStr.toString(),mContext);
+                    CookiesSaveUtil.saveUserId(result.getData(),mContext);
                 }
                 Logger.d(code+"");
                 if (mListener != null) {
@@ -127,14 +126,8 @@ public class LoginThread extends Thread{
             conn.disconnect();
         } catch (JSONException e) {
             e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
         } catch (IOException e) {
             e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
         }
     }
 
@@ -144,6 +137,10 @@ public class LoginThread extends Thread{
         try {
             login();
         } catch (NetworkErrorException e) {
+            if (mListener != null) {
+                mListener.interrupt(e);
+            }
+            //添加网络错误处理
             ToastUtil.getInstance().showToastInThread(mContext,e.toString());
         }
     }
