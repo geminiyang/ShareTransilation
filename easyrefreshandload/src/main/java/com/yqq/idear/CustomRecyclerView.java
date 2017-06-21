@@ -93,6 +93,8 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
         this.mContext = context;
         headerView = null;
         footerView = null;
+        //实现了数据操作监听
+        mDataEndListener.setLoadDataListener(this);
     }
 
     /**
