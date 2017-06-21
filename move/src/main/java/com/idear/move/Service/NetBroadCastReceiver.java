@@ -32,8 +32,8 @@ public class NetBroadCastReceiver extends BroadcastReceiver {
                     Logger.d("WIFI正在开启");
                     //ToastUtil.getInstance().showToast(mContext,"WIFI正在开启");
                 case WifiManager.WIFI_STATE_ENABLED:
-                    Logger.d("WIFI已开启");
-                    //ToastUtil.getInstance().showToast(mContext,"WIFI已开启");
+                    //Logger.d("WIFI已开启");
+                    ToastUtil.getInstance().showToast(mContext,"WIFI已开启");
                 case WifiManager.WIFI_STATE_DISABLED:
                     //Logger.d("WIFI已关闭");
                     ToastUtil.getInstance().showToast(mContext,"WIFI已关闭");
