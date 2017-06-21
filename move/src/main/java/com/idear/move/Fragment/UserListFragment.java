@@ -112,11 +112,7 @@ public class UserListFragment extends Fragment implements MyUserListRecyclerView
         mAdapter.setOnItemClickListener(this);
         //添加初始数据源
         myRecyclerView.setAdapter(mAdapter);
-        //数据状态监听器
-        DataStateChangeCheck mDataEndListener = new DataStateChangeCheck(myRecyclerView);
-        //实现了数据操作监听
-        mDataEndListener.setLoadDataListener(myRecyclerView);
-        myRecyclerView.addDataChangeListener(mDataEndListener);
+
         myRecyclerView.addFooterView(context);
         myRecyclerView.setTotalCount(TOTAL_COUNT);
         myRecyclerView.setRequestCount(REQUEST_COUNT);

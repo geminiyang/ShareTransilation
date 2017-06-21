@@ -109,11 +109,7 @@ public class DynamicsFragment extends Fragment implements CustomRecyclerView.Dat
         adapter = new MyDynamicsRvAdapter(getActivity(), dataModels);
         // specify（指定） an adapter (see also next example)
         myRecyclerView.setAdapter(adapter);
-        //数据状态监听器
-        DataStateChangeCheck mDataEndListener = new DataStateChangeCheck(myRecyclerView);
-        //实现了数据操作监听
-        mDataEndListener.setLoadDataListener(myRecyclerView);
-        myRecyclerView.addDataChangeListener(mDataEndListener);
+
         myRecyclerView.addHeaderView(getActivity());
         myRecyclerView.addFooterView(getActivity());
         myRecyclerView.setTotalCount(TOTAL_COUNT);

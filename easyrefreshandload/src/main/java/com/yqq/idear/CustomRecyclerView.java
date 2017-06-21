@@ -93,8 +93,11 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
         this.mContext = context;
         headerView = null;
         footerView = null;
+        //数据状态监听器
+        mDataEndListener = new DataStateChangeCheck(this);
         //实现了数据操作监听
         mDataEndListener.setLoadDataListener(this);
+        addDataChangeListener(mDataEndListener);
     }
 
     /**
@@ -187,6 +190,14 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
         this.dataOperation = dataOperation;
     }
 
+    /**
+     * 添加预定义的滑动监听器
+     * @param mDataEndListener  预定义的滑动监听器
+     */
+    private void addDataChangeListener(DataStateChangeCheck mDataEndListener) {
+        this.mDataEndListener = mDataEndListener;
+        addOnScrollListener(mDataEndListener);
+    }
 
     /**
      * 将数据操作与外部方法关联
@@ -338,14 +349,6 @@ public class CustomRecyclerView extends RecyclerView implements DataStateChangeC
         }
     }
 
-    /**
-     * 添加预定义的滑动监听器
-     * @param mDataEndListener  预定义的滑动监听器
-     */
-    public void addDataChangeListener(DataStateChangeCheck mDataEndListener) {
-        this.mDataEndListener = mDataEndListener;
-        addOnScrollListener(mDataEndListener);
-    }
 
     /**
      * 内部包装Adapter，需要和外部Adapter结合
