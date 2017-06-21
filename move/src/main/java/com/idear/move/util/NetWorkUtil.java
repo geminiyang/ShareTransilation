@@ -74,7 +74,7 @@ public class NetWorkUtil {
         return -1;
     }
 
-    //判断网络连接是否可用
+    //判断网络连接是否可用(任意一种连接)
     public static boolean isNetworkAvailable(Context context) {
         if(context!=null) {
             ConnectivityManager connectivityManager = (ConnectivityManager) context
@@ -95,6 +95,7 @@ public class NetWorkUtil {
         return false;
     }
 
+    //判断网络连接是否可用(任意一种连接)
     public static void isConnected(Context context) {
         final Context mContext = context;
         ConnectivityManager manger = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

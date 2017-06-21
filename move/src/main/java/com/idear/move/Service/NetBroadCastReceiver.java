@@ -28,13 +28,18 @@ public class NetBroadCastReceiver extends BroadcastReceiver {
         if(WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())){ //此处无实际作用，只是看开关是否开启
             int wifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
             switch (wifiState) {
+                case WifiManager.WIFI_STATE_ENABLING:
+                    Logger.d("WIFI正在开启");
+                    //ToastUtil.getInstance().showToast(mContext,"WIFI正在开启");
+                case WifiManager.WIFI_STATE_ENABLED:
+                    Logger.d("WIFI已开启");
+                    //ToastUtil.getInstance().showToast(mContext,"WIFI已开启");
                 case WifiManager.WIFI_STATE_DISABLED:
-                    ToastUtil.getInstance().showToast(mContext,"WIFI已连接");
-                    break;
-
+                    //Logger.d("WIFI已关闭");
+                    ToastUtil.getInstance().showToast(mContext,"WIFI已关闭");
                 case WifiManager.WIFI_STATE_DISABLING:
-                    ToastUtil.getInstance().showToast(mContext,"WIFI关闭");
-                    break;
+                    Logger.d("WIFI正在关闭");
+                    //ToastUtil.getInstance().showToast(mContext,"WIFI正在关闭");
             }
         }
         //此处是主要代码，
