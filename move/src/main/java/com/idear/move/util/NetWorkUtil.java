@@ -80,6 +80,7 @@ public class NetWorkUtil {
             ConnectivityManager connectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             if (connectivityManager == null) {
+
             } else {
                 NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
                 if (networkInfo != null && networkInfo.length > 0) {
@@ -95,20 +96,24 @@ public class NetWorkUtil {
     }
 
     public static void isConnected(Context context) {
+        final Context mContext = context;
         ConnectivityManager manger = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = manger.getActiveNetworkInfo();
         //判断是否有网络连接
-        if(info!=null&&info.isConnected()) {
+        if(info!=null && info.isConnected()) {
             ToastUtil.getInstance().showToast(context,"网络已连接");
         } else {
-            ToastUtil.getInstance().showToast(context,"网络连接失败");
-            if(Build.VERSION.SDK_INT >= 11){
-                //3.0以上打开设置界面，也可以直接用ACTION_WIRELESS_SETTINGS打开到wifi界面
-                context.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
-            } else {
-                context.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-            }
-
+            AlertDialogUtil.TitleDialog(context,"网络连接失败", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(Build.VERSION.SDK_INT >= 11){
+                        //3.0以上打开设置界面，也可以直接用ACTION_WIRELESS_SETTINGS打开到wifi界面
+                        mContext.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
+                    } else {
+                        mContext.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                    }
+                }
+            });
         }
     }
 

@@ -25,7 +25,7 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 
 public class PasswordForgetWithCodeThread extends Thread{
-	private String url;
+    private String url;
 	private String email;
     private String code;
     private String newPassword;

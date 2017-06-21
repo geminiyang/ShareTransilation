@@ -1,5 +1,9 @@
 package com.idear.move.Activity;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.idear.move.R;
+import com.idear.move.Service.NetBroadCastReceiver;
 import com.idear.move.Thread.GetVerifyCodeThread;
 import com.idear.move.Thread.PasswordForgetWithCodeThread;
 import com.idear.move.Thread.PasswordUpdateWithCodeThread;
@@ -36,6 +41,8 @@ public class ForgetPasswordActivity extends BaseActivity {
     private ImageView iv_back;
     private Button submit,getCode;
     private EditText email,newPassword,reSurePassword,code;
+
+    private BroadcastReceiver receiver;
 
     //静态Handler处理子线程和UI线程的通信
     private static class MyHandler extends Handler {
@@ -70,7 +77,8 @@ public class ForgetPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_forget_password);
-
+        //通过广播设置网络监听
+        receiver = new NetBroadCastReceiver();
         initView();
         initEvent();
     }
@@ -106,6 +114,23 @@ public class ForgetPasswordActivity extends BaseActivity {
                 getVerifyCode();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        IntentFilter filter=new IntentFilter();
+        //一条信息触发一次广播接收器
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(receiver, filter);
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
     /**

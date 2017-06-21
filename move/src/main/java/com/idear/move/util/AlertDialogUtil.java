@@ -97,6 +97,16 @@ public class AlertDialogUtil {
         }).show();
     }
 
+    public static void TitleDialog(Context context,String title,DialogInterface.OnClickListener mListener) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(false);
+        builder.setTitle("确认开启网络？").setIcon(null).setNegativeButton("返回", null);
+        builder.setPositiveButton("确定", mListener);
+        builder.show();
+
+    }
+
     public static void inputTitleDialog(Context context) {
         final EditText input = new EditText(context);
         //获取按钮的LayoutParams
