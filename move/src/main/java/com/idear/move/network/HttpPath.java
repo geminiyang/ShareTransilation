@@ -31,4 +31,6 @@ public class HttpPath {
     public static String getPassWordForgetPath() { return "http://idear.party/api/mine/pwdForget";}
 
     public static String getUserInfoPath() {return "http://idear.party/api/mine/info";}
+
+    public static String getUpdateUserInfoPath() {return "http://idear.party/api/mine/infoupdate";}
 }

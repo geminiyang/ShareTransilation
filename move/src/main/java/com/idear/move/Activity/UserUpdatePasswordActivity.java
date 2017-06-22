@@ -22,6 +22,7 @@ import com.idear.move.util.CheckValidUtil;
 import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
+import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 
 import java.lang.ref.WeakReference;
@@ -65,7 +66,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_user_update_password);
 
         initView();

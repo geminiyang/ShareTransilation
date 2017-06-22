@@ -1,23 +1,21 @@
 package com.idear.move.util;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.idear.move.Activity.PublishRFActivity;
+import com.idear.move.Activity.UserLoginActivity;
 import com.idear.move.R;
-import com.idear.move.myWidget.LoadingProgressDialog;
+import com.idear.move.Thread.UpdateUserInfoThread;
+import com.idear.move.network.DataGetInterface;
+import com.idear.move.network.HttpPath;
+import com.idear.move.network.ResultType;
 
 /**
  * Created by user on 2017/5/10.
@@ -64,18 +62,33 @@ public class AlertDialogUtil {
                 .show();
     }
 
-    public static void SingleChoiceDialog(Context context) {
+    /**
+     * 修改性别操作
+     * @param context
+     */
+    public static void SingleChoiceDialog(final Context context) {
+        final String[] str = new String[]{"女", "男"};
+        final int[] position = {0};
         new AlertDialog.Builder(context)
-                .setTitle("请选择" )
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setSingleChoiceItems(new String[] {"男", "女"},  0 ,
+                .setTitle("修改性别" )
+                .setIcon(null)
+                .setSingleChoiceItems(str, 0,
                         new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
+                                position[0] = which;
                             }
-                        }
-                ).setNegativeButton("取消" ,  null )
-                .show();
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).show();
     }
 
     public static void classificationDialog(Context context, final View ValuesChangeView) {
@@ -132,5 +145,27 @@ public class AlertDialogUtil {
         });
         builder.show();
 
+    }
+
+
+    public static void MyDialog(Context context,String title ,DialogInterface.OnClickListener mListener) {
+        final EditText input = new EditText(context);
+        //获取按钮的LayoutParams
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        //在LayoutParams中设置margin
+        params.setMarginStart(25);
+        params.setMarginEnd(25);
+        //把这个LayoutParams设置给按钮
+        input.setLayoutParams(params);
+        input.setMaxLines(1);
+        input.setSingleLine(true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(false);
+        builder.setTitle(title).setIcon(null).setView(input)
+                .setNegativeButton("返回", null);
+        builder.setPositiveButton("确定", mListener);
+        builder.show();
     }
 }

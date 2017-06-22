@@ -22,12 +22,7 @@
         <activity
             android:name=".Activity.MyLoadingActivity"
             android:theme="@style/FirstPageStyle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.SelectActivity"
@@ -118,7 +113,14 @@
             android:name=".Activity.UserMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 启动 -->
+        </activity>
         <activity
             android:name=".Activity.UserRegisterNextStepActivity"
             android:theme="@style/otherPageStyle" />
@@ -147,7 +149,9 @@
         <activity
             android:name=".Activity.WriteFeedBackActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.UserUpdatePasswordActivity"></activity>
+        <activity android:name=".Activity.UserUpdatePasswordActivity"
+            android:theme="@style/otherPageStyle"
+            />
     </application>
     <!--全局注册-->
     <!--<receiver android:name="NetBroadCastReceiver">-->

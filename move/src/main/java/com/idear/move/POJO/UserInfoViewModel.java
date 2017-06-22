@@ -1,7 +1,5 @@
 package com.idear.move.POJO;
 
-import com.idear.move.Activity.UserLoginActivity;
-
 /**
  * Created by user on 2017/5/9.
  */
@@ -15,7 +13,7 @@ public class UserInfoViewModel {
     private String email;
     private String tel;
     private String school;
-    private String sex;
+    private int sex;
     private String create_time;
 
     public UserInfoViewModel() {
@@ -23,7 +21,7 @@ public class UserInfoViewModel {
     }
 
     public UserInfoViewModel(int status, String user_id, String username,
-                             String password, String email, String tel, String school, String sex) {
+                             String password, String email, String tel, String school, int sex) {
         this.status = status;
         this.user_id = user_id;
         this.username = username;
@@ -98,11 +96,11 @@ public class UserInfoViewModel {
         this.school = school;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 

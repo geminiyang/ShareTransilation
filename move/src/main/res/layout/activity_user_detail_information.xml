@@ -9,13 +9,10 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/toolBarHeight"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/blue_light"
-        android:theme="@style/Theme.ToolBar"
-        app:title=""
-        app:titleTextColor="@color/white"
-        app:layout_scrollFlags="scroll|enterAlways">
+        android:theme="@style/Theme.ToolBar">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -64,25 +61,21 @@
                 <LinearLayout
                     android:id="@+id/ll_one"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:orientation="horizontal"
                     android:background="@color/white"
                     >
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
+                    <com.idear.move.myWidget.RoundImageViewByXfermode
+                        android:id="@+id/avatar"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="20dp"
-                        android:text="头像"
-                        />
-                    <ImageView
-                        android:id="@+id/avatar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="20dp"
-                        android:background="@mipmap/me"
+                        android:src="@mipmap/paintbox"
+                        app:type="circle"
+                        app:borderRadius="5dp"
+                        app:picHeight="50dp"
+                        app:picWidth="50dp"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -269,7 +262,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_marginEnd="20dp"
+                                android:layout_marginEnd="5dp"
                                 android:text="@string/loadingString"
                                 />
                         </RelativeLayout>
@@ -312,7 +305,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="20dp"
-                                android:text="@string/loadingString"
+                                android:text="@string/secrect"
                                 />
                             <ImageView
                                 android:id="@+id/iv_next_password"
@@ -365,33 +358,36 @@
                 <View
                     android:layout_below="@+id/ll_three"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"/>
+                    android:layout_height="50dp"/>
             </RelativeLayout>
         </ScrollView>
+
         <RelativeLayout
             android:id="@+id/loading_face"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@color/transparent"
-            android:visibility="visible"
-            >
+            android:background="@color/white"
+            android:visibility="visible">
+
             <ProgressBar
                 android:id="@+id/progressBar"
-                android:layout_centerInParent="true"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/tv_progressBar"
+                android:indeterminateDrawable="@drawable/circle_progress_bar"
                 />
+
             <TextView
-                android:layout_below="@+id/progressBar"
                 android:id="@+id/tv_progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="18dp"
-                android:textColor="@color/colorPrimary"
                 android:text="数据加载中..."
-                />
+                android:textColor="@color/colorPrimary" />
         </RelativeLayout>
     </FrameLayout>
 </RelativeLayout>
