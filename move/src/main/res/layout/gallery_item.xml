@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:background="@drawable/bg_rectangle_white"
-    android:layout_width="180dp"
-    android:layout_height="120dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="170dp"
+    android:layout_height="110dp"
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="3dp">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+        <com.idear.move.myWidget.RoundImageViewByXfermode
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="160dp"
+            android:layout_height="80dp"
+            app:type="round"
+            app:picHeight="80dp"
+            app:picWidth="160dp"
+            app:borderRadius="10dp"
+            />
         <TextView
-            android:layout_alignParentTop="true"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,53 +37,43 @@
             android:textColor="@color/main_color_red"
             tools:text="text"
             />
-        <com.idear.move.myWidget.UpdateTimeTextView
-            android:id="@+id/hisPublishTime"
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_gravity="bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp">
+        <ImageView
+            android:id="@+id/iv_visit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:textColor="@color/_grey"
-            tools:text="今天20:53"
-            android:textSize="12sp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground" />
-        <ImageView
-            android:id="@+id/iv_me"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_toStartOf="@+id/info_visit_num"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="5dp"
-            android:background="@mipmap/me"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:background="@mipmap/visit"
             />
         <TextView
             android:id="@+id/info_visit_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/_grey"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@+id/iv_visit"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
             tools:text="88"
-            android:textSize="14sp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground" />
-        <com.idear.move.myWidget.RoundImageViewByXfermode
-            android:id="@+id/imageView"
-            android:layout_marginEnd="10dp"
-            android:layout_centerInParent="true"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            app:type="round"
-            app:picHeight="80dp"
-            app:picWidth="160dp"
-            app:borderRadius="10dp"
-            />
+        <com.idear.move.myWidget.UpdateTimeTextView
+            android:id="@+id/hisPublishTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/_grey"
+            tools:text="今天20:53"
+            android:textSize="12sp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground" />
     </RelativeLayout>
-    <View
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
-        android:background="@color/black"
-        />
-</LinearLayout>
+</android.support.v7.widget.CardView>

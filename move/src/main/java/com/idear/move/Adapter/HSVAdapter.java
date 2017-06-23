@@ -38,7 +38,7 @@ public class HSVAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
         this.list=new ArrayList<>();
         picWidth = ScreenUtil.dip2px(context,160);
-        picHeight = ScreenUtil.dip2px(context,800);
+        picHeight = ScreenUtil.dip2px(context,80);
     }
 
     @Override

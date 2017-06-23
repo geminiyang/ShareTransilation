@@ -157,9 +157,9 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
             map.put("index", (i+1));//代表第张图片，而数组从零开始计数
             hsvAdapter.addObjectItem(map);
         }
-        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,180,120);//第三个参数和第四个参数分别为宽和高
-        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,180,120);
-        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE,180,120);
+        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,170,100);//第三个参数和第四个参数分别为宽和高
+        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,170,100);
+        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE,170,100);
 
     }
 

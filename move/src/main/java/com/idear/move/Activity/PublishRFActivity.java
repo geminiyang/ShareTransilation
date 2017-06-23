@@ -39,6 +39,7 @@ import android.widget.TimePicker;
 import com.idear.move.R;
 import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.CameraUtil;
+import com.idear.move.util.DateUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ImageCheckoutUtil;
 import com.idear.move.util.IntentSkipUtil;
@@ -52,6 +53,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -112,7 +114,7 @@ public class PublishRFActivity extends BaseActivity {
         moneyAmount = (EditText) findViewById(R.id.money_amount);
         personNum = (EditText) findViewById(R.id.edit_personNum);
         classification = (EditText) findViewById(R.id.classification);
-        activityTimeInput = (EditText) findViewById(R.id.time_select);
+        activityTimeInput = (EditText) findViewById(R.id.activity_time_select);
         expireTimeInput = (EditText) findViewById(R.id.expire_time_select);
         pic = (ImageView) findViewById(R.id.pic);
         fl_bg_pan = (FrameLayout) findViewById(R.id.pan_bg);
@@ -158,13 +160,13 @@ public class PublishRFActivity extends BaseActivity {
         activityTimeInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productTimeDialog();
+                NewTimeDialog(activityTimeInput);
             }
         });
         expireTimeInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productTimeDialog();
+                NewTimeDialog(expireTimeInput);
             }
         });
         //招募人数编辑框监听
@@ -402,26 +404,27 @@ public class PublishRFActivity extends BaseActivity {
         alertDialog.show();
     }
 
-    private void productTimeDialog() {
+    private void NewTimeDialog(final EditText show) {
         Calendar c = Calendar.getInstance();
         // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
-        Dialog dateDialog = new
-                DatePickerDialog(PublishRFActivity.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dateDialog = new
+                DatePickerDialog(PublishRFActivity.this, android.R.style.Theme_Holo_Light_Dialog,new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker dp, int year, int month, int dayOfMonth) {
+                str.delete(0,str.length());
                 str.append(year + "-" + (month + 1) + "-" + dayOfMonth + " ");
                 Calendar time = Calendar.getInstance();
 
-                Dialog timeDialog =
-                        new TimePickerDialog(PublishRFActivity.this,
+                Dialog timeDialog = new TimePickerDialog(PublishRFActivity.this,
                                 android.R.style.Theme_Holo_Light_Dialog, //在这里指定样式
                                 new TimePickerDialog.OnTimeSetListener() {
                                     @Override
                                     public void onTimeSet(TimePicker tp, int hourOfDay, int minute) {
                                         str.append(hourOfDay + ":" + minute);
-                                        EditText show = (EditText) findViewById(R.id.time_select);
                                         show.setText("");
+                                        //String timeStr = DateUtil.StrToTimeStamp(str.toString()) + "";
                                         show.setText(str);
+                                        show.setSelection((show.getText().toString().length()));//移动光标位置
                                     }
                                 }
                                 // 设置初始时间
@@ -431,9 +434,9 @@ public class PublishRFActivity extends BaseActivity {
             }
         }
                 // 设置初始日期
-                , c.get(Calendar.YEAR), c.get(Calendar.MONTH), c
-                .get(Calendar.DAY_OF_MONTH));
+                , c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         dateDialog.setTitle("请选择日期");
+        dateDialog.getDatePicker().setMaxDate(1893456000000L);  //设置日期最大值
         dateDialog.show();
     }
 

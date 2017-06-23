@@ -82,6 +82,14 @@ public class HSVLinearLayout extends LinearLayout {
             setOrientation(HORIZONTAL);
             LayoutParams params = new LayoutParams(ScreenUtil.dip2px(context,itemWidth),
                     ScreenUtil.dip2px(context,itemHeight));
+            params.bottomMargin = 5;
+            params.topMargin = 5;
+            params.rightMargin = 8;
+            if(i==0 || i==adapter.getCount()-1) {
+                params.leftMargin = 5;
+            } else {
+                params.rightMargin = 0;
+            }
             addView(view, params);
             //addView(view, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
         }

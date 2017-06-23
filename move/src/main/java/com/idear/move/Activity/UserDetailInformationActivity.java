@@ -1,18 +1,14 @@
 package com.idear.move.Activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,11 +22,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.idear.move.POJO.UserInfoViewModel;
 import com.idear.move.R;
+import com.idear.move.Service.NetBroadCastReceiver;
 import com.idear.move.Thread.UpdateUserInfoThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
-import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
@@ -71,7 +67,7 @@ public class UserDetailInformationActivity extends BaseActivity {
     //异步任务相关
     private List<UserInfoAsyncTask> list= new ArrayList<>();
     //网络去处理相关
-    private BroadcastReceiver connectionReceiver;//广播接收器
+    private NetBroadCastReceiver receiver;//广播接收器
 
 
     private static class MyHandler extends Handler {
@@ -119,7 +115,8 @@ public class UserDetailInformationActivity extends BaseActivity {
         initView();
         initEvent();
 
-        setBroadCast();//全局检测网络变化
+        //通过广播设置网络监听
+        receiver = new NetBroadCastReceiver();//全局检测网络变化
         startFirstAsyncTask();//开启第一个异步任务
 
     }
@@ -178,31 +175,31 @@ public class UserDetailInformationActivity extends BaseActivity {
         updatePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateInfo(6);
+                updateSwitcher(6);
             }
         });
         updateSex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateInfo(2);
+                updateSwitcher(2);
             }
         });
         updateNickname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateInfo(1);
+                updateSwitcher(1);
             }
         });
         updateSchool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateInfo(4);
+                updateSwitcher(4);
             }
         });
         updateTel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateInfo(7);
+                updateSwitcher(7);
             }
         });
     }
@@ -211,10 +208,10 @@ public class UserDetailInformationActivity extends BaseActivity {
      * 更新信息的分支
      * @param position 在视图上的位置
      */
-    private void updateInfo(int position) {
+    private void updateSwitcher(int position) {
         switch (position) {
             case 1:
-                updateInfo(NICKNAME);
+                updateInfo(NICKNAME,"修改昵称");
                 break;
             case 2:
                 updateSex();
@@ -223,27 +220,28 @@ public class UserDetailInformationActivity extends BaseActivity {
 
                 break;
             case 4:
-                updateInfo(SCHOOL);
+                updateInfo(SCHOOL,"修改学校");
                 break;
             case 5:
-
+                //邮箱不能修改
                 break;
             case 6:
                 IntentSkipUtil.skipToNextActivity(UserDetailInformationActivity.this,
                         UserUpdatePasswordActivity.class);
                 break;
             case 7:
-                updateInfo(TEL);
+                updateInfo(TEL,"修改电话号码");
                 break;
         }
     }
 
 
     /**
-     * 修改昵称,学校
+     * 修改昵称,学校,电话号码
      * @param key 键值
+     * @param title 标题名
      */
-    private void updateInfo(String key) {
+    private void updateInfo(String key,String title) {
         final EditText input = new EditText(UserDetailInformationActivity.this);
         final String mKey = key;
         //获取按钮的LayoutParams
@@ -259,7 +257,7 @@ public class UserDetailInformationActivity extends BaseActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(UserDetailInformationActivity.this);
         builder.setCancelable(false);
-        builder.setTitle("修改昵称").setIcon(null).setView(input)
+        builder.setTitle(title).setIcon(null).setView(input)
                 .setNegativeButton("返回", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -353,35 +351,23 @@ public class UserDetailInformationActivity extends BaseActivity {
         }).show();
     }
 
-    private void setBroadCast() {
-        connectionReceiver = new BroadcastReceiver() {
 
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                ConnectivityManager connectMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-                NetworkInfo mobNetInfo = connectMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-                NetworkInfo wifiNetInfo = connectMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-                if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
-                    ToastUtil.getInstance().showToast(UserDetailInformationActivity.this,"网络连接失败");
-                } else {
-                    ToastUtil.getInstance().showToast(UserDetailInformationActivity.this,"网络连接成功");
-
-                }
-            }
-        };
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(connectionReceiver, intentFilter);
+    @Override
+    public void onResume() {
+        IntentFilter filter=new IntentFilter();
+        //一条信息触发一次广播接收器
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(receiver, filter);
+        super.onResume();
     }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (connectionReceiver != null) {
-            unregisterReceiver(connectionReceiver);
+        if (receiver != null) {
+            unregisterReceiver(receiver);
         }
     }
 

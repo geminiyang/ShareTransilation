@@ -1,98 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_root"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey"
     android:fitsSystemWindows="true"
+    android:background="@color/light_grey"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <!--距离一个系统状态栏的高度是因为要状态栏可以透明显示,将marginTop设置为22dp（状态栏的高度）-->
-    <!--android:layout_marginTop="24dp"-->
-    <RadioGroup
-        android:id="@+id/rd_group"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="56dp"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/home"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_home"
-            android:text="首页"/>
+        android:layout_height="match_parent">
+        <RadioGroup
+            android:id="@+id/rd_group"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="56dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/home"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_home"
+                android:text="首页"/>
 
-        <RadioButton
-            android:id="@+id/msg"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_msg"
-            android:text="消息"/>
+            <RadioButton
+                android:id="@+id/msg"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_msg"
+                android:text="消息"/>
 
-        <RadioButton
-            android:id="@+id/locate"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_locate_two"
-            android:visibility="invisible"
-            android:text="定位"/>
+            <RadioButton
+                android:id="@+id/locate"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_locate_two"
+                android:text="定位"/>
 
-        <RadioButton
-            android:id="@+id/dynamic"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_dynamic"
-            android:text="动态"/>
+            <RadioButton
+                android:id="@+id/dynamic"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_dynamic"
+                android:text="动态"/>
 
-        <com.idear.move.myWidget.TipButton
-            android:id="@+id/my"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_my"
-            android:text="我的"
-            />
-    </RadioGroup>
-
-    <View
-        android:id="@+id/div_tab_bar"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:background="@color/_grey"
-        android:layout_above="@id/rd_group"/>
-
-    <FrameLayout
-        android:id="@+id/pan_bg"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/circle_pan"
-        android:layout_marginBottom="-15dp"
-        android:clickable="true"
-        android:elevation="8dp"
-        >
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_add_white"
-            />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/rd_group"
-        android:layout_below="@id/toolbar"
-        android:background="@color/transparent">
+            <com.idear.move.myWidget.TipButton
+                android:id="@+id/my"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_my"
+                android:text="我的"
+                />
+        </RadioGroup>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/id_viewpager"
+            android:layout_above="@id/rd_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </android.support.v4.view.ViewPager>
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-15dp"
+        >
+        <FrameLayout
+            android:id="@+id/fl_bt1"
+            android:layout_height="@dimen/small_pan_length"
+            android:layout_width="@dimen/small_pan_length"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/circle_pan"
+            >
+            <TextView
+                android:layout_width="@dimen/small_pan_length"
+                android:layout_height="@dimen/small_pan_length"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:typeface="serif"
+                android:text="招募"
+                />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/fl_bt2"
+            android:layout_height="@dimen/small_pan_length"
+            android:layout_width="@dimen/small_pan_length"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/circle_pan"
+            >
+            <TextView
+                android:layout_width="@dimen/small_pan_length"
+                android:layout_height="@dimen/small_pan_length"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:typeface="serif"
+                android:text="招募     筹资"
+                />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/fl_bt3"
+            android:layout_height="@dimen/small_pan_length"
+            android:layout_width="@dimen/small_pan_length"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/circle_pan"
+            >
+            <TextView
+                android:layout_width="@dimen/small_pan_length"
+                android:layout_height="@dimen/small_pan_length"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:typeface="serif"
+                android:text="筹资"
+                />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/pan_bg"
+            android:layout_width="@dimen/normal_pan_length"
+            android:layout_height="@dimen/normal_pan_length"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/circle_pan"
+            android:clickable="true"
+            >
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_add_white"
+                />
+        </FrameLayout>
     </FrameLayout>
-
-</RelativeLayout>
+</FrameLayout>
 
 
 

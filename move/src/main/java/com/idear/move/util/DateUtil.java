@@ -1,5 +1,7 @@
 package com.idear.move.util;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,6 +54,19 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         String date = sdf.format(timeMills);
         return date;
+    }
+
+    public static int StrToTimeStamp(String str) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.CHINA);
+        Date date = null;
+        try {
+            date = sdf.parse(str);
+        } catch (ParseException e) {
+            //添加相应的处理
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return (int)(cal.getTimeInMillis() / 1000);
     }
 
     /**

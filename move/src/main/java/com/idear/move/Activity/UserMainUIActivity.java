@@ -73,6 +73,8 @@ public class UserMainUIActivity extends BaseActivity implements
     private FrameLayout fl_bt1,fl_bt2,fl_bt3;
     private TextView tv1,tv2,tv3;
 
+    private boolean canStart = true;//是否展开标志
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +138,11 @@ public class UserMainUIActivity extends BaseActivity implements
         radioGroup = (RadioGroup) findViewById(R.id.rd_group);
 
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+
+        //初始化三个动画按钮
+        fl_bt1 = (FrameLayout) findViewById(R.id.fl_bt1);
+        fl_bt2 = (FrameLayout) findViewById(R.id.fl_bt2);
+        fl_bt3 = (FrameLayout) findViewById(R.id.fl_bt3);
     }
 
     private void initEvent() {
@@ -154,24 +161,78 @@ public class UserMainUIActivity extends BaseActivity implements
         //初始化默认页面
         setDefaultFragment();
 
+        fl_bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,PublishRActivity.class);
+                fl_bt1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopAnimator();
+                    }
+                },1000);
+            }
+        });
+        fl_bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,PublishRFActivity.class);
+                fl_bt2.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopAnimator();
+                    }
+                },1000);
+            }
+        });
+        fl_bt3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,PublishFActivity.class);
+                fl_bt3.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopAnimator();
+                    }
+                },1000);
+            }
+        });
+
         //发布按钮点击事件
         fm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final View view = v;
-                fm.postDelayed(new Runnable() {
+                fm.post(new Runnable() {
                     @Override
                     public void run() {
-                        showWindow(view);
+                        //showWindow(view);
+                        if(canStart) {
+                            startAnimator();
+                        } else {
+                            stopAnimator();
+                        }
                     }
-                },500);
+                });
             }
         });
 
     }
 
+    public void startAnimator() {
+        ObjectAnimatorUtil.rotateAnimation(img,0,135f);
+        ObjectAnimatorUtil.startAnimation(fl_bt1,fl_bt2,fl_bt3);
+        canStart=false;
+    }
+
+    public void stopAnimator() {
+        ObjectAnimatorUtil.rotateAnimation(img,135f,0);
+        ObjectAnimatorUtil.closeAnimation(fl_bt1,fl_bt2,fl_bt3);
+        canStart=true;
+    }
+
     /**
-     * 点击+号按钮后的触发事件 自动逸动画
+     * 点击+号按钮后的触发事件 自定义动画
      * @param parent
      */
     private void showWindow(View parent) {
