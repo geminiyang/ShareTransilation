@@ -33,4 +33,6 @@ public class HttpPath {
     public static String getUserInfoPath() {return "http://idear.party/api/mine/info";}
 
     public static String getUpdateUserInfoPath() {return "http://idear.party/api/mine/infoupdate";}
+
+    public static String getFansInfoPath() {return "http://idear.party/api/mine/index";}
 }

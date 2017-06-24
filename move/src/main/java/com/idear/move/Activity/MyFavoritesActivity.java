@@ -92,6 +92,7 @@ public class MyFavoritesActivity extends BaseActivity implements TabLayout.OnTab
 
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(0);
+        mViewPager.setOffscreenPageLimit(0);//设置当前ViewPager显示item,旁边左右跨度预先加载范围
 
         mTabLayout.setupWithViewPager(mViewPager);
         //TabLayout.MODE_SCROLLABLE和TabLayout.MODE_FIXED分别表示当tab的内容超过屏幕宽度是否支持横向水平滑动

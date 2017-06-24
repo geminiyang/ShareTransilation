@@ -49,7 +49,7 @@ import com.yqq.swipebackhelper.SwipeBackHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserMainUIActivity extends BaseActivity implements
+public class UserMainUIActivity extends MyBaseActivity implements
         RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,
         UserListFragment.OnListFragmentInteractionListener,
         GroupListFragment.OnListFragmentInteractionListener {
@@ -220,13 +220,13 @@ public class UserMainUIActivity extends BaseActivity implements
     }
 
     public void startAnimator() {
-        ObjectAnimatorUtil.rotateAnimation(img,0,135f);
+        ObjectAnimatorUtil.rotateAnimation(img,0,45f);
         ObjectAnimatorUtil.startAnimation(fl_bt1,fl_bt2,fl_bt3);
         canStart=false;
     }
 
     public void stopAnimator() {
-        ObjectAnimatorUtil.rotateAnimation(img,135f,0);
+        ObjectAnimatorUtil.rotateAnimation(img,45f,0);
         ObjectAnimatorUtil.closeAnimation(fl_bt1,fl_bt2,fl_bt3);
         canStart=true;
     }
