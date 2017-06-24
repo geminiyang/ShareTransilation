@@ -1,20 +1,30 @@
 package com.idear.move.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,17 +32,24 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.idear.move.POJO.UserInfoViewModel;
 import com.idear.move.R;
+import com.idear.move.Service.ActivityManager;
 import com.idear.move.Service.NetBroadCastReceiver;
+import com.idear.move.Thread.ImageUploadThread;
 import com.idear.move.Thread.UpdateUserInfoThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
+import com.idear.move.util.CameraUtil;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.ErrorHandleUtil;
+import com.idear.move.util.FileSaveUtil;
+import com.idear.move.util.ImageCheckoutUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.Logger;
 import com.idear.move.util.NetWorkUtil;
+import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
+import com.idear.move.util.UploadUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 
@@ -40,6 +57,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -49,13 +69,17 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class UserDetailInformationActivity extends BaseActivity {
+public class UserDetailInformationActivity extends MyBaseActivity {
     //参数
     public static String NICKNAME="username";
     public static String SCHOOL="school";
     public static String TEL ="tel";
+
+    private RelativeLayout rootLayout;
     //标题烂
     private Toolbar mToolBar;
     //界面相关
@@ -66,10 +90,18 @@ public class UserDetailInformationActivity extends BaseActivity {
     private ImageView iv_back,updatePassword,updateSex,updateNickname,updateSchool,updateTel;
     //异步任务相关
     private List<UserInfoAsyncTask> list= new ArrayList<>();
-    //网络去处理相关
-    private NetBroadCastReceiver receiver;//广播接收器
-
-
+    //图片选择控件
+    private static final int TAKE_PICTURE = 100;
+    private static final int SELECT_PICTURE = 101;
+    private static final int IMAGE_SIZE = 100 * 1024;// 100kb,受载入4096×4096图片限制，与工具类的缩放比例对应
+    private static final int SHOW_IMAGE = 102;
+    private File uploadFile;
+    private File mCurrentPhotoFile;
+    private String camPicPath;//照片保存路径
+    private ImageView imageShow;
+    /**
+     * 进行异步显示图片到控件和信息的更新
+     */
     private static class MyHandler extends Handler {
         WeakReference mActivity;
         MyHandler(UserDetailInformationActivity activity) {
@@ -99,6 +131,13 @@ public class UserDetailInformationActivity extends BaseActivity {
                     }
                     theActivity.addNewAsyncTask();
                     break;
+                case SHOW_IMAGE:
+                    theActivity.imageShow.setImageBitmap(ImageCheckoutUtil.getLocalBitmap(((msg.obj).toString())));
+                    //开启异步上传任务
+                    theActivity.submitUploadFile();
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -110,15 +149,9 @@ public class UserDetailInformationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_user_detail_information);
-
-
         initView();
         initEvent();
-
-        //通过广播设置网络监听
-        receiver = new NetBroadCastReceiver();//全局检测网络变化
         startFirstAsyncTask();//开启第一个异步任务
-
     }
     /**
      * 开启第一个异步任务
@@ -149,6 +182,9 @@ public class UserDetailInformationActivity extends BaseActivity {
         email = (TextView) findViewById(R.id.tv_email);
         password = (TextView) findViewById(R.id.tv_password);
         phoneNumber = (TextView) findViewById(R.id.tv_cellphoneNumber);
+        imageShow = (ImageView) findViewById(R.id.avatar);
+
+        rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
 
         //ImageView
         updatePassword = (ImageView) findViewById(R.id.iv_next_password);
@@ -202,6 +238,241 @@ public class UserDetailInformationActivity extends BaseActivity {
                 updateSwitcher(7);
             }
         });
+        imageShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //先获取权限
+                getPermissions();
+                showPopupWindow(UserDetailInformationActivity.this,rootLayout,R.layout.pic_op_popup_window);
+            }
+        });
+    }
+
+    /**
+     * 对应文件选取操作
+     * @param context
+     * @param parent
+     * @param layoutId
+     */
+    private void showPopupWindow(final Context context, View parent, int layoutId) {
+        final boolean CAN_WRITE_EXTERNAL_STORAGE = getIfCanWrite();//获取是否具有读写权限
+        View contentView = LayoutInflater.from(context).inflate(layoutId,null);
+
+        final PopupWindow popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        //拍照功能监听
+        contentView.findViewById(R.id.ll_layer_take_picture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //添加拍照功能
+                if (CAN_WRITE_EXTERNAL_STORAGE) {
+                    //当sd卡可用才执行相关操作state
+                    if (FileSaveUtil.isSDExist()) {
+                        String str[] = CameraUtil.getSavePicPath();
+                        camPicPath = str[0] + str[1];//path + filename (执行拍照操作一次生成一个文件路径名)
+                        startActivityForResult(CameraUtil.openMyCamera(camPicPath),TAKE_PICTURE);
+                    } else {
+                        ToastUtil.getInstance().showToast(UserDetailInformationActivity.this,"请检查内存卡");
+                    }
+                } else {
+                    ToastUtil.getInstance().showToast(UserDetailInformationActivity.this,"权限未开通\n请到设置中开通相册权限");
+                    getPermissions();
+                }
+            }
+        });
+
+        //照片选取监听
+        contentView.findViewById(R.id.ll_layer_select).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //添加选取相册图片功能
+                if (CAN_WRITE_EXTERNAL_STORAGE) {
+                    // 判断是否有SD卡
+                    if (FileSaveUtil.isSDExist()) {
+                        startActivityForResult(CameraUtil.openRecentPhotoList(),SELECT_PICTURE);
+                    } else {
+                        ToastUtil.getInstance().showToast(UserDetailInformationActivity.this,"请检查SD卡");
+                    }
+                } else {
+                    ToastUtil.getInstance().showToast(UserDetailInformationActivity.this,"权限未开通\n请到设置中开通相册权限");
+                    getPermissions();
+                }
+            }
+        });
+        contentView.findViewById(R.id.ll_layer_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        //设置入场动画
+        popupWindow.setAnimationStyle(R.style.PopupSlideFromBottomAnimation);
+        // 设置焦点在弹窗上
+        popupWindow.setFocusable(true);
+        // 设置允许在外点击消失
+        popupWindow.setOutsideTouchable(true);
+
+        //设置显示位置
+        if(!popupWindow.isShowing()) {
+            //相对屏幕，显示在指定位置
+            popupWindow.showAtLocation(parent, Gravity.BOTTOM,0,0);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            //操作成功后处理(压缩操作)
+            switch (requestCode) {
+                case TAKE_PICTURE:
+                    FileInputStream is = null;
+                    try {
+                        is = new FileInputStream(camPicPath);
+                        File camFile = new File(camPicPath); // 图片文件路径
+                        if (camFile.exists()) {
+                            //检查图片大小
+                            int size = ImageCheckoutUtil.getImageSize(
+                                    ImageCheckoutUtil.getLocalBitmap(camPicPath));
+                            if (size > IMAGE_SIZE) {
+                                //压缩处理
+                                imageShow.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                compressPicture(camPicPath);
+                            } else {
+                                uploadFile = camFile;//上传文件
+                                imageShow.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                Message msg = new Message();
+                                msg.obj = camPicPath;
+                                msg.what = SHOW_IMAGE;
+                                handler.sendMessage(msg);
+                            }
+                        } else {
+                            ToastUtil.getInstance().showToast(UserDetailInformationActivity.this,"该文件不存在");
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } finally {
+                        // 关闭流
+                        try {
+                            if (is != null) {
+                                is.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                case SELECT_PICTURE:
+                    Uri uri = data.getData();
+                    String path = FileSaveUtil.getPath(getApplicationContext(), uri);//转换路径
+                    if(path!=null) {
+                        mCurrentPhotoFile = new File(path); // 图片文件路径
+                        if (mCurrentPhotoFile.exists()) {
+                            int size = ImageCheckoutUtil.getImageSize(ImageCheckoutUtil.getLocalBitmap(path));
+                            if (size > IMAGE_SIZE) {
+                                imageShow.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                //添加压缩处理
+                                compressPicture(path);
+                            } else {
+                                uploadFile = mCurrentPhotoFile;//上传文件
+                                //不需要压缩直接处理
+                                imageShow.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                Message msg = new Message();
+                                msg.obj = camPicPath;
+                                msg.what = SHOW_IMAGE;
+                                handler.sendMessage(msg);
+                            }
+                        } else {
+                            ToastUtil.getInstance().showToast(UserDetailInformationActivity.this,"该文件不存在");
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+            //操作取消
+        }
+    }
+
+
+    //图片的后续操作(压缩处理)
+    private void compressPicture(final String path) {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    String str[] = CameraUtil.getSavePicPath();//压缩图片另存为
+                    String GalPicPath = str[0] + str[1];//获取文件保存路径
+                    //生成对应bitmap
+                    Bitmap bitmap = PictureUtil.compressSizeImage(path,
+                            imageShow.getWidth(), imageShow.getHeight()
+                    );//图片压缩处理具体逻辑
+                    //判断图像是否有90度旋转
+                    boolean isSave = FileSaveUtil.saveBitmap(
+                            PictureUtil.reviewPicRotate(bitmap, str[0]+str[1]),
+                            str[0],str[1]);
+                    File file = new File(GalPicPath);
+                    uploadFile = new File(path);//上传文件
+                    if (file.exists() && isSave) {
+                        //图片的操作()
+                        Looper.prepare();
+                        Message msg = new Message();
+                        msg.obj = path;
+                        msg.what = SHOW_IMAGE;
+                        handler.sendMessage(msg);
+                        Looper.loop();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 上传图片操作
+     */
+    private void submitUploadFile() {
+        if (uploadFile == null || (!uploadFile.exists())) {
+            return;
+        }
+        final String requestURL = HttpPath.getUpdateUserInfoPath();
+        Logger.d("请求的URL=" + requestURL);
+        Logger.d("请求的fileName=" + uploadFile.getName());
+        Logger.d("请求的fileName=" + uploadFile.length());
+        final Map<String, String> params = new HashMap<>();
+        params.put("user_id", CookiesSaveUtil.getUserId(UserDetailInformationActivity.this));
+        final Map<String, File> files = new HashMap<>();
+        files.put("img", uploadFile);
+        ImageUploadThread imageUploadThread = new ImageUploadThread(UserDetailInformationActivity.this,
+                requestURL,params,files);
+        imageUploadThread.setDataGetListener(new DataGetInterface() {
+            @Override
+            public void finishWork(Object obj) {
+                if(obj instanceof ResultType) {
+                    ResultType result = (ResultType) obj;
+                    if(Integer.parseInt(result.getStatus()) == 1) {
+                        ToastUtil.getInstance().showToastInThread(UserDetailInformationActivity.this,"上传完成!");
+                    }
+                    ToastUtil.getInstance().showToastInThread(UserDetailInformationActivity.this,
+                            result.getMessage());
+                } else {
+                    ToastUtil.getInstance().showToastInThread(UserDetailInformationActivity.this,
+                            obj.toString());
+                }
+            }
+
+            @Override
+            public void interrupt(Exception e) {
+                //添加网络错误处理
+                ToastUtil.getInstance().showToastInThread(UserDetailInformationActivity.this,
+                        ErrorHandleUtil.ExceptionToStr(e,UserDetailInformationActivity.this));
+            }
+        });
+        imageUploadThread.start();
     }
 
     /**
@@ -349,26 +620,6 @@ public class UserDetailInformationActivity extends BaseActivity {
                 updateUserInfoThread.start();
             }
         }).show();
-    }
-
-
-    @Override
-    public void onResume() {
-        IntentFilter filter=new IntentFilter();
-        //一条信息触发一次广播接收器
-        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(receiver, filter);
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (receiver != null) {
-            unregisterReceiver(receiver);
-        }
     }
 
     /**

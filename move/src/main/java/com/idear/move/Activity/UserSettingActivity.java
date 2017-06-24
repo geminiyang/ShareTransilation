@@ -9,6 +9,12 @@ import android.widget.ImageView;
 
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
+import com.idear.move.Thread.LogoutThread;
+import com.idear.move.network.DataGetInterface;
+import com.idear.move.network.HttpPath;
+import com.idear.move.network.ResultType;
+import com.idear.move.util.ErrorHandleUtil;
+import com.idear.move.util.ToastUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 
@@ -57,8 +63,33 @@ public class UserSettingActivity extends BaseActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ActivityManager.getInstance().finishAllActivities();
-                        finish();
+                        LogoutThread logoutThread = new LogoutThread(UserSettingActivity.this,
+                                HttpPath.getUserLogOutPath());
+                        logoutThread.setDataGetListener(new DataGetInterface() {
+                            @Override
+                            public void finishWork(Object obj) {
+                                if(obj instanceof ResultType) {
+                                    ResultType result = (ResultType) obj;
+                                    if(Integer.parseInt(result.getStatus()) == 1) {
+                                        ActivityManager.getInstance().finishAllActivities();
+                                        finish();
+                                    }
+                                    ToastUtil.getInstance().showToastInThread(UserSettingActivity.this,
+                                            result.getMessage());
+                                } else {
+                                    ToastUtil.getInstance().showToastInThread(UserSettingActivity.this,
+                                            obj.toString());
+                                }
+                            }
+
+                            @Override
+                            public void interrupt(Exception e) {
+                                //添加网络错误处理
+                                ToastUtil.getInstance().showToastInThread(UserSettingActivity.this,
+                                        ErrorHandleUtil.ExceptionToStr(e,UserSettingActivity.this));
+                            }
+                        });
+                        logoutThread.start();
                     }
                 });
         dialog.setNegativeButton("取消",

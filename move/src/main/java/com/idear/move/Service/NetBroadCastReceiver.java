@@ -50,11 +50,12 @@ public class NetBroadCastReceiver extends BroadcastReceiver {
             if(NetworkInfo.State.CONNECTED==info.getState()){
                 //连接状态
                 Logger.d("网络已连接");
-                ToastUtil.getInstance().showToast(mContext,"网络已连接");
+                //ToastUtil.getInstance().showToast(mContext,"网络已连接");
                 //执行后续代码
                 //由于boradCastReciver触发器组件，它和Service服务一样，都是在主线程的，
                 //所以，如果你的后续操作是耗时的操作，请new Thread获得AsyncTask等，进行异步操作
             }else{
+                ToastUtil.getInstance().showToast(mContext,"网络未连接");
                 AlertDialogUtil.TitleDialog(context, "开启网络", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

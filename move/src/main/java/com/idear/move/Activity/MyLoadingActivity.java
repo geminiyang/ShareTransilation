@@ -14,7 +14,7 @@ import com.yqq.swipebackhelper.BaseActivity;
 
 import java.lang.ref.WeakReference;
 
-public class MyLoadingActivity extends BaseActivity implements View.OnClickListener{
+public class MyLoadingActivity extends MyBaseActivity implements View.OnClickListener{
 
     private Button bt;
     static int INDEX_IF_COMETONEXT = 1;//这个标志位与handler中的相应what对应

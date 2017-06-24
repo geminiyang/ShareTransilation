@@ -1,17 +1,13 @@
 package com.idear.move.Activity;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,9 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CheckedTextView;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -37,29 +31,32 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.idear.move.R;
+import com.idear.move.Thread.ImageUploadThread;
+import com.idear.move.network.DataGetInterface;
+import com.idear.move.network.HttpPath;
+import com.idear.move.network.ResultType;
 import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.CameraUtil;
-import com.idear.move.util.DateUtil;
+import com.idear.move.util.CookiesSaveUtil;
+import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ImageCheckoutUtil;
 import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.Logger;
 import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
 import com.idear.move.util.UploadUtil;
-import com.yqq.swipebackhelper.BaseActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PublishRFActivity extends BaseActivity {
+public class PublishRFActivity extends MyBaseActivity {
 
     private RelativeLayout rlRoot;//根布局
     private CheckedTextView ctv;
@@ -75,6 +72,7 @@ public class PublishRFActivity extends BaseActivity {
     private static final int SHOW_IMAGE = 102;
     private File uploadFile;
     private File mCurrentPhotoFile;
+    private String camPicPath;//照片保存路径
     private ImageView pic;
     private FrameLayout fl_bg_pan;
     public ImageView imageShow;
@@ -89,17 +87,11 @@ public class PublishRFActivity extends BaseActivity {
     private final int MAX = 100;
     private int currentNum = 2;
 
-    //权限相关操作
-    private boolean CAN_WRITE_EXTERNAL_STORAGE = true;
-    private static final int SDK_PERMISSION_REQUEST = 127;
-    private String camPicPath;//照片保存路径
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_rf);
 
-        getPermissions();
         initView();
         initEvent();
     }
@@ -208,6 +200,7 @@ public class PublishRFActivity extends BaseActivity {
      * @param layoutId
      */
     private void showPopupWindow(final Context context, View parent,int layoutId) {
+        final boolean CAN_WRITE_EXTERNAL_STORAGE = getIfCanWrite();//获取是否具有读写权限
         View contentView = LayoutInflater.from(context).inflate(layoutId,null);
 
         final PopupWindow popupWindow = new PopupWindow(contentView,
@@ -272,86 +265,6 @@ public class PublishRFActivity extends BaseActivity {
         }
     }
 
-    protected void showDialog_First(Context context) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View dialog_layout = inflater.inflate(R.layout.number_picker_dialog,null);
-        AlertDialog.Builder  dialog = new AlertDialog.Builder(context);
-        dialog.setView(dialog_layout);
-        final AlertDialog display = dialog.create();
-        //点击空白区域会退出dialog,true时候会退出
-        display.setCanceledOnTouchOutside(true);
-
-        display.show();
-
-        //dialog中的修改按钮
-        Button cancel = (Button) dialog_layout.findViewById(R.id.bt_cancel);
-        Button sure = (Button) dialog_layout.findViewById(R.id.bt_sure);
-
-        cancel.setOnClickListener(new android.view.View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                display.cancel();
-            }
-        });
-
-        sure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                personNum.setText("");
-                personNum.setText(currentNum+"");
-                display.cancel();
-            }
-        });
-    }
-
-    /**
-     * 自定义布局的NumberPicker
-     */
-    private void showNumberPickerDialog() {
-        final Dialog dialog = new Dialog(PublishRFActivity.this);
-        dialog.setTitle("NumberPicker");
-
-        dialog.setCanceledOnTouchOutside(true);
-
-        dialog.setContentView(R.layout.number_picker_dialog);
-        Button cancel = (Button) dialog.findViewById(R.id.bt_cancel);
-        Button sure = (Button) dialog.findViewById(R.id.bt_sure);
-        final NumberPicker mNumberPicker = (NumberPicker) dialog.findViewById(R.id.numberPicker);
-        mNumberPicker.setMaxValue(MAX); // max value 100
-        mNumberPicker.setMinValue(MIN);   // min value 1
-        mNumberPicker.setWrapSelectorWheel(true);
-        mNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                currentNum = newVal;
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                //更新UI
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
-                dialog.dismiss();
-            }
-        });
-        sure.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                personNum.setText("");
-                personNum.setText(currentNum+"");
-                dialog.dismiss(); // dismiss the dialog
-            }
-        });
-        dialog.show();
-    }
     /**
      * 系统默认风格的NumberPicker
      */
@@ -389,6 +302,7 @@ public class PublishRFActivity extends BaseActivity {
                                     public void run() {
                                         personNum.setText("");
                                         personNum.setText(currentNum+"");
+                                        personNum.setSelection((personNum.getText().toString().length()));//移动光标位置
                                     }
                                 });
                             }
@@ -552,106 +466,58 @@ public class PublishRFActivity extends BaseActivity {
         }).start();
     }
 
-    private void submitUploadFile(){
+    /**
+     * 上传图片操作
+     */
+    private void submitUploadFile() {
         if (uploadFile == null || (!uploadFile.exists())) {
             return;
         }
-        final String requestURL = "http://idear.party/api/image/up";
-        Log.i("info", "请求的URL=" + requestURL);
-        Log.i("info", "请求的fileName=" + uploadFile.getName());
-        Log.i("info", "请求的fileName=" + uploadFile.length());
+        final String requestURL = HttpPath.getUpdateUserInfoPath();
+        Logger.d("请求的URL=" + requestURL);
+        Logger.d("请求的fileName=" + uploadFile.getName());
+        Logger.d("请求的fileName=" + uploadFile.length());
         final Map<String, String> params = new HashMap<>();
-        params.put("user_id", "1");
+        params.put("user_id", CookiesSaveUtil.getUserId(PublishRFActivity.this));
         final Map<String, File> files = new HashMap<>();
         files.put("img", uploadFile);
-
-        new Thread(new Runnable() { //开启线程上传文件
+        ImageUploadThread imageUploadThread = new ImageUploadThread(PublishRFActivity.this,
+                requestURL,params,files);
+        imageUploadThread.setDataGetListener(new DataGetInterface() {
             @Override
-            public void run() {
-                try {
-                    String str = UploadUtil.uploadImg(requestURL,params,files);
-                    Looper.prepare();
-                    ToastUtil.getInstance().showToast(PublishRFActivity.this,"上传完成!");
-                    Looper.loop();
-                    Log.d("info",str);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    /**
-     * 权限相关处理
-     */
-    @TargetApi(23)
-    protected void getPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ArrayList<String> permissions = new ArrayList<String>();
-            // 读写权限
-            if (addPermission(permissions, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Log.d("info","Manifest.permission.WRITE_EXTERNAL_STORAGE Deny \n") ;
-            }
-            if (permissions.size() > 0) {
-                //请求权限
-                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
-            }
-        }
-    }
-
-    @TargetApi(23)
-    private boolean addPermission(ArrayList<String> permissionsList, String permission) {
-        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-            // 如果应用没有获得对应权限,则添加到列表中,准备批量申请
-            if (shouldShowRequestPermissionRationale(permission)) {
-                return true;
-            } else {
-                permissionsList.add(permission);
-                return false;
-            }
-        } else {
-            return true;
-        }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        /**
-         * 权限请求结果回调
-         */
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case SDK_PERMISSION_REQUEST:
-                Map<String, Integer> perms = new HashMap<String, Integer>();
-                //初始化操作
-                perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
-                //批量进行权限申请
-                for (int i = 0; i < permissions.length; i++) {
-                    perms.put(permissions[i], grantResults[i]);
-                }
-
-                if (perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    CAN_WRITE_EXTERNAL_STORAGE = false;
-                    ToastUtil.getInstance().showToast(this,"禁用图片权限将导致发送图片功能无法使用！");
+            public void finishWork(Object obj) {
+                if(obj instanceof ResultType) {
+                    ResultType result = (ResultType) obj;
+                    if(Integer.parseInt(result.getStatus()) == 1) {
+                        ToastUtil.getInstance().showToastInThread(PublishRFActivity.this,"上传完成!");
+                    }
+                    ToastUtil.getInstance().showToastInThread(PublishRFActivity.this,
+                            result.getMessage());
                 } else {
-                    CAN_WRITE_EXTERNAL_STORAGE = true;
+                    ToastUtil.getInstance().showToastInThread(PublishRFActivity.this,
+                            obj.toString());
                 }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+            }
+
+            @Override
+            public void interrupt(Exception e) {
+                //添加网络错误处理
+                ToastUtil.getInstance().showToastInThread(PublishRFActivity.this,
+                        ErrorHandleUtil.ExceptionToStr(e,PublishRFActivity.this));
+            }
+        });
+        imageUploadThread.start();
     }
 
     /**
      * 进行异步显示图片到控件
      */
     private static class ImageHandler extends Handler {
-         WeakReference<PublishRFActivity> mActivity;
+        WeakReference<PublishRFActivity> mActivity;
 
-         ImageHandler(PublishRFActivity activity) {
-             mActivity = new WeakReference<PublishRFActivity>(activity);
-         }
+        ImageHandler(PublishRFActivity activity) {
+            mActivity = new WeakReference<PublishRFActivity>(activity);
+        }
         @Override
         public void handleMessage(Message msg) {
             PublishRFActivity mCurrentActivity = mActivity.get();

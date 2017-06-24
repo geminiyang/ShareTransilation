@@ -23,8 +23,6 @@ import java.util.UUID;
 public class UploadUtil {
     private static final String TAG = "info";
     private static final int TIME_OUT = 10 * 1000; // 超时时间
-    private static final String SUCCESS="1";
-    private static final String FAILURE="0";
     /**
      * 通过拼接的方式构造请求内容，实现参数传输以及文件传输
      *
@@ -96,9 +94,11 @@ public class UploadUtil {
         byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END).getBytes();
         outStream.write(end_data);
         outStream.flush();
+
         // 得到响应码
         int res = conn.getResponseCode();
         Log.d(TAG,"响应码" + res + "");
+
         InputStream in = conn.getInputStream();
         StringBuilder sb2 = new StringBuilder();
         if (res == 200) {

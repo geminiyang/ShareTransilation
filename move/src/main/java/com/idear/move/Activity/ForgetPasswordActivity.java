@@ -35,14 +35,12 @@ import java.lang.ref.WeakReference;
 /**
  * 赞助商和用户公用一个忘记密码页面，通过Intent传递过来的值判断忘记密码哦操作 所对应的邮箱
  */
-public class ForgetPasswordActivity extends BaseActivity {
+public class ForgetPasswordActivity extends MyBaseActivity {
 
     private Toolbar toolbar;
     private ImageView iv_back;
     private Button submit,getCode;
     private EditText email,newPassword,reSurePassword,code;
-
-    private BroadcastReceiver receiver;
 
     //静态Handler处理子线程和UI线程的通信
     private static class MyHandler extends Handler {
@@ -77,8 +75,6 @@ public class ForgetPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_forget_password);
-        //通过广播设置网络监听
-        receiver = new NetBroadCastReceiver();
         initView();
         initEvent();
     }
@@ -114,23 +110,6 @@ public class ForgetPasswordActivity extends BaseActivity {
                 getVerifyCode();
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        IntentFilter filter=new IntentFilter();
-        //一条信息触发一次广播接收器
-        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(receiver, filter);
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(receiver);
-        super.onDestroy();
     }
 
     /**

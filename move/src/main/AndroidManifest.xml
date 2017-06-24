@@ -28,7 +28,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.MyLoadingActivity"
-            android:theme="@style/FirstPageStyle"></activity>
+            android:theme="@style/FirstPageStyle">
+
+        </activity>
         <activity
             android:name=".Activity.SelectActivity"
             android:launchMode="singleTop"
@@ -119,7 +121,12 @@
             android:label=""
             android:theme="@style/otherPageStyle"
             android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.UserRegisterNextStepActivity"
@@ -152,14 +159,10 @@
         <activity
             android:name=".Activity.UserUpdatePasswordActivity"
             android:theme="@style/otherPageStyle" />
+        <!--补间动画测试类-->
         <activity android:name=".Activity.AnimationTestActivity"
             android:theme="@style/otherPageStyle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- 启动 -->
         </activity>
     </application>
 

@@ -40,17 +40,10 @@ public class LogoutThread extends Thread{
     @Override
     public void run() {
         super.run();
-        try {
-            logout();
-        } catch (NetworkErrorException e) {
-            e.printStackTrace();
-            if (mListener != null) {
-                mListener.interrupt(e);
-            }
-        }
+        logout();
     }
 
-    private void logout() throws NetworkErrorException{
+    private void logout() {
         try {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("cookie", CookiesSaveUtil.getCookies(mContext));
