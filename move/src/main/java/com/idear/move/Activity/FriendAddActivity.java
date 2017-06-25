@@ -27,7 +27,7 @@ import java.util.LinkedList;
 
 import static com.idear.move.Adapter.SearchToAddFriendsAdapter.*;
 
-public class FriendAddActivity extends BaseActivity implements View.OnClickListener,OnViewClickListener{
+public class FriendAddActivity extends MyBaseActivity implements View.OnClickListener,OnViewClickListener{
 
     private EditText editText;//用户搜索输入
     private FrameLayout fl;

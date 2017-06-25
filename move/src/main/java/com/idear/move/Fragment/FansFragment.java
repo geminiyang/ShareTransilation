@@ -11,17 +11,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.idear.move.Adapter.CardLayoutOneAdapter;
+import com.idear.move.Adapter.FansAndAttentionAdapter;
 import com.idear.move.POJO.CardLayoutOneDataModel;
+import com.idear.move.POJO.FansAndAttentionDataModel;
+import com.idear.move.POJO.SearchToAddFriendsDataModel;
 import com.idear.move.R;
 import com.idear.move.util.ToastUtil;
 import com.yqq.idear.CustomRecyclerView;
 
 import java.util.LinkedList;
 
-
-public class ActivityNoPassFragment extends Fragment implements CustomRecyclerView.DataOperation,CardLayoutOneAdapter.OnItemClickListener {
+public class FansFragment extends Fragment implements FansAndAttentionAdapter.OnItemClickListener,
+        FansAndAttentionAdapter.OnViewClickListener {
     private static final String ARG = "param1";
 
     private String mParam1;
@@ -30,20 +34,12 @@ public class ActivityNoPassFragment extends Fragment implements CustomRecyclerVi
 
     private View rootView;
 
-    private CustomRecyclerView myRecyclerView;
+    private RecyclerView myRecyclerView;
     private RecyclerView.Adapter adapter;
-    private LinkedList<CardLayoutOneDataModel> dataModels = new LinkedList<>();
-    private String activityName = "分享漫画活动";
-    private String state = "[未通过]";
-    private long TimeStamp = 1497626094;
+    private LinkedList<FansAndAttentionDataModel> dataModels = new LinkedList<>();
     private static final String picUrl = "http://img0.imgtn.bdimg.com/it/u=1928150351,2755968131&fm=26&gp=0.jpg";
 
-    // 服务器端一共多少条数据
-    private static final int TOTAL_COUNT = 10;
-    // 每一页展示多少条数据
-    private static final int REQUEST_COUNT = 2;
-
-    public ActivityNoPassFragment() {
+    public FansFragment() {
         //要求要有一个空的构造函数
     }
 
@@ -51,8 +47,8 @@ public class ActivityNoPassFragment extends Fragment implements CustomRecyclerVi
      * 使用提供的参数和工厂方法去创建一个fragment实例
      * Activity->Fragment
      */
-    public static ActivityNoPassFragment newInstance(String values) {
-        ActivityNoPassFragment fragment = new ActivityNoPassFragment();
+    public static FansFragment newInstance(String values) {
+        FansFragment fragment = new FansFragment();
         Bundle args = new Bundle();
         args.putString(ARG, values);
         fragment.setArguments(args);
@@ -70,9 +66,10 @@ public class ActivityNoPassFragment extends Fragment implements CustomRecyclerVi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(rootView==null) {
-            rootView = inflater.inflate(R.layout.fragment_activity_no_pass, container, false);
+            rootView = inflater.inflate(R.layout.fragment_fans, container, false);
             init(rootView);
             initRecyclerView(rootView);
+            addData();
         }
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
@@ -86,28 +83,31 @@ public class ActivityNoPassFragment extends Fragment implements CustomRecyclerVi
      * @param rootView
      */
     private void init(View rootView) {
-        myRecyclerView = (CustomRecyclerView) rootView.findViewById(R.id.my_recycler_view);
+        myRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+    }
+
+    private void addData() {
+        //这里执行提交数据并获取相关数据的异步操作
+        for(int i=0;i<2;i++) {
+            dataModels.add(new FansAndAttentionDataModel("20143501140331",picUrl,"123、快跑"));
+        }
+        adapter.notifyDataSetChanged();
     }
 
     private void initRecyclerView(View view) {
         //获取RecyclerV
-        myRecyclerView = (CustomRecyclerView) view.findViewById(R.id.my_recycler_view);
+        myRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         //使用此设置，以提高性能，如果内容不改变RecyclerView的布局尺寸，也称为设置固定大小
         myRecyclerView.setHasFixedSize(true);
         //设置ITEM 动画管理者
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //初始化自定义适配器
-        adapter = new CardLayoutOneAdapter(getActivity(), dataModels);
-        ((CardLayoutOneAdapter)adapter).setOnItemClickListener(this);
+        adapter = new FansAndAttentionAdapter(getActivity(), dataModels);
+        ((FansAndAttentionAdapter)adapter).setOnItemClickListener(this);
+        ((FansAndAttentionAdapter)adapter).setOnViewClickListener(this);
         // specify（指定） an adapter (see also next example)
         myRecyclerView.setAdapter(adapter);
 
-        myRecyclerView.addHeaderView(getActivity());
-        myRecyclerView.addFooterView(getActivity());
-        myRecyclerView.setTotalCount(TOTAL_COUNT);
-        myRecyclerView.setRequestCount(REQUEST_COUNT);
-        myRecyclerView.setDataOperation(this);
-        myRecyclerView.Initialize();
         //网格布局管理器
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),1);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -122,11 +122,12 @@ public class ActivityNoPassFragment extends Fragment implements CustomRecyclerVi
 
     /**
      * 此方法可以调用外部Activity中提供的相关运行逻辑(例如信息传递)
+     * 当触发此方法时Activity收到相关数据
      * @param uri
      */
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onActivityNoPassFragmentInteraction(uri);
+            mListener.onFansFragmentInteraction(uri);
         }
     }
 
@@ -148,41 +149,31 @@ public class ActivityNoPassFragment extends Fragment implements CustomRecyclerVi
     }
 
     @Override
-    public void onLoadMore() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
-            }
-            Log.d("info","loadMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.add(new CardLayoutOneDataModel(activityName,picUrl,state,TimeStamp));
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
-            }
-            Log.d("info","refreshMode------" + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.addFirst(new CardLayoutOneDataModel(activityName,picUrl,state,TimeStamp));
-        }
-    }
-
-    @Override
     public void onItemClick(int position) {
         //点击每一个子项后的响应
-        ToastUtil.getInstance().showToastTest(this.getActivity());
+    }
+
+    @Override
+    public void onViewClick(int position, int viewType,View view) {
+        switch (viewType) {
+            case 1:
+                ToastUtil.getInstance().showToast(getActivity(),"点击了关注按钮");
+                ((Button)view).setText("关注");
+                //这里执行相关的关注异步操作
+                break;
+            default:
+                break;
+        }
     }
 
     /**
-     * 此接口必须由包含此Fragment的活动来实现，以允许在此Fragment与包含其的活动和潜在的其他Fragment交互。
+     * 此接口必须由包含此Fragment的Activity来实现，以允许在此Fragment与包含其的Activity和潜在的其他Fragment交互。
      * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onActivityNoPassFragmentInteraction(Uri uri);
+        void onFansFragmentInteraction(Uri uri);
     }
 }

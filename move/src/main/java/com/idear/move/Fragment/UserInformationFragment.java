@@ -24,6 +24,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
+import com.idear.move.Activity.FansAndAttentionActivity;
 import com.idear.move.Activity.MyActivityActivity;
 import com.idear.move.Activity.MyDynamicsActivity;
 import com.idear.move.Activity.MyFavoritesActivity;
@@ -208,6 +209,9 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             }
         });
         ivToMyFavorites.setOnClickListener(this);
+        attentionQuantity.setOnClickListener(this);
+        fansNum.setOnClickListener(this);
+
     }
 
 
@@ -259,6 +263,9 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             case R.id.to_my_favorites:
                 IntentSkipUtil.skipToNextActivity(getActivity(),MyFavoritesActivity.class);
                 break;
+            case R.id.fansNum:
+            case R.id.attentionQuantity:
+                IntentSkipUtil.skipToNextActivity(getActivity(),FansAndAttentionActivity.class);
             default:
                 break;
         }
@@ -389,8 +396,14 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
                 //显示一个ProgressBar
                 attentionQuantity.setText(viewModel.getGuanzhu() + "");
                 fansNum.setText(viewModel.getFensi() + "");
-                Glide.with(UserInformationFragment.this).load("http://" + viewModel.getPic_dir()).
-                        error(R.mipmap.paintbox).into(userImg);
+                String urlStr = viewModel.getPic_dir();
+                if(!urlStr.contentEquals("0")) {
+                    Glide.with(UserInformationFragment.this).load("http://idear.party/" + urlStr).
+                            error(R.mipmap.paintbox).into(userImg);
+                } else {
+                    Glide.with(UserInformationFragment.this).load("http://idear.party/" + urlStr).
+                            error(R.mipmap.paintbox).into(userImg);
+                }
             } else {
                 //提示服务器出现错误
                 LoadingFace.setBackgroundColor(Color.WHITE);

@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <!-- 全局注册 -->
     <!-- <receiver android:name="NetBroadCastReceiver"> -->
     <!-- <intent-filter> -->
@@ -29,7 +30,12 @@
         <activity
             android:name=".Activity.MyLoadingActivity"
             android:theme="@style/FirstPageStyle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.SelectActivity"
@@ -120,14 +126,7 @@
             android:name=".Activity.UserMainUIActivity"
             android:label=""
             android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- 启动 -->
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".Activity.UserRegisterNextStepActivity"
             android:theme="@style/otherPageStyle" />
@@ -159,11 +158,14 @@
         <activity
             android:name=".Activity.UserUpdatePasswordActivity"
             android:theme="@style/otherPageStyle" />
-        <!--补间动画测试类-->
-        <activity android:name=".Activity.AnimationTestActivity"
-            android:theme="@style/otherPageStyle">
-
-        </activity>
+        <!-- 补间动画测试类 -->
+        <activity
+            android:name=".Activity.AnimationTestActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.FansAndAttentionActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.DynamicCommentActivity"></activity>
     </application>
 
 </manifest>

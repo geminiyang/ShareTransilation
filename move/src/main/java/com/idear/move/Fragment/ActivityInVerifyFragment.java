@@ -17,18 +17,10 @@ import com.idear.move.POJO.CardLayoutOneDataModel;
 import com.idear.move.R;
 import com.idear.move.util.ToastUtil;
 import com.yqq.idear.CustomRecyclerView;
-import com.yqq.idear.DataStateChangeCheck;
 
 import java.util.LinkedList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ActivityInVerifyFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ActivityInVerifyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ActivityInVerifyFragment extends Fragment implements CustomRecyclerView.DataOperation ,CardLayoutOneAdapter.OnItemClickListener{
     private static final String ARG = "param1";
 
