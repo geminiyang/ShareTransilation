@@ -1,5 +1,7 @@
 package com.idear.move.Fragment;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +31,11 @@ import com.idear.move.Activity.MyActivityActivity;
 import com.idear.move.Activity.MyDynamicsActivity;
 import com.idear.move.Activity.MyFavoritesActivity;
 import com.idear.move.Activity.UserDetailInformationActivity;
+import com.idear.move.Activity.UserSearchActivity;
 import com.idear.move.Activity.UserSettingActivity;
+import com.idear.move.Adapter.SearchItemAdapter;
+import com.idear.move.Helper.ImgSQLiteOpenHelper;
+import com.idear.move.Helper.RecordSQLiteOpenHelper;
 import com.idear.move.POJO.FansViewModel;
 import com.idear.move.R;
 import com.idear.move.myWidget.RoundImageViewByXfermode;
@@ -136,6 +142,10 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
 
     private MyHandler handler = new MyHandler(this);
 
+    /*数据库变量*/
+    private ImgSQLiteOpenHelper helper ;
+    private SQLiteDatabase db;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(rootView ==null) {
@@ -143,6 +153,8 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             init(rootView);
             initGirdView(rootView);
             startFirstAsyncTask();
+            //实例化数据库SQLiteOpenHelper子类对象
+            helper = new ImgSQLiteOpenHelper(this.getContext());
         }
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
@@ -150,6 +162,53 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
         }
 
         return rootView;
+    }
+
+    /*插入数据*/
+    private void insertData(int userId,String picUrl) {
+        Logger.d("insert---" + userId + ":" + picUrl);
+        db = helper.getWritableDatabase();
+        db.execSQL("insert into imgRecords values(" + userId + ",'" + picUrl + "')");
+        db.close();
+    }
+
+    /*更新数据*/
+    private void updateData(int userId,String picUrl) {
+        Logger.d("update---" + userId + ":" + picUrl);
+        db = helper.getWritableDatabase();
+        db.execSQL("update imgRecords set picUrl ='" + picUrl + "' where id =" + userId);
+        db.close();
+    }
+
+    /*查询id对应的URL*/
+    private String queryData(int id) {
+        Logger.d("query---" + id);
+        //模糊搜索
+        Cursor cursor = helper.getReadableDatabase().rawQuery(
+                "select id ,picUrl from imgRecords where id = " + id, null);
+        ArrayList<String> list = new ArrayList<>();
+
+        //遍历Cursor
+        while(cursor.moveToNext()){
+            list.add(cursor.getString(1));//对应picUrl字段
+        }
+        return list.get(0);
+    }
+
+    /*检查数据库中是否已经有该条记录*/
+    private boolean hasData(int tempId) {
+        Logger.d("hasData---");
+        Cursor cursor = helper.getReadableDatabase().rawQuery(
+                "select id from imgRecords where id =" + tempId, null);
+        //判断是否有下一个
+        return cursor.moveToNext();
+    }
+
+    /*清空数据*/
+    private void deleteData() {
+        db = helper.getWritableDatabase();
+        db.execSQL("delete from imgRecords");
+        db.close();
     }
 
     /**
@@ -337,7 +396,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             viewModel.setPic_dir(receiveJson.get("pic_dir").getAsString());
             viewModel.setFensi(receiveJson.get("fensi").getAsInt());
             viewModel.setGuanzhu(receiveJson.get("guanzhu").getAsInt());
-            //viewModel.setNickname(receiveJson.get("username").getAsString());
+            viewModel.setNickname(receiveJson.get("username").getAsString());
             viewModels.add(viewModel);
 
         }  catch (JSONException e) {
@@ -396,8 +455,18 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
                 //显示一个ProgressBar
                 attentionQuantity.setText(viewModel.getGuanzhu() + "");
                 fansNum.setText(viewModel.getFensi() + "");
-                String urlStr = viewModel.getPic_dir();
+                nameText.setText(viewModel.getNickname());
+                String urlStr = viewModel.getPic_dir();//图像路径
+                int userId = Integer.parseInt(CookiesSaveUtil.getUserId(
+                        UserInformationFragment.this.getContext()));//用户Id
+
                 if(!urlStr.contentEquals("0")) {
+                    //保存到数据库的操作
+                    if(!hasData(userId)) {
+                        insertData(userId,urlStr);
+                    } else {
+                        updateData(userId,urlStr);
+                    }
                     Glide.with(UserInformationFragment.this).load("http://idear.party/" + urlStr).
                             error(R.mipmap.paintbox).into(userImg);
                 } else {

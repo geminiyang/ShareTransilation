@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -29,7 +31,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.idear.move.Fragment.UserInformationFragment;
+import com.idear.move.Helper.ImgSQLiteOpenHelper;
 import com.idear.move.POJO.UserInfoViewModel;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
@@ -144,6 +149,10 @@ public class UserDetailInformationActivity extends MyBaseActivity {
 
     private MyHandler handler = new MyHandler(this);
 
+    /*数据库变量*/
+    private ImgSQLiteOpenHelper helper ;
+    private SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,6 +161,9 @@ public class UserDetailInformationActivity extends MyBaseActivity {
         initView();
         initEvent();
         startFirstAsyncTask();//开启第一个异步任务
+
+        //实例化数据库SQLiteOpenHelper子类对象
+        helper = new ImgSQLiteOpenHelper(this);
     }
     /**
      * 开启第一个异步任务
@@ -758,7 +770,11 @@ public class UserDetailInformationActivity extends MyBaseActivity {
                 } else {
                     Sex.setText("男");
                 }
-
+                int userId = Integer.parseInt(CookiesSaveUtil.getUserId(
+                        UserDetailInformationActivity.this));//用户Id
+                String url = queryData(userId);
+                Glide.with(UserDetailInformationActivity.this).load(HttpPath.getPath() + url).
+                        error(R.mipmap.paintbox).into(imageShow);
                 birthDay.setText(user.getCreate_time());
                 school.setText(user.getSchool());
                 email.setText(user.getEmail());
@@ -789,5 +805,20 @@ public class UserDetailInformationActivity extends MyBaseActivity {
         protected void onCancelled() {
             super.onCancelled();
         }
+    }
+
+    /*查询id对应的URL*/
+    private String queryData(int id) {
+        Logger.d("query---" + id);
+        //模糊搜索
+        Cursor cursor = helper.getReadableDatabase().rawQuery(
+                "select id ,picUrl from imgRecords where id = " + id, null);
+        ArrayList<String> list = new ArrayList<>();
+
+        //遍历Cursor
+        while(cursor.moveToNext()){
+            list.add(cursor.getString(1));//对应picUrl字段
+        }
+        return list.get(0);
     }
 }
