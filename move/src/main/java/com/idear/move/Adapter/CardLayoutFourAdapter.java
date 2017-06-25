@@ -135,4 +135,5 @@ public class CardLayoutFourAdapter extends RecyclerView.Adapter<CardLayoutFourAd
     public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
         this.onItemLongClickListener = onItemLongClickListener;
     }
+
 }

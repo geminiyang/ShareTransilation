@@ -13,4 +13,8 @@
     <string name="json_error">json格式转换异常</string>
     <string name="canNotGetConnected">无法连接网络</string>
     <string name="malformedURL">URL协议、格式或者路径错误</string>
+    <string name="comments">评论</string>
+    <string name="TimeExampleStr">2017/6/25 14:51</string>
+    <string name="NickNameExamStr">123、快跑</string>
+    <string name="praise">赞</string>
 </resources>

@@ -205,6 +205,7 @@
                             android:textSize="14sp"
                             />
                         <ImageView
+                            android:id="@+id/toDynamicsComment"
                             yqq:srcCompat="@drawable/ic_next"
                             android:tint="@color/black"
                             android:layout_marginEnd="20dp"
@@ -231,6 +232,7 @@
                             android:textSize="14sp" />
 
                         <ImageView
+                            android:id="@+id/toDynamicsPraise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"

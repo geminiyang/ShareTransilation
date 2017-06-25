@@ -11,39 +11,41 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.idear.move.POJO.CardLayoutThreeDataModel;
-import com.idear.move.POJO.CardLayoutTwoDataModel;
+import com.idear.move.POJO.DynamicsCommentDataModel;
+import com.idear.move.POJO.DynamicsPraiseDataModel;
 import com.idear.move.R;
-import com.idear.move.util.DateUtil;
+import com.idear.move.myWidget.RoundImageViewByXfermode;
+import com.idear.move.myWidget.UpdateTimeTextView;
 import com.idear.move.util.ScreenUtil;
-import com.idear.move.util.ToastUtil;
 import com.yqq.idear.CustomRecyclerView;
 
 import java.util.List;
 
-public class CardLayoutThreeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public class DynamicsCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static int BTN = 1;
     private Context mContext;
-    private List<CardLayoutThreeDataModel> modelList;
+    private List<DynamicsCommentDataModel> modelList;
     private LayoutInflater mInflater;
-    private int picWidth,picHeight;
+    private int picWidth,picHeight,iconWidth,iconHeight;
     public OnViewClickListener onViewClickListener;//item子view点击事件
     public OnItemClickListener onItemClickListener;//item点击事件
     public OnItemLongClickListener onItemLongClickListener;//item长按事件
 
-    public CardLayoutThreeAdapter(Context context , List<CardLayoutThreeDataModel> modelList) {
+    public DynamicsCommentAdapter(Context context , List<DynamicsCommentDataModel> modelList) {
         this.mContext = context;
         this.modelList = modelList;
         mInflater = LayoutInflater.from(this.mContext);
-        picWidth = ScreenUtil.dip2px(mContext,200);
-        picHeight = ScreenUtil.dip2px(mContext,120);
+        picWidth = ScreenUtil.dip2px(mContext,60);
+        picHeight = ScreenUtil.dip2px(mContext,60);
+        iconWidth = ScreenUtil.dip2px(mContext,40);
+        iconHeight = ScreenUtil.dip2px(mContext,40);
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // 给ViewHolder设置布局文件
-        View v = mInflater.inflate(R.layout.card_layout_three, parent, false);
+        View v = mInflater.inflate(R.layout.carview_layout_comment, parent, false);
         return new ViewHolder(v);
     }
 
@@ -51,16 +53,35 @@ public class CardLayoutThreeAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final int tempPosition = position;
         // 给ViewHolder设置元素
-        CardLayoutThreeDataModel u = modelList.get(position);
+        DynamicsCommentDataModel u = modelList.get(position);
         ViewHolder mHolder = (ViewHolder) holder;
-        //设置活动标题名
-        mHolder.mActivityName.setText(u.activityName);
-        //设置图像
-        Glide.with(mContext).load(u.picUrl).override(picWidth,picHeight).diskCacheStrategy(DiskCacheStrategy.RESULT).
-                skipMemoryCache(false).centerCrop().into(mHolder.mActivityPic);
-        //设置略缩内容
-        mHolder.mBreviaryContent.setText(u.breviaryContent);
+        //设置评论者昵称
+        mHolder.mUsername.setText(u.username);
+        //设置评论者图标
+        Glide.with(mContext).load(u.discussantIconUrl).override(iconWidth,iconHeight).
+                diskCacheStrategy(DiskCacheStrategy.RESULT).skipMemoryCache(false).centerCrop().
+                into(mHolder.mDiscussantIcon);
+        //设置动态发生时间
 
+        //设置动态图片
+        Glide.with(mContext).load(u.picUrl).override(picWidth,picHeight).
+                diskCacheStrategy(DiskCacheStrategy.RESULT).skipMemoryCache(false).centerCrop().
+                into(mHolder.mPic);
+        //设置评论内容
+        mHolder.mCommentContent.setText(u.commentStr);
+        //设置略缩内容
+        mHolder.mBreviaryContent.setText(u.textContent);
+        //设置按钮点击事件
+        mHolder.mReplyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onViewClickListener != null) {
+                    onViewClickListener.onViewClick(tempPosition,BTN);
+                }
+            }
+        });
+
+        //整个item色绘制对应的点击事件
         holder.itemView.setOnClickListener(new View.OnClickListener() {//item点击事件
             @Override
             public void onClick(View v) {
@@ -93,14 +114,21 @@ public class CardLayoutThreeAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     //重写的自定义ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mActivityName,mBreviaryContent;
-        private ImageView mActivityPic;
+        private TextView mUsername,mBreviaryContent,mCommentContent;
+        private UpdateTimeTextView mTime;
+        private RoundImageViewByXfermode mDiscussantIcon;
+        private ImageView mPic;
+        private Button mReplyBtn;
 
         private ViewHolder(View v) {
             super(v);
-            mActivityName = (TextView) v.findViewById(R.id.activityName);
+            mDiscussantIcon = (RoundImageViewByXfermode) v.findViewById(R.id.userImg);
+            mUsername = (TextView) v.findViewById(R.id.username);
+            mReplyBtn = (Button) v.findViewById(R.id.replyBtn);
+            mCommentContent = (TextView) v.findViewById(R.id.commentContent);
             mBreviaryContent = (TextView) v.findViewById(R.id.breviary_content);
-            mActivityPic = (ImageView) v.findViewById(R.id.activityPic);
+            mTime = (UpdateTimeTextView) v.findViewById(R.id.time);
+            mPic = (ImageView) v.findViewById(R.id.pic);
         }
     }
 

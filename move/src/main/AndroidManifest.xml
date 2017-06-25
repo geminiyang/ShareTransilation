@@ -165,7 +165,12 @@
         <activity
             android:name=".Activity.FansAndAttentionActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.DynamicCommentActivity"></activity>
+        <activity android:name=".Activity.DynamicCommentActivity"
+            android:theme="@style/otherPageStyle"
+            />
+        <activity android:name=".Activity.DynamicPraiseActivity"
+            android:theme="@style/otherPageStyle"
+            />
     </application>
 
 </manifest>

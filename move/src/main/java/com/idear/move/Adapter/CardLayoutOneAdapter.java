@@ -144,4 +144,12 @@ public class CardLayoutOneAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
         this.onItemLongClickListener = onItemLongClickListener;
     }
+
+    /**
+     * 设置子View的点击事件
+     * @param onViewClickListener
+     */
+    public void setOnViewClickListener(OnViewClickListener onViewClickListener) {
+        this.onViewClickListener = onViewClickListener;
+    }
 }

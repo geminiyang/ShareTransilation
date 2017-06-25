@@ -22,20 +22,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
+import com.idear.move.Activity.DynamicCommentActivity;
+import com.idear.move.Activity.DynamicPraiseActivity;
 import com.idear.move.Activity.FansAndAttentionActivity;
 import com.idear.move.Activity.MyActivityActivity;
 import com.idear.move.Activity.MyDynamicsActivity;
 import com.idear.move.Activity.MyFavoritesActivity;
 import com.idear.move.Activity.UserDetailInformationActivity;
-import com.idear.move.Activity.UserSearchActivity;
 import com.idear.move.Activity.UserSettingActivity;
-import com.idear.move.Adapter.SearchItemAdapter;
 import com.idear.move.Helper.ImgSQLiteOpenHelper;
-import com.idear.move.Helper.RecordSQLiteOpenHelper;
 import com.idear.move.POJO.FansViewModel;
 import com.idear.move.R;
 import com.idear.move.myWidget.RoundImageViewByXfermode;
@@ -54,7 +50,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
@@ -87,7 +82,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private ScrollView myScrollView;
     private RelativeLayout rllayout;//含有图片的那个相对布局，顶部控件
 
-    private ImageView ivToUserInfo,ivToDynamics,ivToMyFavorites;
+    private ImageView ivToUserInfo,ivToDynamics,ivToMyFavorites,ivToDynamicsComment,ivToDynamicsPraise;
 
     private GridView gridView;//网格视图
     private List<Map<String, Object>> data_list;//数据源
@@ -248,6 +243,8 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
         ivToUserInfo = (ImageView) view.findViewById(R.id.to_user_info);
         ivToDynamics = (ImageView) view.findViewById(R.id.to_dynamics);
         ivToMyFavorites = (ImageView) view.findViewById(R.id.to_my_favorites);
+        ivToDynamicsComment = (ImageView) view.findViewById(R.id.toDynamicsComment);
+        ivToDynamicsPraise = (ImageView) view.findViewById(R.id.toDynamicsPraise);
 
         //三句代码使界面打开时候自定义ScrollView下面的EditText获取焦点的事件不再发生
         myScrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
@@ -268,9 +265,10 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             }
         });
         ivToMyFavorites.setOnClickListener(this);
+        ivToDynamicsPraise.setOnClickListener(this);
+        ivToDynamicsComment.setOnClickListener(this);
         attentionQuantity.setOnClickListener(this);
         fansNum.setOnClickListener(this);
-
     }
 
 
@@ -325,6 +323,13 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             case R.id.fansNum:
             case R.id.attentionQuantity:
                 IntentSkipUtil.skipToNextActivity(getActivity(),FansAndAttentionActivity.class);
+                break;
+            case R.id.toDynamicsPraise:
+                IntentSkipUtil.skipToNextActivity(getActivity(),DynamicPraiseActivity.class);
+                break;
+            case R.id.toDynamicsComment:
+                IntentSkipUtil.skipToNextActivity(getActivity(),DynamicCommentActivity.class);
+                break;
             default:
                 break;
         }

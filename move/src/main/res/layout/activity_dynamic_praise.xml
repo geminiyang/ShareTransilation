@@ -42,7 +42,7 @@
                 android:layout_marginStart="15sp"
                 android:textColor="@color/white"
                 android:textSize="19sp"
-                android:text="@string/comments"
+                android:text="@string/praise"
                 android:layout_centerVertical="true"
                 />
         </RelativeLayout>
