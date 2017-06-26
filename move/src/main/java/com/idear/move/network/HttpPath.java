@@ -40,5 +40,7 @@ public class HttpPath {
 
     public static String getFPath() {return "http://idear.party/api/apply/2";}
 
+    public static String getRFPath() {return "http://idear.party/api/apply/both";}
+
     public static String getPath() {return "http://idear.party/";}
 }

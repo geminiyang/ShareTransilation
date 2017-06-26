@@ -40,6 +40,10 @@ public class MySpannableTextView extends AppCompatTextView {
         });
     }
 
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        super.setText(text, type);
+    }
 
     /**
      * get the last char index for max limit row,if not exceed the limit,return -1

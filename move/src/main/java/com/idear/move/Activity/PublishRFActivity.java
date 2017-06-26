@@ -36,6 +36,7 @@ import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.CameraUtil;
 import com.idear.move.util.CheckValidUtil;
 import com.idear.move.util.CookiesSaveUtil;
+import com.idear.move.util.DateUtil;
 import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ImageCheckoutUtil;
@@ -61,9 +62,9 @@ public class PublishRFActivity extends MyBaseActivity {
     private TextView urlTextView;
 
     //用户输入相关
-    private EditText startTimeInput,endTimeInput,expireTimeInput,activityNameInput,activityLocationInput,
-            activityContentInput,activityMeaningInput,activityPersonNumInput,activityMoneyInput,
-            activityClassificationInput;
+    private EditText startTimeInput,endTimeInput,numberExpireTimeInput,moneyExpireTimeInput,
+            activityNameInput, activityLocationInput, activityContentInput,activityMeaningInput,
+            activityPersonNumInput,activityMoneyInput, activityClassificationInput;
     //图片选择控件
     private static final int TAKE_PICTURE = 100;
     private static final int SELECT_PICTURE = 101;
@@ -96,6 +97,9 @@ public class PublishRFActivity extends MyBaseActivity {
                     case SHOW_IMAGE:
                         mCurrentActivity.imageShow.setImageBitmap(ImageCheckoutUtil.getLocalBitmap(((msg.obj).toString())));
                         break;
+                    case 101:
+                        mCurrentActivity.finish();
+                        break;
                     default:
                         break;
                 }
@@ -125,11 +129,11 @@ public class PublishRFActivity extends MyBaseActivity {
         rlRoot = (RelativeLayout) findViewById(R.id.rl_root);
         iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
 
-        expireTimeInput = (EditText) findViewById(R.id.expire_time_select);
+        moneyExpireTimeInput = (EditText) findViewById(R.id.money_expire_time_select);
         activityClassificationInput = (EditText) findViewById(R.id.classification);
         startTimeInput = (EditText) findViewById(R.id.start_time_select);
         endTimeInput = (EditText) findViewById(R.id.end_time_select);
-        expireTimeInput = (EditText) findViewById(R.id.expire_time_select);
+        numberExpireTimeInput = (EditText) findViewById(R.id.number_expire_time_select);
         activityNameInput = (EditText) findViewById(R.id.activityNameInput);
         activityLocationInput = (EditText) findViewById(R.id.activityLocationInput);
         activityContentInput = (EditText) findViewById(R.id.activityContentInput);
@@ -443,7 +447,8 @@ public class PublishRFActivity extends MyBaseActivity {
     private void submitUploadFile() {
         String startTimeInputStr = startTimeInput.getText().toString().trim();
         String endTimeInputStr = endTimeInput.getText().toString().trim();
-        String expireTimeInputStr = expireTimeInput.getText().toString().trim();
+        String numberExpireTimeInputStr = numberExpireTimeInput.getText().toString().trim();
+        String moneyExpireTimeInputStr = moneyExpireTimeInput.getText().toString().trim();
         String activityNameInputStr = activityNameInput.getText().toString().trim();
         String activityLocationInputStr = activityLocationInput.getText().toString().trim();
         String activityContentInputStr = activityContentInput.getText().toString().trim();
@@ -451,10 +456,10 @@ public class PublishRFActivity extends MyBaseActivity {
         String activityMoneyInputStr = activityMoneyInput.getText().toString().trim();
         String activityPersonNumInputStr = activityPersonNumInput.getText().toString().trim();
         String activityClassificationInputStr = activityClassificationInput.getText().toString().trim();
-        if(!CheckValidUtil.isAllNotEmpty(startTimeInputStr,endTimeInputStr,expireTimeInputStr,
+        if(!CheckValidUtil.isAllNotEmpty(startTimeInputStr,endTimeInputStr,numberExpireTimeInputStr,
                 activityNameInputStr, activityLocationInputStr,activityContentInputStr,
                 activityMeaningInputStr, activityMoneyInputStr,activityPersonNumInputStr,
-                activityClassificationInputStr)) {
+                activityClassificationInputStr,moneyExpireTimeInputStr)) {
             ToastUtil.getInstance().showToast(this,"请确保表单输入完整");
             return;
         }
@@ -462,12 +467,25 @@ public class PublishRFActivity extends MyBaseActivity {
         if (uploadFile == null || (!uploadFile.exists())) {
             return;
         }
-        final String requestURL = HttpPath.getUpdateUserInfoPath();
-        Logger.d("请求的URL --- =" + requestURL);
-        Logger.d("请求的fileName --- =" + uploadFile.getName());
-        Logger.d("请求的fileSize --- =" + uploadFile.length());
+        final String requestURL = HttpPath.getRFPath();
+        Logger.d("请求的---URL=" + requestURL);
+        Logger.d("请求的---fileName=" + uploadFile.getName());
+        Logger.d("请求的---fileSize=" + uploadFile.length());
+        //提交到服务器的文本
         final Map<String, String> params = new HashMap<>();
         params.put("user_id", CookiesSaveUtil.getUserId(PublishRFActivity.this));
+        params.put("act_title", activityNameInputStr);
+        params.put("act_content", activityContentInputStr);
+        params.put("act_meaning", activityMeaningInputStr);
+        params.put("act_location", activityLocationInputStr);
+        params.put("start_time", DateUtil.StrToTimeStamp(startTimeInputStr) + "");
+        params.put("end_time", DateUtil.StrToTimeStamp(endTimeInputStr) + "");
+        params.put("act_category", activityClassificationInputStr);
+        params.put("number", activityPersonNumInputStr);
+        params.put("number_expire", numberExpireTimeInputStr);
+        params.put("money", activityMoneyInputStr);
+        params.put("money_expire", moneyExpireTimeInputStr);
+        //提交到服务器的图片
         final Map<String, File> files = new HashMap<>();
         files.put("img", uploadFile);
         ImageUploadThread imageUploadThread = new ImageUploadThread(PublishRFActivity.this,
@@ -478,7 +496,7 @@ public class PublishRFActivity extends MyBaseActivity {
                 if(obj instanceof ResultType) {
                     ResultType result = (ResultType) obj;
                     if(Integer.parseInt(result.getStatus()) == 1) {
-                        ToastUtil.getInstance().showToastInThread(PublishRFActivity.this,"上传完成!");
+                        imageHandler.sendEmptyMessage(101);
                     }
                     ToastUtil.getInstance().showToastInThread(PublishRFActivity.this,
                             result.getMessage());
