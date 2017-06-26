@@ -48,6 +48,7 @@ import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.Logger;
 import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
+import com.yqq.swipebackhelper.SwipeBackHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -119,6 +120,9 @@ public class PublishRActivity extends MyBaseActivity {
         setContentView(R.layout.activity_publish_r);
         initView();
         initEvent();
+        //设置当前Activity不能够滑动返回
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(true);
     }
 
     private void initEvent() {
@@ -527,6 +531,7 @@ public class PublishRActivity extends MyBaseActivity {
         params.put("act_category", activityClassificationInputStr);
         params.put("number", activityPersonNumInputStr);
         params.put("expire", expireTimeInputStr);
+        params.put("submit_time", System.currentTimeMillis()/1000+"");
         //提交到服务器的图片
         final Map<String, File> files = new HashMap<>();
         files.put("img", uploadFile);

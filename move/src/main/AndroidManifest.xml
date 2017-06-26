@@ -29,9 +29,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.MyLoadingActivity"
-            android:theme="@style/FirstPageStyle">
-
-        </activity>
+            android:theme="@style/FirstPageStyle"></activity>
         <activity
             android:name=".Activity.SelectActivity"
             android:launchMode="singleTop"
@@ -101,19 +99,13 @@
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.PublishRFActivity"
-            android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:theme="@style/PublishPageStyle" />
         <activity
             android:name=".Activity.PublishRActivity"
-            android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:theme="@style/PublishPageStyle" />
         <activity
             android:name=".Activity.PublishFActivity"
-            android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:theme="@style/PublishPageStyle" />
         <activity
             android:name=".Activity.UserLoginActivity"
             android:theme="@style/otherPageStyle" />
@@ -170,10 +162,13 @@
         <activity
             android:name=".Activity.FansAndAttentionActivity"
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.DynamicCommentActivity"
-            android:theme="@style/otherPageStyle"
-            />
-        <activity android:name=".Activity.DynamicPraiseActivity"
+        <activity
+            android:name=".Activity.DynamicCommentActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".Activity.DynamicPraiseActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.DynamicsDetailActivity"
             android:theme="@style/otherPageStyle"
             />
     </application>

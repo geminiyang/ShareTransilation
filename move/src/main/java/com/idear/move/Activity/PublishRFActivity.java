@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +47,7 @@ import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.Logger;
 import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
+import com.yqq.swipebackhelper.SwipeBackHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -116,6 +120,9 @@ public class PublishRFActivity extends MyBaseActivity {
 
         initView();
         initEvent();
+        //设置当前Activity不能够滑动返回
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(true);
     }
 
     /**
@@ -211,7 +218,27 @@ public class PublishRFActivity extends MyBaseActivity {
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(PublishRFActivity.this);
+                dialog.setIcon(null);
+                dialog.setInverseBackgroundForced(true);
+                dialog.setTitle("注销");
+                dialog.setMessage("你确定要退出招募筹资申请？");
+                dialog.setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                dialog.setNegativeButton("取消",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                AlertDialog apk = dialog.create();
+                apk.show();
             }
         });
     }
@@ -403,7 +430,35 @@ public class PublishRFActivity extends MyBaseActivity {
             //操作取消
         }
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.ACTION_DOWN) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setIcon(null);
+            dialog.setInverseBackgroundForced(true);
+            dialog.setTitle("注销");
+            dialog.setMessage("你确定要退出招募筹资申请？");
+            dialog.setPositiveButton("确定",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+            dialog.setNegativeButton("取消",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
+                        }
+                    });
+            AlertDialog apk = dialog.create();
+            apk.show();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
     /**
      * 图片的后续操作(压缩处理)
      */
@@ -485,6 +540,7 @@ public class PublishRFActivity extends MyBaseActivity {
         params.put("number_expire", numberExpireTimeInputStr);
         params.put("money", activityMoneyInputStr);
         params.put("money_expire", moneyExpireTimeInputStr);
+        params.put("submit_time", System.currentTimeMillis()/1000+"");
         //提交到服务器的图片
         final Map<String, File> files = new HashMap<>();
         files.put("img", uploadFile);

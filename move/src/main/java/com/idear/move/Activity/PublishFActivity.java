@@ -31,6 +31,7 @@ import android.widget.TimePicker;
 
 import com.idear.move.R;
 import com.idear.move.Thread.ImageUploadThread;
+import com.idear.move.myWidget.LoadingProgressDialog;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
@@ -45,7 +46,9 @@ import com.idear.move.util.ImageCheckoutUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.Logger;
 import com.idear.move.util.PictureUtil;
+import com.idear.move.util.ProgressDialogUtil;
 import com.idear.move.util.ToastUtil;
+import com.yqq.swipebackhelper.SwipeBackHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,6 +69,8 @@ public class PublishFActivity extends MyBaseActivity {
     private CheckedTextView ctv;
     private Button publish;
     private TextView urlTextView;
+    //
+    private  LoadingProgressDialog dialog;
 
     //用来拼接日期和时间，最终用来显示的
     private StringBuilder str = new StringBuilder("");
@@ -99,6 +104,7 @@ public class PublishFActivity extends MyBaseActivity {
                         mCurrentActivity.imageShow.setImageBitmap(ImageCheckoutUtil.getLocalBitmap(((msg.obj).toString())));
                         break;
                     case 101:
+                        mCurrentActivity.dialog.dismiss();
                         mCurrentActivity.finish();
                         break;
                     default:
@@ -117,6 +123,9 @@ public class PublishFActivity extends MyBaseActivity {
 
         initView();
         initEvent();
+        //设置当前Activity不能够滑动返回
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
+        SwipeBackHelper.getCurrentPage(this).setDisallowInterceptTouchEvent(true);
     }
 
     private void initEvent() {
@@ -520,6 +529,7 @@ public class PublishFActivity extends MyBaseActivity {
         params.put("act_category", activityClassificationInputStr);
         params.put("money", activityMoneyInputStr);
         params.put("expire", expireTimeInputStr);
+        params.put("submit_time", System.currentTimeMillis()/1000+"");
         //提交到服务器的图片
         final Map<String, File> files = new HashMap<>();
         files.put("img", uploadFile);
@@ -551,5 +561,7 @@ public class PublishFActivity extends MyBaseActivity {
             }
         });
         imageUploadThread.start();
+        dialog =new LoadingProgressDialog(this, R.drawable.progress_loading);
+        dialog.show();
     }
 }

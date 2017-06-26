@@ -59,7 +59,6 @@ public class DynamicPublishingActivity extends BaseActivity {
 
     //拍照相关功能
     private boolean CAN_WRITE_EXTERNAL_STORAGE = true;
-    private final String TAG = "info";
     private final int SELECT_PICTURE = 0;
     private final int TAKE_PICTURE = 1;
     private final int CROP_PHOTO = 2;

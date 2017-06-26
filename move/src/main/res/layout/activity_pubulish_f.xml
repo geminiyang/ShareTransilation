@@ -465,10 +465,6 @@
                     android:textColor="@drawable/register_text_selector"
                     android:background="@drawable/corner_button_template_register"
                     />
-                <View
-                    android:layout_below="@+id/publish"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

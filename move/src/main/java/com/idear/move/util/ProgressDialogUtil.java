@@ -58,7 +58,7 @@ public class ProgressDialogUtil {
     public static void showLoadDialog(Activity activity) {
         final LoadingProgressDialog dialog =new LoadingProgressDialog(activity, R.drawable.progress_loading);
         dialog.show();
-        Handler handler =new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -1,12 +1,17 @@
 package com.idear.move.Thread;
 
 import android.content.Context;
+import android.os.Handler;
 
 import com.google.gson.Gson;
+import com.idear.move.Activity.DynamicPublishingActivity;
+import com.idear.move.R;
+import com.idear.move.myWidget.LoadingProgressDialog;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.ResultType;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.Logger;
+import com.idear.move.util.ProgressDialogUtil;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -28,7 +33,7 @@ import java.net.URL;
 import java.util.Map;
 
 public class ImageUploadThread extends Thread {
-    private static final int TIME_OUT = 10 * 1000; // 超时时间
+    private static final int TIME_OUT = 20 * 1000; // 超时时间
 	private String url;
     private Context mContext;
     private Map<String, String> params;
@@ -63,8 +68,7 @@ public class ImageUploadThread extends Thread {
         //使用工具将其封装成一个类的对象
         Gson gson = new Gson();
         try {
-            //开启进度框
-            //startProgressDialog();
+
             URL uri = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) uri.openConnection();
             conn.setReadTimeout(TIME_OUT);//缓存的最长时间
@@ -146,7 +150,7 @@ public class ImageUploadThread extends Thread {
                 }
             }
             // 移除进度框
-            //removeProgressDialog();
+
             //关闭连接关闭流
             outStream.close();
             conn.disconnect();
