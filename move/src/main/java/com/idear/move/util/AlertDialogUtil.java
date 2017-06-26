@@ -93,6 +93,7 @@ public class AlertDialogUtil {
 
     public static void classificationDialog(Context context, final View ValuesChangeView) {
         final String [] str = new String[] {"分类1", "分类2","分类3","分类4"};
+        final int[] position = new int[1];
         new AlertDialog.Builder(context)
                 .setTitle("请选择您的分类" )
                 .setSingleChoiceItems(str,0,
@@ -100,11 +101,19 @@ public class AlertDialogUtil {
                             public void onClick(DialogInterface dialog, int which) {
                                 //选择了任意一个按钮需要更新输入文本的值
                                 ((TextView)ValuesChangeView).setText(str[which]);
+                                position[0] = which;
                             }
                         }
-                ).setPositiveButton("关闭",new DialogInterface.OnClickListener() {
+                ).setNegativeButton("返回", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).setPositiveButton("确认",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //选择了任意一个按钮需要更新输入文本的值
+                ((TextView)ValuesChangeView).setText(str[position[0]]);
                 dialog.dismiss();
             }
         }).show();

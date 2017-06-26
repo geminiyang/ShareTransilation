@@ -28,7 +28,6 @@ import java.net.URL;
 import java.util.Map;
 
 public class ImageUploadThread extends Thread {
-    private static final String TAG = "info";
     private static final int TIME_OUT = 10 * 1000; // 超时时间
 	private String url;
     private Context mContext;

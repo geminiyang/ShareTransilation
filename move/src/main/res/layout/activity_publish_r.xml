@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:yqq="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     >
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/blue_light"
+        android:layout_height="@dimen/toolBarHeight"
+        android:background="@color/title_bar_blue"
+        android:theme="@style/Theme.ToolBar"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -46,21 +49,20 @@
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
     <View
-        android:layout_below="@+id/toolbar"
         android:id="@+id/title_bar_divider"
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/_grey"
         />
     <ScrollView
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
         android:fitsSystemWindows="true"
         android:clipToPadding="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_below="@+id/toolbar"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -74,18 +76,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="170dp">
                     <FrameLayout
-                        android:id="@+id/pan_bg"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/circle"
-                        >
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@color/white"
-                            android:src="@mipmap/camera_64"
+                            android:id="@+id/pic_show"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center" />
+                        <FrameLayout
+                            android:id="@+id/pan_bg"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:clickable="true"
+                            android:background="@drawable/circle_pan_grey"
+                            >
+                            <ImageView
+                                android:id="@+id/pic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:tint="@color/white"
+                                android:src="@mipmap/camera_64"
+                                android:layout_gravity="center" />
+                        </FrameLayout>
                     </FrameLayout>
                 </RelativeLayout>
                 <LinearLayout
@@ -97,12 +110,13 @@
                     android:divider="@drawable/form_divider"
                     android:orientation="vertical"
                     >
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
-                        >
+                        android:layout_marginStart="10dp">
+
                         <TextView
                             android:id="@+id/activity_name"
                             android:layout_width="wrap_content"
@@ -110,23 +124,55 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
                             android:text="活动名称"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <EditText
+                            android:id="@+id/activityNameInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="70dp"
+                            android:layout_toEndOf="@+id/activity_name"
+                            android:background="@null"
+                            android:hint="请输入活动名称"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/activity_start_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/StartTimeStr"
                             android:textSize="16sp"
                             android:textColor="@color/black"
                             />
                         <EditText
-                            android:layout_toEndOf="@+id/activity_name"
+                            android:layout_toEndOf="@+id/activity_start_time"
+                            android:id="@+id/start_time_select"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="70dp"
                             android:textColor="@color/gray"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             android:cursorVisible="true"
                             android:textCursorDrawable="@null"
-                            android:hint="请输入活动名称"
+                            android:editable="false"
+                            android:hint="请输入时间日期(双击)"
                             android:singleLine="true"
                             android:maxLines="1"
-                            android:background="@null"
                             />
                     </RelativeLayout>
                     <RelativeLayout
@@ -136,60 +182,30 @@
                         android:layout_marginEnd="10dp"
                         >
                         <TextView
-                            android:id="@+id/activity_time"
+                            android:id="@+id/activity_end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:text="活动时间"
+                            android:text="@string/EndTimeStr"
                             android:textSize="16sp"
                             android:textColor="@color/black"
                             />
                         <EditText
-                            android:layout_toEndOf="@+id/activity_time"
-                            android:id="@+id/time_select"
+                            android:layout_toEndOf="@+id/activity_end_time"
+                            android:id="@+id/end_time_select"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="70dp"
                             android:textColor="@color/gray"
-                            android:textSize="12sp"
-                            android:hint="请输入时间日期"
+                            android:textSize="14sp"
+                            android:cursorVisible="true"
+                            android:textCursorDrawable="@null"
+                            android:editable="false"
+                            android:hint="请输入时间日期(双击)"
                             android:singleLine="true"
                             android:maxLines="1"
-                            android:background="@null"
-                            />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        >
-                        <TextView
-                            android:id="@+id/activity_expire_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="8dp"
-                            android:text="招募期限"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"
-                            />
-                        <EditText
-                            android:layout_toEndOf="@+id/activity_expire_time"
-                            android:id="@+id/expire_time_select"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="70dp"
-                            android:textColor="@color/gray"
-                            android:textSize="12sp"
-                            android:hint="请输入招募期限"
-                            android:singleLine="true"
-                            android:maxLines="1"
-                            android:background="@null"
                             />
                     </RelativeLayout>
                     <RelativeLayout
@@ -204,7 +220,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:text="活动地点"
+                            android:text="@string/ActivityLocation"
                             android:cursorVisible="true"
                             android:textCursorDrawable="@null"
                             android:textSize="16sp"
@@ -212,12 +228,13 @@
                             />
                         <EditText
                             android:layout_toEndOf="@+id/activity_location"
+                            android:id="@+id/activityLocationInput"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="70dp"
                             android:textColor="@color/gray"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             android:hint="请输入活动地点"
                             android:singleLine="true"
                             android:maxLines="1"
@@ -238,19 +255,19 @@
                             android:layout_marginStart="8dp"
                             android:text="活动内容"
                             android:textSize="16sp"
-                            android:cursorVisible="true"
                             android:textCursorDrawable="@null"
                             android:textColor="@color/black"
                             />
                         <EditText
                             android:layout_toEndOf="@+id/activity_content"
+                            android:id="@+id/activityContentInput"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="70dp"
                             android:textColor="@color/gray"
                             android:hint="请输入活动内容"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             android:maxLines="4"
                             android:background="@null"
                             />
@@ -282,18 +299,51 @@
                             />
                         <EditText
                             android:layout_toEndOf="@+id/activity_target"
+                            android:id="@+id/activityMeaningInput"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="70dp"
                             android:layout_marginTop="15dp"
                             android:layout_marginBottom="10dp"
-                            android:cursorVisible="true"
-                            android:textCursorDrawable="@null"
                             android:textColor="@color/gray"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             android:hint="请输入活动的原因"
                             android:maxLines="4"
                             android:background="@null"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/activity_expire_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:text="招募天数"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            />
+                        <EditText
+                            android:id="@+id/expire_time_select"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="70dp"
+                            android:editable="false"
+                            android:textColor="@color/gray"
+                            android:hint="请输入招募天数(天)"
+                            android:cursorVisible="true"
+                            android:textCursorDrawable="@null"
+                            android:inputType="numberDecimal"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:maxLength="3"
                             />
                     </RelativeLayout>
                     <RelativeLayout
@@ -313,28 +363,19 @@
                             />
                         <EditText
                             android:id="@+id/edit_personNum"
-                            android:layout_width="85dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:maxLength="3"
-                            android:maxEms="3"
-                            android:singleLine="true"
-                            android:hint="招募人数(>0)"
-                            android:layout_toStartOf="@+id/human"
-                            android:layout_centerVertical="true"
-                            />
-                        <TextView
-                            android:id="@+id/human"
+                            android:layout_alignParentEnd="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="10dp"
-                            android:text="人"
-                            android:textSize="16sp"
+                            android:maxLines="1"
+                            android:maxLength="3"
+                            android:singleLine="true"
+                            android:editable="false"
                             android:textColor="@color/gray"
+                            android:hint="请输入招募人数(人)"
+                            android:cursorVisible="true"
+                            android:textCursorDrawable="@null"
+                            android:inputType="numberDecimal"
+                            android:layout_centerVertical="true"
                             />
                     </RelativeLayout>
                     <RelativeLayout
@@ -354,19 +395,18 @@
                             android:textColor="@color/black"
                             />
                         <EditText
-                            android:layout_toEndOf="@+id/classification_text"
                             android:id="@+id/classification"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="70dp"
                             android:textColor="@color/gray"
-                            android:textSize="12sp"
-                            android:hint="请选择您的分类"
+                            android:hint="@string/ChooseYourClassification"
+                            android:editable="false"
                             android:singleLine="true"
                             android:maxLines="1"
-                            android:background="@null"
-                            />
+                            android:cursorVisible="true"
+                            android:textCursorDrawable="@null"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true" />
                     </RelativeLayout>
                 </LinearLayout>
                 <TextView
@@ -379,7 +419,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:textColor="@color/main_color_red"
-                    android:text="注意:为了您的申请尽快申请通过,请确保您的活动开始时间和招募时间中有一段缓冲时间！"
+                    android:text="@string/FormTips"
                     />
                 <LinearLayout
                     android:id="@+id/move_protocol"
@@ -397,10 +437,9 @@
                         android:gravity="center_vertical"
                         android:drawableStart="?android:attr/listChoiceIndicatorMultiple"
                         android:paddingLeft="6dp"
-                        android:filterTouchesWhenObscured="true"
-                        android:focusableInTouchMode="true"
-                        android:text="我已阅读同意"
+                        android:clickable="true"
                         android:checked="false"
+                        android:text="我已阅读同意"
                         android:textSize="12sp"
                         android:paddingRight="6dp"
                         />
@@ -425,6 +464,10 @@
                     android:textColor="@drawable/register_text_selector"
                     android:background="@drawable/corner_button_template_register"
                     />
+                <View
+                    android:layout_below="@+id/publish"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

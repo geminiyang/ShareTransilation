@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,8 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,19 +21,20 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.idear.move.R;
+import com.idear.move.Service.ActivityManager;
 import com.idear.move.Thread.ImageUploadThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
 import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.CameraUtil;
+import com.idear.move.util.CheckValidUtil;
 import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.FileSaveUtil;
@@ -45,7 +43,6 @@ import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.Logger;
 import com.idear.move.util.PictureUtil;
 import com.idear.move.util.ToastUtil;
-import com.idear.move.util.UploadUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,29 +60,50 @@ public class PublishRFActivity extends MyBaseActivity {
     private Button publish;
     private TextView urlTextView;
 
-    // 更新显示当前值的TextView
-    private EditText personNum,moneyAmount,classification;
+    //用户输入相关
+    private EditText startTimeInput,endTimeInput,expireTimeInput,activityNameInput,activityLocationInput,
+            activityContentInput,activityMeaningInput,activityPersonNumInput,activityMoneyInput,
+            activityClassificationInput;
     //图片选择控件
     private static final int TAKE_PICTURE = 100;
     private static final int SELECT_PICTURE = 101;
     private static final int IMAGE_SIZE = 100 * 1024;// 100kb,受载入4096×4096图片限制，与工具类的缩放比例对应
     private static final int SHOW_IMAGE = 102;
-    private File uploadFile;
-    private File mCurrentPhotoFile;
+    private File uploadFile;//上传图片
+    private File mCurrentPhotoFile;//当前图片
     private String camPicPath;//照片保存路径
-    private ImageView pic;
     private FrameLayout fl_bg_pan;
     public ImageView imageShow;
-    public ImageHandler imageHandler;
 
     private ImageView iv_back;//返回按钮
 
-    private EditText activityTimeInput,expireTimeInput;
     //用来拼接日期和时间，最终用来显示的
     private StringBuilder str = new StringBuilder("");
-    private final int MIN = 1;
-    private final int MAX = 100;
-    private int currentNum = 2;
+    /**
+     * 进行异步显示图片到控件
+     */
+    private static class ImageHandler extends Handler {
+        WeakReference<PublishRFActivity> mActivity;
+
+        ImageHandler(PublishRFActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            PublishRFActivity mCurrentActivity = mActivity.get();
+            if(mCurrentActivity!=null) {
+                switch (msg.what) {
+                    case SHOW_IMAGE:
+                        mCurrentActivity.imageShow.setImageBitmap(ImageCheckoutUtil.getLocalBitmap(((msg.obj).toString())));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+    }
+    public ImageHandler imageHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,15 +121,23 @@ public class PublishRFActivity extends MyBaseActivity {
         ctv = (CheckedTextView) findViewById(R.id.check_tv_title);
         publish = (Button) findViewById(R.id.publish);
         urlTextView = (TextView) findViewById(R.id.tv_url);
-        moneyAmount = (EditText) findViewById(R.id.money_amount);
-        personNum = (EditText) findViewById(R.id.edit_personNum);
-        classification = (EditText) findViewById(R.id.classification);
-        activityTimeInput = (EditText) findViewById(R.id.activity_time_select);
-        expireTimeInput = (EditText) findViewById(R.id.expire_time_select);
-        pic = (ImageView) findViewById(R.id.pic);
         fl_bg_pan = (FrameLayout) findViewById(R.id.pan_bg);
         rlRoot = (RelativeLayout) findViewById(R.id.rl_root);
         iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
+
+        expireTimeInput = (EditText) findViewById(R.id.expire_time_select);
+        activityClassificationInput = (EditText) findViewById(R.id.classification);
+        startTimeInput = (EditText) findViewById(R.id.start_time_select);
+        endTimeInput = (EditText) findViewById(R.id.end_time_select);
+        expireTimeInput = (EditText) findViewById(R.id.expire_time_select);
+        activityNameInput = (EditText) findViewById(R.id.activityNameInput);
+        activityLocationInput = (EditText) findViewById(R.id.activityLocationInput);
+        activityContentInput = (EditText) findViewById(R.id.activityContentInput);
+        activityMeaningInput = (EditText) findViewById(R.id.activityMeaningInput);
+        activityPersonNumInput = (EditText) findViewById(R.id.edit_personNum);
+        activityMoneyInput = (EditText) findViewById(R.id.money_amount);
+        activityClassificationInput = (EditText) findViewById(R.id.classification);
+
         imageShow = (ImageView) findViewById(R.id.pic_show);
         imageHandler = new ImageHandler(this);
     }
@@ -149,30 +175,23 @@ public class PublishRFActivity extends MyBaseActivity {
         });
 
         //时间编辑框监听
-        activityTimeInput.setOnClickListener(new View.OnClickListener() {
+        startTimeInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewTimeDialog(activityTimeInput);
+                NewTimeDialog(startTimeInput);
             }
         });
-        expireTimeInput.setOnClickListener(new View.OnClickListener() {
+        endTimeInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewTimeDialog(expireTimeInput);
-            }
-        });
-        //招募人数编辑框监听
-        personNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productNumberPickerDialog();
+                NewTimeDialog(endTimeInput);
             }
         });
         //分类功能
-        classification.setOnClickListener(new View.OnClickListener() {
+        activityClassificationInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialogUtil.classificationDialog(PublishRFActivity.this,classification);
+                AlertDialogUtil.classificationDialog(PublishRFActivity.this,activityClassificationInput);
             }
         });
         //图片选择器监听
@@ -266,58 +285,9 @@ public class PublishRFActivity extends MyBaseActivity {
     }
 
     /**
-     * 系统默认风格的NumberPicker
+     *生成一个时间选择框
+     * @param show
      */
-    private void productNumberPickerDialog() {
-        RelativeLayout linearLayout = new RelativeLayout(PublishRFActivity.this);
-        final NumberPicker aNumberPicker = new NumberPicker(PublishRFActivity.this);
-        aNumberPicker.setMaxValue(MAX);
-        aNumberPicker.setMinValue(MIN);
-        aNumberPicker.setValue(currentNum);
-
-        aNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                currentNum = newVal;
-            }
-        });
-
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
-        RelativeLayout.LayoutParams numPickerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        numPickerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-
-        linearLayout.setLayoutParams(params);
-        linearLayout.addView(aNumberPicker,numPickerParams);
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PublishRFActivity.this);
-        alertDialogBuilder.setTitle("选择招募人数");
-        alertDialogBuilder.setView(linearLayout);
-        alertDialogBuilder.setCancelable(false)
-                .setPositiveButton("确定",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //更新UI
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        personNum.setText("");
-                                        personNum.setText(currentNum+"");
-                                        personNum.setSelection((personNum.getText().toString().length()));//移动光标位置
-                                    }
-                                });
-                            }
-                        })
-                .setNegativeButton("取消",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int id) {
-                                dialog.cancel();
-                            }
-                        });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
     private void NewTimeDialog(final EditText show) {
         Calendar c = Calendar.getInstance();
         // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
@@ -430,8 +400,9 @@ public class PublishRFActivity extends MyBaseActivity {
         }
     }
 
-
-    //图片的后续操作(压缩处理)
+    /**
+     * 图片的后续操作(压缩处理)
+     */
     private void compressPicture(final String path) {
         new Thread(new Runnable() {
 
@@ -470,13 +441,31 @@ public class PublishRFActivity extends MyBaseActivity {
      * 上传图片操作
      */
     private void submitUploadFile() {
+        String startTimeInputStr = startTimeInput.getText().toString().trim();
+        String endTimeInputStr = endTimeInput.getText().toString().trim();
+        String expireTimeInputStr = expireTimeInput.getText().toString().trim();
+        String activityNameInputStr = activityNameInput.getText().toString().trim();
+        String activityLocationInputStr = activityLocationInput.getText().toString().trim();
+        String activityContentInputStr = activityContentInput.getText().toString().trim();
+        String activityMeaningInputStr = activityMeaningInput.getText().toString().trim();
+        String activityMoneyInputStr = activityMoneyInput.getText().toString().trim();
+        String activityPersonNumInputStr = activityPersonNumInput.getText().toString().trim();
+        String activityClassificationInputStr = activityClassificationInput.getText().toString().trim();
+        if(!CheckValidUtil.isAllNotEmpty(startTimeInputStr,endTimeInputStr,expireTimeInputStr,
+                activityNameInputStr, activityLocationInputStr,activityContentInputStr,
+                activityMeaningInputStr, activityMoneyInputStr,activityPersonNumInputStr,
+                activityClassificationInputStr)) {
+            ToastUtil.getInstance().showToast(this,"请确保表单输入完整");
+            return;
+        }
+        //检查所填数据是否完整
         if (uploadFile == null || (!uploadFile.exists())) {
             return;
         }
         final String requestURL = HttpPath.getUpdateUserInfoPath();
-        Logger.d("请求的URL=" + requestURL);
-        Logger.d("请求的fileName=" + uploadFile.getName());
-        Logger.d("请求的fileName=" + uploadFile.length());
+        Logger.d("请求的URL --- =" + requestURL);
+        Logger.d("请求的fileName --- =" + uploadFile.getName());
+        Logger.d("请求的fileSize --- =" + uploadFile.length());
         final Map<String, String> params = new HashMap<>();
         params.put("user_id", CookiesSaveUtil.getUserId(PublishRFActivity.this));
         final Map<String, File> files = new HashMap<>();
@@ -507,30 +496,5 @@ public class PublishRFActivity extends MyBaseActivity {
             }
         });
         imageUploadThread.start();
-    }
-
-    /**
-     * 进行异步显示图片到控件
-     */
-    private static class ImageHandler extends Handler {
-        WeakReference<PublishRFActivity> mActivity;
-
-        ImageHandler(PublishRFActivity activity) {
-            mActivity = new WeakReference<PublishRFActivity>(activity);
-        }
-        @Override
-        public void handleMessage(Message msg) {
-            PublishRFActivity mCurrentActivity = mActivity.get();
-            if(mCurrentActivity!=null) {
-                switch (msg.what) {
-                    case SHOW_IMAGE:
-                        mCurrentActivity.imageShow.setImageBitmap(ImageCheckoutUtil.getLocalBitmap(((msg.obj).toString())));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
     }
 }

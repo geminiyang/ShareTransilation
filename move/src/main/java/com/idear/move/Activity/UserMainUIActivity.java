@@ -164,7 +164,7 @@ public class UserMainUIActivity extends MyBaseActivity implements
         fl_bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,PublishRActivity.class);
+                IntentSkipUtil.skipToNext(UserMainUIActivity.this,PublishRActivity.class);
                 fl_bt1.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -176,7 +176,7 @@ public class UserMainUIActivity extends MyBaseActivity implements
         fl_bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,PublishRFActivity.class);
+                IntentSkipUtil.skipToNext(UserMainUIActivity.this,PublishRFActivity.class);
                 fl_bt2.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -188,7 +188,7 @@ public class UserMainUIActivity extends MyBaseActivity implements
         fl_bt3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentSkipUtil.skipToNextActivity(UserMainUIActivity.this,PublishFActivity.class);
+                IntentSkipUtil.skipToNext(UserMainUIActivity.this,PublishFActivity.class);
                 fl_bt3.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -220,19 +220,19 @@ public class UserMainUIActivity extends MyBaseActivity implements
     }
 
     public void startAnimator() {
-        ObjectAnimatorUtil.rotateAnimation(img,0,45f);
+        ObjectAnimatorUtil.rotateAnimation(img,0,135f);
         ObjectAnimatorUtil.startAnimation(fl_bt1,fl_bt2,fl_bt3);
         canStart=false;
     }
 
     public void stopAnimator() {
-        ObjectAnimatorUtil.rotateAnimation(img,45f,0);
+        ObjectAnimatorUtil.rotateAnimation(img,135f,0);
         ObjectAnimatorUtil.closeAnimation(fl_bt1,fl_bt2,fl_bt3);
         canStart=true;
     }
 
     /**
-     * 点击+号按钮后的触发事件 自定义动画
+     * 点击+号按钮后的触发事件 自定义动画(利用popupWindow)
      * @param parent
      */
     private void showWindow(View parent) {

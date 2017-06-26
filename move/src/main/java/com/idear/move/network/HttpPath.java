@@ -36,5 +36,9 @@ public class HttpPath {
 
     public static String getFansInfoPath() {return "http://idear.party/api/mine/index";}
 
+    public static String getRPath() {return "http://idear.party/api/apply/1";}
+
+    public static String getFPath() {return "http://idear.party/api/apply/2";}
+
     public static String getPath() {return "http://idear.party/";}
 }

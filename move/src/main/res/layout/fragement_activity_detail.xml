@@ -1,263 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="false">
-
-    <ScrollView
-        android:id="@+id/my_scrollview"
-        android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:background="@color/white">
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_activity_introduce"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="vertical">
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_corner_fill_white"
+            android:divider="@drawable/template_divider_horizontal_grey"
+            android:dividerPadding="18dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
             <LinearLayout
-                android:id="@+id/ll_activity_introduce"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/bg_corner_fill_white"
-                android:divider="@drawable/template_divider_horizontal_grey"
-                android:dividerPadding="18dp"
-                android:orientation="vertical"
-                android:showDividers="middle">
+                android:layout_height="40dp"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text="活动介绍"
-                        android:textColor="@color/blue_light"
-                        android:textSize="20sp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text="[筹资完成]"
-                        android:textColor="@color/main_color_red"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="活动介绍"
+                    android:textColor="@color/blue_light"
+                    android:textSize="20sp" />
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.idear.move.myWidget.MySpannableTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp"
-                        android:text="@string/testString"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="[筹资完成]"
+                    android:textColor="@color/main_color_red"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_activity_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/bg_corner_fill_white"
+                android:orientation="vertical">
+
+                <com.idear.move.myWidget.MySpannableTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:text="@string/testString"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_activity_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_corner_fill_white"
+            android:divider="@drawable/template_divider_horizontal_grey"
+            android:dividerPadding="0dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="活动详情"
+                    android:textColor="@color/blue_light"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:divider="@drawable/template_divider_horizontal_grey"
                 android:dividerPadding="0dp"
                 android:orientation="vertical"
                 android:showDividers="middle">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text="活动详情"
-                        android:textColor="@color/blue_light"
-                        android:textSize="20sp" />
+                        android:padding="10dp"
+                        android:text="发起人:"
+                        />
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="123、快跑"
+                        />
                 </LinearLayout>
-
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:divider="@drawable/template_divider_horizontal_grey"
-                    android:dividerPadding="0dp"
-                    android:orientation="vertical"
-                    android:showDividers="middle">
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="内容:"
+                        />
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="漫画分享大会"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="时间:"
+                        />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="2017年6月10日" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="发起人:"
-                            />
-                        <TextView
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="123、快跑"
-                            />
-                        </LinearLayout>
-                    <LinearLayout
+                        android:padding="10dp"
+                        android:text="地点:"
+                        />
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="天河体育馆"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="内容:"
-                            />
-                        <TextView
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="漫画分享大会"
-                            />
-                        </LinearLayout>
-                    <LinearLayout
+                        android:padding="10dp"
+                        android:text="活动目的:"
+                        />
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="增加文艺鉴赏能力"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="时间:"
-                            />
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="2017年6月10日" />
-                    </LinearLayout>
-                    <LinearLayout
+                        android:padding="10dp"
+                        android:text="招募人数:"
+                        />
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="10人"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="地点:"
-                            />
-                        <TextView
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="天河体育馆"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
+                        android:padding="10dp"
+                        android:text="赞助金额:"
+                        />
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="5万"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="活动目的:"
-                            />
-                        <TextView
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="增加文艺鉴赏能力"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:padding="10dp"
+                        android:text="招募时间至:"
+                        />
+                    <TextView
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="招募人数:"
-                            />
-                        <TextView
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="10人"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="赞助金额:"
-                            />
-                        <TextView
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="5万"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="招募时间至:"
-                            />
-                        <TextView
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="2017/6/18 15:50"
-                            />
-                    </LinearLayout>
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="2017/6/18 15:50"
+                        />
                 </LinearLayout>
             </LinearLayout>
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"/>
         </LinearLayout>
-    </ScrollView>
-
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"/>
+    </LinearLayout>
 </RelativeLayout>

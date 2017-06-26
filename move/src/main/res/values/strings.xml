@@ -17,4 +17,9 @@
     <string name="TimeExampleStr">2017/6/25 14:51</string>
     <string name="NickNameExamStr">123、快跑</string>
     <string name="praise">赞</string>
+    <string name="StartTimeStr">开始时间</string>
+    <string name="EndTimeStr">结束时间</string>
+    <string name="ActivityLocation">活动地点</string>
+    <string name="ChooseYourClassification">请选择您的分类</string>
+    <string name="FormTips">注意:为了您的申请尽快申请通过,请确保您的活动开始时间和招募时间中有一段缓冲时间！</string>
 </resources>

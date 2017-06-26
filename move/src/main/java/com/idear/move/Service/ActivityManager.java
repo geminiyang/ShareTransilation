@@ -8,8 +8,7 @@ import java.util.LinkedList;
 public class ActivityManager {
 
 		//用来结束Activity的服务类
-	
-	    private LinkedList<Activity> activityLinkedList = new LinkedList<Activity>();
+	    private LinkedList<Activity> activityLinkedList = new LinkedList<>();
 	    
 	    private ActivityManager() {
 	    }
@@ -30,13 +29,12 @@ public class ActivityManager {
 	    }
 	    
 	    //结束特定的Activity(s)
-	    public ActivityManager finishActivities(Class<? extends Activity>... activityClasses){
+	    public void finishActivities(Class<? extends Activity>... activityClasses){
 	        for (Activity activity : activityLinkedList) {
 	            if( Arrays.asList(activityClasses).contains( activity.getClass() ) ){
 	                activity.finish();
 	            }
 	        }
-	        return instance;
 	    }
 	    
 	    //结束所有的Activities

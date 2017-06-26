@@ -33,7 +33,6 @@ public class MyBaseActivity extends BaseActivity {
     //权限相关操作
     private boolean CAN_WRITE_EXTERNAL_STORAGE = true;
     private static final int SDK_PERMISSION_REQUEST = 127;
-    private String camPicPath;//照片保存路径
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
