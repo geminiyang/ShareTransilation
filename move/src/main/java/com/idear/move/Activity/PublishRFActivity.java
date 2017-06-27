@@ -32,6 +32,7 @@ import android.widget.TimePicker;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
 import com.idear.move.Thread.ImageUploadThread;
+import com.idear.move.myWidget.LoadingProgressDialog;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
@@ -64,7 +65,8 @@ public class PublishRFActivity extends MyBaseActivity {
     private CheckedTextView ctv;
     private Button publish;
     private TextView urlTextView;
-
+    //loading图片
+    private LoadingProgressDialog dialog;
     //用户输入相关
     private EditText startTimeInput,endTimeInput,numberExpireTimeInput,moneyExpireTimeInput,
             activityNameInput, activityLocationInput, activityContentInput,activityMeaningInput,
@@ -102,6 +104,7 @@ public class PublishRFActivity extends MyBaseActivity {
                         mCurrentActivity.imageShow.setImageBitmap(ImageCheckoutUtil.getLocalBitmap(((msg.obj).toString())));
                         break;
                     case 101:
+                        mCurrentActivity.dialog.dismiss();
                         mCurrentActivity.finish();
                         break;
                     default:
@@ -479,7 +482,7 @@ public class PublishRFActivity extends MyBaseActivity {
                             PictureUtil.reviewPicRotate(bitmap, str[0]+str[1]),
                             str[0],str[1]);
                     File file = new File(GalPicPath);
-                    uploadFile = new File(path);//上传文件
+                    uploadFile = file;//上传文件
                     if (file.exists() && isSave) {
                         //图片的操作()
                         Looper.prepare();
@@ -570,5 +573,7 @@ public class PublishRFActivity extends MyBaseActivity {
             }
         });
         imageUploadThread.start();
+        dialog =new LoadingProgressDialog(this, R.drawable.progress_loading);
+        dialog.show();
     }
 }

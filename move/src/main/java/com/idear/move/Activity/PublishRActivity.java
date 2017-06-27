@@ -33,6 +33,7 @@ import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
 import com.idear.move.Thread.ImageUploadThread;
 import com.idear.move.Thread.LogoutThread;
+import com.idear.move.myWidget.LoadingProgressDialog;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
@@ -68,6 +69,8 @@ public class PublishRActivity extends MyBaseActivity {
     activityContentInput,activityMeaningInput,activityPersonNumInput,activityClassificationInput;
     //用来拼接日期和时间，最终用来显示的
     private StringBuilder str = new StringBuilder("");
+    //loading图片
+    private LoadingProgressDialog dialog;
 
     private CheckedTextView ctv;
     private Button publish;
@@ -102,6 +105,7 @@ public class PublishRActivity extends MyBaseActivity {
                         mCurrentActivity.imageShow.setImageBitmap(ImageCheckoutUtil.getLocalBitmap(((msg.obj).toString())));
                         break;
                     case 101:
+                        mCurrentActivity.dialog.dismiss();
                         mCurrentActivity.finish();
                         break;
                     default:
@@ -474,7 +478,7 @@ public class PublishRActivity extends MyBaseActivity {
                             PictureUtil.reviewPicRotate(bitmap, str[0]+str[1]),
                             str[0],str[1]);
                     File file = new File(GalPicPath);
-                    uploadFile = new File(path);//上传文件
+                    uploadFile = file;//上传文件
                     if (file.exists() && isSave) {
                         //图片的操作()
                         Looper.prepare();
@@ -561,6 +565,8 @@ public class PublishRActivity extends MyBaseActivity {
             }
         });
         imageUploadThread.start();
+        dialog =new LoadingProgressDialog(this, R.drawable.progress_loading);
+        dialog.show();
     }
 
 }

@@ -69,7 +69,7 @@ public class PublishFActivity extends MyBaseActivity {
     private CheckedTextView ctv;
     private Button publish;
     private TextView urlTextView;
-    //
+    //loading图片
     private  LoadingProgressDialog dialog;
 
     //用来拼接日期和时间，最终用来显示的
@@ -471,7 +471,7 @@ public class PublishFActivity extends MyBaseActivity {
                             PictureUtil.reviewPicRotate(bitmap, str[0]+str[1]),
                             str[0],str[1]);
                     File file = new File(GalPicPath);
-                    uploadFile = new File(path);//上传文件
+                    uploadFile = file;//上传文件
                     if (file.exists() && isSave) {
                         //图片的操作()
                         Looper.prepare();
@@ -541,9 +541,7 @@ public class PublishFActivity extends MyBaseActivity {
                 if(obj instanceof ResultType) {
                     ResultType result = (ResultType) obj;
                     if(Integer.parseInt(result.getStatus()) == 1) {
-                        Looper.prepare();
                         imageHandler.sendEmptyMessage(101);
-                        Looper.loop();
                     }
                     ToastUtil.getInstance().showToastInThread(PublishFActivity.this,
                             result.getMessage());

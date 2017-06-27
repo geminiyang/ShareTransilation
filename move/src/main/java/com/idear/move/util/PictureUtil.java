@@ -209,7 +209,7 @@ public class PictureUtil {
         int beginRate = 100;
 		//第一个参数 ：图片格式 ，第二个参数： 图片质量，100为最高，0为最差  ，第三个参数：保存压缩后的数据的流
 		bitmap.compress(Bitmap.CompressFormat.JPEG, beginRate, baos);
-        while ( beginRate>=10 && baos.toByteArray().length / 1024  > 200) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+        while ( beginRate>=10 && baos.toByteArray().length / 1024  > 200) {  //循环判断如果压缩后图片是否大于200kb,大于继续压缩
 			beginRate = beginRate - 10;//每次都减少10
 			baos.reset();//重置baos即清空baos
             bitmap.compress(Bitmap.CompressFormat.JPEG, beginRate, baos);//这里压缩beginRate%，把压缩后的数据存放到baos中

@@ -427,7 +427,7 @@ public class UserDetailInformationActivity extends MyBaseActivity {
                             PictureUtil.reviewPicRotate(bitmap, str[0]+str[1]),
                             str[0],str[1]);
                     File file = new File(GalPicPath);
-                    uploadFile = new File(path);//上传文件
+                    uploadFile = file;//上传文件
                     if (file.exists() && isSave) {
                         //图片的操作()
                         Looper.prepare();
@@ -452,9 +452,9 @@ public class UserDetailInformationActivity extends MyBaseActivity {
             return;
         }
         final String requestURL = HttpPath.getUpdateUserInfoPath();
-        Logger.d("请求的URL=" + requestURL);
-        Logger.d("请求的fileName=" + uploadFile.getName());
-        Logger.d("请求的fileName=" + uploadFile.length());
+        Logger.d("请求的---URL=" + requestURL);
+        Logger.d("请求的---fileName=" + uploadFile.getName());
+        Logger.d("请求的---fileSize=" + uploadFile.length());
         final Map<String, String> params = new HashMap<>();
         params.put("user_id", CookiesSaveUtil.getUserId(UserDetailInformationActivity.this));
         final Map<String, File> files = new HashMap<>();
