@@ -41,6 +41,7 @@ import com.idear.move.Service.ActivityManager;
 import com.idear.move.Service.NetBroadCastReceiver;
 import com.idear.move.Thread.ImageUploadThread;
 import com.idear.move.Thread.UpdateUserInfoThread;
+import com.idear.move.myWidget.LoadingProgressDialog;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
@@ -104,6 +105,8 @@ public class UserDetailInformationActivity extends MyBaseActivity {
     private File mCurrentPhotoFile;
     private String camPicPath;//照片保存路径
     private ImageView imageShow;
+    //loading图片
+    private  LoadingProgressDialog dialog;
     /**
      * 进行异步显示图片到控件和信息的更新
      */
@@ -140,6 +143,10 @@ public class UserDetailInformationActivity extends MyBaseActivity {
                     theActivity.imageShow.setImageBitmap(ImageCheckoutUtil.getLocalBitmap(((msg.obj).toString())));
                     //开启异步上传任务
                     theActivity.submitUploadFile();
+                    break;
+                case 101:
+                    //停止正在加载动画
+                    theActivity.dialog.dismiss();
                     break;
                 default:
                     break;
@@ -485,6 +492,8 @@ public class UserDetailInformationActivity extends MyBaseActivity {
             }
         });
         imageUploadThread.start();
+        dialog =new LoadingProgressDialog(UserDetailInformationActivity.this, R.drawable.progress_loading);
+        dialog.show();
     }
 
     /**
