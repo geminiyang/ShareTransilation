@@ -1,16 +1,12 @@
 package com.idear.move.Activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.idear.move.Adapter.DynamicsPraiseAdapter;
-import com.idear.move.Adapter.FansAndAttentionAdapter;
 import com.idear.move.POJO.DynamicsPraiseDataModel;
-import com.idear.move.POJO.FansAndAttentionDataModel;
 import com.idear.move.R;
 import com.idear.move.util.ToastUtil;
 

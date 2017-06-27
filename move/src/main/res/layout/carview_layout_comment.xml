@@ -5,12 +5,10 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="165dp"
-    android:layout_marginStart="4dp"
-    android:layout_marginEnd="4dp"
-    android:layout_marginTop="1dp"
-    app:cardElevation="5dp"
+    android:layout_marginBottom="1dp"
+    app:cardElevation="1dp"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="3dp">
+    app:cardCornerRadius="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -74,33 +72,36 @@
             android:layout_marginStart="12dp"
             android:maxLength="25"
             android:maxLines="1"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="这里用来填写评论"
             />
         <LinearLayout
             android:id="@+id/abbreviatedItem"
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
-            android:background="@color/light_grey"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/bg_rect"
             android:layout_width="wrap_content"
             android:layout_height="60dp">
             <ImageView
                 android:id="@+id/pic"
+                android:padding="8dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:visibility="visible"
-                android:background="@drawable/note"
+                android:src="@drawable/note"
+                android:background="@color/light_grey"
                 />
             <TextView
                 android:id="@+id/breviary_content"
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:text="@string/companySummer"
                 android:layout_marginEnd="5dp"
                 android:maxLines="3"
-                android:maxLength="50"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:maxLength="65"
                 android:layout_marginStart="30dp" />
         </LinearLayout>
     </RelativeLayout>

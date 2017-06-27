@@ -33,8 +33,8 @@ public class DynamicsPraiseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.mContext = context;
         this.modelList = modelList;
         mInflater = LayoutInflater.from(this.mContext);
-        picWidth = ScreenUtil.dip2px(mContext,60);
-        picHeight = ScreenUtil.dip2px(mContext,60);
+        picWidth = ScreenUtil.dip2px(mContext,44);
+        picHeight = ScreenUtil.dip2px(mContext,44);
         iconWidth = ScreenUtil.dip2px(mContext,40);
         iconHeight = ScreenUtil.dip2px(mContext,40);
     }

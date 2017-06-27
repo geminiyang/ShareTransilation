@@ -1,19 +1,15 @@
 package com.idear.move.Activity;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.idear.move.Fragment.AttentionFragment;
 import com.idear.move.Fragment.FansFragment;
-import com.idear.move.Fragment.GroupListFragment;
-import com.idear.move.Fragment.MyFragment;
-import com.idear.move.Fragment.UserListFragment;
 import com.idear.move.R;
 import com.idear.move.myWidget.NoScrollViewPager;
 
