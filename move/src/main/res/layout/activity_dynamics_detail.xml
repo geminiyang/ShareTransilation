@@ -36,7 +36,8 @@
         android:dividerPadding="0dp"
         android:divider="@drawable/template_divider_horizontal_grey"
         android:orientation="vertical"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,15 +46,16 @@
             android:padding="5dp"
             >
             <ImageView
+                android:layout_centerVertical="true"
                 android:id="@+id/iv_user_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_margin="5dp"
                 tools:src="@drawable/paintbox"
                 />
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="45dp"
                 android:layout_toEndOf="@+id/iv_user_icon"
                 android:layout_marginStart="10dp"
                 android:layout_centerVertical="true"
@@ -65,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:layout_marginTop="5dp"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:text="峡湾仔"
                     />
                 <TextView
@@ -81,8 +83,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:layout_width="70dp"
-                android:layout_height="35dp"
+                android:layout_width="60dp"
+                android:layout_height="25dp"
                 android:text="关注"
                 android:textColor="@drawable/register_text_selector"
                 android:background="@drawable/corner_button_template_register"
@@ -100,7 +102,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/testString"
@@ -109,10 +111,11 @@
                 android:layout_below="@+id/dynamicContent"
                 android:id="@+id/pic"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="60dp"
                 android:layout_width="300dp"
-                android:layout_height="160dp"
+                android:layout_height="120dp"
                 android:src="@drawable/family"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
@@ -143,8 +146,8 @@
                     android:layout_marginStart="50dp">
 
                     <com.idear.move.myWidget.RoundImageViewByXfermode
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:src="@mipmap/c"
                         app:type="circle"
@@ -153,8 +156,8 @@
                         />
 
                     <com.idear.move.myWidget.RoundImageViewByXfermode
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:src="@mipmap/c"
                         app:type="circle"
@@ -163,8 +166,8 @@
                         />
 
                     <com.idear.move.myWidget.RoundImageViewByXfermode
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:src="@mipmap/c"
                         app:type="circle"
@@ -173,8 +176,8 @@
                         />
 
                     <com.idear.move.myWidget.RoundImageViewByXfermode
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:src="@mipmap/c"
                         app:type="circle"
@@ -183,8 +186,8 @@
                         />
 
                     <com.idear.move.myWidget.RoundImageViewByXfermode
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:src="@mipmap/c"
                         app:type="circle"
@@ -193,8 +196,8 @@
                         />
 
                     <com.idear.move.myWidget.RoundImageViewByXfermode
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:src="@mipmap/c"
                         app:type="circle"
@@ -251,7 +254,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="20dp"
+            android:padding="15dp"
             >
             <com.idear.move.myWidget.RoundImageViewByXfermode
                 android:id="@+id/observer"
@@ -264,7 +267,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 >
                 <TextView
@@ -341,11 +344,13 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@drawable/template_divider_horizontal_tran_black"
+        android:showDividers="beginning"
         android:orientation="vertical"
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:background="@color/white"
             android:gravity="center_vertical"
@@ -361,7 +366,7 @@
                 <EditText
                     android:id="@+id/input_text"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/bg_chat_msg"
                     android:maxLines="1"

@@ -21,6 +21,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="toolBarHeight">45dp</dimen>
+    <dimen name="shortToolBarHeight">25dp</dimen>
     <dimen name="small_pan_length">45dp</dimen>
     <dimen name="normal_pan_length">80dp</dimen>
 

@@ -169,8 +169,9 @@
             android:name=".Activity.DynamicPraiseActivity"
             android:theme="@style/otherPageStyle" />
         <activity android:name=".Activity.DynamicsDetailActivity"
-            android:theme="@style/otherPageStyle"
-            />
+            android:theme="@style/otherPageStyle">
+
+        </activity>
     </application>
 
 </manifest>
