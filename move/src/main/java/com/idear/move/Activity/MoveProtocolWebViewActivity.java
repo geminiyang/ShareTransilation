@@ -1,7 +1,6 @@
 package com.idear.move.Activity;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -10,8 +9,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.idear.move.jsJavaInteraction.JsCallJava;
 import com.idear.move.R;
+import com.idear.move.jsJavaInteraction.JsCallJava;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 

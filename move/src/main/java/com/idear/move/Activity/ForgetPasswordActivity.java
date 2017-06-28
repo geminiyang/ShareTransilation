@@ -1,13 +1,8 @@
 package com.idear.move.Activity;
 
-import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,10 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.idear.move.R;
-import com.idear.move.Service.NetBroadCastReceiver;
 import com.idear.move.Thread.GetVerifyCodeThread;
 import com.idear.move.Thread.PasswordForgetWithCodeThread;
-import com.idear.move.Thread.PasswordUpdateWithCodeThread;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
@@ -28,7 +21,6 @@ import com.idear.move.util.CheckValidUtil;
 import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
-import com.yqq.swipebackhelper.BaseActivity;
 
 import java.lang.ref.WeakReference;
 

@@ -9,8 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,17 +25,13 @@ import android.widget.TextView;
 import com.idear.move.Adapter.SearchItemAdapter;
 import com.idear.move.Fragment.AllActivitySearchFragment;
 import com.idear.move.Fragment.FeedbackSearchFragment;
-import com.idear.move.Fragment.MyFragment;
 import com.idear.move.Fragment.SpreadSearchFragment;
 import com.idear.move.Helper.RecordSQLiteOpenHelper;
 import com.idear.move.R;
-import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabSelectedListener ,
         FeedbackSearchFragment.OnFragmentInteractionListener,AllActivitySearchFragment.OnFragmentInteractionListener,

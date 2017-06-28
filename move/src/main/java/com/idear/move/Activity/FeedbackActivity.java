@@ -13,7 +13,6 @@ import com.idear.move.POJO.FeedBackDataModel;
 import com.idear.move.R;
 import com.idear.move.util.IntentSkipUtil;
 import com.yqq.idear.CustomRecyclerView;
-import com.yqq.idear.DataStateChangeCheck;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
 

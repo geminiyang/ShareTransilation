@@ -1,7 +1,6 @@
 package com.idear.move.Activity;
 
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -14,9 +13,7 @@ import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
 import com.idear.move.util.CheckValidUtil;
-import com.idear.move.util.CookiesSaveUtil;
 import com.idear.move.util.ErrorHandleUtil;
-import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.BaseActivity;

@@ -30,7 +30,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.idear.move.R;
-import com.idear.move.Service.ActivityManager;
 import com.idear.move.Thread.ImageUploadThread;
 import com.idear.move.myWidget.LoadingProgressDialog;
 import com.idear.move.network.DataGetInterface;

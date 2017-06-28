@@ -29,6 +29,9 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<MyDynamicsDataModel> modelList;
     private LayoutInflater mInflater;
     private int iconSize,screenSize,picHeight;
+    public OnViewClickListener onViewClickListener;//item子view点击事件
+    public OnItemClickListener onItemClickListener;//item点击事件
+    public OnItemLongClickListener onItemLongClickListener;//item长按事件
     public MyDynamicsRvAdapter(Context context , List<MyDynamicsDataModel> modelList) {
         this.mContext = context;
         this.modelList = modelList;
@@ -49,6 +52,7 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         // 给ViewHolder设置元素
+        final int tempPosition = position;
         MyDynamicsDataModel u = modelList.get(position);
         MyViewHolder mHolder = (MyViewHolder) holder;
         Glide.with(mContext).load(u.userIcon).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
@@ -82,6 +86,25 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             @Override
             public void onClick(View v) {
                 ToastUtil.getInstance().showToastTest(mContext);
+            }
+        });
+
+        //整个item绘制对应的点击事件
+        holder.itemView.setOnClickListener(new View.OnClickListener() {//item点击事件
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(tempPosition);
+                }
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {//item长按事件
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemLongClickListener != null) {
+                    onItemLongClickListener.onItemLongClick(tempPosition);
+                }
+                return true;
             }
         });
     }
@@ -118,4 +141,52 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    /**
+     * item中子view的点击事件（回调）
+     */
+    public interface OnViewClickListener {
+        /**
+         * @param position item position
+         * @param viewType 点击的view的类型，调用时根据不同的view传入不同的值加以区分
+         */
+        void onViewClick(int position, int viewType);
+    }
+
+    /**
+     * item点击事件
+     */
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    /**
+     * item长按事件
+     */
+    public interface OnItemLongClickListener {
+        void onItemLongClick(int position);
+    }
+
+    /**
+     * 设置item点击事件
+     * @param onItemClickListener
+     */
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    /**
+     * 设置item长按事件
+     * @param onItemLongClickListener
+     */
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    /**
+     * 设置子View的点击事件
+     * @param onViewClickListener
+     */
+    public void setOnViewClickListener(OnViewClickListener onViewClickListener) {
+        this.onViewClickListener = onViewClickListener;
+    }
 }

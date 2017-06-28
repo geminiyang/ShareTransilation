@@ -1,7 +1,6 @@
 package com.idear.move.Activity;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -11,10 +10,8 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -23,7 +20,6 @@ import android.widget.LinearLayout;
 
 import com.idear.move.Fragment.ActivityDetailFragment;
 import com.idear.move.Fragment.FeedbackContentFragment;
-import com.idear.move.Fragment.MyFragment;
 import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;

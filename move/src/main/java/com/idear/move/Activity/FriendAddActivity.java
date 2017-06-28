@@ -13,19 +13,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.idear.move.Adapter.CardLayoutThreeAdapter;
 import com.idear.move.Adapter.SearchToAddFriendsAdapter;
-import com.idear.move.POJO.CardLayoutThreeDataModel;
 import com.idear.move.POJO.SearchToAddFriendsDataModel;
 import com.idear.move.R;
 import com.idear.move.util.ToastUtil;
-import com.yqq.idear.DataStateChangeCheck;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
-import com.yqq.swipebackhelper.BaseActivity;
 
 import java.util.LinkedList;
 
-import static com.idear.move.Adapter.SearchToAddFriendsAdapter.*;
+import static com.idear.move.Adapter.SearchToAddFriendsAdapter.OnViewClickListener;
 
 public class FriendAddActivity extends MyBaseActivity implements View.OnClickListener,OnViewClickListener{
 

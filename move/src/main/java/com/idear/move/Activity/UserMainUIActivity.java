@@ -27,10 +27,10 @@ import android.widget.TextView;
 
 import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.GroupListFragment;
-import com.idear.move.Fragment.UserMessageFragment;
 import com.idear.move.Fragment.UserHomeFragment;
 import com.idear.move.Fragment.UserInformationFragment;
 import com.idear.move.Fragment.UserListFragment;
+import com.idear.move.Fragment.UserMessageFragment;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
 import com.idear.move.Thread.LogoutThread;
@@ -43,7 +43,6 @@ import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ObjectAnimatorUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
-import com.yqq.swipebackhelper.BaseActivity;
 import com.yqq.swipebackhelper.SwipeBackHelper;
 
 import java.util.ArrayList;

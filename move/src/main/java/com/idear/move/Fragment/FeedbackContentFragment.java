@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idear.move.Activity.FeedbackEveryOneDetailActivity;
 import com.idear.move.Adapter.CardLayoutOneAdapter;
 import com.idear.move.Adapter.FeedbackItemAdapter;
 import com.idear.move.POJO.CardLayoutOneDataModel;
@@ -153,6 +154,7 @@ public class FeedbackContentFragment extends Fragment implements FeedbackItemAda
     @Override
     public void onItemClick(int position) {
         //跳转到评论详细信息页面
+        IntentSkipUtil.skipToNextActivity(getActivity(), FeedbackEveryOneDetailActivity.class);
     }
 
     @Override

@@ -32,12 +32,10 @@ import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.idear.move.R;
 import com.idear.move.util.CameraUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ProgressDialogUtil;
-import com.idear.move.util.ScreenUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;

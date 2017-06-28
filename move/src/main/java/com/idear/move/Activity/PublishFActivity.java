@@ -46,7 +46,6 @@ import com.idear.move.util.ImageCheckoutUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.Logger;
 import com.idear.move.util.PictureUtil;
-import com.idear.move.util.ProgressDialogUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.swipebackhelper.SwipeBackHelper;
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.idear.move.Activity.DynamicPublishingActivity;
+import com.idear.move.Activity.DynamicsDetailActivity;
 import com.idear.move.Activity.FriendAddActivity;
 import com.idear.move.Adapter.MyDynamicsRvAdapter;
 import com.idear.move.POJO.MyDynamicsDataModel;
@@ -32,7 +33,7 @@ import java.util.List;
  * Created by user on 2017/5/3.
  */
 
-public class DynamicsFragment extends Fragment implements CustomRecyclerView.DataOperation{
+public class DynamicsFragment extends Fragment implements CustomRecyclerView.DataOperation, MyDynamicsRvAdapter.OnItemClickListener, MyDynamicsRvAdapter.OnViewClickListener {
 
     private static final String ARG = "arg";
 
@@ -107,6 +108,8 @@ public class DynamicsFragment extends Fragment implements CustomRecyclerView.Dat
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //初始化自定义适配器
         adapter = new MyDynamicsRvAdapter(getActivity(), dataModels);
+        ((MyDynamicsRvAdapter)adapter).setOnItemClickListener(this);
+        ((MyDynamicsRvAdapter)adapter).setOnViewClickListener(this);
         // specify（指定） an adapter (see also next example)
         myRecyclerView.setAdapter(adapter);
 
@@ -155,5 +158,16 @@ public class DynamicsFragment extends Fragment implements CustomRecyclerView.Dat
 
             }
         },dataModels).start();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        //跳转到对应的动态详情页
+        IntentSkipUtil.skipToNextActivity(getActivity(), DynamicsDetailActivity.class);
+    }
+
+    @Override
+    public void onViewClick(int position, int viewType) {
+
     }
 }

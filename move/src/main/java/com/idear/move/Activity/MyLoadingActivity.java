@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
-import com.yqq.swipebackhelper.BaseActivity;
 
 import java.lang.ref.WeakReference;
 

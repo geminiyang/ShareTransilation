@@ -50,7 +50,7 @@ public class DynamicsDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.modelList = modelList;
         mInflater = LayoutInflater.from(this.mContext);
         userIconSize = ScreenUtil.dip2px(mContext,40);
-        dynamicPicWidth = ScreenUtil.dip2px(mContext,300);
+        dynamicPicWidth = ScreenUtil.dip2px(mContext,240);
         dynamicPicHeight = ScreenUtil.dip2px(mContext,120);
         discussantIconSize = ScreenUtil.dip2px(mContext,40);
     }

@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.idear.move.Adapter.DynamicsDetailAdapter;
 import com.idear.move.POJO.AbstractDataModel;
@@ -24,28 +26,45 @@ import static com.idear.move.Adapter.DynamicsDetailAdapter.FAVORITE_ICON;
 import static com.idear.move.Adapter.DynamicsDetailAdapter.THUMB_UP_ICON_ONE;
 import static com.idear.move.Adapter.DynamicsDetailAdapter.THUMB_UP_ICON_THREE;
 
-public class DynamicsDetailActivity extends AppCompatActivity implements
+public class DynamicsDetailActivity extends MyBaseActivity implements
         DynamicsDetailAdapter.OnItemClickListener, DynamicsDetailAdapter.OnViewClickListener {
+    //UI相关
+    private ImageView iv_back;
 
+    //RecyclerView相关
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter adapter;
     private LinkedList<AbstractDataModel> dataModels = new LinkedList<>();
     private static final String picUrl = "http://img0.imgtn.bdimg.com/it/u=1928150351,2755968131&fm=26&gp=0.jpg";
     private long TimeStamp = 1497626094;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamics_detail);
-        init();
-        initRecyclerView();
-        addData();
+        initView();
+        initEvent();
     }
 
     /**
      * 初始化界面
      */
-    private void init() {
+    private void initView() {
         myRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        iv_back = (ImageView) findViewById(R.id.ic_arrow_back);
+    }
+
+    /**
+     * 初始化事件
+     */
+    private void initEvent() {
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        initRecyclerView();
     }
 
     //模拟数据初始化
@@ -80,11 +99,12 @@ public class DynamicsDetailActivity extends AppCompatActivity implements
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //初始化自定义适配器
         adapter = new DynamicsDetailAdapter(this, dataModels);
+        //填充数据
+        addData();
         ((DynamicsDetailAdapter)adapter).setOnItemClickListener(this);
         ((DynamicsDetailAdapter)adapter).setOnViewClickListener(this);
         // specify（指定） an adapter (see also next example)
         myRecyclerView.setAdapter(adapter);
-
         //网格布局管理器
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
