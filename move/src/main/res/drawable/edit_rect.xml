@@ -14,7 +14,7 @@
                 android:topRightRadius="5dp"/>
             <stroke
                 android:width="0.5dp"
-                android:color="#EFEFEF"/>
+                android:color="@color/select_grey"/>
         </shape>
     </item>
 </layer-list>

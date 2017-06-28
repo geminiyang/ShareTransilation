@@ -23,12 +23,11 @@ public class RefreshThread extends Thread {
     private DataGetInterface mListener;
 
     private LinkedList<MyDynamicsDataModel> dataModels;
-    private String[] states ={"[审核中]","[进行中]","[筹资中]","[已结束]"};
+    private String[] dynamicContents ={"aaaaaaaaa","aaaaaaaaa","aaaaaaaaa","aaaaaaaaa"};
     private int[] pics ={R.mipmap.family,R.mipmap.family,R.mipmap.family,R.mipmap.family};
     private int[] userIcons ={R.mipmap.paintbox,R.mipmap.paintbox,
             R.mipmap.paintbox,R.mipmap.paintbox};
-    private String[] commentOne = {"大丸子","一级棒"};
-    private List<String[]> lists = new ArrayList<>();
+    private long TimeStamp = 1498627673;
     // 服务器端一共多少条数据
     private static final int TOTAL_COUNT = 10;
     // 每一页展示多少条数据
@@ -37,7 +36,6 @@ public class RefreshThread extends Thread {
     public RefreshThread(DataGetInterface mListener, LinkedList<MyDynamicsDataModel> list) {
         this.mListener = mListener;
         this.dataModels = list;
-        lists.add(commentOne);
     }
 
     @Override
@@ -48,10 +46,10 @@ public class RefreshThread extends Thread {
                 break;
             }
             int index = dataModels.size()%4;
-            Logger.d("RefreshMode------"+index+"LIST SIZE : " + (dataModels.size()+1));
-            dataModels.addFirst(new MyDynamicsDataModel(userIcons[index],"下拉刷新获得",
-                    DateUtil.timeStampToStr(System.currentTimeMillis()),
-                    pics[index], states[index],lists.get(0)));
+            Logger.d("RefreshMode---"+index+"---LIST SIZE : " + (dataModels.size()+1));
+            dataModels.addFirst(new MyDynamicsDataModel(userIcons[index],"下拉刷新",
+                    DateUtil.receiveDate(TimeStamp),
+                    pics[index], dynamicContents[index]));
         }
         mListener.finishWork(new Object());
     }

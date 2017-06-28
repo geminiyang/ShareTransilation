@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +19,10 @@ import com.idear.move.R;
 import com.idear.move.Thread.LoadMoreThread;
 import com.idear.move.Thread.RefreshThread;
 import com.idear.move.network.DataGetInterface;
-import com.idear.move.util.DateUtil;
 import com.idear.move.util.IntentSkipUtil;
 import com.yqq.idear.CustomRecyclerView;
-import com.yqq.idear.DataStateChangeCheck;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by user on 2017/5/3.
@@ -50,15 +45,6 @@ public class DynamicsFragment extends Fragment implements CustomRecyclerView.Dat
     private CustomRecyclerView myRecyclerView;
     private RecyclerView.Adapter adapter;
     private LinkedList<MyDynamicsDataModel> dataModels = new LinkedList<>();
-    private String[] states ={"[审核中]","[进行中]","[筹资中]","[已结束]"};
-    private int[] pics ={R.mipmap.family,R.mipmap.family,R.mipmap.family,R.mipmap.family};
-    private int[] userIcons ={R.mipmap.paintbox,R.mipmap.paintbox,
-            R.mipmap.paintbox,R.mipmap.paintbox};
-    private String[] userNames = {"大丸子","二丸子","三丸子","四丸子"};
-    private String[] times = {"2017.6.11","2017.6.12","2017.6.13","2017.6.14"};
-    private String[] commentOne = {"大丸子","一级棒"};
-    private List<String[]> lists = new ArrayList<>();
-
     // 服务器端一共多少条数据
     private static final int TOTAL_COUNT = 10;
     // 每一页展示多少条数据
@@ -79,7 +65,6 @@ public class DynamicsFragment extends Fragment implements CustomRecyclerView.Dat
     }
 
     private void init(View view) {
-        lists.add(commentOne);
         addFriend = (ImageView) view.findViewById(R.id.iv_add_friend);
         publishDynamics = (ImageView) view.findViewById(R.id.iv_publish);
         myRecyclerView = (CustomRecyclerView) view.findViewById(R.id.my_recycler_view);

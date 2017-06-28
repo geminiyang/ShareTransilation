@@ -59,8 +59,8 @@
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:text="关注"
-            android:textColor="@drawable/register_text_selector"
-            android:background="@drawable/corner_button_template_register"
+            android:textColor="@color/tras_black"
+            android:background="@drawable/edit_rect"
             />
     </RelativeLayout>
     <RelativeLayout

@@ -10,6 +10,9 @@ import android.view.View;
 import com.idear.move.Adapter.MyDynamicsRvAdapter;
 import com.idear.move.POJO.MyDynamicsDataModel;
 import com.idear.move.R;
+import com.idear.move.Thread.LoadMoreThread;
+import com.idear.move.Thread.RefreshThread;
+import com.idear.move.network.DataGetInterface;
 import com.yqq.idear.CustomRecyclerView;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -23,15 +26,6 @@ public class MyDynamicsActivity extends BaseActivity implements CustomRecyclerVi
     private CustomRecyclerView myRecyclerView;
     private RecyclerView.Adapter adapter;
     private LinkedList<MyDynamicsDataModel> dataModels = new LinkedList<>();
-    private String[] states ={"[审核中]","[进行中]","[筹资中]","[已结束]"};
-    private int[] pics ={R.mipmap.family,R.mipmap.family,R.mipmap.family,R.mipmap.family};
-    private int[] userIcons ={R.mipmap.paintbox,R.mipmap.paintbox,
-            R.mipmap.paintbox,R.mipmap.paintbox};
-    private String[] userNames = {"大丸子","二丸子","三丸子","四丸子"};
-    private String[] times = {"2017.6.11","2017.6.12","2017.6.13","2017.6.14"};
-    private String[] commentOne = {"大丸子","一级棒"};
-    private List<String[]> lists = new ArrayList<>();
-
     // 服务器端一共多少条数据
     private static final int TOTAL_COUNT = 10;
     // 每一页展示多少条数据
@@ -43,7 +37,6 @@ public class MyDynamicsActivity extends BaseActivity implements CustomRecyclerVi
         TranslucentStatusSetting.setTranslucentStatusSetting(this, getResources().getColor(R.color.blue_light));
         setContentView(R.layout.activity_my_dynamics);
         initView();
-        lists.add(commentOne);
         initRecyclerView();
     }
 
@@ -91,15 +84,16 @@ public class MyDynamicsActivity extends BaseActivity implements CustomRecyclerVi
      */
     @Override
     public void onLoadMore() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
+        new LoadMoreThread(new DataGetInterface() {
+            @Override
+            public void finishWork(Object obj) {
             }
-            int index = dataModels.size()%4;
-            Log.d("info","loadMode------"+index+"LIST SIZE : " + dataModels.size()+1);
-            dataModels.add(new MyDynamicsDataModel(userIcons[index],userNames[index],times[index],
-                    pics[index], states[index],lists.get(0)));
-        }
+
+            @Override
+            public void interrupt(Exception e) {
+
+            }
+        }, dataModels).start();
     }
 
     /**
@@ -107,14 +101,16 @@ public class MyDynamicsActivity extends BaseActivity implements CustomRecyclerVi
      */
     @Override
     public void onRefresh() {
-        for (int i = 0; i < REQUEST_COUNT; i++) {
-            if (dataModels.size() >= TOTAL_COUNT) {
-                break;
+        new RefreshThread(new DataGetInterface() {
+            @Override
+            public void finishWork(Object obj) {
+                myRecyclerView.finishComplete();
             }
-            int index = dataModels.size()%4;
-            Log.d("info","refreshMode------"+index + "LIST SIZE : " + dataModels.size()+1);
-            dataModels.addFirst(new MyDynamicsDataModel(userIcons[index],userNames[index],times[index],
-                    pics[index], states[index],lists.get(0)));
-        }
+
+            @Override
+            public void interrupt(Exception e) {
+
+            }
+        },dataModels).start();
     }
 }

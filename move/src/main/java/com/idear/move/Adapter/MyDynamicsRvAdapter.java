@@ -28,7 +28,7 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context mContext;
     private List<MyDynamicsDataModel> modelList;
     private LayoutInflater mInflater;
-    private int iconSize,screenSize,picHeight;
+    private int iconSize,picWidth,picHeight;
     public OnViewClickListener onViewClickListener;//item子view点击事件
     public OnItemClickListener onItemClickListener;//item点击事件
     public OnItemLongClickListener onItemLongClickListener;//item长按事件
@@ -36,9 +36,9 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mContext = context;
         this.modelList = modelList;
         mInflater = LayoutInflater.from(this.mContext);
-        iconSize = ScreenUtil.dip2px(mContext,32);
-        screenSize = ScreenUtil.getScreenWidth(mContext) - ScreenUtil.dip2px(mContext,10);
-        picHeight = ScreenUtil.dip2px(mContext,220);
+        iconSize = ScreenUtil.dip2px(mContext,48);
+        picWidth = ScreenUtil.dip2px(mContext,250);
+        picHeight = ScreenUtil.dip2px(mContext,125);
     }
 
 
@@ -55,20 +55,14 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         final int tempPosition = position;
         MyDynamicsDataModel u = modelList.get(position);
         MyViewHolder mHolder = (MyViewHolder) holder;
-        Glide.with(mContext).load(u.userIcon).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+        Glide.with(mContext).load(u.getUserIcon()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
                 .override(iconSize,iconSize).centerCrop().into(mHolder.mUserIcon);
-        mHolder.mUsername.setText(u.username);
-        mHolder.mTime.setText(u.time);
+        mHolder.mUsername.setText(u.getUsername());
+        mHolder.mTime.setText(u.getTime());
         //设置图像
-        Glide.with(mContext).load(u.pic).override(screenSize,picHeight).centerCrop().into(mHolder.mPic);
-        mHolder.mState.setText(u.state);
+        Glide.with(mContext).load(u.getPic()).override(picWidth,picHeight).centerCrop().into(mHolder.mPic);
+        mHolder.mDynamicContent.setText(u.getDynamicContent());
         mHolder.mThumbUpIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.getInstance().showToastTest(mContext);
-            }
-        });
-        mHolder.mCommentIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ToastUtil.getInstance().showToastTest(mContext);
@@ -80,8 +74,6 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ToastUtil.getInstance().showToastTest(mContext);
             }
         });
-        mHolder.commentTextView.setNameLabelText(u.commentList[0]);
-        mHolder.commentTextView.setCommentContentText(u.commentList[1]);
         mHolder.mMoreContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,9 +114,8 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     //重写的自定义ViewHolder
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView mUsername,mTime,mState,mMoreContent;
-        private ImageView mUserIcon,mPic,mFavoriteIcon,mCommentIcon,mThumbUpIcon;
-        private CommentTextView commentTextView;
+        private TextView mUsername,mTime,mDynamicContent,mMoreContent;
+        private ImageView mUserIcon,mPic,mFavoriteIcon,mThumbUpIcon;
 
         private MyViewHolder(View v) {
             super(v);
@@ -132,11 +123,9 @@ public class MyDynamicsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mUsername = (TextView)v.findViewById(R.id.tv_username);
             mTime = (TextView)v.findViewById(R.id.tv_time);
             mPic = (ImageView)v.findViewById(R.id.pic);
-            mState= (TextView)v.findViewById(R.id.state);
-            mThumbUpIcon = (ImageView) v.findViewById(R.id.iv_thumbUpIcon);
-            mCommentIcon = (ImageView) v.findViewById(R.id.iv_commentIcon);
-            mFavoriteIcon = (ImageView) v.findViewById(R.id.iv_favoriteIcon);
-            commentTextView = (CommentTextView) v.findViewById(R.id.commentTextView);
+            mDynamicContent= (TextView)v.findViewById(R.id.dynamicContent);
+            mThumbUpIcon = (ImageView) v.findViewById(R.id.thumbUpIcon);
+            mFavoriteIcon = (ImageView) v.findViewById(R.id.favoriteIcon);
             mMoreContent = (TextView) v.findViewById(R.id.tv_more_content);
         }
     }
