@@ -280,20 +280,9 @@
                     android:clickable="true"
                     />
             </RelativeLayout>
-            <Button
-                android:id="@+id/log_out_bt"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/corner_button_template_register"
-                android:text="退出登录"
-                android:textColor="@drawable/register_text_selector"
-                />
             <View
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="50dp"
                 />
         </LinearLayout>
     </ScrollView>

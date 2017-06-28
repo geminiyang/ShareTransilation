@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.idear.move">
 
+    <!--权限的添加-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -12,7 +13,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- 全局注册 -->
+    <!-- 全局注册广播 -->
     <!-- <receiver android:name="NetBroadCastReceiver"> -->
     <!-- <intent-filter> -->
     <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> -->
@@ -27,6 +28,7 @@
         android:roundIcon="@drawable/move"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--普通用户Activity-->
         <activity
             android:name=".Activity.MyLoadingActivity"
             android:theme="@style/FirstPageStyle" />
@@ -52,12 +54,6 @@
             android:name=".Activity.ForgetPasswordActivity"
             android:label=""
             android:theme="@style/otherPageStyle" />
-        <activity android:name=".Activity.MenuActivity" />
-        <activity
-            android:name=".SponsorActivity.SponsorMainUIActivity"
-            android:label=""
-            android:theme="@style/otherPageStyle"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -117,31 +113,16 @@
             android:label=""
             android:theme="@style/otherPageStyle"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.UserRegisterNextStepActivity"
-            android:theme="@style/otherPageStyle" />
-        <activity
-            android:name=".SponsorActivity.SponsorLoginActivity"
-            android:label="@string/title_activity_sponsor_login"
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.UserSearchActivity"
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.MyDynamicsActivity"
-            android:theme="@style/otherPageStyle" />
-        <activity
-            android:name=".SponsorActivity.SponsorRegisterNextStepActivity"
-            android:theme="@style/otherPageStyle" />
-        <activity
-            android:name=".SponsorActivity.SponsorRegisterActivity"
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.MyFavoritesActivity"
@@ -154,10 +135,6 @@
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.UserUpdatePasswordActivity"
-            android:theme="@style/otherPageStyle" />
-        <!-- 补间动画测试类 -->
-        <activity
-            android:name=".Activity.AnimationTestActivity"
             android:theme="@style/otherPageStyle" />
         <activity
             android:name=".Activity.FansAndAttentionActivity"
@@ -174,6 +151,36 @@
         <activity android:name=".Activity.FeedbackEveryOneDetailActivity"
             android:theme="@style/otherPageStyle"
             />
-    </application>
+        <!--赞助商Activity-->
+        <activity
+            android:name=".SponsorActivity.SponsorMainUIActivity"
+            android:label=""
+            android:theme="@style/otherPageStyle"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 启动 -->
+        </activity>
+        <activity
+            android:name=".SponsorActivity.SponsorRegisterNextStepActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".SponsorActivity.SponsorRegisterActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".SponsorActivity.SponsorLoginActivity"
+            android:label="@string/title_activity_sponsor_login"
+            android:theme="@style/otherPageStyle" />
+        <activity
+            android:name=".SponsorActivity.PublishSActivity"
+            android:theme="@style/otherPageStyle" />
+        <!-- 补间动画测试类 -->
+        <activity
+            android:name=".Activity.AnimationTestActivity"
+            android:theme="@style/otherPageStyle" />
+        <activity android:name=".Activity.MenuActivity" />
+    </application>
 </manifest>

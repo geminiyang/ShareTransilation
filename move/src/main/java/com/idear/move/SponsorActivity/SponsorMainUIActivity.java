@@ -1,40 +1,22 @@
 package com.idear.move.SponsorActivity;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import com.idear.move.Activity.DynamicPublishingActivity;
-import com.idear.move.Activity.FriendAddActivity;
-import com.idear.move.Activity.PublishFActivity;
-import com.idear.move.Activity.PublishRActivity;
-import com.idear.move.Activity.PublishRFActivity;
-import com.idear.move.Activity.UserLoginActivity;
-import com.idear.move.Activity.UserMainUIActivity;
 import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.GroupListFragment;
-import com.idear.move.Fragment.UserMessageFragment;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
 import com.idear.move.SponsorFragment.SponsorHomeFragment;
@@ -47,7 +29,6 @@ import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
 import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
-import com.idear.move.util.ObjectAnimatorUtil;
 import com.idear.move.util.ToastUtil;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
 import com.yqq.swipebackhelper.BaseActivity;
@@ -74,10 +55,6 @@ public class SponsorMainUIActivity extends BaseActivity implements
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mTabs = new ArrayList<Fragment>();
-
-    private PopupWindow popup;
-    private FrameLayout fl_bt1,fl_bt2,fl_bt3;
-    private TextView tv1,tv2,tv3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +144,7 @@ public class SponsorMainUIActivity extends BaseActivity implements
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        IntentSkipUtil.skipToNextActivity(view.getRootView().getContext(),PublishRFActivity.class);
+                        IntentSkipUtil.skipToNextActivity(view.getRootView().getContext(),PublishSActivity.class);
                     }
                 }).start();
             }

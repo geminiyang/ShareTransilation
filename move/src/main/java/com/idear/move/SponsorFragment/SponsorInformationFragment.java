@@ -1,13 +1,10 @@
 package com.idear.move.SponsorFragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -15,7 +12,6 @@ import android.widget.ScrollView;
 import com.idear.move.Activity.UserDetailInformationActivity;
 import com.idear.move.Activity.UserSettingActivity;
 import com.idear.move.R;
-import com.idear.move.Service.ActivityManager;
 import com.idear.move.util.IntentSkipUtil;
 
 
@@ -31,7 +27,6 @@ public class SponsorInformationFragment extends Fragment implements View.OnClick
     private RelativeLayout rllayout;//含有图片的那个相对布局，顶部控件
 
     private ImageView ivComeUserInfo,ivComeUserSetting;
-    private Button loginOutBtn;
 
     public static SponsorInformationFragment newInstance(String arg){
         SponsorInformationFragment fragment = new SponsorInformationFragment();
@@ -61,9 +56,6 @@ public class SponsorInformationFragment extends Fragment implements View.OnClick
      * 初始化控件
      */
     private void init(View view) {
-
-        loginOutBtn = (Button) view.findViewById(R.id.log_out_bt);
-
         rllayout = (RelativeLayout)view.findViewById(R.id.rllayout);
 
         myScrollView = (ScrollView)view.findViewById(R.id.myScrollView);
@@ -83,8 +75,6 @@ public class SponsorInformationFragment extends Fragment implements View.OnClick
     private void initEvent() {
         ivComeUserInfo.setOnClickListener(this);
         ivComeUserSetting.setOnClickListener(this);
-
-        loginOutBtn.setOnClickListener(this);
     }
 
     @Override
@@ -97,53 +87,8 @@ public class SponsorInformationFragment extends Fragment implements View.OnClick
             case R.id.image_come_setting:
                 IntentSkipUtil.skipToNextActivity(getActivity(),UserSettingActivity.class);
                 break;
-            case R.id.log_out_bt:
-                loginOutOP();
-                break;
             default:
                 break;
         }
     }
-
-    /**
-     * 退出登录操作
-     */
-    private void loginOutOP() {
-        AlertDialog.Builder dialog1 = new AlertDialog.Builder(getActivity());
-        dialog1.setTitle("Tips");
-        dialog1.setMessage("Are you sure quit the App?");
-        dialog1.setIcon(android.R.drawable.ic_dialog_email);
-        dialog1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                getActivity().finish();
-            }
-        });
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setIcon(android.R.drawable.ic_dialog_info);
-        dialog.setInverseBackgroundForced(true);
-        dialog.setTitle("注销");
-        dialog.setMessage("你确定要退出当前程序？");
-        dialog.setPositiveButton("确定",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityManager.getInstance().finishAllActivities();
-                        getActivity().finish();
-                    }
-                });
-        dialog.setNegativeButton("取消",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        //可以如此，也可以直接 用dialog 来执行show()
-        AlertDialog apk = dialog.create();
-        apk.show();
-    }
-
 }
