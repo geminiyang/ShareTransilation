@@ -31,7 +31,7 @@ import com.idear.move.Activity.MyDynamicsActivity;
 import com.idear.move.Activity.MyFavoritesActivity;
 import com.idear.move.Activity.UserDetailInformationActivity;
 import com.idear.move.Activity.UserSettingActivity;
-import com.idear.move.Helper.ImgSQLiteOpenHelper;
+import com.idear.move.Helper.RecordSQLiteOpenHelper;
 import com.idear.move.POJO.FansViewModel;
 import com.idear.move.R;
 import com.idear.move.myWidget.RoundImageViewByXfermode;
@@ -58,11 +58,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-/**
- * Created by user on 2017/4/21.
- */
 
 public class UserInformationFragment extends Fragment implements View.OnClickListener {
 
@@ -138,9 +133,8 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     private MyHandler handler = new MyHandler(this);
 
     /*数据库变量*/
-    private ImgSQLiteOpenHelper helper ;
+    private RecordSQLiteOpenHelper helper ;
     private SQLiteDatabase db;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(rootView ==null) {
@@ -149,7 +143,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
             initGirdView(rootView);
             startFirstAsyncTask();
             //实例化数据库SQLiteOpenHelper子类对象
-            helper = new ImgSQLiteOpenHelper(this.getContext());
+            helper = new  RecordSQLiteOpenHelper(this.getContext());
         }
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {

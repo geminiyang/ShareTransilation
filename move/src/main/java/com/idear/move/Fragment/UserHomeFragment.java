@@ -27,10 +27,6 @@ import com.idear.move.myWidget.HSVLinearLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by user on 2017/4/26.
- */
-
 public class UserHomeFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG = "arg";
@@ -125,6 +121,7 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
 
     private void initView(View view) {
 
+        //水平的ScrollView
         mGalleryLayoutOne = (HSVLinearLayout) view.findViewById(R.id.my_gallery_one);
         mGalleryLayoutTwo= (HSVLinearLayout) view.findViewById(R.id.my_gallery_two);
         mGalleryLayoutThree = (HSVLinearLayout) view.findViewById(R.id.my_gallery_three);

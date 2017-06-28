@@ -33,7 +33,7 @@ import com.yqq.swipebackhelper.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserSearchActivity extends BaseActivity implements TabLayout.OnTabSelectedListener ,
+public class UserSearchActivity extends MyBaseActivity implements TabLayout.OnTabSelectedListener ,
         FeedbackSearchFragment.OnFragmentInteractionListener,AllActivitySearchFragment.OnFragmentInteractionListener,
         SpreadSearchFragment.OnFragmentInteractionListener {
 

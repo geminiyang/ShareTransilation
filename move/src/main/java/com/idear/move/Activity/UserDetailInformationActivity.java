@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.idear.move.Helper.ImgSQLiteOpenHelper;
+import com.idear.move.Helper.RecordSQLiteOpenHelper;
 import com.idear.move.POJO.UserInfoViewModel;
 import com.idear.move.R;
 import com.idear.move.Thread.ImageUploadThread;
@@ -148,7 +148,7 @@ public class UserDetailInformationActivity extends MyBaseActivity {
     private MyHandler handler = new MyHandler(this);
 
     /*数据库变量*/
-    private ImgSQLiteOpenHelper helper ;
+    private RecordSQLiteOpenHelper helper ;
     private SQLiteDatabase db;
 
     @Override
@@ -161,7 +161,7 @@ public class UserDetailInformationActivity extends MyBaseActivity {
         startFirstAsyncTask();//开启第一个异步任务
 
         //实例化数据库SQLiteOpenHelper子类对象
-        helper = new ImgSQLiteOpenHelper(this);
+        helper = new  RecordSQLiteOpenHelper(this);
     }
     /**
      * 开启第一个异步任务

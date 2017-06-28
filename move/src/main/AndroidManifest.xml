@@ -31,7 +31,9 @@
         <!--普通用户Activity-->
         <activity
             android:name=".Activity.MyLoadingActivity"
-            android:theme="@style/FirstPageStyle" />
+            android:theme="@style/FirstPageStyle" >
+
+        </activity>
         <activity
             android:name=".Activity.SelectActivity"
             android:launchMode="singleTop"

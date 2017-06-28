@@ -190,7 +190,7 @@ public class PublishFActivity extends MyBaseActivity {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(PublishFActivity.this);
                 dialog.setIcon(null);
                 dialog.setInverseBackgroundForced(true);
-                dialog.setTitle("注销");
+                dialog.setTitle("退出");
                 dialog.setMessage("你确定要退出筹资申请？");
                 dialog.setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
@@ -351,7 +351,7 @@ public class PublishFActivity extends MyBaseActivity {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setIcon(null);
             dialog.setInverseBackgroundForced(true);
-            dialog.setTitle("注销");
+            dialog.setTitle("退出");
             dialog.setMessage("你确定要退出筹资申请？");
             dialog.setPositiveButton("确定",
                     new DialogInterface.OnClickListener() {

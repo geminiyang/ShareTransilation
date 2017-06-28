@@ -1,8 +1,5 @@
 package com.idear.move.SponsorActivity;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,14 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckedTextView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.idear.move.Activity.MoveProtocolWebViewActivity;
 import com.idear.move.Activity.MyBaseActivity;
@@ -37,11 +32,9 @@ import com.idear.move.myWidget.LoadingProgressDialog;
 import com.idear.move.network.DataGetInterface;
 import com.idear.move.network.HttpPath;
 import com.idear.move.network.ResultType;
-import com.idear.move.util.AlertDialogUtil;
 import com.idear.move.util.CameraUtil;
 import com.idear.move.util.CheckValidUtil;
 import com.idear.move.util.CookiesSaveUtil;
-import com.idear.move.util.DateUtil;
 import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.FileSaveUtil;
 import com.idear.move.util.ImageCheckoutUtil;
@@ -56,7 +49,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -194,7 +186,7 @@ public class PublishSActivity extends MyBaseActivity {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(PublishSActivity.this);
                 dialog.setIcon(null);
                 dialog.setInverseBackgroundForced(true);
-                dialog.setTitle("注销");
+                dialog.setTitle("退出");
                 dialog.setMessage("你确定要退出推广发布？");
                 dialog.setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
@@ -369,7 +361,7 @@ public class PublishSActivity extends MyBaseActivity {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setIcon(null);
             dialog.setInverseBackgroundForced(true);
-            dialog.setTitle("注销");
+            dialog.setTitle("退出");
             dialog.setMessage("你确定要退出推广发布？");
             dialog.setPositiveButton("确定",
                     new DialogInterface.OnClickListener() {

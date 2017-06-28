@@ -24,6 +24,8 @@ public class RecordSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //打开数据库，建立了一个叫records的表，里面只有一列name来存储历史记录：
         db.execSQL("create table records(id integer primary key autoincrement,name varchar(200))");
+        //打开数据库，建立了一个叫imgRecords的表，里面只有一列name来存储历史记录：
+        db.execSQL("create table imgRecords(id integer ,picUrl varchar(200))");
     }
 
     @Override

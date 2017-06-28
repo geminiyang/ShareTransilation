@@ -223,7 +223,7 @@ public class PublishRFActivity extends MyBaseActivity {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(PublishRFActivity.this);
                 dialog.setIcon(null);
                 dialog.setInverseBackgroundForced(true);
-                dialog.setTitle("注销");
+                dialog.setTitle("退出");
                 dialog.setMessage("你确定要退出招募筹资申请？");
                 dialog.setPositiveButton("确定",
                         new DialogInterface.OnClickListener() {
@@ -438,7 +438,7 @@ public class PublishRFActivity extends MyBaseActivity {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setIcon(null);
             dialog.setInverseBackgroundForced(true);
-            dialog.setTitle("注销");
+            dialog.setTitle("退出");
             dialog.setMessage("你确定要退出招募筹资申请？");
             dialog.setPositiveButton("确定",
                     new DialogInterface.OnClickListener() {
