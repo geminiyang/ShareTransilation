@@ -135,6 +135,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
     /*数据库变量*/
     private RecordSQLiteOpenHelper helper ;
     private SQLiteDatabase db;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(rootView ==null) {

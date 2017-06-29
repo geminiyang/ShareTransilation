@@ -45,4 +45,6 @@ public class HttpPath {
     public static String getSPath() {return "http://idear.party/api/ad/advertise";}
 
     public static String getPath() {return "http://idear.party/";}
+
+    public static String getHomeInitialPath() { return "http://idear.party/api/index/index";}
 }

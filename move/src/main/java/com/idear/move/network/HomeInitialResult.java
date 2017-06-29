@@ -1,6 +1,6 @@
 package com.idear.move.network;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 
 /**
  * 作者:geminiyang on 2017/6/18.
@@ -8,12 +8,12 @@ import com.google.gson.JsonObject;
  * github地址：https://github.com/geminiyang/ShareTransilation
  */
 
-public class ViewModelResult {
+public class HomeInitialResult {
     private String status;
     private String message;
-    private JsonObject data;
+    private JsonArray data;
 
-    public ViewModelResult(String status, String message, JsonObject data) {
+    public HomeInitialResult(String status, String message, JsonArray data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -35,11 +35,11 @@ public class ViewModelResult {
         this.message = message;
     }
 
-    public JsonObject getData() {
+    public JsonArray getData() {
         return data;
     }
 
-    public void setData(JsonObject data) {
+    public void setData(JsonArray data) {
         this.data = data;
     }
 }

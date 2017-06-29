@@ -7,8 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.idear.move.Activity.ActivityDetailActivity;
+import com.idear.move.Fragment.UserHomeFragment;
+import com.idear.move.POJO.HomeInitialItem;
 import com.idear.move.R;
+import com.idear.move.network.HttpPath;
 import com.idear.move.util.IntentSkipUtil;
 import com.idear.move.util.ToastUtil;
 
@@ -29,12 +33,13 @@ public class BannerPagerAdapter extends PagerAdapter{
     /**
      * 图像列表
      */
-    private List<Integer> pictureList = new ArrayList<>();
+    private List<HomeInitialItem> pictureList = new ArrayList<>();
+
     /**
      * 默认轮播个数，设置一个较大值保证滑动滑动范围
      */
     public static final int BANNER_MAX_SIZE = 1000;
-    public BannerPagerAdapter(Context mContext,List<Integer> pictureList){
+    public BannerPagerAdapter(Context mContext,List<HomeInitialItem> pictureList){
         this.mContext = mContext;
         this.pictureList = pictureList;
     }
@@ -59,16 +64,17 @@ public class BannerPagerAdapter extends PagerAdapter{
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.banner_item,container,false);
-        ImageView iv = (ImageView) view.findViewById(R.id.imageView_banner_item);
+        final ImageView iv = (ImageView) view.findViewById(R.id.imageView_banner_item);
         //进行取余操作,这样就可以获取到符合数据源取值范围的位置,从而得到想要获取展示的数据.
-        position = position%pictureList.size();
+        position = position % pictureList.size();
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IntentSkipUtil.skipToNextActivity(mContext, ActivityDetailActivity.class);
             }
         });
-        iv.setImageResource(pictureList.get(position));
+        //iv.setImageResource(R.drawable.family);
+        Glide.with(mContext).load(HttpPath.getPath() + pictureList.get(position).getPic_dir()).into(iv);
         container.addView(view);
         return view;
     }

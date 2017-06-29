@@ -1,5 +1,6 @@
 package com.idear.move.Thread;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.idear.move.Adapter.BannerPagerAdapter;
+import com.idear.move.Fragment.UserHomeFragment;
+import com.idear.move.POJO.HomeInitialItem;
 import com.idear.move.R;
 import com.idear.move.myWidget.IndicatorView;
 
@@ -20,7 +23,7 @@ import java.util.Timer;
  * 封装Fragment中的初始化操作
  */
 
-public class MyHomeLoadingAsyncTask extends AsyncTask<View,Void,Void> {
+public class MyHomeLoadingAsyncTask extends AsyncTask<Void,Void,Void> {
 
     /**
      * 轮播图
@@ -75,20 +78,26 @@ public class MyHomeLoadingAsyncTask extends AsyncTask<View,Void,Void> {
     /**
      * 图像列表
      */
-    private List<Integer> pictureList = new ArrayList<>();
+    private List<HomeInitialItem> pictureList = new ArrayList<>();
 
+    /**
+     * 上下文参数
+     */
+    private Context context;
+    public MyHomeLoadingAsyncTask(Context context,View view,List<HomeInitialItem> list) {
+        this.context = context;
+        this.pictureList = list;
+        initView(view);
+    }
+
+    @Override
+    protected Void doInBackground(Void... params) {
+        return null;
+    }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-    }
-
-    @Override
-    protected Void doInBackground(View... params) {
-        //在这里执行初始化操作
-        initData();
-        initView(params[0]);
-        return null;
     }
 
     @Override
@@ -104,7 +113,7 @@ public class MyHomeLoadingAsyncTask extends AsyncTask<View,Void,Void> {
     public void initView(View view){
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager_banner);
         mIndicatorView = (IndicatorView) view.findViewById(R.id.indicator_view_banner);
-        bannerPagerAdapter = new BannerPagerAdapter(view.getContext(),pictureList);
+        bannerPagerAdapter = new BannerPagerAdapter(context,pictureList);
         mViewPager.setAdapter(bannerPagerAdapter);
         mIndicatorView.setViewPager(pictureList.size(),mViewPager);
         // 设置默认起始位置,使开始可以向左边滑动
@@ -156,12 +165,6 @@ public class MyHomeLoadingAsyncTask extends AsyncTask<View,Void,Void> {
             //设置循环时间,第二个时间为延迟时间，第三个为持续时间
             timer.schedule(bannerTimerTask,CIRCLE_TIME,CIRCLE_TIME);
         }
-    }
-
-    private void initData() {
-        pictureList.add(R.drawable.family);
-        pictureList.add(R.drawable.family);
-        pictureList.add(R.drawable.family);
     }
 
     public void quitBannerTask(){
