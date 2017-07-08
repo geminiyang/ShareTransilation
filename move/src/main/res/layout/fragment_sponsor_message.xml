@@ -9,8 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </com.idear.move.myWidget.NoScrollViewPager>
-        <FrameLayout
-            android:padding="3dp"
+        <RelativeLayout
             android:id="@+id/tab_layout_fl_message"
             android:background="@color/blue_light"
             android:layout_width="match_parent"
@@ -19,15 +18,14 @@
             android:layout_alignParentStart="true">
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tab_layout_message"
-                    android:layout_width="200dp"
-                    android:layout_height="40dp"
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/toolBarHeight"
                     android:layout_gravity="center"
-                    app:tabBackground="@drawable/bg_tab_round_corner_selector_two"
-                    app:tabTextAppearance="@style/TabLayoutTextStyle"
-                    app:tabIndicatorHeight="1dp"
-                    app:tabIndicatorColor="@color/blue_light"
-                    app:tabSelectedTextColor="@color/blue_light"
-                    app:tabTextColor="@color/white">
+                    app:tabTextAppearance="@style/TabLayoutNormalTextStyle"
+                    app:tabIndicatorHeight="2.5dp"
+                    app:tabIndicatorColor="@color/white"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextColor="@color/normal_white">
                 </android.support.design.widget.TabLayout>
-        </FrameLayout>
+        </RelativeLayout>
 </RelativeLayout>

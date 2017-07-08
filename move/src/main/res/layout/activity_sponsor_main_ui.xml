@@ -4,57 +4,58 @@
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey"
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--距离一个系统状态栏的高度是因为要状态栏可以透明显示,将marginTop设置为22dp（状态栏的高度）-->
     <!--android:layout_marginTop="24dp"-->
-    <RadioGroup
-        android:id="@+id/rd_group"
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/fl_rg_layout"
         android:layout_alignParentBottom="true"
-        android:layout_height="56dp"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/home"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_home"
-            android:text="首页"/>
-
-        <RadioButton
-            android:id="@+id/msg"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_msg"
-            android:text="消息"/>
-
-        <RadioButton
-            android:id="@+id/locate"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_locate_two"
-            android:visibility="invisible"
-            android:text="定位"/>
-
-        <RadioButton
-            android:id="@+id/dynamic"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_dynamic"
-            android:text="管理"/>
-
-        <com.idear.move.myWidget.TipButton
-            android:id="@+id/my"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/tab_menu_my"
-            android:text="我的"
-            />
-    </RadioGroup>
-
-    <View
-        android:id="@+id/div_tab_bar"
         android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:background="@color/_grey"
-        android:layout_above="@id/rd_group"/>
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/rd_group"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/home"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_home"
+                android:text="首页"/>
+
+            <RadioButton
+                android:id="@+id/msg"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_msg"
+                android:text="消息"/>
+
+            <RadioButton
+                android:id="@+id/locate"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_locate_two"
+                android:text="定位"/>
+
+            <RadioButton
+                android:id="@+id/dynamic"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_dynamic"
+                android:text="管理"/>
+
+            <com.idear.move.myWidget.TipButton
+                android:id="@+id/my"
+                style="@style/tab_menu_item"
+                android:drawableTop="@drawable/tab_menu_my"
+                android:text="我的"
+                />
+        </RadioGroup>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/select_grey"
+            />
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/pan_bg"
@@ -80,7 +81,7 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rd_group"
+        android:layout_above="@id/fl_rg_layout"
         android:layout_below="@id/toolbar"
         android:background="@color/transparent">
 

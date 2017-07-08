@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -26,7 +27,6 @@ import com.idear.move.Activity.FeedbackActivity;
 import com.idear.move.Activity.SpreadActivity;
 import com.idear.move.Activity.UserSearchActivity;
 import com.idear.move.Adapter.HSVAdapter;
-import com.idear.move.Fragment.UserHomeFragment;
 import com.idear.move.POJO.HomeInitialItem;
 import com.idear.move.R;
 import com.idear.move.Thread.MyHomeLoadingAsyncTask;
@@ -114,6 +114,7 @@ public class SponsorHomeFragment extends Fragment implements View.OnClickListene
     }
 
     //正在加载异步任务相关
+    private ScrollView myScrollView;
     private RelativeLayout LoadingFace;
     private ProgressBar progressBar;
     private TextView loadingText;
@@ -183,7 +184,9 @@ public class SponsorHomeFragment extends Fragment implements View.OnClickListene
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        myHomeLoadingAsyncTask.quitBannerTask();
+        if(myHomeLoadingAsyncTask!=null) {
+            myHomeLoadingAsyncTask.quitBannerTask();
+        }
     }
 
     @Override
@@ -230,6 +233,7 @@ public class SponsorHomeFragment extends Fragment implements View.OnClickListene
         searchImageView = (ImageView) view.findViewById(R.id.iv_search);
 
         //异步处理任务相关
+        myScrollView = (ScrollView) view.findViewById(R.id.myScrollView);
         LoadingFace = (RelativeLayout) view.findViewById(R.id.loading_face);
         loadingText = (TextView) view.findViewById(R.id.tv_progressBar);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
@@ -422,6 +426,7 @@ public class SponsorHomeFragment extends Fragment implements View.OnClickListene
         protected void onPostExecute(List<HomeInitialItem> viewModels){
             super.onPostExecute(viewModels);
             if(viewModels != null) {
+                ((View)myScrollView).setVisibility(View.VISIBLE);
                 LoadingFace.setVisibility(View.GONE);
 
                 int size = viewModels.size();
@@ -442,6 +447,8 @@ public class SponsorHomeFragment extends Fragment implements View.OnClickListene
                 loadingText.setText("服务器出现错误");
                 loadingText.setTextColor(Color.RED);
                 progressBar.setVisibility(View.INVISIBLE);
+                //另一个布局Gone
+                ((View)myScrollView).setVisibility(View.GONE);
             }
         }
 

@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
+
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -19,6 +20,7 @@ import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.GroupListFragment;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
+import com.idear.move.SponsorFragment.MyManagementFragment;
 import com.idear.move.SponsorFragment.SponsorHomeFragment;
 import com.idear.move.SponsorFragment.SponsorInformationFragment;
 import com.idear.move.SponsorFragment.SponsorMessageFragment;
@@ -42,7 +44,7 @@ public class SponsorMainUIActivity extends BaseActivity implements
         GroupListFragment.OnListFragmentInteractionListener {
     private RadioButton dynamic,home,locate,msg;
     private TipButton my;
-    private DynamicsFragment f3;
+    private MyManagementFragment f3;
     private SponsorMessageFragment f2;
     private SponsorInformationFragment f4;
     private SponsorHomeFragment f1;
@@ -79,7 +81,7 @@ public class SponsorMainUIActivity extends BaseActivity implements
             f2 = SponsorMessageFragment.newInstance("消息");
         }
         if(f3==null){
-            f3 = DynamicsFragment.newInstance("管理");
+            f3 = MyManagementFragment.newInstance("管理");
         }
         if(f4==null) {
             f4 = SponsorInformationFragment.newInstance("我的");

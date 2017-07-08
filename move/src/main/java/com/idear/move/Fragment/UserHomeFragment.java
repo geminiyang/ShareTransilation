@@ -179,7 +179,9 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        myHomeLoadingAsyncTask.quitBannerTask();
+        if(myHomeLoadingAsyncTask!=null) {
+            myHomeLoadingAsyncTask.quitBannerTask();
+        }
     }
 
     @Override

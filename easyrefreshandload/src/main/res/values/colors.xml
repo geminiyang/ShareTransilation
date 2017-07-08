@@ -34,7 +34,7 @@
     <color name="black">#000000</color>
     <!-- 白色 -->
     <color name="white">#FFFFFF</color>
-
+    <color name="normal_white">#E0E0E0</color>
     <!-- 浅灰色 -->
     <color name="lightgrey">#C4C4C4</color>
     <!-- 灰色 -->

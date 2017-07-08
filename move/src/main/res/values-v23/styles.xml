@@ -22,6 +22,12 @@
     </style>
 
     <!--TabLayout的文字样式-->
+    <style name="TabLayoutNormalTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <!--TabLayout的文字样式-->
     <style name="TabLayoutBigTextStyle">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">monospace</item>

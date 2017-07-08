@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.idear.move.R;
+import com.idear.move.Service.ActivityManager;
+import com.idear.move.SponsorActivity.SponsorMainUIActivity;
 import com.idear.move.Thread.GetVerifyCodeThread;
 import com.idear.move.Thread.PasswordForgetWithCodeThread;
 import com.idear.move.network.DataGetInterface;
@@ -20,6 +22,7 @@ import com.idear.move.network.ResultType;
 import com.idear.move.util.CheckValidUtil;
 import com.idear.move.util.ErrorHandleUtil;
 import com.idear.move.util.IntentSkipUtil;
+import com.idear.move.util.Logger;
 import com.idear.move.util.ToastUtil;
 
 import java.lang.ref.WeakReference;
@@ -163,9 +166,18 @@ public class ForgetPasswordActivity extends MyBaseActivity {
             getVerifyCodeThread.setDataGetListener(new DataGetInterface() {
                 @Override
                 public void finishWork(Object obj) {
-                    ResultType result = (ResultType) obj;
-                    int statusCode = Integer.parseInt(result.getStatus());
-                    handler.sendEmptyMessage(statusCode);
+                    if(obj instanceof ResultType) {
+                        ResultType result = (ResultType) obj;
+                        int statusCode = Integer.parseInt(result.getStatus());
+                        Logger.d("statusCode:----" + statusCode);
+                        handler.sendEmptyMessage(statusCode);
+                        ToastUtil.getInstance().showToastInThread(ForgetPasswordActivity.this,
+                                result.getMessage());
+                    } else {
+                        handler.sendEmptyMessage(3);
+                        ToastUtil.getInstance().showToastInThread(ForgetPasswordActivity.this,
+                                obj.toString());
+                    }
                 }
 
                 @Override
