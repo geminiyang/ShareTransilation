@@ -13,11 +13,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -426,7 +426,7 @@ public class SponsorHomeFragment extends Fragment implements View.OnClickListene
         protected void onPostExecute(List<HomeInitialItem> viewModels){
             super.onPostExecute(viewModels);
             if(viewModels != null) {
-                ((View)myScrollView).setVisibility(View.VISIBLE);
+                //((View)myScrollView).setVisibility(View.VISIBLE);
                 LoadingFace.setVisibility(View.GONE);
 
                 int size = viewModels.size();
@@ -443,12 +443,12 @@ public class SponsorHomeFragment extends Fragment implements View.OnClickListene
                 handler.sendMessage(msg);
             } else {
                 //提示服务器出现错误
-                LoadingFace.setBackgroundColor(Color.WHITE);
+                //LoadingFace.setBackgroundColor(Color.WHITE);
                 loadingText.setText("服务器出现错误");
                 loadingText.setTextColor(Color.RED);
                 progressBar.setVisibility(View.INVISIBLE);
                 //另一个布局Gone
-                ((View)myScrollView).setVisibility(View.GONE);
+                //((View)myScrollView).setVisibility(View.GONE);
             }
         }
 

@@ -123,7 +123,7 @@ public class UserDetailInformationActivity extends MyBaseActivity {
                         theActivity.list.get((theActivity.list.size()-1)).execute(HttpPath.getUserInfoPath());
                     } else {
                         //提示无网络连接
-                        theActivity.LoadingFace.setBackgroundColor(Color.WHITE);
+                        //theActivity.LoadingFace.setBackgroundColor(Color.WHITE);
                         theActivity.loadingText.setText("网络无连接");
                         theActivity.loadingText.setTextColor(Color.RED);
                         theActivity.progressBar.setVisibility(View.INVISIBLE);
@@ -781,7 +781,7 @@ public class UserDetailInformationActivity extends MyBaseActivity {
                 phoneNumber.setText(user.getTel());
             } else {
                 //提示服务器出现错误
-                LoadingFace.setBackgroundColor(Color.WHITE);
+                //LoadingFace.setBackgroundColor(Color.WHITE);
                 loadingText.setText("服务器出现错误");
                 loadingText.setTextColor(Color.RED);
                 progressBar.setVisibility(View.INVISIBLE);

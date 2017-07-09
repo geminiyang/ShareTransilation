@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.idear.move.Fragment.GroupListFragment;
 import com.idear.move.Fragment.MyFragment;
-import com.idear.move.Fragment.UserListFragment;
 import com.idear.move.R;
 import com.idear.move.myWidget.NoScrollViewPager;
 
@@ -21,17 +19,13 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by user on 2017/5/3.
- */
-
-public class MyManagementFragment extends Fragment implements
+public class SponsorManagementFragment extends Fragment implements
         TabLayout.OnTabSelectedListener {
 
     private static final String ARG = "arg";
 
-    public static MyManagementFragment newInstance(String arg){
-        MyManagementFragment fragment = new MyManagementFragment();
+    public static SponsorManagementFragment newInstance(String arg){
+        SponsorManagementFragment fragment = new SponsorManagementFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG, arg);
         fragment.setArguments(bundle);
@@ -42,18 +36,18 @@ public class MyManagementFragment extends Fragment implements
     private NoScrollViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private MyFragment f1;
-    private MyFragment f2;
+    private SponsorSpreadFragment f1;
+    private AdministrateSpreadFragment f2;
 
     private FragmentPagerAdapter mAdapter;
-    private List<Fragment> mTabs = new ArrayList<Fragment>();
+    private List<Fragment> mTabs = new ArrayList<>();
 
     private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(rootView ==null) {
-            rootView = inflater.inflate(R.layout.fragment_my_management,container,false);
+        if(rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_sponsor_management,container,false);
             initData();
             init(rootView);
         }
@@ -65,7 +59,7 @@ public class MyManagementFragment extends Fragment implements
     }
 
     private void init(View view) {
-        mViewPager = (NoScrollViewPager) view.findViewById(R.id.view_pager_message);
+        mViewPager = (NoScrollViewPager) view.findViewById(R.id.view_pager_administrate);
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout_message);
 
         mViewPager.setUnableScroll(true);
@@ -93,10 +87,10 @@ public class MyManagementFragment extends Fragment implements
 
     private void initData() {
         if (f1 == null) {
-            f1 = MyFragment.newInstance("赞助");
+            f1 = SponsorSpreadFragment.newInstance("赞助");
         }
         if (f2 == null) {
-            f2 = MyFragment.newInstance("推广");
+            f2 = AdministrateSpreadFragment.newInstance("推广");
         }
         mTabs.add(f1);
         mTabs.add(f2);

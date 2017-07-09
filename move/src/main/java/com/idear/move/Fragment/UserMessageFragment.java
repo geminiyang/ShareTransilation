@@ -39,7 +39,7 @@ public class UserMessageFragment extends Fragment implements
     private GroupListFragment f2;
 
     private FragmentPagerAdapter mAdapter;
-    private List<Fragment> mTabs = new ArrayList<Fragment>();
+    private List<Fragment> mTabs = new ArrayList<>();
 
     private View rootView;
 

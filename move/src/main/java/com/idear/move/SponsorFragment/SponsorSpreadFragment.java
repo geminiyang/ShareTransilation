@@ -1,4 +1,4 @@
-package com.idear.move.Fragment;
+package com.idear.move.SponsorFragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -55,12 +56,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserHomeFragment extends Fragment implements View.OnClickListener {
+/**
+ * Created by user on 2017/4/26.
+ */
+
+public class SponsorSpreadFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG = "arg";
 
-    public static UserHomeFragment newInstance(String arg){
-        UserHomeFragment fragment = new UserHomeFragment();
+    public static SponsorSpreadFragment newInstance(String arg){
+        SponsorSpreadFragment fragment = new SponsorSpreadFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG, arg);
         fragment.setArguments(bundle);
@@ -69,18 +74,11 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
 
     private View rootView;
 
-    //界面初始化异步操作
-    private MyHomeLoadingAsyncTask myHomeLoadingAsyncTask;
-
     private HSVAdapter hsvAdapter;
     private HSVLinearLayout mGalleryLayoutOne = null;
     private HSVLinearLayout mGalleryLayoutTwo = null;
-    private HSVLinearLayout mGalleryLayoutThree = null;
 
-    private TextView moreActivity_tv,moreFeedback_tv,moreSpread_tv;
-    private EditText searchEditText;
-    private ImageView searchImageView;
-    //轮播图更新
+    private TextView moreActivity_tv,moreFeedback_tv;
     private IntentFilter intentFilter = null;
     private BroadcastReceiver receiver = null;
     private int nCount = 0;
@@ -110,6 +108,7 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
     }
 
     //正在加载异步任务相关
+    private ScrollView myScrollView;
     private RelativeLayout LoadingFace;
     private ProgressBar progressBar;
     private TextView loadingText;
@@ -119,15 +118,15 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
     /**
      * 进行异步显示图片到控件和信息的更新
      */
-    public static class MyHandler extends Handler {
+    private static class MyHandler extends Handler {
         WeakReference mFragment;
-        MyHandler(UserHomeFragment fragment) {
+        MyHandler(SponsorSpreadFragment fragment) {
             mFragment = new WeakReference(fragment);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            UserHomeFragment theFragment= (UserHomeFragment) mFragment.get();
+            SponsorSpreadFragment theFragment= (SponsorSpreadFragment) mFragment.get();
             switch (msg.what) {
                 case 0:
                     //启动异步任务（UI初始化）
@@ -143,13 +142,6 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
                     }
                     theFragment.addNewAsyncTask();
                     break;
-                case 1:
-                    Logger.d("datalist Size --- " + theFragment.dataLists.size() + "");
-                    theFragment.myHomeLoadingAsyncTask = new
-                            MyHomeLoadingAsyncTask(theFragment.getActivity(),theFragment.rootView,
-                            theFragment.dataLists);
-                    theFragment.myHomeLoadingAsyncTask.execute();
-                    break;
                 default:
                     break;
             }
@@ -162,7 +154,7 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if(rootView==null) {
-            rootView = inflater.inflate(R.layout.fragment_user_myhome, container,false);
+            rootView = inflater.inflate(R.layout.fragment_sponsor_spread, container,false);
             initView(rootView);
             startFirstAsyncTask();
         }
@@ -179,9 +171,6 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(myHomeLoadingAsyncTask!=null) {
-            myHomeLoadingAsyncTask.quitBannerTask();
-        }
     }
 
     @Override
@@ -216,19 +205,14 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
 
     private void initView(View view) {
 
-        //水平的ScrollView
         mGalleryLayoutOne = (HSVLinearLayout) view.findViewById(R.id.my_gallery_one);
         mGalleryLayoutTwo= (HSVLinearLayout) view.findViewById(R.id.my_gallery_two);
-        mGalleryLayoutThree = (HSVLinearLayout) view.findViewById(R.id.my_gallery_three);
 
         moreActivity_tv = (TextView) view.findViewById(R.id.more_activity);
         moreFeedback_tv = (TextView) view.findViewById(R.id.more_feedback);
-        moreSpread_tv = (TextView) view.findViewById(R.id.more_spread);
-
-        searchEditText = (EditText) view.findViewById(R.id.et_search);
-        searchImageView = (ImageView) view.findViewById(R.id.iv_search);
 
         //异步处理任务相关
+        myScrollView = (ScrollView) view.findViewById(R.id.myScrollView);
         LoadingFace = (RelativeLayout) view.findViewById(R.id.loading_face);
         loadingText = (TextView) view.findViewById(R.id.tv_progressBar);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
@@ -239,14 +223,10 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
 
         moreActivity_tv.setOnClickListener(this);
         moreFeedback_tv.setOnClickListener(this);
-        moreSpread_tv.setOnClickListener(this);
-        searchEditText.setOnClickListener(this);
-        searchImageView.setOnClickListener(this);
-
     }
 
     private void initAdapterData() {
-        hsvAdapter = new HSVAdapter(UserHomeFragment.this.getContext());
+        hsvAdapter = new HSVAdapter(SponsorSpreadFragment.this.getContext());
         for (int i = 0; i < images.length; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("image", images[i]);
@@ -254,10 +234,8 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
             map.put("index", (i+1));//代表第张图片，而数组从零开始计数
             hsvAdapter.addObjectItem(map);
         }
-        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,170,100);//第三个参数和第四个参数分别为宽和高
-        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,170,100);
-        mGalleryLayoutThree.setAdapter(hsvAdapter,TYPE_THREE,170,100);
-
+        mGalleryLayoutOne.setAdapter(hsvAdapter,TYPE_ONE,180,120);//第三个参数和第四个参数分别为宽和高
+        mGalleryLayoutTwo.setAdapter(hsvAdapter,TYPE_TWO,180,120);
     }
 
     @Override
@@ -265,19 +243,10 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
         int id = v.getId();
         switch (id) {
             case R.id.more_activity:
-                IntentSkipUtil.skipToNextActivity(UserHomeFragment.this.getActivity(),AllActivityActivity.class);
+                IntentSkipUtil.skipToNextActivity(SponsorSpreadFragment.this.getActivity(),AllActivityActivity.class);
                 break;
             case R.id.more_feedback:
-                IntentSkipUtil.skipToNextActivity(UserHomeFragment.this.getActivity(),FeedbackActivity.class);
-                break;
-            case R.id.more_spread:
-                IntentSkipUtil.skipToNextActivity(UserHomeFragment.this.getActivity(),SpreadActivity.class);
-                break;
-            case R.id.et_search:
-                IntentSkipUtil.skipToNextActivity(getActivity(),UserSearchActivity.class);
-                break;
-            case R.id.iv_search:
-                IntentSkipUtil.skipToNextActivity(getActivity(),UserSearchActivity.class);
+                IntentSkipUtil.skipToNextActivity(SponsorSpreadFragment.this.getActivity(),FeedbackActivity.class);
                 break;
             default:
                 break;
@@ -291,6 +260,7 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
         addNewAsyncTask();
         handler.sendEmptyMessage(0);
     }
+
     /**
      * 添加新的异步任务
      */
@@ -351,7 +321,7 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
             }
             is = urlConnection.getInputStream();
             //is = new URL(param).openStream();
-            //先将下面这个服务器返回的字符串转换成Json数组
+            //先将下面这个服务器返回的字符串转换成对象
             String receiverJsonString = readStream(is);
             Logger.d(receiverJsonString);
             HomeInitialResult result = gson.fromJson(receiverJsonString,HomeInitialResult.class);
@@ -384,7 +354,7 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
      * @return
      */
     private String readStream(InputStream is) {
-        InputStreamReader isr;
+        InputStreamReader isr = null;
         String result = "";
         try {
             String line = "";
@@ -411,7 +381,7 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected List<HomeInitialItem> doInBackground(String... params) {
-            List<HomeInitialItem> list;
+            List<HomeInitialItem> list = null;
             list = myGetJsonData(params[0]);
             return list;
         }
@@ -420,6 +390,7 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(List<HomeInitialItem> viewModels){
             super.onPostExecute(viewModels);
             if(viewModels != null) {
+                //((View)myScrollView).setVisibility(View.VISIBLE);
                 LoadingFace.setVisibility(View.GONE);
 
                 int size = viewModels.size();
@@ -430,13 +401,18 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
                             ", picUrl---" + viewModel.getPic_dir());
                 }
 
-                handler.sendEmptyMessage(1);
+                Message msg = new Message();
+                msg.obj = viewModels;
+                msg.what = 1;
+                handler.sendMessage(msg);
             } else {
                 //提示服务器出现错误
-                //LoadingFace.setBackgroundColor(Color.WHITE);//修改提示字体颜色
+                //LoadingFace.setBackgroundColor(Color.WHITE);
                 loadingText.setText("服务器出现错误");
                 loadingText.setTextColor(Color.RED);
                 progressBar.setVisibility(View.INVISIBLE);
+                //另一个布局Gone
+                //((View)myScrollView).setVisibility(View.GONE);
             }
         }
 

@@ -33,7 +33,6 @@
         <activity
             android:name=".Activity.MyLoadingActivity"
             android:theme="@style/FirstPageStyle" >
-
         </activity>
         <activity
             android:name=".Activity.SelectActivity"
@@ -116,7 +115,11 @@
             android:label=""
             android:theme="@style/otherPageStyle"
             android:windowSoftInputMode="adjustPan">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 启动 -->
         </activity>
         <activity
             android:name=".Activity.UserRegisterNextStepActivity"
@@ -160,11 +163,6 @@
             android:label=""
             android:theme="@style/otherPageStyle"
             android:windowSoftInputMode="adjustPan" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- 启动 -->
         </activity>
         <activity
             android:name=".SponsorActivity.SponsorRegisterNextStepActivity"

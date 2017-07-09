@@ -475,7 +475,7 @@ public class UserInformationFragment extends Fragment implements View.OnClickLis
                 }
             } else {
                 //提示服务器出现错误
-                LoadingFace.setBackgroundColor(Color.WHITE);
+                //LoadingFace.setBackgroundColor(Color.WHITE);
                 loadingText.setText("服务器出现错误");
                 loadingText.setTextColor(Color.RED);
                 progressBar.setVisibility(View.INVISIBLE);

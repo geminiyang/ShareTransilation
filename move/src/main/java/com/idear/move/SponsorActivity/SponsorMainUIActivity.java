@@ -16,11 +16,11 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.idear.move.Fragment.DynamicsFragment;
 import com.idear.move.Fragment.GroupListFragment;
 import com.idear.move.R;
 import com.idear.move.Service.ActivityManager;
-import com.idear.move.SponsorFragment.MyManagementFragment;
+import com.idear.move.SponsorFragment.AdministrateSpreadFragment;
+import com.idear.move.SponsorFragment.SponsorManagementFragment;
 import com.idear.move.SponsorFragment.SponsorHomeFragment;
 import com.idear.move.SponsorFragment.SponsorInformationFragment;
 import com.idear.move.SponsorFragment.SponsorMessageFragment;
@@ -41,13 +41,14 @@ import java.util.List;
 
 public class SponsorMainUIActivity extends BaseActivity implements
         RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,
-        GroupListFragment.OnListFragmentInteractionListener {
-    private RadioButton dynamic,home,locate,msg;
+        GroupListFragment.OnListFragmentInteractionListener ,
+        AdministrateSpreadFragment.OnFragmentInteractionListener{
+    private RadioButton administrate,home,locate,msg;
     private TipButton my;
-    private MyManagementFragment f3;
-    private SponsorMessageFragment f2;
-    private SponsorInformationFragment f4;
     private SponsorHomeFragment f1;
+    private SponsorMessageFragment f2;
+    private SponsorManagementFragment f3;
+    private SponsorInformationFragment f4;
 
     private RadioGroup radioGroup;
 
@@ -81,7 +82,7 @@ public class SponsorMainUIActivity extends BaseActivity implements
             f2 = SponsorMessageFragment.newInstance("消息");
         }
         if(f3==null){
-            f3 = MyManagementFragment.newInstance("管理");
+            f3 = SponsorManagementFragment.newInstance("管理");
         }
         if(f4==null) {
             f4 = SponsorInformationFragment.newInstance("我的");
@@ -108,7 +109,7 @@ public class SponsorMainUIActivity extends BaseActivity implements
 
     //UI组件初始化与事件绑定
     private void initView() {
-        dynamic = (RadioButton) findViewById(R.id.dynamic);
+        administrate = (RadioButton) findViewById(R.id.administrate);
         home = (RadioButton) findViewById(R.id.home);
         locate = (RadioButton) findViewById(R.id.locate);
         msg = (RadioButton) findViewById(R.id.msg);
@@ -171,7 +172,7 @@ public class SponsorMainUIActivity extends BaseActivity implements
             case R.id.msg:
                 mViewPager.setCurrentItem(1, false);
                 break;
-            case R.id.dynamic:
+            case R.id.administrate:
                 mViewPager.setCurrentItem(2, false);
                 break;
             case R.id.my:
@@ -196,7 +197,7 @@ public class SponsorMainUIActivity extends BaseActivity implements
                 break;
             case 2:
                 mViewPager.setCurrentItem(2, false);
-                dynamic.setChecked(true);
+                administrate.setChecked(true);
                 break;
             case 3:
                 mViewPager.setCurrentItem(3, false);
@@ -280,6 +281,11 @@ public class SponsorMainUIActivity extends BaseActivity implements
 
     @Override
     public void onGroupListFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onAdministrateSpreadFragmentInteraction(Uri uri) {
 
     }
 }
