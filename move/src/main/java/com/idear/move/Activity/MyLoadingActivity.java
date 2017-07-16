@@ -90,7 +90,8 @@ public class MyLoadingActivity extends MyBaseActivity implements View.OnClickLis
         }
         if (packageInfo!=null) {
             String versionName = packageInfo.versionName;//清单文件的版本号
-            text.setText("版本号:"+ versionName);
+            int versionCode = packageInfo.versionCode;
+            text.setText("版本名:"+ versionName + "   " +"版本号:" + versionCode);
         }
         sendMessage();
     }

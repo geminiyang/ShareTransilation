@@ -10,15 +10,23 @@ android {
         useNewCruncher = false
     }
 
+    def versionPropsFile = file("version.properties")
+
     defaultConfig {
         applicationId "com.idear.move"
         minSdkVersion 19
         targetSdkVersion 25
+        //这个versionCode 是指你升级的Code码，简单理解可以为标记的升级次数
         versionCode 1
+        //这个则是升级的版本号，也就是版本名称（注意这两个Code和name必须不断增大，不可以一个变大一个减小，否则打包后发布平台审核不予通过）
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
 
     signingConfigs {
@@ -35,6 +43,8 @@ android {
             storePassword '19960610'
         }
     }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -49,14 +59,29 @@ android {
         }
     }
     productFlavors {
-        otherConfig {
-            minSdkVersion 19
-            applicationId 'com.idear.move'
-            signingConfig signingConfigs.myReleaseconfig
-            targetSdkVersion 25
-            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 1
-            versionName '1.0'
+        if (versionPropsFile.canRead()) {
+            Properties versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionPropsFile))
+
+            def runTasks = gradle.startParameter.taskNames
+            def int verCode = versionProps['VERSION_CODE'].toInteger()
+            if (':move:assembleOtherConfigRelease' in runTasks) {
+                versionProps['VERSION_CODE'] = (verCode + 1).toString()
+                versionProps.store(versionPropsFile.newWriter(), null)
+            }
+
+            otherConfig {
+                minSdkVersion 19
+                applicationId 'com.idear.move'
+                signingConfig signingConfigs.myReleaseconfig
+                targetSdkVersion 25
+                testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+                versionCode verCode
+                versionName '1.0.2'
+            }
+
+        } else {
+            throw new GradleException("Could not read version.properties!")
         }
     }
 }
