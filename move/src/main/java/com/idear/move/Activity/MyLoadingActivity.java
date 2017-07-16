@@ -2,11 +2,14 @@ package com.idear.move.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.idear.move.R;
 import com.yqq.myutillibrary.TranslucentStatusSetting;
@@ -16,6 +19,7 @@ import java.lang.ref.WeakReference;
 public class MyLoadingActivity extends MyBaseActivity implements View.OnClickListener{
 
     private Button bt;
+    private TextView text;
     static int INDEX_IF_COMETONEXT = 1;//这个标志位与handler中的相应what对应
 
     static class InnerHandler extends Handler {
@@ -76,6 +80,18 @@ public class MyLoadingActivity extends MyBaseActivity implements View.OnClickLis
 
         bt = (Button) findViewById(R.id.surface_bt);
         bt.setOnClickListener(this);
+        text = (TextView) findViewById(R.id.versionName);
+
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = this.getPackageManager().getPackageInfo("com.idear.move", 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (packageInfo!=null) {
+            String versionName = packageInfo.versionName;//清单文件的版本号
+            text.setText("版本号:"+ versionName);
+        }
         sendMessage();
     }
 
